@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Laboratorio Musicale del Convitto Costaggini di Rieti — Espressività musicale, formazione artistica e crescita personale attraverso la musica."/>
+  <meta property="og:title" content="Laboratorio Musicale — Convitto "Costaggini" Rieti"/>
+  <meta property="og:description" content="Il Laboratorio Musicale del Convitto Costaggini di Rieti: chitarra, voce, ensemble dal vivo da vent'anni."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Convitto Costaggini — Rieti"/>
+  <meta property="og:image" content="https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4374-scaled.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Laboratorio Musicale | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+
+    /* ═══════════ HERO MUSICALE ═══════════ */
+    .mus-hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      background: #0a0f0a;
+      overflow: hidden;
+    }
+    .mus-hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(10,15,10,.72) 0%, rgba(10,15,10,.55) 50%, rgba(10,15,10,.92) 100%),
+        url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1600&q=80') center/cover no-repeat;
+    }
+    /* Pentagramma animato in sfondo */
+    .mus-lines {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      opacity: .06;
+    }
+    /* Note musicali fluttuanti */
+    .mus-note {
+      position: absolute;
+      font-size: 1.4rem;
+      color: var(--oro2);
+      opacity: 0;
+      animation: noteFloat linear infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+    @keyframes noteFloat {
+      0%   { transform: translateY(0) rotate(-8deg); opacity: 0; }
+      15%  { opacity: .55; }
+      85%  { opacity: .35; }
+      100% { transform: translateY(-110vh) rotate(8deg); opacity: 0; }
+    }
+    .mus-hero-content {
+      position: relative; z-index: 2;
+      padding: 1.5rem 1.25rem 3rem;
+      max-width: 760px;
+      margin-top: 1rem;
+    }
+    @media(min-width:768px){
+      .mus-hero-content { padding: 1.5rem 2rem 3rem; }
+    }
+    .mus-eyebrow {
+      display: flex; align-items: center; gap: .7rem;
+      font-family: var(--fu); font-size: .62rem; font-weight: 800;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--oro2); margin-bottom: 1rem;
+    }
+    .mus-eyebrow::before { content: '♪'; font-size: .9rem; }
+    .mus-hero h1 {
+      font-family: var(--fd); font-size: clamp(2.4rem,8vw,5rem);
+      font-weight: 300; color: #fff; line-height: 1.05;
+      margin-bottom: .7rem;
+    }
+    .mus-hero h1 em { display: block; font-style: italic; color: var(--oro3); }
+    .mus-hero p.lead {
+      color: rgba(255,255,255,.6); font-size: clamp(.9rem,2.5vw,1.1rem);
+      line-height: 1.8; max-width: 520px; margin-bottom: 2rem;
+    }
+    .mus-scroll-hint {
+      display: flex; flex-direction: column; align-items: flex-start; gap: .35rem;
+      margin-top: .5rem;
+    }
+    .mus-scroll-hint span {
+      font-family: var(--fu); font-size: .6rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; color: rgba(184,146,42,.55);
+    }
+    @keyframes bounceMus {
+      0%,100%{transform:translateY(0);opacity:.5} 50%{transform:translateY(7px);opacity:1}
+    }
+    .mus-scroll-arrow { animation: bounceMus 1.4s ease-in-out infinite; }
+
+    /* Linea ornamentale con nota */
+    .mus-divider {
+      display: flex; align-items: center; gap: .8rem;
+      margin: 0 auto 2rem; max-width: 600px;
+    }
+    .mus-divider::before, .mus-divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(184,146,42,.4), transparent);
+    }
+    .mus-divider span { color: var(--oro2); font-size: 1.1rem; flex-shrink: 0; }
+
+    /* ═══════════ INTRO VALORE FORMATIVO ═══════════ */
+    #intro-musica {
+      background: var(--av);
+      padding: 5rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .intro-grid {
+      display: grid; gap: 3rem; align-items: center;
+    }
+    @media(min-width:768px){ .intro-grid { grid-template-columns: 1fr 1fr; } }
+    .intro-quote {
+      position: relative;
+      padding: 2rem 2rem 2rem 3rem;
+      border-left: 3px solid var(--oro);
+    }
+    .intro-quote::before {
+      content: '"';
+      position: absolute; top: -.5rem; left: .6rem;
+      font-family: var(--fd); font-size: 6rem; color: var(--oro2); opacity: .25;
+      line-height: 1;
+    }
+    .intro-quote blockquote {
+      font-family: var(--fd); font-size: clamp(1.2rem,3vw,1.65rem);
+      font-weight: 300; font-style: italic; color: var(--bosco);
+      line-height: 1.5; margin: 0 0 .75rem;
+    }
+    .intro-quote cite {
+      font-family: var(--fu); font-size: .65rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--oro); font-style: normal;
+    }
+    .intro-text p {
+      font-size: .92rem; color: var(--txt2); line-height: 1.85; margin-bottom: 1rem;
+    }
+    .intro-text p:last-child { margin-bottom: 0; }
+    @media(max-width:767px){
+      .intro-text { text-align: center; }
+      .intro-text .lbl { text-align: center; }
+      .intro-text h2 { text-align: center; }
+      .mus-pillars { margin-left: auto; margin-right: auto; }
+    }
+    .mus-pillars {
+      display: grid; grid-template-columns: 1fr; gap: .75rem;
+      margin-top: 1.5rem;
+    }
+    @media(min-width:480px){ .mus-pillars { grid-template-columns: repeat(2,1fr); } }
+    .mus-pillar {
+      background: var(--av2); border: 1px solid var(--av3);
+      border-radius: 6px; padding: .9rem 1rem;
+    }
+    .mus-pillar .pillar-icon { font-size: 1.4rem; margin-bottom: .35rem; display: block; }
+    .mus-pillar h4 {
+      font-family: var(--fu); font-size: .68rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--bosco); margin-bottom: .2rem;
+    }
+    .mus-pillar p { font-size: .78rem; color: var(--txt2); line-height: 1.6; margin: 0; }
+
+    /* ═══════════ SLIDESHOW COMPATTO ═══════════ */
+    #mus-gallery {
+      background: #0e1a0f;
+      padding: 3rem 0 0;
+    }
+    #mus-gallery .w { padding-bottom: 0; }
+    #mus-gallery h2 { color: var(--av); text-align: center; }
+    #mus-gallery .lbl { color: var(--oro2); text-align: center; }
+
+    .mus-slideshow {
+      position: relative;
+      width: 100%;
+      height: clamp(220px, 45vw, 480px);
+      overflow: hidden;
+      background: #080d08;
+      margin-top: 2rem;
+    }
+    .mus-track {
+      display: flex; height: 100%;
+      transition: transform .6s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+    .mus-slide {
+      min-width: 100%; width: 100%; height: 100%;
+      position: relative; flex-shrink: 0; overflow: hidden;
+    }
+    .mus-slide-bg {
+      position: absolute; inset: -20px;
+      background-size: cover; background-position: center;
+      filter: blur(16px) brightness(.4) saturate(.6);
+      transform: scale(1.08); z-index: 0;
+    }
+    .mus-slide img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: contain; object-position: center;
+      display: block;
+    }
+    .mus-slide-cap {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+      background: linear-gradient(0deg, rgba(10,15,10,.9) 0%, transparent 100%);
+      padding: 2rem 1.5rem .9rem;
+    }
+    .mus-slide-cap span {
+      display: block; font-family: var(--fu); font-size: .6rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--oro2); margin-bottom: .2rem;
+    }
+    .mus-slide-cap p {
+      font-family: var(--fd); font-size: clamp(.9rem,2vw,1.1rem);
+      font-style: italic; color: rgba(245,240,232,.85); margin: 0;
+    }
+    .mus-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px;
+      background: rgba(10,15,10,.6); border: 1.5px solid rgba(184,146,42,.3);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10; backdrop-filter: blur(4px);
+      transition: background .2s, border-color .2s;
+    }
+    .mus-arrow:hover { background: rgba(184,146,42,.2); border-color: var(--oro2); }
+    .mus-arrow svg { width: 18px; height: 18px; fill: var(--av); }
+    .mus-prev { left: .7rem; }
+    .mus-next { right: .7rem; }
+    .mus-dots {
+      position: absolute; bottom: .75rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: .4rem; z-index: 10;
+    }
+    .mus-dot {
+      width: 6px; height: 6px; border-radius: 50%; border: none; padding: 0;
+      background: rgba(245,240,232,.25); cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .mus-dot.active { background: var(--oro2); transform: scale(1.4); }
+    .mus-progress { height: 2px; background: rgba(184,146,42,.12); }
+    .mus-progress-bar { height: 100%; background: linear-gradient(90deg, var(--oro2), var(--oro3)); width: 0%; transition: width linear; }
+
+    /* ═══════════ VIDEO ═══════════ */
+    #mus-video {
+      background: var(--av2);
+      padding: 5rem 1.25rem;
+    }
+    .video-grid {
+      display: grid; gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+    @media(min-width:640px){ .video-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:1024px){ .video-grid { grid-template-columns: repeat(3, 1fr); } }
+    .video-card {
+      background: var(--bosco); border-radius: 8px; overflow: hidden;
+      border: 1px solid rgba(184,146,42,.15);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .video-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+    .video-wrap {
+      position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+      background: #0a0f0a;
+    }
+    .video-wrap iframe {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      border: 0;
+    }
+    .video-info { padding: .9rem 1.1rem 1.1rem; }
+    .video-info .vid-tag {
+      font-family: var(--fu); font-size: .58rem; font-weight: 800;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--oro2); margin-bottom: .35rem;
+    }
+    .video-info h4 {
+      font-family: var(--fd); font-size: 1rem; font-weight: 400;
+      font-style: italic; color: var(--av); line-height: 1.3;
+    }
+
+    /* ═══════════ RESPONSABILE ═══════════ */
+    #mus-responsabile {
+      background: #2a4a2b;
+      padding: 5rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .resp-grid {
+      display: grid; gap: 3rem; align-items: start;
+    }
+    @media(min-width:768px){ .resp-grid { grid-template-columns: 280px 1fr; } }
+    .resp-portrait {
+      width: 100%; max-width: 280px; margin: 0 auto;
+    }
+    .resp-portrait-img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 8px;
+      border: 2px solid rgba(184,146,42,.3);
+      display: block;
+    }
+    .resp-portrait-placeholder {
+      width: 100%; aspect-ratio: 3/4;
+      background: linear-gradient(135deg, rgba(245,240,232,.06), rgba(245,240,232,.02));
+      border: 2px dashed rgba(184,146,42,.25); border-radius: 8px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: .5rem;
+    }
+    .resp-portrait-placeholder svg { width: 48px; height: 48px; fill: rgba(184,146,42,.35); }
+    .resp-portrait-placeholder p {
+      font-family: var(--fu); font-size: .62rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: rgba(245,240,232,.3);
+      text-align: center; margin: 0; padding: 0 1rem;
+    }
+    .resp-name {
+      font-family: var(--fu); font-size: .62rem; font-weight: 800;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--oro2);
+      margin-top: .75rem; text-align: center;
+    }
+    .resp-bio { color: rgba(245,240,232,.92); }
+    .resp-bio h2 { color: var(--av); }
+    .resp-bio h2 em { color: var(--oro3); }
+    .resp-bio .role-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(184,146,42,.18); border: 1px solid rgba(184,146,42,.35);
+      border-radius: 4px; padding: .35rem .8rem; margin-bottom: 1.25rem;
+    }
+    .resp-bio .role-badge span {
+      font-family: var(--fu); font-size: .62rem; font-weight: 800;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--oro2);
+    }
+    .resp-bio p { font-size: .92rem; line-height: 1.9; margin-bottom: .85rem; color: rgba(245,240,232,.92); }
+    .resp-bio p:last-child { margin-bottom: 0; }
+    .resp-credits { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
+    .resp-credits .tag {
+      color: rgba(245,240,232,.85);
+      border-color: rgba(184,146,42,.4);
+      background: rgba(184,146,42,.08);
+    }
+
+    /* ═══════════ TESTIMONIANZE ═══════════ */
+    #mus-testimonianze {
+      background: var(--av);
+      padding: 5rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .test-grid {
+      display: grid; gap: 1.25rem;
+    }
+    @media(min-width:640px){ .test-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:1024px){ .test-grid { grid-template-columns: repeat(3, 1fr); } }
+    .test-card {
+      background: var(--av2); border: 1px solid var(--av3);
+      border-radius: 8px; padding: 1.5rem 1.4rem;
+      position: relative;
+    }
+    .test-card::before {
+      content: '"'; position: absolute; top: .5rem; right: 1rem;
+      font-family: var(--fd); font-size: 4rem; color: var(--oro2); opacity: .15;
+      line-height: 1; pointer-events: none;
+    }
+    .test-stars { color: var(--oro); font-size: .85rem; margin-bottom: .75rem; }
+    .test-card blockquote {
+      font-family: var(--fd); font-size: 1rem; font-style: italic;
+      color: var(--bosco); line-height: 1.65; margin: 0 0 1rem;
+    }
+    .test-author {
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .test-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--bosco); display: flex; align-items: center; justify-content: center;
+      font-family: var(--fd); font-size: 1.1rem; font-style: italic; color: var(--oro2);
+      flex-shrink: 0;
+    }
+    .test-name { font-family: var(--fu); font-size: .7rem; font-weight: 700; color: var(--bosco); letter-spacing: .05em; }
+    .test-role { font-size: .72rem; color: var(--txt2); }
+    .test-badge {
+      display: inline-block; font-family: var(--fu); font-size: .55rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase; padding: .2rem .55rem;
+      border-radius: 20px; margin-top: .2rem;
+    }
+    .test-badge.convittore { background: rgba(44,62,45,.12); color: var(--bosco); }
+    .test-badge.ex { background: rgba(184,146,42,.12); color: #8B6914; }
+
+    /* ═══════════ CTA ISCRIZIONE ═══════════ */
+    #mus-cta {
+      background: linear-gradient(135deg, var(--bosco) 0%, #1a2e1b 100%);
+      padding: 4rem 1.25rem;
+      text-align: center;
+    }
+    #mus-cta h2 { color: var(--av); }
+    #mus-cta h2 em { color: var(--oro3); }
+    #mus-cta p { color: rgba(245,240,232,.6); max-width: 500px; margin: .5rem auto 2rem; font-size: .9rem; }
+    .cta-buttons { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+    /* ═══ Decorazioni strumenti ═══ */
+    .mus-deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+    @keyframes deco-sway {
+      0%,100% { transform: rotate(var(--r0,0deg)) translateY(0); }
+      50%      { transform: rotate(var(--r1,3deg)) translateY(-6px); }
+    }
+    @keyframes deco-pulse {
+      0%,100% { opacity: var(--op0,.08); }
+      50%      { opacity: var(--op1,.16); }
+    }
+    .mus-deco-sway  { animation: deco-sway  6s ease-in-out infinite; }
+    .mus-deco-pulse { animation: deco-pulse 4s ease-in-out infinite; }
+
+  @media(min-width:560px){.lab-grid{grid-template-columns:1fr 1fr}}</style>
+</head>
+<body data-page="laboratorio-musicale">
+<main id="main">
+
+  <!-- ══════════════════════════════════════
+       HERO
+  ══════════════════════════════════════ -->
+  <section class="mus-hero" aria-labelledby="mus-h1">
+    <div class="mus-hero-bg" aria-hidden="true"></div>
+
+    <!-- Note musicali fluttuanti -->
+    <div aria-hidden="true">
+      <span class="mus-note" style="left:4%;animation-duration:9s;animation-delay:0s">♩</span>
+      <span class="mus-note" style="left:12%;animation-duration:12s;animation-delay:2s;font-size:1.8rem">♪</span>
+      <span class="mus-note" style="left:22%;animation-duration:10s;animation-delay:4s">♫</span>
+      <span class="mus-note" style="left:35%;animation-duration:8s;animation-delay:1s;font-size:1rem">♬</span>
+      <span class="mus-note" style="left:55%;animation-duration:13s;animation-delay:3s">♩</span>
+      <span class="mus-note" style="left:68%;animation-duration:9.5s;animation-delay:5s;font-size:1.8rem">♪</span>
+      <span class="mus-note" style="left:78%;animation-duration:11s;animation-delay:1.5s">♫</span>
+      <span class="mus-note" style="left:88%;animation-duration:8.5s;animation-delay:3.5s;font-size:1rem">♬</span>
+      <span class="mus-note" style="left:95%;animation-duration:10.5s;animation-delay:6s">♩</span>
+    </div>
+
+    <!-- Pentagramma SVG decorativo -->
+    <svg class="mus-lines" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true">
+      <g stroke="rgba(245,240,232,.6)" stroke-width="1" fill="none">
+        <line x1="0" y1="120" x2="1200" y2="120"/>
+        <line x1="0" y1="150" x2="1200" y2="150"/>
+        <line x1="0" y1="180" x2="1200" y2="180"/>
+        <line x1="0" y1="210" x2="1200" y2="210"/>
+        <line x1="0" y1="240" x2="1200" y2="240"/>
+        <line x1="0" y1="340" x2="1200" y2="340"/>
+        <line x1="0" y1="370" x2="1200" y2="370"/>
+        <line x1="0" y1="400" x2="1200" y2="400"/>
+        <line x1="0" y1="430" x2="1200" y2="430"/>
+        <line x1="0" y1="460" x2="1200" y2="460"/>
+      </g>
+    </svg>
+
+    <div class="mus-hero-content w">
+      <nav class="breadcrumb" aria-label="Percorso" style="--bc-col:rgba(245,240,232,.55)">
+        <a href="index.html" style="color:rgba(245,240,232,.55)">Home</a>
+        <span style="color:rgba(245,240,232,.3)">›</span>
+        <span aria-current="page" style="color:var(--oro2)">Laboratorio Musicale</span>
+      </nav>
+
+      <div class="mus-eyebrow" style="margin-top:1.5rem">Laboratorio di Espressività Musicale</div>
+      <h1 id="mus-h1">
+        La musica che<br>
+        <em>abita il Convitto</em>
+      </h1>
+      <p class="lead">Un laboratorio dove la teoria incontra il palco, la disciplina libera la creatività e ogni studente scopre la propria voce — strumento tra gli strumenti di una comunità che suona insieme.</p>
+
+      <div class="mus-scroll-hint">
+        <span>Esplora il laboratorio</span>
+        <svg class="mus-scroll-arrow" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"
+             style="cursor:pointer" onclick="document.getElementById('intro-musica').scrollIntoView({behavior:'smooth'})">
+          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" fill="rgba(184,146,42,.7)"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       VALORE FORMATIVO
+  ══════════════════════════════════════ -->
+  <section id="intro-musica">
+
+    
+
+    <!-- Chiave di violino grande — sinistra -->
+    <div class="mus-deco mus-deco-sway" aria-hidden="true"
+         style="left:-5px;top:3%;font-size:16rem;opacity:.06;color:var(--bosco);line-height:1;--r0:-3deg;--r1:-1deg;animation-duration:9s;font-family:'Times New Roman',Georgia,serif;pointer-events:none">𝄞</div>
+
+    <!-- Chiave di violino stilizzata — destra -->
+    <svg class="mus-deco mus-deco-pulse" aria-hidden="true"
+         style="right:-20px;bottom:5%;width:120px;height:200px;opacity:.08;--op0:.06;--op1:.14"
+         viewBox="0 0 80 180">
+      <text x="10" y="160" font-size="155" font-family="Georgia,serif" fill="var(--bosco)" opacity="1">𝄞</text>
+    </svg>
+
+    <div class="w" style="position:relative;z-index:1">
+      <div class="mus-divider rv"><span>♬</span></div>
+      <div class="intro-grid">
+        <div class="intro-quote rv">
+          <blockquote>La musica dà un'anima alle nostre menti, ali al pensiero, slancio all'immaginazione e vita ad ogni cosa.</blockquote>
+          <cite>— Platone</cite>
+        </div>
+        <div class="intro-text rv d1">
+          <p class="lbl">Perché la musica</p>
+          <h2>Un valore <em>educativo</em> profondo</h2>
+          <p>La musica non è solo arte: è linguaggio universale che sviluppa capacità trasversali fondamentali per la vita. Suonare insieme insegna ad ascoltare l'altro, a rispettare i tempi, a trovare armonia nella diversità — competenze che un convittore porta con sé ben oltre il licenziamento scolastico.</p>
+          <p>Il Laboratorio Musicale del Convitto "Costaggini" nasce dall'idea che la formazione professionale si intreccia con la crescita personale: ogni ragazzo che impara a tenere un ritmo, a intonare una frase, a costruire un accordo, diventa più consapevole di sé e più capace di collaborare con gli altri.</p>
+          <p>Fare musica insieme abbassa la soglia d'ansia, stimola la memoria, allena la concentrazione e rafforza l'autostima. Non servono talenti predefiniti: serve voglia di partecipare.</p>
+
+          <div class="mus-pillars">
+            <div class="mus-pillar rv">
+              <span class="pillar-icon">🎯</span>
+              <h4>Concentrazione</h4>
+              <p>La lettura musicale allena l'attenzione selettiva e la memoria di lavoro.</p>
+            </div>
+            <div class="mus-pillar rv d1">
+              <span class="pillar-icon">🤝</span>
+              <h4>Collaborazione</h4>
+              <p>Suonare in gruppo richiede ascolto reciproco e rispetto dei ruoli.</p>
+            </div>
+            <div class="mus-pillar rv d2">
+              <span class="pillar-icon">💪</span>
+              <h4>Autostima</h4>
+              <p>Ogni esibizione vissuta è una prova di coraggio superata.</p>
+            </div>
+            <div class="mus-pillar rv d3">
+              <span class="pillar-icon">✨</span>
+              <h4>Creatività</h4>
+              <p>L'improvvisazione apre spazi espressivi che trasformano lo sguardo sul mondo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       SLIDESHOW COMPATTO
+  ══════════════════════════════════════ -->
+  <section id="mus-gallery">
+    <div class="w">
+      <p class="lbl">Fotogalleria</p>
+      <h2 style="color:var(--av);text-align:center">Il laboratorio <em style="color:var(--oro3)">in immagini</em></h2>
+    </div>
+    <div class="mus-slideshow" id="musSlideshow">
+      <div class="mus-track" id="musTrack">
+
+        <div class="mus-slide">
+          <div class="mus-slide-bg" style="background-image:url('img/natale2024/i.jpg')"></div>
+          <img src="img/natale2024/i.jpg" alt="La band del Convitto Costaggini durante un'esibizione" loading="lazy"/>
+          <div class="mus-slide-cap"><span>La band</span><p>Tastiera, batteria, chitarra, basso e voci — la formazione completa del laboratorio</p></div>
+        </div>
+
+        <div class="mus-slide">
+          <div class="mus-slide-bg" style="background-image:url('img/natale2024/g.jpg')"></div>
+          <img src="img/natale2024/g.jpg" alt="Quattro giovani convittori cantano sul palco" loading="lazy" style="object-position:center top"/>
+          <div class="mus-slide-cap"><span>I giovani solisti</span><p>Quattro studenti in scena con microfono e leggio durante la Festa di Natale</p></div>
+        </div>
+
+        <div class="mus-slide">
+          <div class="mus-slide-bg" style="background-image:url('img/natale2024/p_.jpg')"></div>
+          <img src="img/natale2024/p_.jpg" alt="I solisti del Convitto sul palco con tromba" loading="lazy" style="object-position:center top"/>
+          <div class="mus-slide-cap"><span>Ensemble</span><p>Voci, tromba e chitarra nell'esibizione di fine anno</p></div>
+        </div>
+
+        <div class="mus-slide">
+          <div class="mus-slide-bg" style="background-image:url('img/natale2024/o.jpg')"></div>
+          <img src="img/natale2024/o.jpg" alt="Convittore suona la tromba" loading="lazy" style="object-position:center 38%"/>
+          <div class="mus-slide-cap"><span>Tromba</span><p>Un convittore si esibisce alla tromba accanto al suo educatore alla chitarra</p></div>
+        </div>
+
+        <div class="mus-slide">
+          <div class="mus-slide-bg" style="background-image:url('img/natale2024/l.jpg')"></div>
+          <img src="img/natale2024/l.jpg" alt="Voce solista femminile accompagnata dalla band" loading="lazy" style="object-position:center top"/>
+          <div class="mus-slide-cap"><span>Voce solista</span><p>Una convittrice interpreta un brano accompagnata dal gruppo</p></div>
+        </div>
+
+        <div class="mus-slide">
+          <div class="mus-slide-bg" style="background-image:url('img/natale2024/n.jpg')"></div>
+          <img src="img/natale2024/n.jpg" alt="Studente in assolo al microfono con intensità" loading="lazy" style="object-position:center 42%"/>
+          <div class="mus-slide-cap"><span>Assolo</span><p>Concentrazione e passione in un momento solistico durante il concerto</p></div>
+        </div>
+
+      </div>
+      <button class="mus-arrow mus-prev" id="musPrev" aria-label="Foto precedente">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+      <button class="mus-arrow mus-next" id="musNext" aria-label="Foto successiva">
+        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
+      <div class="mus-dots" id="musDots"></div>
+    </div>
+    <div class="mus-progress"><div class="mus-progress-bar" id="musProgressBar"></div></div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       VIDEO
+  ══════════════════════════════════════ -->
+  <section id="mus-video">
+    <div class="w">
+      <p class="lbl">Video</p>
+      <h2>Il laboratorio <em>in azione</em></h2>
+      <p style="color:var(--txt2);max-width:560px;margin:.5rem 0 2.5rem;font-size:.88rem">Guarda le esibizioni del laboratorio musicale del Convitto — dai concerti di Natale alle rassegne cittadine. <em style="color:var(--oro);font-style:italic">[Sostituire con i video reali del laboratorio]</em></p>
+
+      <div class="video-grid">
+        <!-- Video segnaposto 1 — Festa di Natale 2024 dal canale YouTube della scuola -->
+        <div class="video-card rv">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/a5KTPj68dso"
+                    title="IPSSEOA Alberghiero Costaggini Rieti — Gli indirizzi, i laboratori ed il convitto"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <p class="vid-tag">Presentazione istituto</p>
+            <h4>Il Costaggini: indirizzi, laboratori e convitto</h4>
+          </div>
+        </div>
+
+        <!-- Video segnaposto 2 — da sostituire -->
+        <div class="video-card rv d1">
+          <div class="video-wrap" style="display:flex;align-items:center;justify-content:center;background:var(--bosco)">
+            <div style="text-align:center;padding:2rem">
+              <svg viewBox="0 0 24 24" width="48" height="48" style="fill:rgba(184,146,42,.4);margin-bottom:.75rem"><path d="M8 5v14l11-7z"/></svg>
+              <p style="font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.3)">Video da aggiungere</p>
+            </div>
+          </div>
+          <div class="video-info">
+            <p class="vid-tag">Concerto · In arrivo</p>
+            <h4>Esibizione del laboratorio — da inserire</h4>
+          </div>
+        </div>
+
+        <!-- Video segnaposto 3 — da sostituire -->
+        <div class="video-card rv d2">
+          <div class="video-wrap" style="display:flex;align-items:center;justify-content:center;background:var(--bosco)">
+            <div style="text-align:center;padding:2rem">
+              <svg viewBox="0 0 24 24" width="48" height="48" style="fill:rgba(184,146,42,.4);margin-bottom:.75rem"><path d="M8 5v14l11-7z"/></svg>
+              <p style="font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.3)">Video da aggiungere</p>
+            </div>
+          </div>
+          <div class="video-info">
+            <p class="vid-tag">Backstage · In arrivo</p>
+            <h4>Dal laboratorio al palco — da inserire</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       IL RESPONSABILE
+  ══════════════════════════════════════ -->
+  <section id="mus-responsabile">
+
+    
+
+    <!-- Chitarra Unicode — destra -->
+    <div class="mus-deco mus-deco-sway" aria-hidden="true"
+         style="right:-15px;top:5%;font-size:11rem;opacity:.09;color:rgba(245,240,232,.9);line-height:1;--r0:10deg;--r1:13deg;animation-duration:8s">🎸</div>
+
+    <!-- Note musicali sparse — sinistra -->
+    <div class="mus-deco" aria-hidden="true" style="left:8px;top:15%;opacity:.12;font-size:2.5rem;color:rgba(184,146,42,.8);line-height:2">
+      <div class="mus-deco-pulse" style="--op0:.08;--op1:.18;animation-delay:0s">♩</div>
+      <div class="mus-deco-pulse" style="--op0:.06;--op1:.14;animation-delay:1.2s;font-size:1.8rem;margin-left:1rem">♪</div>
+      <div class="mus-deco-pulse" style="--op0:.07;--op1:.16;animation-delay:2.4s;font-size:2rem">♫</div>
+    </div>
+
+    <div class="w" style="position:relative;z-index:1">
+      <p class="lbl" style="color:var(--oro2)">Chi guida il laboratorio</p>
+      <div class="resp-grid">
+        <div class="resp-portrait rv">
+          <!-- Segnaposto foto Michele Gaggiano -->
+          <div class="resp-portrait-placeholder">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            <p>Foto di Michele Gaggiano<br>da inserire</p>
+          </div>
+          <p class="resp-name">Michele Gaggiano · Responsabile</p>
+        </div>
+        <div class="resp-bio rv d1">
+          <h2>Il <em>Cofondatore</em> del Laboratorio</h2>
+          <div class="role-badge">
+            <span>🎸 Educatore — Responsabile Laboratorio Musicale</span>
+          </div>
+          <p>Il Laboratorio Musicale del Convitto nasce vent'anni fa grazie all'intuizione di un valorosissimo ex collega, grande batterista: <strong style="color:var(--av)">Dino Barba</strong>. La sua idea fu immediatamente recepita dall'attuale responsabile e da allora l'attività non si è mai fermata, avvicinando alla musica un gran numero di ragazze e ragazzi.</p>
+          <p><strong style="color:var(--av)">Michele Gaggiano</strong> è chitarrista di formazione classica, con una solida esperienza anche nella musica pop ed etno-popolare. Ex direttore di cori polifonici, si è formato nello studio del canto corale e della polifonia — un percorso che porta ogni giorno dentro al laboratorio una visione della musica ampia, inclusiva e profondamente educativa.</p>
+          <p>Grazie a questa continuità, generazione dopo generazione, molti convittori hanno scoperto il proprio strumento, la propria voce e — soprattutto — il piacere di suonare insieme agli altri.</p>
+          <div class="resp-credits" style="--tag-col:#fff">
+            <span class="tag">Chitarra classica</span>
+            <span class="tag">Musica pop</span>
+            <span class="tag">Etno-popolare</span>
+            <span class="tag">Canto corale</span>
+            <span class="tag">Direzione corale</span>
+            <span class="tag">Polifonia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       TESTIMONIANZE
+  ══════════════════════════════════════ -->
+  <section id="mus-testimonianze">
+
+    
+
+    <!-- Chitarra classica — sinistra -->
+    <div class="mus-deco mus-deco-sway" aria-hidden="true"
+         style="left:-15px;top:8%;font-size:12rem;opacity:.07;color:var(--bosco);line-height:1;--r0:-8deg;--r1:-5deg;animation-duration:10s">🎸</div>
+
+    <!-- Chiave di basso — destra -->
+    <svg class="mus-deco mus-deco-pulse" aria-hidden="true"
+         style="right:-10px;bottom:8%;width:110px;height:160px;opacity:.07;--op0:.05;--op1:.12;animation-duration:5s"
+         viewBox="0 0 80 140">
+      <text x="5" y="120" font-size="115" font-family="Georgia,serif" fill="var(--bosco)" opacity="1">𝄢</text>
+    </svg>
+
+    <!-- Nota singola grande — centro destra alto -->
+    <div class="mus-deco mus-deco-pulse" aria-hidden="true"
+         style="right:4%;top:6%;font-size:5rem;color:var(--oro2);opacity:.06;--op0:.04;--op1:.10;animation-delay:1.5s">♬</div>
+
+    <div class="w" style="position:relative;z-index:1">
+      <p class="lbl">Le voci</p>
+      <h2>Cosa dicono <em>i protagonisti</em></h2>
+      <p style="color:var(--txt2);max-width:560px;margin:.5rem 0 2.5rem;font-size:.88rem">Le parole di chi ha vissuto il laboratorio — convittori in corso e alumni che portano ancora dentro di sé quella nota. <em style="color:var(--oro);font-style:italic">[Sostituire con dichiarazioni reali]</em></p>
+
+      <div class="test-grid">
+
+        <div class="test-card rv">
+          <div class="test-stars">★★★★★</div>
+          <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</blockquote>
+          <div class="test-author">
+            <div class="test-avatar">M</div>
+            <div>
+              <p class="test-name">M. R.</p>
+              <p class="test-role">Convittore · 3ª anno</p>
+              <span class="test-badge convittore">Convittore</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="test-card rv d1">
+          <div class="test-stars">★★★★★</div>
+          <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</blockquote>
+          <div class="test-author">
+            <div class="test-avatar">S</div>
+            <div>
+              <p class="test-name">S. L.</p>
+              <p class="test-role">Ex convittrice · diplomata 2023</p>
+              <span class="test-badge ex">Ex convittrice</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="test-card rv d2">
+          <div class="test-stars">★★★★★</div>
+          <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</blockquote>
+          <div class="test-author">
+            <div class="test-avatar">A</div>
+            <div>
+              <p class="test-name">A. T.</p>
+              <p class="test-role">Convittore · 5ª anno</p>
+              <span class="test-badge convittore">Convittore</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="test-card rv">
+          <div class="test-stars">★★★★★</div>
+          <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</blockquote>
+          <div class="test-author">
+            <div class="test-avatar">F</div>
+            <div>
+              <p class="test-name">F. M.</p>
+              <p class="test-role">Ex convittore · diplomato 2022</p>
+              <span class="test-badge ex">Ex convittore</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="test-card rv d1">
+          <div class="test-stars">★★★★★</div>
+          <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Excepteur sint occaecat cupidatat non proident.</blockquote>
+          <div class="test-author">
+            <div class="test-avatar">G</div>
+            <div>
+              <p class="test-name">G. P.</p>
+              <p class="test-role">Convittrice · 4ª anno</p>
+              <span class="test-badge convittore">Convittrice</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="test-card rv d2">
+          <div class="test-stars">★★★★★</div>
+          <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit.</blockquote>
+          <div class="test-author">
+            <div class="test-avatar">C</div>
+            <div>
+              <p class="test-name">C. D.</p>
+              <p class="test-role">Ex convittrice · diplomata 2024</p>
+              <span class="test-badge ex">Ex convittrice</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       CTA
+  ══════════════════════════════════════ -->
+  <section id="mus-cta">
+
+
+    
+
+    <!-- Chitarra acustica — sinistra -->
+    <div class="mus-deco mus-deco-sway" aria-hidden="true"
+         style="left:-10px;bottom:-10px;font-size:13rem;opacity:.1;color:rgba(245,240,232,.9);line-height:1;--r0:-5deg;--r1:-2deg;animation-duration:7s">🎸</div>
+
+    <!-- Note musicali — destra -->
+    <div class="mus-deco" aria-hidden="true"
+         style="right:5%;top:20%;font-size:3rem;color:rgba(184,146,42,.15);line-height:1.6;text-align:right">
+      <div class="mus-deco-pulse" style="--op0:.08;--op1:.18;animation-delay:0s">♪</div>
+      <div class="mus-deco-pulse" style="--op0:.06;--op1:.14;animation-delay:.8s;font-size:2rem">♫</div>
+    </div>
+
+    <div class="w" style="position:relative;z-index:1">
+      <div class="mus-divider rv" style="--av3:rgba(184,146,42,.2)"><span>♪</span></div>
+      <h2 class="rv">Vuoi far parte del <em>laboratorio</em>?</h2>
+      <p class="rv d1">Il laboratorio è aperto a tutti i convittori e convittrici, indipendentemente dall'esperienza musicale precedente. L'unico requisito è la voglia di suonare insieme.</p>
+      <div class="cta-buttons rv d2">
+        <button onclick="document.getElementById('lab-modal').style.display='flex'" class="btn-gold">🎵 Iscriviti al Laboratorio →</button>
+        <a href="contatti.html" class="btn-outline" style="color:rgba(245,240,232,.7);border-color:rgba(245,240,232,.3)">Contattaci per info →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+(function(){
+  // ── Slideshow compatto ──
+  const TOTAL_MUS = 6;
+  const track = document.getElementById('musTrack');
+  const dotsEl = document.getElementById('musDots');
+  const progressBar = document.getElementById('musProgressBar');
+  const AUTOPLAY = 4500;
+  let cur = 0, timer;
+
+  for(let i=0;i<TOTAL_MUS;i++){
+    const b = document.createElement('button');
+    b.className='mus-dot'+(i===0?' active':'');
+    b.setAttribute('aria-label',`Foto ${i+1}`);
+    b.addEventListener('click',()=>goTo(i));
+    dotsEl.appendChild(b);
+  }
+
+  function goTo(n){
+    cur = (n+TOTAL_MUS)%TOTAL_MUS;
+    track.style.transform=`translateX(-${cur*100}%)`;
+    dotsEl.querySelectorAll('.mus-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+    resetAutoplay();
+  }
+
+  document.getElementById('musPrev').addEventListener('click',e=>{e.preventDefault();goTo(cur-1);});
+  document.getElementById('musNext').addEventListener('click',e=>{e.preventDefault();goTo(cur+1);});
+
+  let tx=0,ty=0,sw=false;
+  track.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;sw=false;},{passive:true});
+  track.addEventListener('touchmove',e=>{
+    const dx=Math.abs(e.touches[0].clientX-tx),dy=Math.abs(e.touches[0].clientY-ty);
+    if(dx>dy&&dx>8){sw=true;e.preventDefault();}
+  },{passive:false});
+  track.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-tx;
+    if(sw&&Math.abs(dx)>40)goTo(cur+(dx<0?1:-1));
+    sw=false;
+  },{passive:true});
+
+  function startProgress(){
+    progressBar.style.transition='none';progressBar.style.width='0%';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      progressBar.style.transition=`width ${AUTOPLAY}ms linear`;
+      progressBar.style.width='100%';
+    }));
+  }
+  function resetAutoplay(){
+    clearInterval(timer);startProgress();
+    timer=setInterval(()=>goTo(cur+1),AUTOPLAY);
+  }
+  const ss=document.getElementById('musSlideshow');
+  ss.addEventListener('mouseenter',()=>{clearInterval(timer);progressBar.style.transition='none';});
+  ss.addEventListener('mouseleave',()=>resetAutoplay());
+  resetAutoplay();
+
+  // ── Blurred background per ogni slide ──
+  document.querySelectorAll('.mus-slide').forEach(slide=>{
+    const img=slide.querySelector('img');
+    const bg=slide.querySelector('.mus-slide-bg');
+    if(!img||!bg)return;
+    const setSrc=()=>{bg.style.backgroundImage=`url('${img.src}')`};
+    if(img.complete)setSrc();else img.addEventListener('load',setSrc);
+  });
+
+  // ── IntersectionObserver .rv ──
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
+  }),{threshold:.08});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+})();
+</script>
+
+<!-- MODALE ISCRIZIONE LABORATORIO MUSICALE -->
+<div id="lab-modal" role="dialog" aria-modal="true" aria-labelledby="lab-modal-title"
+     style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(10,15,10,.8);
+            align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)">
+  <div style="background:#fff;border-radius:14px;width:min(580px,100%);max-height:88vh;
+              overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.4);
+              animation:modalIn .28s cubic-bezier(.22,1,.36,1) both">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,var(--bosco),#1a3a1b);padding:1.5rem 1.75rem;
+                border-radius:14px 14px 0 0;display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.16em;
+                  text-transform:uppercase;color:var(--oro2);margin-bottom:.3rem">🎵 Laboratorio Musicale</p>
+        <h2 id="lab-modal-title" style="font-family:var(--fd);font-size:1.5rem;font-weight:300;
+                                         color:#fff;margin:0">Richiesta di <em style="font-style:italic;color:var(--oro3)">iscrizione</em></h2>
+      </div>
+      <button onclick="document.getElementById('lab-modal').style.display='none'"
+              style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+                     color:rgba(255,255,255,.7);width:34px;height:34px;border-radius:50%;
+                     cursor:pointer;font-size:1rem;flex-shrink:0"
+              aria-label="Chiudi">✕</button>
+    </div>
+
+    <!-- Form -->
+    <form name="laboratorio-musicale" netlify netlify-honeypot="bot-field"
+          method="POST" action="/grazie.html"
+          style="padding:1.5rem 1.75rem" onsubmit="labFormValidate(event)">
+      <input type="hidden" name="form-name" value="laboratorio-musicale"/>
+      <p style="display:none"><label>Non compilare: <input name="bot-field"/></label></p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem">
+        <div>
+          <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+                         text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Nome *</label>
+          <input type="text" name="nome" required placeholder="Nome"
+                 style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
+                         font-family:var(--fu);font-size:15px;box-sizing:border-box"/>
+        </div>
+        <div>
+          <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+                         text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Cognome *</label>
+          <input type="text" name="cognome" required placeholder="Cognome"
+                 style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
+                         font-family:var(--fu);font-size:15px;box-sizing:border-box"/>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem">
+        <div>
+          <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+                         text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Classe *</label>
+          <select name="classe" required
+                  style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
+                          font-family:var(--fu);font-size:15px;box-sizing:border-box;background:#faf7f0">
+            <option value="">— Seleziona —</option>
+            <option>1ª anno</option><option>2ª anno</option><option>3ª anno</option>
+            <option>4ª anno</option><option>5ª anno</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+                         text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Email di contatto *</label>
+          <input type="email" name="email" required placeholder="tua@email.it"
+                 style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
+                         font-family:var(--fu);font-size:15px;box-sizing:border-box"/>
+        </div>
+      </div>
+
+      <div style="margin-bottom:.85rem">
+        <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+                       text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Esperienza musicale pregressa</label>
+        <select name="esperienza"
+                style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
+                        font-family:var(--fu);font-size:15px;box-sizing:border-box;background:#faf7f0">
+          <option value="nessuna">Nessuna — parto da zero</option>
+          <option value="autodidatta">Qualche nozione, autodidatta</option>
+          <option value="qualche-anno">Ho studiato per 1-3 anni</option>
+          <option value="esperto">Studio da oltre 3 anni</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:.85rem">
+        <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+                       text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Strumento che suoni (o vorresti imparare)</label>
+        <select name="strumento"
+                style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
+                        font-family:var(--fu);font-size:15px;box-sizing:border-box;background:#faf7f0">
+          <option value="">— Seleziona —</option>
+          <option>Chitarra classica</option>
+          <option>Chitarra pop/rock</option>
+          <option>Canto</option>
+          <option>Pianoforte / Tastiera</option>
+          <option>Percussioni</option>
+          <option>Non lo so ancora — voglio scoprire</option>
+          <option>Altro</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:.85rem">
+        <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+                       text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Cosa ti interessa approfondire?</label>
+        <select name="interesse"
+                style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
+                        font-family:var(--fu);font-size:15px;box-sizing:border-box;background:#faf7f0">
+          <option value="">— Seleziona —</option>
+          <option>Tecnica strumentale</option>
+          <option>Teoria musicale e solfeggio</option>
+          <option>Musica d'insieme / ensemble</option>
+          <option>Canto corale</option>
+          <option>Composizione e arrangiamento</option>
+          <option>Storia della musica</option>
+          <option>Tutto — sono curioso/a di scoprire</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:1.25rem">
+        <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+                       text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Note libere (opzionale)</label>
+        <textarea name="note" rows="3" placeholder="Raccontaci qualcosa di te e della tua passione per la musica…"
+                  style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
+                          font-family:var(--fu);font-size:15px;box-sizing:border-box;resize:vertical"></textarea>
+      </div>
+
+      <div id="lab-ok" style="display:none;background:rgba(29,111,66,.1);border:1px solid rgba(29,111,66,.3);
+                               border-radius:8px;padding:.9rem 1.1rem;margin-bottom:1rem;
+                               font-family:var(--fu);font-size:.85rem;color:#1d6f42;font-weight:700">
+        ✅ Richiesta inviata! Ti contatteremo presto.
+      </div>
+
+      <button type="submit"
+              style="width:100%;padding:.85rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);
+                     color:#fff;border:none;border-radius:8px;font-family:var(--fu);font-size:.78rem;
+                     font-weight:800;letter-spacing:.12em;text-transform:uppercase;cursor:pointer">
+        🎵 Invia richiesta di iscrizione
+      </button>
+      <p style="font-family:var(--fu);font-size:.65rem;color:#8b7a5a;margin-top:.75rem;text-align:center">
+        La richiesta sarà valutata dagli Educatori. Ti risponderemo entro 48 ore.
+      </p>
+    </form>
+  </div>
+</div>
+
+<script>
+function labFormSend(e) {
+  e.preventDefault();
+  const form = e.target;
+  fetch(form.action, {
+    method:'POST',
+    body: new FormData(form),
+    headers: {'Accept':'application/json'}
+  }).then(r => {
+    if (r.ok) {
+      document.getElementById('lab-ok').style.display = 'block';
+      form.reset();
+      setTimeout(() => {
+        document.getElementById('lab-modal').style.display = 'none';
+        document.getElementById('lab-ok').style.display = 'none';
+      }, 3000);
+    }
+  }).catch(() => {});
+}
+// Chiudi cliccando fuori
+document.getElementById('lab-modal').addEventListener('click', function(e) {
+  if (e.target === this) this.style.display = 'none';
+});
+</script>
+
+</body>
+</html>

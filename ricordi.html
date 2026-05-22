@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Il Muro dei Ricordi — gli ex convittori del Costaggini raccontano un momento, una frase, un'emozione. Lascia anche tu il tuo ricordo."/>
+  <meta name="theme-color" content="#0a0f0a"/>
+  <title>Il Muro dei Ricordi | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background:#0a0f0a; }
+
+    /* ── HERO ── */
+    .mr-hero {
+      background:linear-gradient(180deg,#000 0%,#0a0f0a 100%);
+      padding:5rem 1.25rem 4rem; text-align:center; position:relative; overflow:hidden;
+    }
+    .mr-hero-sub { font-family:var(--fu); font-size:.62rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--oro2); margin-bottom:.75rem; }
+    .mr-hero h1 { font-family:var(--fd); font-size:clamp(2.5rem,8vw,5rem); font-weight:300; color:#fff; line-height:1; margin-bottom:.5rem; }
+    .mr-hero h1 em { font-style:italic; color:var(--oro3); }
+    .mr-hero p { color:rgba(245,240,232,.5); max-width:520px; margin:.75rem auto 0; font-size:.92rem; line-height:1.8; }
+    /* Particelle di luce */
+    #mr-canvas { position:absolute; inset:0; pointer-events:none; }
+
+    /* ── CTA AGGIUNGI ── */
+    .mr-cta-bar { background:#111; border-bottom:1px solid rgba(184,146,42,.15); padding:1.5rem 1.25rem; text-align:center; }
+    .mr-cta-bar p { color:rgba(245,240,232,.4); font-size:.82rem; margin-bottom:.85rem; font-family:var(--fu); }
+
+    /* ── WALL ── */
+    .mr-wall { padding:3rem 1.25rem 5rem; background:#0a0f0a; }
+    .mr-masonry {
+      columns:1; column-gap:1.25rem;
+      max-width:1100px; margin:0 auto;
+    }
+    @media(min-width:480px){ .mr-masonry { columns:2; } }
+    @media(min-width:860px){ .mr-masonry { columns:3; } }
+
+    /* Post-it */
+    .mr-card {
+      break-inside:avoid;
+      border-radius:4px 14px 14px 4px;
+      padding:1.4rem 1.3rem 1.1rem;
+      margin-bottom:1.25rem;
+      position:relative;
+      display:block;
+      border-left:3px solid;
+      animation:cardIn .5s ease both;
+      cursor:default;
+      transition:transform .25s, box-shadow .25s;
+    }
+    .mr-card:hover { transform:translateY(-4px) rotate(.4deg); box-shadow:0 16px 40px rgba(0,0,0,.5); }
+
+    /* Palette colori per le card */
+    .mr-card.c0 { background:#141e14; border-color:#2e7d32; }
+    .mr-card.c1 { background:#1a150a; border-color:#B8922A; }
+    .mr-card.c2 { background:#0d1520; border-color:#1565C0; }
+    .mr-card.c3 { background:#1a0d14; border-color:#880E4F; }
+    .mr-card.c4 { background:#111; border-color:#37474F; }
+
+    .mr-card-quote { font-family:var(--fd); font-size:1rem; font-style:italic; color:rgba(245,240,232,.85); line-height:1.75; margin-bottom:1rem; }
+    .mr-card-quote::before { content:'\201C'; font-size:1.8rem; color:rgba(184,146,42,.3); line-height:0; vertical-align:-.4rem; margin-right:.2rem; }
+    .mr-card-quote::after  { content:'\201D'; font-size:1.8rem; color:rgba(184,146,42,.3); line-height:0; vertical-align:-.4rem; margin-left:.2rem; }
+
+    .mr-card-author { font-family:var(--fu); font-size:.6rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(245,240,232,.35); }
+    .mr-card-year   { display:inline-block; font-family:var(--fd); font-size:.78rem; font-style:italic; color:var(--oro2); margin-right:.4rem; }
+
+    @keyframes cardIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Piaccolo lucino decorativo in angolo */
+    .mr-card::after { content:'✦'; position:absolute; top:.6rem; right:.75rem; font-size:.55rem; color:rgba(184,146,42,.2); }
+
+    /* ── MODALE AGGIUNGI RICORDO ── */
+    .mr-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:2000; backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:1rem; }
+    .mr-overlay.open { display:flex; }
+    .mr-modal { background:#141e14; border:1px solid rgba(184,146,42,.25); border-radius:14px; width:min(560px,100%); max-height:90vh; overflow-y:auto; box-shadow:0 32px 80px rgba(0,0,0,.6); animation:modalIn .3s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes modalIn { from{opacity:0;transform:scale(.95)} to{opacity:1;transform:scale(1)} }
+
+    .mr-modal-hdr { padding:1.5rem 1.75rem 1rem; border-bottom:1px solid rgba(184,146,42,.15); display:flex; justify-content:space-between; align-items:flex-start; }
+    .mr-modal-hdr h2 { font-family:var(--fd); font-size:1.6rem; font-weight:300; color:#fff; }
+    .mr-modal-hdr h2 em { font-style:italic; color:var(--oro3); }
+    .mr-modal-close { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.5); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s; }
+    .mr-modal-close:hover { background:rgba(255,255,255,.15); color:#fff; }
+
+    .mr-form { padding:1.5rem 1.75rem; }
+    .mr-label { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--oro2); display:block; margin-bottom:.4rem; }
+    .mr-input, .mr-textarea {
+      width:100%; padding:.75rem 1rem;
+      background:rgba(255,255,255,.05); border:1.5px solid rgba(184,146,42,.2);
+      border-radius:8px; color:#fff; font-family:var(--fu); font-size:15px;
+      outline:none; margin-bottom:1rem; box-sizing:border-box;
+      transition:border-color .2s;
+    }
+    .mr-input:focus, .mr-textarea:focus { border-color:var(--oro2); }
+    .mr-input::placeholder, .mr-textarea::placeholder { color:rgba(255,255,255,.2); }
+    .mr-textarea { resize:vertical; min-height:100px; font-family:var(--fd); font-style:italic; font-size:16px; }
+    .mr-charcount { font-family:var(--fu); font-size:.58rem; color:rgba(255,255,255,.25); text-align:right; margin-top:-.75rem; margin-bottom:.75rem; }
+    .mr-note { font-family:var(--fu); font-size:.65rem; color:rgba(255,255,255,.25); line-height:1.6; margin-bottom:1.25rem; }
+    .mr-success { display:none; background:rgba(29,111,66,.15); border:1px solid rgba(29,111,66,.3); border-radius:8px; padding:1rem 1.25rem; margin-bottom:1rem; }
+    .mr-success p { font-family:var(--fd); font-style:italic; color:rgba(245,240,232,.7); font-size:.95rem; margin:0; line-height:1.6; }
+
+    /* ── COUNTER ── */
+    .mr-counter { text-align:center; padding:2rem 0 0; }
+    .mr-counter span { font-family:var(--fd); font-size:3rem; font-weight:300; color:var(--oro2); }
+    .mr-counter p { font-family:var(--fu); font-size:.6rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(245,240,232,.3); margin-top:.25rem; }
+  </style>
+</head>
+<body data-page="ricordi" style="background:#0a0f0a">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="mr-hero">
+    <canvas id="mr-canvas"></canvas>
+    <div class="w" style="position:relative;z-index:1">
+      <p class="mr-hero-sub">— Voci nel tempo</p>
+      <h1>Il Muro<br>dei <em>Ricordi</em></h1>
+      <p>Un posto, una stagione, una frase che non si dimentica. Gli ex convittori del Costaggini lasciano qui un frammento del loro tempo qui. Piccolo. Vero.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="mr-cta-bar">
+    <p>Sei passato dal Costaggini? Lascia anche tu un ricordo — basta una riga.</p>
+    <button onclick="openModal()" class="btn-gold">✦ Aggiungi il tuo ricordo</button>
+  </div>
+
+  <!-- WALL -->
+  <section class="mr-wall">
+    <div class="w">
+      <div class="mr-counter rv">
+        <span id="mr-count">—</span>
+        <p>ricordi lasciati sul muro</p>
+      </div>
+    </div>
+    <div class="mr-masonry" id="mr-masonry">
+      <!-- Popolato da JS -->
+    </div>
+  </section>
+
+</main>
+
+<!-- MODALE -->
+<div class="mr-overlay" id="mr-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="mr-modal">
+    <div class="mr-modal-hdr">
+      <h2>Il tuo <em>ricordo</em></h2>
+      <button class="mr-modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <form class="mr-form" onsubmit="submitRicordo(event)">
+      <label class="mr-label">Il tuo ricordo *</label>
+      <textarea class="mr-textarea" id="mr-testo" maxlength="280" placeholder="Un momento, una frase, un'emozione. Anche solo una riga." required oninput="updateCount()"></textarea>
+      <p class="mr-charcount"><span id="mr-chars">0</span>/280 caratteri</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div>
+          <label class="mr-label">Il tuo nome *</label>
+          <input type="text" class="mr-input" id="mr-nome" placeholder="Come vuoi firmare" required/>
+        </div>
+        <div>
+          <label class="mr-label">Anni al Convitto</label>
+          <input type="text" class="mr-input" id="mr-anni" placeholder="es. 2008–2013"/>
+        </div>
+      </div>
+
+      <label class="mr-label">Dove sei adesso?</label>
+      <input type="text" class="mr-input" id="mr-dove" placeholder="es. Roma · Chef · Milano · Ingegnere… (opzionale)"/>
+
+      <div id="mr-success-box" class="mr-success">
+        <p>✦ Grazie. Il tuo ricordo è in attesa di approvazione — apparirà sul muro entro poche ore.</p>
+      </div>
+
+      <p class="mr-note">Il tuo ricordo apparirà sul muro dopo una breve moderazione. Non vengono pubblicati contenuti offensivi o non pertinenti. Nessun dato viene condiviso con terze parti.</p>
+
+      <button type="submit" style="width:100%;padding:.85rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:8px;font-family:var(--fu);font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;cursor:pointer">
+        ✦ Lascia il ricordo
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="supabase.js"></script>
+<script src="shared.js?v=2"></script>
+<script>
+// ── Ricordi di esempio (pre-caricati) ──────────────────────────
+const RICORDI_DEFAULT = [
+  { testo:"Il Terminillo di notte, dalla finestra del terzo piano. Non l'avevo mai visto così.", nome:"Anna V.", anni:"2007–2012", dove:"Zurigo · Barista", colore:4 },
+];
+
+function buildCard(r, delay = 0) {
+  const div = document.createElement('div');
+  div.className = `mr-card c${r.colore ?? Math.floor(Math.random()*5)}`;
+  div.style.animationDelay = delay + 'ms';
+  div.innerHTML = `
+    <p class="mr-card-quote">${r.testo}</p>
+    <div>
+      <span class="mr-card-year">${r.anni || ''}</span>
+      <span class="mr-card-author">${r.nome}${r.dove ? ' · ' + r.dove : ''}</span>
+    </div>
+  `;
+  return div;
+}
+
+async function renderWall() {
+  const masonry = document.getElementById('mr-masonry');
+  masonry.innerHTML = '<p style="text-align:center;color:rgba(245,240,232,.3);font-family:var(--fu);font-size:.75rem;padding:2rem">Caricamento ricordi…</p>';
+  try {
+    const fromDB = await sb.select('ricordi', 'approvato=eq.true');
+    const all = [...RICORDI_DEFAULT, ...(fromDB||[]).map(r=>({testo:r.testo,nome:r.nome,anni:r.anni,dove:r.dove,colore:r.colore||0}))];
+    masonry.innerHTML = '';
+    all.forEach((r,i) => masonry.appendChild(buildCard(r, i*60)));
+    document.getElementById('mr-count').textContent = all.length;
+  } catch(e) {
+    // fallback a soli default
+    masonry.innerHTML = '';
+    RICORDI_DEFAULT.forEach((r,i) => masonry.appendChild(buildCard(r,i*60)));
+    document.getElementById('mr-count').textContent = RICORDI_DEFAULT.length;
+  }
+}
+
+// ── Modale ────────────────────────────────────────────────────
+function openModal() {
+  document.getElementById('mr-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('mr-testo').focus();
+}
+function closeModal() {
+  document.getElementById('mr-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function updateCount() {
+  document.getElementById('mr-chars').textContent = document.getElementById('mr-testo').value.length;
+}
+
+async function submitRicordo(e) {
+  e.preventDefault();
+  const r = {
+    testo: document.getElementById('mr-testo').value.trim(),
+    nome:  document.getElementById('mr-nome').value.trim(),
+    anni:  document.getElementById('mr-anni').value.trim(),
+    dove:  document.getElementById('mr-dove').value.trim(),
+    colore: Math.floor(Math.random()*5),
+    pending: true,
+    sentAt: new Date().toISOString()
+  };
+  // In coda di moderazione ricordi
+  const queue = JSON.parse(localStorage.getItem('costaggini-ricordi-pending') || '[]');
+  queue.push(r);
+  localStorage.setItem('costaggini-ricordi-pending', JSON.stringify(queue));
+
+  // Se ha indicato dove abita, crea automaticamente anche un pin per la mappa
+  if (r.dove.trim()) {
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(r.dove)}&limit=1`,
+        { headers: { 'Accept-Language':'it' } }
+      );
+      const geo = await res.json();
+      if (geo && geo[0]) {
+        const pin = {
+          id:    'p' + Date.now(),
+          name:  r.nome,
+          city:  r.dove,
+          type:  'alumni',
+          year:  r.anni,
+          role:  'Ex convittore/trice',
+          lat:   parseFloat(geo[0].lat),
+          lng:   parseFloat(geo[0].lon),
+          pending:     true,
+          fromRicordo: true,   // marcato: viene dal Muro dei Ricordi
+          submittedAt: new Date().toISOString()
+        };
+        const pinQueue = JSON.parse(localStorage.getItem('costaggini-pins-pending') || '[]');
+        pinQueue.push(pin);
+        localStorage.setItem('costaggini-pins-pending', JSON.stringify(pinQueue));
+      }
+    } catch(err) { /* geocoding fallito — non blocca l'invio del ricordo */ }
+  }
+
+  document.getElementById('mr-success-box').style.display = 'block';
+  document.getElementById('mr-testo').value = '';
+  document.getElementById('mr-nome').value = '';
+  document.getElementById('mr-anni').value = '';
+  document.getElementById('mr-dove').value = '';
+  document.getElementById('mr-chars').textContent = '0';
+  setTimeout(() => {
+    closeModal();
+    document.getElementById('mr-success-box').style.display = 'none';
+  }, 3000);
+}
+
+// Escape per chiudere
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// ── Particelle luminose sull'hero ─────────────────────────────
+const canvas = document.getElementById('mr-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width  = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+for (let i = 0; i < 60; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + .3,
+    a: Math.random(),
+    speed: .003 + Math.random() * .008,
+    phase: Math.random() * Math.PI * 2
+  });
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.phase += p.speed;
+    const alpha = (Math.sin(p.phase) + 1) / 2 * .6;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(184,146,42,${alpha.toFixed(2)})`;
+    ctx.fill();
+    p.y -= .15;
+    if (p.y < -5) { p.y = canvas.height + 5; p.x = Math.random() * canvas.width; }
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// Init
+renderWall();
+</script>
+</body>
+</html>

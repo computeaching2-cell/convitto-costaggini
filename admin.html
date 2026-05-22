@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>Pannello Admin | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bosco:#2C3E2D; --bosco2:#3D5C3E; --oro:#B8922A; --oro2:#9a7820;
+      --av:#F5F0E8; --av2:#EDE8DC; --txt:#1a2e1b; --txt2:#5a7a5b;
+      --fu:'Source Sans 3',sans-serif; --fd:'Cormorant Garamond',serif;
+    }
+    body { font-family:var(--fu); background:#f0ebe0; color:var(--txt); min-height:100vh; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      position:fixed; inset:0; background:var(--bosco);
+      display:flex; align-items:center; justify-content:center;
+      z-index:1000; padding:1.25rem;
+    }
+    .login-box {
+      background:rgba(245,240,232,.06); border:1px solid rgba(184,146,42,.3);
+      border-radius:14px; padding:2.5rem 2rem; width:100%; max-width:360px; text-align:center;
+    }
+    .login-logo { font-size:2.5rem; margin-bottom:.75rem; }
+    .login-box h1 { font-family:var(--fd); font-size:1.9rem; font-weight:300; color:#fff; margin-bottom:.25rem; }
+    .login-box h1 em { font-style:italic; color:#D4AA4A; }
+    .login-box p { font-family:var(--fu); font-size:.65rem; color:rgba(255,255,255,.35); letter-spacing:.12em; text-transform:uppercase; margin-bottom:2rem; }
+    .login-box input {
+      width:100%; padding:.8rem 1rem; background:rgba(255,255,255,.08);
+      border:1.5px solid rgba(184,146,42,.3); border-radius:8px; color:#fff;
+      font-family:var(--fu); font-size:16px; outline:none; margin-bottom:.75rem;
+      transition:border-color .2s; text-align:center; letter-spacing:.05em;
+    }
+    .login-box input:focus { border-color:#B8922A; }
+    .login-box input::placeholder { color:rgba(255,255,255,.3); letter-spacing:0; }
+    .btn-accedi {
+      width:100%; padding:.85rem; background:linear-gradient(135deg,#B8922A,#D4AA4A);
+      color:var(--bosco); border:none; border-radius:8px; font-family:var(--fu);
+      font-size:.8rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+      cursor:pointer; transition:opacity .2s;
+    }
+    .btn-accedi:hover { opacity:.88; }
+    #login-err { color:#fca5a5; font-size:.82rem; margin-top:.75rem; display:none; }
+
+    /* ── HEADER ── */
+    .adm-hdr {
+      background:var(--bosco); padding:.9rem 1.25rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.75rem;
+      position:sticky; top:0; z-index:100; box-shadow:0 2px 16px rgba(0,0,0,.25);
+    }
+    .adm-hdr-brand { display:flex; align-items:center; gap:.75rem; }
+    .adm-hdr-brand span { font-size:1.5rem; }
+    .adm-hdr-brand h1 { font-family:var(--fd); font-size:1.25rem; font-weight:300; color:#fff; line-height:1.1; }
+    .adm-hdr-brand h1 em { font-style:italic; color:#D4AA4A; }
+    .adm-hdr-brand small { font-family:var(--fu); font-size:.6rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.35); display:block; }
+    .adm-hdr-links { display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; }
+    .adm-hdr-links a { font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.45); text-decoration:none; transition:color .2s; }
+    .adm-hdr-links a:hover { color:#D4AA4A; }
+    .btn-logout { font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.4rem .9rem; border:1px solid rgba(255,255,255,.2); background:none; color:rgba(255,255,255,.45); border-radius:4px; cursor:pointer; transition:all .2s; }
+    .btn-logout:hover { color:#fff; border-color:rgba(255,255,255,.5); }
+
+    /* ── TAB PRINCIPALE ── */
+    .main-tabs { display:flex; border-bottom:2px solid #d4c9a8; background:#fff; padding:0 1.25rem; overflow-x:auto; }
+    .main-tab { font-family:var(--fu); font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:.9rem 1.25rem; border:none; background:none; cursor:pointer; color:#8b7a5a; border-bottom:3px solid transparent; margin-bottom:-2px; transition:all .2s; white-space:nowrap; }
+    .main-tab.on { color:var(--bosco); border-bottom-color:var(--oro); }
+    .main-tab:hover:not(.on) { color:var(--bosco); }
+    .tab-section { display:none; }
+    .tab-section.on { display:block; }
+
+    /* ── AVVISO LIMITE ── */
+    .adm-notice { background:rgba(234,88,12,.08); border-left:4px solid #ea580c; padding:.85rem 1.25rem; font-size:.8rem; color:#92400e; line-height:1.6; margin:1rem 1.25rem; border-radius:0 6px 6px 0; }
+
+    /* ── LAYOUT 2 COLONNE ── */
+    .adm-body { display:grid; grid-template-columns:1fr; gap:1.25rem; padding:1.25rem; }
+    @media(min-width:860px){ .adm-body { grid-template-columns:360px 1fr; } }
+
+    /* ── CARD ── */
+    .adm-card { background:#fff; border-radius:10px; padding:1.4rem; box-shadow:0 2px 10px rgba(0,0,0,.06); }
+    .adm-card h2 { font-family:var(--fd); font-size:1.25rem; font-weight:400; color:var(--bosco); margin-bottom:1.1rem; padding-bottom:.75rem; border-bottom:1px solid #e8e0d0; }
+    .adm-card h2 em { font-style:italic; color:var(--oro); }
+
+    /* ── FORM ── */
+    .fg { margin-bottom:.85rem; }
+    .fg label { display:block; font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#6b5a2a; margin-bottom:.3rem; }
+    .fg input,.fg select,.fg textarea { width:100%; padding:.62rem .9rem; border:1.5px solid #d4c9a8; border-radius:6px; font-family:var(--fu); font-size:15px; color:var(--txt); background:#faf7f0; outline:none; transition:border-color .2s; }
+    .fg input:focus,.fg select:focus,.fg textarea:focus { border-color:var(--oro); }
+    .fg textarea { resize:vertical; min-height:90px; }
+    .fg-row2 { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
+    .fg-check { display:flex; align-items:center; gap:.45rem; font-size:.82rem; color:var(--txt); cursor:pointer; }
+    .fg-check input { width:auto; min-height:auto; accent-color:var(--oro); cursor:pointer; }
+    .form-btns { display:flex; gap:.6rem; margin-top:1.1rem; flex-wrap:wrap; align-items:center; }
+    .btn-pubblica { flex:1; padding:.72rem; background:linear-gradient(135deg,var(--bosco),#1a3a1b); color:#fff; border:none; border-radius:6px; font-family:var(--fu); font-size:.7rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; transition:opacity .2s; min-width:140px; }
+    .btn-pubblica:hover { opacity:.88; }
+    .btn-pubblica.modifica { background:linear-gradient(135deg,#1a4a7a,#1e5a96); }
+    .btn-annulla { padding:.72rem 1rem; border:1.5px solid #d4c9a8; background:none; color:#6b5a2a; border-radius:6px; font-family:var(--fu); font-size:.7rem; font-weight:700; cursor:pointer; }
+    .ok-msg { font-family:var(--fu); font-size:.75rem; color:#1d6f42; font-weight:700; display:none; }
+
+    /* ── AI BOX ── */
+    .ai-box { background:#f5f2e8; border:1px solid #d4c9a8; border-radius:8px; padding:1rem; margin-bottom:.9rem; }
+    .ai-box h4 { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--bosco); margin-bottom:.65rem; }
+    .ai-row { display:flex; gap:.5rem; }
+    .ai-input { flex:1; padding:.6rem .85rem; border:1.5px solid #d4c9a8; border-radius:6px; font-family:var(--fu); font-size:14px; background:#fff; outline:none; min-width:0; }
+    .ai-input:focus { border-color:var(--oro); }
+    .btn-ai { padding:.6rem 1rem; background:var(--bosco); color:#fff; border:none; border-radius:6px; font-family:var(--fu); font-size:.62rem; font-weight:700; cursor:pointer; white-space:nowrap; flex-shrink:0; }
+    .ai-stato { font-size:.75rem; color:#8b7a5a; margin-top:.45rem; min-height:1.1rem; }
+
+    /* ── LISTA ELEMENTI ── */
+    .list-wrap { background:#fff; border-radius:10px; padding:1.4rem; box-shadow:0 2px 10px rgba(0,0,0,.06); }
+    .list-count { font-family:var(--fu); font-size:.62rem; color:#8b7a5a; margin-bottom:.9rem; }
+    .el-item { border:1px solid #e8e0d0; border-radius:8px; padding:.9rem 1rem; margin-bottom:.6rem; transition:box-shadow .2s; }
+    .el-item:hover { box-shadow:0 3px 12px rgba(0,0,0,.08); }
+    .el-top { display:flex; align-items:flex-start; gap:.6rem; }
+    .el-cat { font-family:var(--fu); font-size:.5rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:.18rem .5rem; border-radius:20px; background:rgba(44,62,45,.1); color:var(--bosco); flex-shrink:0; margin-top:.2rem; }
+    .el-cat.urgente { background:rgba(220,38,38,.1); color:#dc2626; }
+    .el-titolo { font-family:var(--fd); font-size:.95rem; color:var(--bosco); line-height:1.3; flex:1; }
+    .el-meta { font-family:var(--fu); font-size:.58rem; color:#8b7a5a; margin-top:.25rem; }
+    .el-actions { display:flex; gap:.4rem; margin-top:.7rem; flex-wrap:wrap; }
+    .btn-ed { font-family:var(--fu); font-size:.58rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:.3rem .7rem; border-radius:4px; border:1.5px solid; cursor:pointer; transition:all .2s; background:none; }
+    .btn-ed.edit { border-color:#1a4a7a; color:#1a4a7a; }
+    .btn-ed.edit:hover { background:#1a4a7a; color:#fff; }
+    .btn-ed.del  { border-color:#dc2626; color:#dc2626; }
+    .btn-ed.del:hover  { background:#dc2626; color:#fff; }
+    .btn-ed.up,.btn-ed.dn { border-color:#d4c9a8; color:#6b5a2a; padding:.3rem .6rem; }
+    .btn-ed.up:hover,.btn-ed.dn:hover { border-color:var(--oro); }
+    .badge-home { font-family:var(--fu); font-size:.48rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; background:#1d6f42; color:#fff; padding:.12rem .4rem; border-radius:8px; margin-left:.35rem; vertical-align:middle; }
+    .badge-pin { font-family:var(--fu); font-size:.48rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; background:#1a4a7a; color:#fff; padding:.12rem .4rem; border-radius:8px; margin-left:.35rem; vertical-align:middle; }
+
+    /* ── ESPORTA ── */
+    .export-bar { border-top:1px solid #e8e0d0; margin-top:1.25rem; padding-top:1rem; }
+    .export-bar p { font-size:.78rem; color:#6b5a2a; margin-bottom:.6rem; line-height:1.5; }
+    .btn-export { font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; padding:.5rem 1rem; border:1.5px solid var(--bosco); color:var(--bosco); background:none; border-radius:6px; cursor:pointer; transition:all .2s; }
+    .btn-export:hover { background:var(--bosco); color:#fff; }
+  </style>
+</head>
+<body>
+
+<!-- ════ LOGIN ════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">🛡️</div>
+    <h1>Pannello <em>Admin</em></h1>
+    <p>Convitto "Costaggini" — Rieti</p>
+    <input type="password" id="pwd" placeholder="Password" autocomplete="current-password"/>
+    <button class="btn-accedi" onclick="doLogin()">Accedi →</button>
+    <p id="login-err">Password errata. Riprova.</p>
+    <a href="index.html"
+       style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1.25rem;
+              font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+              padding:.5rem 1.2rem;background:linear-gradient(135deg,#B8922A,#d4aa4a);
+              color:#2C3E2D;border-radius:6px;text-decoration:none;transition:opacity .2s"
+       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      🏠 Torna alla Home
+    </a>
+  </div>
+</div>
+
+<!-- ════ PANNELLO ════ -->
+<div id="adm-wrap" style="display:none">
+
+  <header class="adm-hdr">
+    <div class="adm-hdr-brand">
+      <span>🛡️</span>
+      <div>
+        <h1>Pannello <em>Admin</em></h1>
+        <small>Convitto "Costaggini" — Rieti</small>
+      </div>
+    </div>
+    <div class="adm-hdr-links">
+      <a href="index.html"
+         style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1.1rem;background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--bosco);border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:opacity .2s"
+         onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        🏠 Home
+      </a>
+      <a href="notizie.html" target="_blank">↗ Notizie</a>
+      <a href="avvisi.html" target="_blank">↗ Avvisi</a>
+      <button class="btn-logout" onclick="logout()">Esci</button>
+    </div>
+  </header>
+
+  <!-- TAB -->
+  <div class="main-tabs">
+    <button class="main-tab on" onclick="switchTab('notizie',this)">📰 Notizie</button>
+    <button class="main-tab" onclick="switchTab('avvisi',this)">📋 Avvisi & Comunicati</button>
+    <button class="main-tab" onclick="switchTab('mappa',this)">🗺️ Mappa — Pin in attesa</button>
+    <button class="main-tab" onclick="switchTab('alumni',this)">👥 Alumni — Schede in attesa</button>
+  </div>
+
+  <div class="adm-notice">
+    ⚠️ <strong>Sistema locale:</strong> le modifiche vengono salvate nel browser (localStorage) e non sono visibili agli altri utenti finché non si esporta il file e lo si ricarica su Netlify. Per un sistema live permanente: GitHub + Netlify CMS (gratuito, da configurare dopo la pubblicazione).
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 1 — NOTIZIE
+  ══════════════════════════════════ -->
+  <div class="tab-section on" id="tab-notizie">
+    <div class="adm-body">
+
+      <!-- FORM NOTIZIE -->
+      <div class="adm-card">
+        <h2 id="n-form-title">+ Nuova <em>notizia</em></h2>
+        <div class="ai-box">
+          <h4>⚡ AI — genera il testo automaticamente</h4>
+          <div class="ai-row">
+            <input type="text" class="ai-input" id="n-ai-prompt" placeholder="Es: inaugurazione palestra, ottobre 2025"/>
+            <button class="btn-ai" onclick="aiNotizia()">Genera</button>
+          </div>
+          <div class="ai-stato" id="n-ai-stato">Descrivi la notizia — l'AI scrive per te.</div>
+        </div>
+        <div class="fg"><label>Titolo *</label><input type="text" id="n-titolo" placeholder="Es: Inaugurazione nuova palestra"/></div>
+        <div class="fg-row2">
+          <div class="fg"><label>Data</label><input type="text" id="n-data" placeholder="Es: Ottobre 2025"/></div>
+          <div class="fg"><label>Categoria</label>
+            <select id="n-cat">
+              <option>Istituzionale</option><option>Vita al Convitto</option>
+              <option>PNRR</option><option>Successi</option>
+              <option>Eventi</option><option>Erasmus+</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg"><label>Testo *</label><textarea id="n-testo" rows="5" placeholder="Testo della notizia…"></textarea></div>
+        <div class="fg"><label>Link</label><input type="text" id="n-link" placeholder="https://… oppure natale2024.html"/></div>
+        <div class="fg"><label>Testo del link</label><input type="text" id="n-link-testo" placeholder="Leggi →"/></div>
+        <div class="fg"><label>URL immagine</label><input type="text" id="n-img" placeholder="https://images.unsplash.com/…"/></div>
+        <div class="fg"><label>Descrizione immagine</label><input type="text" id="n-img-alt" placeholder="Breve descrizione"/></div>
+        <div class="fg" style="display:flex;gap:1.25rem;flex-wrap:wrap">
+          <label class="fg-check"><input type="checkbox" id="n-evidenza"/> In evidenza</label>
+          <label class="fg-check"><input type="checkbox" id="n-featured"/> In primo piano</label>
+        </div>
+        <input type="hidden" id="n-edit-id"/>
+        <div class="form-btns">
+          <button class="btn-pubblica" id="n-btn-salva" onclick="salvaNotizia()">📌 Pubblica</button>
+          <button class="btn-annulla" onclick="resetNotizia()">Annulla</button>
+          <span class="ok-msg" id="n-ok">✅ Salvata!</span>
+        </div>
+      </div>
+
+      <!-- LISTA NOTIZIE -->
+      <div class="list-wrap">
+        <h2>Notizie pubblicate <em>— gestisci</em></h2>
+        <p class="list-count" id="n-count"></p>
+        <div id="n-list"></div>
+        <div class="export-bar">
+          <p>Per aggiornare il sito: esporta il JSON e caricalo su Netlify al posto di <code>notizie.json</code>.</p>
+          <button class="btn-export" onclick="esportaNotizie()">⬇️ Esporta notizie.json</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 2 — AVVISI
+  ══════════════════════════════════ -->
+  <div class="tab-section" id="tab-avvisi">
+    <div class="adm-body">
+
+      <!-- FORM AVVISI -->
+      <div class="adm-card">
+        <h2 id="a-form-title">+ Nuovo <em>avviso</em></h2>
+        <div class="ai-box">
+          <h4>⚡ AI — genera il testo automaticamente</h4>
+          <div class="ai-row">
+            <input type="text" class="ai-input" id="a-ai-prompt" placeholder="Es: chiusura mensa venerdì per pulizie"/>
+            <button class="btn-ai" onclick="aiAvviso()">Genera</button>
+          </div>
+          <div class="ai-stato" id="a-ai-stato">Descrivi l'avviso — l'AI scrive per te.</div>
+        </div>
+        <div class="fg-row2">
+          <div class="fg"><label>Categoria</label>
+            <select id="a-cat">
+              <option value="famiglie">Famiglie</option>
+              <option value="convittori">Convittori</option>
+              <option value="istituzionale">Istituzionale</option>
+              <option value="eventi">Eventi</option>
+              <option value="urgente">🔴 Urgente</option>
+            </select>
+          </div>
+          <div class="fg"><label>Data</label><input type="date" id="a-data" style="font-size:15px"/></div>
+        </div>
+        <div class="fg"><label>Autore / Ufficio</label><input type="text" id="a-autore" placeholder="Es: La Direzione"/></div>
+        <div class="fg"><label>Titolo *</label><input type="text" id="a-titolo" placeholder="Es: Variazione orario mensa — venerdì 16 maggio"/></div>
+        <div class="fg"><label>Testo *</label><textarea id="a-testo" rows="5" placeholder="Testo del comunicato…"></textarea></div>
+        <div class="fg">
+          <label class="fg-check"><input type="checkbox" id="a-pinned"/> 📌 Metti in evidenza (pinnato in cima)</label>
+        </div>
+        <input type="hidden" id="a-edit-id"/>
+        <div class="form-btns">
+          <button class="btn-pubblica" id="a-btn-salva" onclick="salvaAvviso()">📌 Pubblica</button>
+          <button class="btn-annulla" onclick="resetAvviso()">Annulla</button>
+          <span class="ok-msg" id="a-ok">✅ Pubblicato!</span>
+        </div>
+      </div>
+
+      <!-- LISTA AVVISI -->
+      <div class="list-wrap">
+        <h2>Avvisi pubblicati <em>— gestisci</em></h2>
+        <p class="list-count" id="a-count"></p>
+        <div id="a-list"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 3 — MAPPA PIN
+  ══════════════════════════════════ -->
+  <div class="tab-section" id="tab-mappa">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Pin in attesa di <em>approvazione</em></h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
+          Ogni volta che un visitatore aggiunge un segnaposto sulla mappa del mondo, entra qui in attesa. Solo dopo la tua approvazione apparirà pubblicamente sulla mappa. Approva, rifiuta o modifica ogni pin prima di pubblicarlo.
+        </p>
+        <div id="pin-pending-list">
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento in corso…</p>
+        </div>
+        <div style="border-top:1px solid #e8e0d0;margin-top:1.25rem;padding-top:1rem">
+          <p style="font-size:.75rem;color:#8b7a5a;margin-bottom:.6rem">Pin già approvati e visibili sulla mappa:</p>
+          <div id="pin-approved-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ══════════════════════════════════
+       TAB 4 — ALUMNI
+  ══════════════════════════════════ -->
+  <div class="tab-section" id="tab-alumni">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Schede Alumni in <em>attesa di approvazione</em></h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
+          Ogni ex convittore che compila il form "Unisciti agli Alumni" appare qui. Approva la scheda e apparirà automaticamente nella gallery di alumni.html. Rifiutala e scompare silenziosamente.
+        </p>
+        <div id="alumni-pending-list">
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento in corso…</p>
+        </div>
+        <div style="border-top:1px solid #e8e0d0;margin-top:1.25rem;padding-top:1rem">
+          <p style="font-size:.75rem;color:#8b7a5a;margin-bottom:.6rem">Alumni già approvati e visibili nella gallery:</p>
+          <div id="alumni-approved-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- fine adm-wrap -->
+
+<script>
+const PWD   = 'Alluquartelachiazzetta_2025';
+const KEY_N = 'costaggini_notizie_admin_v1';
+const KEY_A = 'costaggini_comunicati_v2';
+
+// ═══ AUTH ═══
+function doLogin() {
+  if (document.getElementById('pwd').value === PWD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('adm-wrap').style.display = 'block';
+    initAll();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+    document.getElementById('pwd').select();
+  }
+}
+document.getElementById('pwd').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+function logout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('adm-wrap').style.display = 'none';
+  document.getElementById('pwd').value = '';
+}
+
+// ═══ TAB ═══
+function switchTab(name, btn) {
+  document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('tab-' + name).classList.add('on');
+}
+
+// ═══════════════════════════════════
+// NOTIZIE
+// ═══════════════════════════════════
+let notizie = [];
+
+async function loadNotizie() {
+  const saved = localStorage.getItem(KEY_N);
+  if (saved) { notizie = JSON.parse(saved); renderNotizie(); return; }
+  try {
+    const r = await fetch('notizie.json?t=' + Date.now());
+    notizie = await r.json();
+    renderNotizie();
+  } catch(e) { notizie = []; renderNotizie(); }
+}
+
+function saveNotizie() { localStorage.setItem(KEY_N, JSON.stringify(notizie)); }
+
+function renderNotizie() {
+  const list = document.getElementById('n-list');
+  document.getElementById('n-count').textContent =
+    notizie.length + ' notizie · le prime 3 appaiono in homepage';
+  if (!notizie.length) {
+    list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Nessuna notizia.</p>';
+    return;
+  }
+  list.innerHTML = notizie.map((n,i) => `
+    <div class="el-item">
+      <div class="el-top">
+        <span class="el-cat">${n.categoria||'—'}</span>
+        <div>
+          <div class="el-titolo">
+            ${i<3?'<span class="badge-home">HOME</span>':''}
+            ${n.titolo}
+          </div>
+          <div class="el-meta">${n.data||''}</div>
+        </div>
+      </div>
+      <div class="el-actions">
+        <button class="btn-ed edit" onclick="modificaNotizia('${n.id}')">✏️ Modifica</button>
+        <button class="btn-ed del"  onclick="eliminaNotizia('${n.id}')">🗑 Elimina</button>
+        <button class="btn-ed up"   onclick="spostaNotizia(${i},-1)" ${i===0?'disabled':''}>▲</button>
+        <button class="btn-ed dn"   onclick="spostaNotizia(${i},+1)" ${i===notizie.length-1?'disabled':''}>▼</button>
+      </div>
+    </div>`).join('');
+}
+
+function salvaNotizia() {
+  const titolo = document.getElementById('n-titolo').value.trim();
+  const testo  = document.getElementById('n-testo').value.trim();
+  if (!titolo||!testo) { alert('Titolo e testo sono obbligatori.'); return; }
+  const editId = document.getElementById('n-edit-id').value;
+  const n = {
+    id:           editId || 'n'+Date.now(),
+    titolo,testo,
+    data:         document.getElementById('n-data').value.trim(),
+    categoria:    document.getElementById('n-cat').value,
+    link:         document.getElementById('n-link').value.trim()||'#',
+    link_testo:   document.getElementById('n-link-testo').value.trim()||'Leggi →',
+    immagine:     document.getElementById('n-img').value.trim()||'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80',
+    immagine_alt: document.getElementById('n-img-alt').value.trim()||titolo,
+    in_evidenza:  document.getElementById('n-evidenza').checked,
+    featured:     document.getElementById('n-featured').checked,
+  };
+  if (editId) { const i=notizie.findIndex(x=>x.id===editId); if(i>=0) notizie[i]=n; }
+  else notizie.unshift(n);
+  saveNotizie(); renderNotizie(); resetNotizia();
+  const ok=document.getElementById('n-ok'); ok.style.display='flex'; setTimeout(()=>ok.style.display='none',2200);
+}
+
+function modificaNotizia(id) {
+  const n=notizie.find(x=>x.id===id); if(!n)return;
+  document.getElementById('n-titolo').value    = n.titolo||'';
+  document.getElementById('n-testo').value     = n.testo||'';
+  document.getElementById('n-data').value      = n.data||'';
+  document.getElementById('n-cat').value       = n.categoria||'Istituzionale';
+  document.getElementById('n-link').value      = n.link||'';
+  document.getElementById('n-link-testo').value= n.link_testo||'';
+  document.getElementById('n-img').value       = n.immagine||'';
+  document.getElementById('n-img-alt').value   = n.immagine_alt||'';
+  document.getElementById('n-evidenza').checked= !!n.in_evidenza;
+  document.getElementById('n-featured').checked= !!n.featured;
+  document.getElementById('n-edit-id').value   = id;
+  const btn=document.getElementById('n-btn-salva');
+  document.getElementById('n-form-title').innerHTML='✏️ Modifica <em>notizia</em>';
+  btn.textContent='💾 Aggiorna'; btn.classList.add('modifica');
+  document.querySelector('#tab-notizie .adm-card').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function eliminaNotizia(id) {
+  const n=notizie.find(x=>x.id===id);
+  if(!confirm('Eliminare:\n"'+n?.titolo+'"?')) return;
+  notizie=notizie.filter(x=>x.id!==id); saveNotizie(); renderNotizie();
+}
+
+function spostaNotizia(i,d) {
+  const j=i+d; if(j<0||j>=notizie.length)return;
+  [notizie[i],notizie[j]]=[notizie[j],notizie[i]]; saveNotizie(); renderNotizie();
+}
+
+function resetNotizia() {
+  ['n-titolo','n-testo','n-data','n-link','n-link-testo','n-img','n-img-alt','n-edit-id'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('n-cat').value='Istituzionale';
+  document.getElementById('n-evidenza').checked=false;
+  document.getElementById('n-featured').checked=false;
+  document.getElementById('n-form-title').innerHTML='+ Nuova <em>notizia</em>';
+  const btn=document.getElementById('n-btn-salva');
+  btn.textContent='📌 Pubblica'; btn.classList.remove('modifica');
+}
+
+function esportaNotizie() {
+  const blob=new Blob([JSON.stringify(notizie,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='notizie.json'; a.click(); URL.revokeObjectURL(a.href);
+}
+
+// ═══════════════════════════════════
+// AVVISI
+// ═══════════════════════════════════
+let avvisi = [];
+
+function loadAvvisi() {
+  const saved = localStorage.getItem(KEY_A);
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('a-data').value = today;
+  if (saved) { avvisi = JSON.parse(saved); }
+  else {
+    avvisi = [{
+      id:'d1', titolo:'Benvenuti nella bacheca comunicati', cat:'istituzionale',
+      data:today, autore:'La Direzione', pinned:true,
+      testo:'Questa bacheca raccoglie i comunicati ufficiali del Convitto "Costaggini" di Rieti.'
+    }];
+  }
+  renderAvvisi();
+}
+
+function saveAvvisi() { localStorage.setItem(KEY_A, JSON.stringify(avvisi)); }
+
+function renderAvvisi() {
+  document.getElementById('a-count').textContent = avvisi.length + ' comunicati';
+  const list = document.getElementById('a-list');
+  if (!avvisi.length) { list.innerHTML='<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Nessun comunicato.</p>'; return; }
+  list.innerHTML = avvisi.map((a,i) => `
+    <div class="el-item">
+      <div class="el-top">
+        <span class="el-cat ${a.cat==='urgente'?'urgente':''}">${a.cat}</span>
+        <div>
+          <div class="el-titolo">
+            ${a.pinned?'<span class="badge-pin">📌 Pinnato</span>':''}
+            ${a.titolo}
+          </div>
+          <div class="el-meta">${a.data||''} · ${a.autore||''}</div>
+        </div>
+      </div>
+      <div class="el-actions">
+        <button class="btn-ed edit" onclick="modificaAvviso('${a.id}')">✏️ Modifica</button>
+        <button class="btn-ed del"  onclick="eliminaAvviso('${a.id}')">🗑 Elimina</button>
+        <button class="btn-ed up"   onclick="spostaAvviso(${i},-1)" ${i===0?'disabled':''}>▲</button>
+        <button class="btn-ed dn"   onclick="spostaAvviso(${i},+1)" ${i===avvisi.length-1?'disabled':''}>▼</button>
+      </div>
+    </div>`).join('');
+}
+
+function salvaAvviso() {
+  const titolo=document.getElementById('a-titolo').value.trim();
+  const testo=document.getElementById('a-testo').value.trim();
+  if(!titolo||!testo){alert('Titolo e testo sono obbligatori.');return;}
+  const editId=document.getElementById('a-edit-id').value;
+  const a={
+    id:editId||'a'+Date.now(), titolo,testo,
+    cat:document.getElementById('a-cat').value,
+    data:document.getElementById('a-data').value,
+    autore:document.getElementById('a-autore').value.trim(),
+    pinned:document.getElementById('a-pinned').checked,
+  };
+  if(editId){const i=avvisi.findIndex(x=>x.id===editId);if(i>=0)avvisi[i]=a;}
+  else avvisi.unshift(a);
+  saveAvvisi(); renderAvvisi(); resetAvviso();
+  const ok=document.getElementById('a-ok');ok.style.display='flex';setTimeout(()=>ok.style.display='none',2200);
+}
+
+function modificaAvviso(id) {
+  const a=avvisi.find(x=>x.id===id);if(!a)return;
+  document.getElementById('a-titolo').value = a.titolo||'';
+  document.getElementById('a-testo').value  = a.testo||'';
+  document.getElementById('a-cat').value    = a.cat||'istituzionale';
+  document.getElementById('a-data').value   = a.data||'';
+  document.getElementById('a-autore').value = a.autore||'';
+  document.getElementById('a-pinned').checked=!!a.pinned;
+  document.getElementById('a-edit-id').value=id;
+  document.getElementById('a-form-title').innerHTML='✏️ Modifica <em>avviso</em>';
+  const btn=document.getElementById('a-btn-salva');
+  btn.textContent='💾 Aggiorna'; btn.classList.add('modifica');
+  document.querySelector('#tab-avvisi .adm-card').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function eliminaAvviso(id) {
+  const a=avvisi.find(x=>x.id===id);
+  if(!confirm('Eliminare:\n"'+a?.titolo+'"?'))return;
+  avvisi=avvisi.filter(x=>x.id!==id); saveAvvisi(); renderAvvisi();
+}
+
+function spostaAvviso(i,d) {
+  const j=i+d;if(j<0||j>=avvisi.length)return;
+  [avvisi[i],avvisi[j]]=[avvisi[j],avvisi[i]]; saveAvvisi(); renderAvvisi();
+}
+
+function resetAvviso() {
+  ['a-titolo','a-testo','a-autore','a-edit-id'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('a-cat').value='famiglie';
+  document.getElementById('a-data').value=new Date().toISOString().split('T')[0];
+  document.getElementById('a-pinned').checked=false;
+  document.getElementById('a-form-title').innerHTML='+ Nuovo <em>avviso</em>';
+  const btn=document.getElementById('a-btn-salva');
+  btn.textContent='📌 Pubblica'; btn.classList.remove('modifica');
+}
+
+// ═══════════════════════════════════
+// AI
+// ═══════════════════════════════════
+async function callAI(prompt, sistemaFn, statoId) {
+  const stato = document.getElementById(statoId);
+  stato.textContent = '⏳ Generazione in corso…';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:500,
+        messages:[{role:'user',content:
+          `Sei il redattore del Convitto "Costaggini" di Rieti (IPSSEOA).
+Scrivi un testo breve (3-4 frasi, tono istituzionale ma vivace) su: ${prompt}.
+Rispondi SOLO con il testo, senza titolo, senza virgolette, senza prefazioni.`}]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text||'';
+    if(text){ sistemaFn(text); stato.textContent='✅ Testo generato — puoi modificarlo.'; }
+    else stato.textContent='⚠️ Nessun testo. Riprova.';
+  } catch(e) { stato.textContent='⚠️ Errore. Scrivi il testo manualmente.'; }
+}
+
+function aiNotizia() {
+  const p=document.getElementById('n-ai-prompt').value.trim();
+  if(!p){alert('Descrivi brevemente la notizia.');return;}
+  callAI(p, t=>document.getElementById('n-testo').value=t, 'n-ai-stato');
+}
+function aiAvviso() {
+  const p=document.getElementById('a-ai-prompt').value.trim();
+  if(!p){alert('Descrivi brevemente l\'avviso.');return;}
+  callAI(p, t=>document.getElementById('a-testo').value=t, 'a-ai-stato');
+}
+
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+function initAll() { loadNotizie(); loadAvvisi(); loadPins(); loadAlumni(); }
+
+// ═══════════════════════════════════
+// ALUMNI — MODERAZIONE SUPABASE
+// ═══════════════════════════════════
+
+// Chiave service_role — salvata in localStorage dell'admin dopo il primo inserimento
+let SB_SERVICE = localStorage.getItem('sb_service_key') || '';
+if (!SB_SERVICE) {
+  SB_SERVICE = window.prompt('Prima configurazione — inserisci la chiave service_role di Supabase:') || '';
+  if (SB_SERVICE) localStorage.setItem('sb_service_key', SB_SERVICE);
+}
+
+async function loadAlumni() { await renderAlumniPending(); await renderAlumniApproved(); }
+
+async function renderAlumniPending() {
+  const el = document.getElementById('alumni-pending-list');
+  el.innerHTML = '<p style="font-size:.85rem;color:var(--txt2)">Caricamento…</p>';
+  try {
+    const pending = await sb.select('alumni', 'approvato=eq.false');
+    if (!pending || !pending.length) {
+      el.innerHTML = '<div style="background:rgba(29,111,66,.06);border:1px solid rgba(29,111,66,.2);border-radius:8px;padding:1rem 1.25rem;font-size:.85rem;color:#1d6f42">✅ Nessuna scheda in attesa.</div>';
+      return;
+    }
+    el.innerHTML = `<p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#dc2626;margin-bottom:.75rem">⏳ ${pending.length} scheda/e in attesa</p>` +
+      pending.map(a => `
+      <div style="border:1.5px solid rgba(234,88,12,.25);border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:.85rem;background:rgba(234,88,12,.03)">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.4rem">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--bosco);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.1rem;font-style:italic;color:var(--oro2);flex-shrink:0">${(a.nome||'?')[0].toUpperCase()}</div>
+              <div>
+                <p style="font-family:var(--fd);font-size:1rem;color:var(--bosco);margin:0"><strong>${a.nome}</strong></p>
+                <p style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--oro);margin:0">${a.lavoro||''}${a.citta?' · '+a.citta:''}</p>
+              </div>
+            </div>
+            <p style="font-size:.82rem;color:var(--txt2);font-style:italic;margin-bottom:.3rem">"${a.ricordo||''}"</p>
+            <p style="font-size:.72rem;color:#8b7a5a">Convittore ${a.anni||'—'} · Email: ${a.email||'—'} · ${new Date(a.created_at).toLocaleString('it-IT')}</p>
+            <p style="font-size:.7rem;color:#8b7a5a;margin-top:.2rem">
+              ${a.social_fb?'📘 '+a.social_fb+'  ':''} ${a.social_ig?'📸 '+a.social_ig+'  ':''} ${a.social_li?'💼 '+a.social_li:''}
+            </p>
+          </div>
+          <div style="display:flex;gap:.5rem;flex-shrink:0">
+            <button onclick="approveAlumno('${a.id}')"
+              style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .85rem;border-radius:4px;border:1.5px solid #1d6f42;color:#1d6f42;background:none;cursor:pointer"
+              onmouseover="this.style.background='#1d6f42';this.style.color='#fff'"
+              onmouseout="this.style.background='none';this.style.color='#1d6f42'">✅ Approva</button>
+            <button onclick="rejectAlumno('${a.id}','${(a.nome||'').replace(/'/g,'')}')"
+              style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .85rem;border-radius:4px;border:1.5px solid #dc2626;color:#dc2626;background:none;cursor:pointer"
+              onmouseover="this.style.background='#dc2626';this.style.color='#fff'"
+              onmouseout="this.style.background='none';this.style.color='#dc2626'">🗑 Rifiuta</button>
+          </div>
+        </div>
+      </div>`).join('');
+  } catch(e) { el.innerHTML = '<p style="color:#dc2626">Errore connessione Supabase: '+e.message+'</p>'; }
+}
+
+async function renderAlumniApproved() {
+  const el = document.getElementById('alumni-approved-list');
+  try {
+    const approved = await sb.select('alumni', 'approvato=eq.true');
+    if (!approved || !approved.length) { el.innerHTML = '<p style="font-size:.8rem;color:#8b7a5a;font-style:italic">Nessuna scheda approvata ancora.</p>'; return; }
+    el.innerHTML = approved.map(a => `
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem .85rem;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:.4rem;flex-wrap:wrap">
+        <span style="font-size:.82rem;color:var(--bosco)"><strong>${a.nome}</strong> — ${a.lavoro||''}${a.citta?' · '+a.citta:''}</span>
+        <button onclick="removeAlumno('${a.id}','${(a.nome||'').replace(/'/g,'')}')"
+          style="font-family:var(--fu);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .65rem;border-radius:4px;border:1px solid #dc2626;color:#dc2626;background:none;cursor:pointer">
+          Rimuovi
+        </button>
+      </div>`).join('');
+  } catch(e) {}
+}
+
+async function approveAlumno(id) {
+  try {
+    await sb.update('alumni', id, { approvato: true }, SB_SERVICE);
+    await loadAlumni();
+  } catch(e) { alert('Errore: '+e.message); }
+}
+
+async function rejectAlumno(id, nome) {
+  if (!confirm(`Rifiutare e cancellare la scheda di "${nome}"?`)) return;
+  try {
+    await sb.delete('alumni', id, SB_SERVICE);
+    await loadAlumni();
+  } catch(e) { alert('Errore: '+e.message); }
+}
+
+async function removeAlumno(id, nome) {
+  if (!confirm(`Rimuovere la scheda di "${nome}" dalla gallery?`)) return;
+  try {
+    await sb.update('alumni', id, { approvato: false }, SB_SERVICE);
+    await loadAlumni();
+  } catch(e) { alert('Errore: '+e.message); }
+}
+
+function renderAlumniPending() {
+  const pending = JSON.parse(localStorage.getItem('costaggini-alumni-pending') || '[]');
+  const el = document.getElementById('alumni-pending-list');
+  if (!pending.length) {
+    el.innerHTML = '<div style="background:rgba(29,111,66,.06);border:1px solid rgba(29,111,66,.2);border-radius:8px;padding:1rem 1.25rem;font-size:.85rem;color:#1d6f42">✅ Nessuna scheda in attesa.</div>';
+    return;
+  }
+  el.innerHTML = `<p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#dc2626;margin-bottom:.75rem">⏳ ${pending.length} scheda/e in attesa</p>` +
+    pending.map((a,i) => `
+    <div style="border:1.5px solid rgba(234,88,12,.25);border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:.85rem;background:rgba(234,88,12,.03)">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.4rem;flex-wrap:wrap">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--bosco);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.1rem;font-style:italic;color:var(--oro2);flex-shrink:0">${a.nome?a.nome[0].toUpperCase():'?'}</div>
+            <div>
+              <p style="font-family:var(--fd);font-size:1rem;color:var(--bosco);margin:0"><strong>${a.nome}</strong></p>
+              <p style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--oro);margin:0">${a.lavoro}${a.citta?' · '+a.citta:''}</p>
+            </div>
+          </div>
+          <p style="font-size:.82rem;color:var(--txt2);font-style:italic;margin-bottom:.3rem">"${a.ricordo}"</p>
+          <p style="font-size:.72rem;color:#8b7a5a">Convittore ${a.anni||'—'} · Email: ${a.email} · ${new Date(a.sentAt||Date.now()).toLocaleString('it-IT')}</p>
+          ${a.mappa ? '<p style="font-size:.7rem;color:var(--oro)">🌍 Ha richiesto il pin sulla mappa</p>' : ''}
+        </div>
+        <div style="display:flex;gap:.5rem;flex-shrink:0;align-items:flex-start">
+          <button onclick="approveAlumno(${i})"
+            style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .85rem;border-radius:4px;border:1.5px solid #1d6f42;color:#1d6f42;background:none;cursor:pointer"
+            onmouseover="this.style.background='#1d6f42';this.style.color='#fff'"
+            onmouseout="this.style.background='none';this.style.color='#1d6f42'">✅ Approva</button>
+          <button onclick="rejectAlumno(${i})"
+            style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .85rem;border-radius:4px;border:1.5px solid #dc2626;color:#dc2626;background:none;cursor:pointer"
+            onmouseover="this.style.background='#dc2626';this.style.color='#fff'"
+            onmouseout="this.style.background='none';this.style.color='#dc2626'">🗑 Rifiuta</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+
+// ═══════════════════════════════════
+// MAPPA — MODERAZIONE PIN
+// ═══════════════════════════════════
+function loadPins() {
+  renderPending();
+  renderApproved();
+}
+
+function renderPending() {
+  const pending = JSON.parse(localStorage.getItem('costaggini-pins-pending') || '[]');
+  const el = document.getElementById('pin-pending-list');
+  if (!pending.length) {
+    el.innerHTML = '<div style="background:rgba(29,111,66,.06);border:1px solid rgba(29,111,66,.2);border-radius:8px;padding:1rem 1.25rem;font-size:.85rem;color:#1d6f42">✅ Nessun pin in attesa — la mappa è aggiornata.</div>';
+    return;
+  }
+  el.innerHTML = `<p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#dc2626;margin-bottom:.75rem">⏳ ${pending.length} pin in attesa di approvazione</p>` +
+    pending.map((p,i) => `
+    <div style="border:1.5px solid rgba(234,88,12,.25);border-radius:8px;padding:1rem 1.1rem;margin-bottom:.6rem;background:rgba(234,88,12,.04)">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+        <div>
+          <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ea580c;margin-bottom:.3rem">📍 ${p.type || 'alumni'}</p>
+          <p style="font-family:var(--fd);font-size:1rem;color:var(--bosco);margin-bottom:.15rem"><strong>${p.name}</strong></p>
+          <p style="font-size:.78rem;color:var(--txt2)">${p.city}${p.year?' · Anno '+p.year:''}${p.role?' · '+p.role:''}</p>
+          <p style="font-size:.65rem;color:#8b7a5a;margin-top:.25rem">Ricevuto: ${new Date(p.submittedAt||Date.now()).toLocaleString('it-IT')}${p.fromRicordo ? ' · <strong style="color:var(--oro)">📝 dal Muro dei Ricordi</strong>' : ''}</p>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-shrink:0">
+          <button onclick="approvePin(${i})"
+            style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .85rem;border-radius:4px;border:1.5px solid #1d6f42;color:#1d6f42;background:none;cursor:pointer;transition:all .2s"
+            onmouseover="this.style.background='#1d6f42';this.style.color='#fff'"
+            onmouseout="this.style.background='none';this.style.color='#1d6f42'">
+            ✅ Approva
+          </button>
+          <button onclick="rejectPin(${i})"
+            style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .85rem;border-radius:4px;border:1.5px solid #dc2626;color:#dc2626;background:none;cursor:pointer;transition:all .2s"
+            onmouseover="this.style.background='#dc2626';this.style.color='#fff'"
+            onmouseout="this.style.background='none';this.style.color='#dc2626'">
+            🗑 Rifiuta
+          </button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderApproved() {
+  const approved = JSON.parse(localStorage.getItem('costaggini-pins-v2') || '[]');
+  const el = document.getElementById('pin-approved-list');
+  if (!approved.length) {
+    el.innerHTML = '<p style="font-size:.8rem;color:#8b7a5a;font-style:italic">Nessun pin approvato ancora.</p>';
+    return;
+  }
+  el.innerHTML = approved.map((p,i) => `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem .85rem;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:.4rem;flex-wrap:wrap">
+      <span style="font-size:.82rem;color:var(--bosco)"><strong>${p.name}</strong> — ${p.city}</span>
+      <button onclick="removeApproved(${i})"
+        style="font-family:var(--fu);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .65rem;border-radius:4px;border:1px solid #dc2626;color:#dc2626;background:none;cursor:pointer">
+        Rimuovi
+      </button>
+    </div>`).join('');
+}
+
+function approvePin(i) {
+  const pending = JSON.parse(localStorage.getItem('costaggini-pins-pending') || '[]');
+  const pin = pending[i];
+  delete pin.pending;
+  delete pin.submittedAt;
+  // Sposta negli approvati
+  const approved = JSON.parse(localStorage.getItem('costaggini-pins-v2') || '[]');
+  approved.push(pin);
+  localStorage.setItem('costaggini-pins-v2', JSON.stringify(approved));
+  pending.splice(i, 1);
+  localStorage.setItem('costaggini-pins-pending', JSON.stringify(pending));
+  renderPending();
+  renderApproved();
+}
+
+function rejectPin(i) {
+  const pending = JSON.parse(localStorage.getItem('costaggini-pins-pending') || '[]');
+  const name = pending[i].name;
+  if (!confirm(`Rifiutare e cancellare il pin di "${name}"?`)) return;
+  pending.splice(i, 1);
+  localStorage.setItem('costaggini-pins-pending', JSON.stringify(pending));
+  renderPending();
+}
+
+function removeApproved(i) {
+  const approved = JSON.parse(localStorage.getItem('costaggini-pins-v2') || '[]');
+  if (!confirm(`Rimuovere il pin di "${approved[i].name}" dalla mappa?`)) return;
+  approved.splice(i, 1);
+  localStorage.setItem('costaggini-pins-v2', JSON.stringify(approved));
+  renderApproved();
+}
+</script>
+<script src="supabase.js"></script>
+</body>
+</html>

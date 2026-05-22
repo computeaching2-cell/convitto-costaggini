@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Galleria fotografica — Festa di Natale 2024 al Convitto Costaggini di Rieti: cena di gala, musica dal vivo e tombola."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Festa di Natale 2024 | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+
+    .gal-hero {
+      background: linear-gradient(135deg, var(--bosco) 0%, #1a2e1b 100%);
+      padding: 5rem 1.25rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .gal-hero::before {
+      content: '✦';
+      position: absolute;
+      font-size: 18rem;
+      color: rgba(184,146,42,.04);
+      top: -4rem; left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .gal-hero .gold-bar { margin: 0 auto .9rem; }
+    .gal-hero h1 { font-family: var(--fd); font-size: clamp(2rem,6vw,3.5rem); font-weight: 300; color: var(--av); line-height: 1.1; margin-bottom: .6rem; }
+    .gal-hero h1 em { display: block; font-style: italic; color: var(--oro3); }
+    .gal-hero p { color: rgba(245,240,232,.65); font-size: .92rem; max-width: 520px; margin: 0 auto; }
+    .gal-chip { display: inline-flex; align-items: center; gap: .5rem; font-size: .62rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--oro2); margin-bottom: .9rem; }
+    .gal-chip::before { content: '—'; }
+
+    #slideshow {
+      position: relative;
+      background: #0c140d;
+      overflow: hidden;
+      user-select: none;
+      width: 100%;
+      height: clamp(280px, 60vw, 600px);
+      contain: layout style;
+    }
+    @media(max-width: 600px){
+      #slideshow { height: clamp(240px, 70vw, 420px); }
+    }
+    .slides-track {
+      display: flex;
+      height: 100%;
+      transition: transform .65s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+    .slide {
+      min-width: 100%;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    /* Sfondo sfumato: copia della foto scalata e sfocata */
+    .slide-bg {
+      position: absolute;
+      inset: -20px;
+      background-size: cover;
+      background-position: center;
+      filter: blur(18px) brightness(.45) saturate(.7);
+      transform: scale(1.08);
+      z-index: 0;
+    }
+    .slide img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      transform: translateZ(0);
+    }
+    .slide-caption {
+      z-index: 2;
+    }
+    .slide-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(0deg, rgba(12,20,13,.88) 0%, transparent 100%);
+      padding: 2.5rem 1.5rem 1.25rem;
+      pointer-events: none;
+    }
+    .slide-caption p {
+      font-family: var(--fd);
+      font-size: clamp(.95rem,2.5vw,1.25rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(245,240,232,.88);
+      margin: 0;
+    }
+    .slide-caption span {
+      display: block;
+      font-family: var(--fu);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--oro2);
+      margin-bottom: .3rem;
+    }
+
+    .sl-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px;
+      background: rgba(12,20,13,.55);
+      border: 1.5px solid rgba(184,146,42,.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+      z-index: 10;
+      backdrop-filter: blur(4px);
+    }
+    .sl-arrow:hover { background: rgba(184,146,42,.25); border-color: var(--oro2); }
+    .sl-arrow svg { width: 18px; height: 18px; fill: var(--av); }
+    .sl-prev { left: .85rem; }
+    .sl-next { right: .85rem; }
+
+    .sl-dots {
+      position: absolute;
+      bottom: .9rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: .45rem;
+      z-index: 10;
+    }
+    .sl-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(245,240,232,.3);
+      border: none; cursor: pointer;
+      padding: 0;
+      transition: background .25s, transform .25s;
+    }
+    .sl-dot.active { background: var(--oro2); transform: scale(1.35); }
+
+    .sl-counter {
+      position: absolute;
+      top: 1rem; right: 1.1rem;
+      font-family: var(--fu);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: rgba(245,240,232,.5);
+      z-index: 10;
+    }
+
+    .sl-progress { height: 2px; background: rgba(184,146,42,.15); position: relative; overflow: hidden; }
+    .sl-progress-bar { height: 100%; background: linear-gradient(90deg, var(--oro2), var(--oro3)); width: 0%; transition: width linear; }
+
+    .thumb-section { background: #0e1a0f; padding: 1rem 1rem 1.5rem; border-top: 1px solid rgba(184,146,42,.15); }
+    .thumb-strip {
+      display: flex; gap: .5rem;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin; scrollbar-color: rgba(184,146,42,.3) transparent;
+      padding-bottom: .3rem;
+    }
+    .thumb-strip::-webkit-scrollbar { height: 3px; }
+    .thumb-strip::-webkit-scrollbar-thumb { background: rgba(184,146,42,.3); border-radius: 2px; }
+    .thumb { flex-shrink: 0; width: 72px; height: 52px; border-radius: 3px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color .2s, opacity .2s; scroll-snap-align: start; opacity: .55; }
+    .thumb.active { border-color: var(--oro2); opacity: 1; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    .gal-info { background: var(--av2); border-top: 1px solid var(--av3); padding: 2.5rem 1.25rem; }
+    .gal-info .w { display: grid; gap: 2rem; }
+    @media(min-width:700px){ .gal-info .w { grid-template-columns: 1fr 1fr; align-items: start; } }
+    .gal-menu { background: var(--bosco); border-radius: 8px; padding: 1.5rem 1.75rem; border: 1px solid rgba(184,146,42,.2); }
+    .gal-menu h3 { font-family: var(--fd); font-size: 1.4rem; font-weight: 400; color: var(--av); margin-bottom: 1rem; }
+    .gal-menu h3 em { font-style: italic; color: var(--oro3); }
+    .menu-item { padding: .55rem 0; border-bottom: 1px solid rgba(245,240,232,.1); }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-portata { font-family: var(--fu); font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--oro2); display: block; margin-bottom: .15rem; }
+    .menu-piatto { font-family: var(--fd); font-size: 1.05rem; font-weight: 300; color: var(--av); font-style: italic; }
+    .gal-desc h3 { font-family: var(--fd); font-size: 1.4rem; font-weight: 400; color: var(--bosco); margin-bottom: .75rem; }
+    .gal-desc h3 em { font-style: italic; color: var(--oro); }
+    .gal-desc p { font-size: .88rem; color: var(--txt2); line-height: 1.8; margin-bottom: .75rem; }
+    .gal-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+    .back-bar { background: var(--bosco); padding: 1.5rem 1.25rem; text-align: center; }
+
+  </style>
+</head>
+<body data-page="natale2024">
+<main id="main">
+
+  <style>
+    /* ── Decorazioni natalizie hero ── */
+    .xmas-deco {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    /* Fiocchi di neve cadenti */
+    .snowflake {
+      position: absolute;
+      top: -10%;
+      color: rgba(245,240,232,.22);
+      font-size: 1.1rem;
+      animation: snowfall linear infinite;
+      user-select: none;
+    }
+    @keyframes snowfall {
+      0%   { transform: translateY(0) rotate(0deg);   opacity: .7; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+    /* Rametti SVG angoli */
+    .xmas-branch { position: absolute; opacity: .45; }
+    /* Pallina oscillante */
+    @keyframes sway { 0%,100%{transform:rotate(-4deg)} 50%{transform:rotate(4deg)} }
+    .xmas-ball { animation: sway 3s ease-in-out infinite; transform-origin: top center; }
+
+    /* Lucine LED che si accendono e spengono */
+    @keyframes blink-r  { 0%,100%{opacity:.15;r:4} 50%{opacity:1;r:6} }
+    @keyframes blink-g  { 0%,100%{opacity:.15;r:4} 50%{opacity:1;r:6} }
+    @keyframes blink-w  { 0%,100%{opacity:.1; r:3} 50%{opacity:.9;r:5} }
+    @keyframes blink-y  { 0%,100%{opacity:.15;r:4} 50%{opacity:1;r:6} }
+    .led-r { animation: blink-r ease-in-out infinite; }
+    .led-g { animation: blink-g ease-in-out infinite; }
+    .led-w { animation: blink-w ease-in-out infinite; }
+    .led-y { animation: blink-y ease-in-out infinite; }
+    /* Alone luminoso dietro ogni lucina */
+    .led-glow { transition: opacity .3s; }
+
+    /* Freccia scroll */
+    .scroll-hint {
+      display: flex; flex-direction: column; align-items: center;
+      gap: .35rem; margin-top: 1.4rem; cursor: pointer;
+    }
+    .scroll-hint span {
+      font-family: var(--fu); font-size: .6rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(184,146,42,.55);
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); opacity: .5; }
+      50%      { transform: translateY(7px); opacity: 1; }
+    }
+    .scroll-arrow {
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+    /* Stelle scintillanti */
+    @keyframes twinkle { 0%,100%{opacity:.15;transform:scale(.8)} 50%{opacity:.7;transform:scale(1.15)} }
+    .xmas-star { position: absolute; animation: twinkle ease-in-out infinite; color: var(--oro2); font-size: 1rem; }
+    /* Riga ornamentale */
+    .xmas-divider {
+      display: flex; align-items: center; justify-content: center;
+      gap: .6rem; margin: .9rem auto .7rem;
+      color: rgba(184,146,42,.6);
+      font-size: .75rem;
+    }
+    .xmas-divider::before, .xmas-divider::after {
+      content: '';
+      flex: 1; max-width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(184,146,42,.5), transparent);
+    }
+  </style>
+
+  <div class="gal-hero" style="padding-bottom:3.5rem">
+
+    <!-- Decorazioni di sfondo -->
+    <div class="xmas-deco" aria-hidden="true">
+
+      <!-- Fiocchi di neve -->
+      <span class="snowflake" style="left:5%;animation-duration:7s;animation-delay:0s;font-size:.9rem">❄</span>
+      <span class="snowflake" style="left:12%;animation-duration:9s;animation-delay:1.5s">❅</span>
+      <span class="snowflake" style="left:22%;animation-duration:6.5s;animation-delay:.8s;font-size:.7rem">❄</span>
+      <span class="snowflake" style="left:35%;animation-duration:8s;animation-delay:2.2s">❆</span>
+      <span class="snowflake" style="left:48%;animation-duration:7.5s;animation-delay:.3s;font-size:.8rem">❄</span>
+      <span class="snowflake" style="left:60%;animation-duration:6s;animation-delay:1.8s">❅</span>
+      <span class="snowflake" style="left:72%;animation-duration:9.5s;animation-delay:.6s;font-size:.7rem">❄</span>
+      <span class="snowflake" style="left:83%;animation-duration:7s;animation-delay:3s">❆</span>
+      <span class="snowflake" style="left:93%;animation-duration:8.5s;animation-delay:1.1s;font-size:.9rem">❄</span>
+
+      <!-- Stelle scintillanti -->
+      <span class="xmas-star" style="top:12%;left:8%;animation-duration:2.1s;animation-delay:.4s">✦</span>
+      <span class="xmas-star" style="top:20%;left:88%;animation-duration:2.8s;animation-delay:1s;font-size:.65rem">✦</span>
+      <span class="xmas-star" style="top:65%;left:6%;animation-duration:2.4s;animation-delay:.7s;font-size:.65rem">✦</span>
+      <span class="xmas-star" style="top:70%;left:91%;animation-duration:3s;animation-delay:1.5s">✦</span>
+      <span class="xmas-star" style="top:40%;left:3%;animation-duration:2.6s;animation-delay:.2s;font-size:.55rem">★</span>
+      <span class="xmas-star" style="top:45%;left:95%;animation-duration:2.2s;animation-delay:1.8s;font-size:.55rem">★</span>
+
+      <!-- Rametto sinistro -->
+      <svg class="xmas-branch" style="left:-10px;top:0;width:180px;height:220px" viewBox="0 0 180 220">
+        <g fill="none" stroke="#3d6b3e" stroke-width="1.5">
+          <path d="M20,10 Q60,60 30,120 Q70,90 90,160 Q50,140 60,200"/>
+          <path d="M30,40 Q55,35 70,50"/>
+          <path d="M25,70 Q55,60 75,75"/>
+          <path d="M28,100 Q60,88 82,100"/>
+          <path d="M35,130 Q65,118 88,130"/>
+          <path d="M42,160 Q70,150 90,162"/>
+        </g>
+        <g fill="#3d6b3e" opacity=".6">
+          <ellipse cx="72" cy="50" rx="8" ry="4" transform="rotate(-20,72,50)"/>
+          <ellipse cx="77" cy="75" rx="9" ry="4" transform="rotate(-15,77,75)"/>
+          <ellipse cx="84" cy="100" rx="10" ry="4" transform="rotate(-10,84,100)"/>
+          <ellipse cx="90" cy="130" rx="10" ry="4" transform="rotate(-5,90,130)"/>
+          <ellipse cx="92" cy="162" rx="9" ry="4"/>
+        </g>
+        <!-- Pallina rossa -->
+        <g class="xmas-ball">
+          <circle cx="92" cy="100" r="7" fill="#c0392b" opacity=".7"/>
+          <rect x="90" y="93" width="4" height="4" rx="1" fill="#8B6914" opacity=".8"/>
+          <path d="M88,97 Q92,94 96,97" stroke="rgba(255,255,255,.3)" stroke-width="1" fill="none"/>
+        </g>
+        <!-- Stellina -->
+        <text x="25" y="38" font-size="10" fill="rgba(184,146,42,.7)">✦</text>
+        <text x="38" y="155" font-size="8" fill="rgba(184,146,42,.5)">✦</text>
+      </svg>
+
+      <!-- Rametto destro (specchiato) -->
+      <svg class="xmas-branch" style="right:-10px;top:0;width:180px;height:220px;transform:scaleX(-1)" viewBox="0 0 180 220">
+        <g fill="none" stroke="#3d6b3e" stroke-width="1.5">
+          <path d="M20,10 Q60,60 30,120 Q70,90 90,160 Q50,140 60,200"/>
+          <path d="M30,40 Q55,35 70,50"/>
+          <path d="M25,70 Q55,60 75,75"/>
+          <path d="M28,100 Q60,88 82,100"/>
+          <path d="M35,130 Q65,118 88,130"/>
+          <path d="M42,160 Q70,150 90,162"/>
+        </g>
+        <g fill="#3d6b3e" opacity=".6">
+          <ellipse cx="72" cy="50" rx="8" ry="4" transform="rotate(-20,72,50)"/>
+          <ellipse cx="77" cy="75" rx="9" ry="4" transform="rotate(-15,77,75)"/>
+          <ellipse cx="84" cy="100" rx="10" ry="4" transform="rotate(-10,84,100)"/>
+          <ellipse cx="90" cy="130" rx="10" ry="4" transform="rotate(-5,90,130)"/>
+          <ellipse cx="92" cy="162" rx="9" ry="4"/>
+        </g>
+        <g class="xmas-ball">
+          <circle cx="84" cy="130" r="7" fill="#B8922A" opacity=".7"/>
+          <rect x="82" y="123" width="4" height="4" rx="1" fill="#8B6914" opacity=".8"/>
+          <path d="M80,127 Q84,124 88,127" stroke="rgba(255,255,255,.3)" stroke-width="1" fill="none"/>
+        </g>
+        <text x="25" y="38" font-size="10" fill="rgba(184,146,42,.7)">✦</text>
+        <text x="38" y="185" font-size="8" fill="rgba(184,146,42,.5)">✦</text>
+      </svg>
+
+      <!-- Ghirlanda in cima con lucine LED animate -->
+      <svg style="position:absolute;top:0;left:0;width:100%;height:60px" viewBox="0 0 800 60" preserveAspectRatio="none" aria-hidden="true">
+        <!-- Fascia verde -->
+        <path d="M0,0 Q100,40 200,20 Q300,50 400,25 Q500,50 600,20 Q700,40 800,10 L800,0 Z"
+              fill="rgba(45,90,46,.35)"/>
+        <!-- Filo -->
+        <path d="M0,5 Q100,38 200,18 Q300,48 400,23 Q500,48 600,18 Q700,38 800,8"
+              fill="none" stroke="rgba(61,107,62,.5)" stroke-width="1.5"/>
+        <!-- Aloni luminosi (rimangono fissi, sfocati) -->
+        <circle class="led-glow" cx="100" cy="28" r="10" fill="#e74c3c" opacity=".12" filter="url(#blur)"/>
+        <circle class="led-glow" cx="200" cy="19" r="9"  fill="#f0a500" opacity=".12" filter="url(#blur)"/>
+        <circle class="led-glow" cx="300" cy="35" r="10" fill="#27ae60" opacity=".12" filter="url(#blur)"/>
+        <circle class="led-glow" cx="400" cy="24" r="9"  fill="#ecf0f1" opacity=".10" filter="url(#blur)"/>
+        <circle class="led-glow" cx="500" cy="35" r="10" fill="#e74c3c" opacity=".12" filter="url(#blur)"/>
+        <circle class="led-glow" cx="600" cy="19" r="9"  fill="#f0a500" opacity=".12" filter="url(#blur)"/>
+        <circle class="led-glow" cx="700" cy="28" r="10" fill="#27ae60" opacity=".12" filter="url(#blur)"/>
+        <!-- Lucine LED animate -->
+        <circle class="led-r" cx="100" cy="28" r="5" fill="#e74c3c" style="animation-duration:1.8s;animation-delay:0s"/>
+        <circle class="led-y" cx="200" cy="19" r="4" fill="#f0a500" style="animation-duration:2.3s;animation-delay:.4s"/>
+        <circle class="led-g" cx="300" cy="35" r="5" fill="#2ecc71" style="animation-duration:1.6s;animation-delay:.9s"/>
+        <circle class="led-w" cx="400" cy="24" r="4" fill="#ecf0f1" style="animation-duration:2.1s;animation-delay:.2s"/>
+        <circle class="led-r" cx="500" cy="35" r="5" fill="#e74c3c" style="animation-duration:1.9s;animation-delay:1.1s"/>
+        <circle class="led-y" cx="600" cy="19" r="4" fill="#f0a500" style="animation-duration:2.4s;animation-delay:.6s"/>
+        <circle class="led-g" cx="700" cy="28" r="5" fill="#2ecc71" style="animation-duration:1.7s;animation-delay:.3s"/>
+        <!-- Filtro blur per gli aloni -->
+        <defs>
+          <filter id="blur"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+      </svg>
+
+    </div><!-- fine xmas-deco -->
+
+    <div class="w" style="position:relative;z-index:2">
+      <nav class="breadcrumb" aria-label="Percorso" style="justify-content:center">
+        <a href="index.html" style="color:rgba(245,240,232,.5)">Home</a>
+        <span style="color:rgba(245,240,232,.3)">›</span>
+        <a href="notizie.html" style="color:rgba(245,240,232,.5)">Notizie</a>
+        <span style="color:rgba(245,240,232,.3)">›</span>
+        <span aria-current="page" style="color:var(--oro2)">Natale 2024</span>
+      </nav>
+
+      <!-- Divisore ornamentale -->
+      <div class="xmas-divider" style="margin-top:1.5rem">
+        <span>🎄</span>
+      </div>
+
+      <p class="gal-chip">16 Dicembre 2024 · Convitto Costaggini · Rieti</p>
+      <h1>Festa di Natale <em>al Convitto</em></h1>
+
+      <!-- Riga decorativa sotto il titolo -->
+      <div class="xmas-divider">
+        <span style="font-size:.9rem">✦</span>
+        <span style="font-size:.75rem;letter-spacing:.2em;color:rgba(184,146,42,.5);font-family:var(--fu);font-weight:700;text-transform:uppercase">Cena · Musica · Tombola</span>
+        <span style="font-size:.9rem">✦</span>
+      </div>
+
+      <p style="color:rgba(245,240,232,.65);font-size:.92rem;max-width:520px;margin:0 auto">Una serata di condivisione tra convittori, educatori e famiglie.</p>
+
+      <!-- Riga finale ornamentale -->
+      <div class="xmas-divider" style="margin-top:1.2rem;margin-bottom:0">
+        <span>⛄</span>
+      </div>
+
+      <!-- Freccia scroll animata -->
+      <div class="scroll-hint" role="button" tabindex="0" aria-label="Scorri per vedere le foto"
+           onclick="document.getElementById('slideshow').scrollIntoView({behavior:'smooth'})"
+           onkeydown="if(event.key==='Enter')document.getElementById('slideshow').scrollIntoView({behavior:'smooth'})">
+        <span>Scopri le foto</span>
+        <svg class="scroll-arrow" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+                fill="rgba(184,146,42,.7)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <section id="slideshow" aria-label="Galleria fotografica Festa di Natale 2024">
+    <div class="slides-track" id="slidesTrack">
+
+      <div class="slide">
+        <img src="img/natale2024/a.jpg" alt="Il menù della Cena di Natale 2024 sulla lavagna decorata" loading="eager" style="object-position:center center"/>
+        <div class="slide-caption"><span>Il menù</span><p>La lavagna illustrata con i piatti della serata: lasagna, stinco al forno, moretto</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/b.jpg" alt="La sala mensa allestita per la cena di Natale 2024" loading="lazy" style="object-position:center center"/>
+        <div class="slide-caption"><span>La sala pronta</span><p>Tavoli allestiti con decorazioni natalizie in attesa degli ospiti</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/c.jpg" alt="Studente in divisa che allestisce il tavolo rotondo" loading="lazy" style="object-position:center center"/>
+        <div class="slide-caption"><span>La mise en place</span><p>Uno studente in divisa cura ogni dettaglio del tavolo degli educatori</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/d.jpg" alt="Convittori e convittrici seduti ai tavoli durante la cena" loading="lazy" style="object-position:center 30%"/>
+        <div class="slide-caption"><span>La cena</span><p>Studenti ed educatori a tavola insieme durante la cena di gala</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/e.jpg" alt="Panoramica della sala piena durante la Festa di Natale" loading="lazy" style="object-position:center 25%"/>
+        <div class="slide-caption"><span>La festa</span><p>La sala al completo: convittori, educatori, personale e famiglie</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/f.jpg" alt="Partecipanti applaudono durante lo spettacolo musicale" loading="lazy" style="object-position:center center"/>
+        <div class="slide-caption"><span>Lo spettacolo</span><p>Il pubblico applaude durante le esibizioni musicali dal vivo</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/g.jpg" alt="Quattro studenti cantano sul palco" loading="lazy" style="object-position:center top"/>
+        <div class="slide-caption"><span>I giovani talenti</span><p>Quattro studenti si esibiscono con microfono e leggio davanti all'albero di Natale</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/h.jpg" alt="Due studentesse cantano al microfono" loading="lazy" style="object-position:center center"/>
+        <div class="slide-caption"><span>Le presentatrici</span><p>Le presentatrici della serata</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/i.jpg" alt="Gruppo musicale con tastiera, batteria, chitarra e voci sul palco" loading="lazy" style="object-position:center center"/>
+        <div class="slide-caption"><span>La band</span><p>Tastiera, batteria, chitarra e voci: la formazione completa della band studentesca</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/l.jpg" alt="Studentessa solista canta al microfono accompagnata dalla band" loading="lazy" style="object-position:center top"/>
+        <div class="slide-caption"><span>Voce solista</span><p>Una studentessa interpreta un brano accompagnata dal gruppo</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/m.jpg" alt="Studente canta al microfono con la batteria sullo sfondo" loading="lazy" style="object-position:center 35%"/>
+        <div class="slide-caption"><span>Sul palco</span><p>Una delle voci soliste della serata</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/n.jpg" alt="Studente esegue un assolo al microfono con intensità" loading="lazy" style="object-position:center 42%"/>
+        <div class="slide-caption"><span>Assolo</span><p>Un momento di intensa concentrazione durante l'esibizione</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/o.jpg" alt="Convittore suona la tromba accanto al suo educatore alla chitarra elettrica" loading="lazy" style="object-position:center center"/>
+        <div class="slide-caption"><span>Tromba &amp; chitarra</span><p>Un convittore suona la tromba accanto al suo educatore alla chitarra elettrica</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/p_.jpg" alt="I quattro solisti sul palco con tromba e microfoni" loading="lazy" style="object-position:center top"/>
+        <div class="slide-caption"><span>Il gran finale</span><p>I giovani solisti sul palco con l'albero di Natale sullo sfondo</p></div>
+      </div>
+
+      <div class="slide">
+        <img src="img/natale2024/q.jpg" alt="Il team degli educatori ed educatrici del Convitto Costaggini riuniti per la Festa di Natale 2024" loading="lazy" style="object-position:center 25%"/>
+        <div class="slide-caption"><span>Gli educatori</span><p>Il team degli educatori ed educatrici del Convitto "Costaggini" insieme per la Festa di Natale</p></div>
+      </div>
+
+    </div>
+
+    <button class="sl-arrow sl-prev" aria-label="Foto precedente" id="slPrev">
+      <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+    <button class="sl-arrow sl-next" aria-label="Foto successiva" id="slNext">
+      <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </button>
+
+    <div class="sl-counter" id="slCounter" aria-live="polite">1 / 15</div>
+    <div class="sl-dots" role="tablist" aria-label="Selezione foto" id="slDots"></div>
+  </section>
+
+  <div class="sl-progress"><div class="sl-progress-bar" id="slProgressBar"></div></div>
+
+  <div class="thumb-section">
+    <div class="thumb-strip" id="thumbStrip" role="list" aria-label="Miniature galleria"></div>
+  </div>
+
+  <section class="gal-info">
+    <div class="w">
+      <div class="gal-menu rv">
+        <h3>Il <em>Menù</em> della serata</h3>
+        <div class="menu-item"><span class="menu-portata">Antipasto</span><span class="menu-piatto">Lonza, prosciutto, salame, formaggio, olive e tortino di patate</span></div>
+        <div class="menu-item"><span class="menu-portata">Primo</span><span class="menu-piatto">Lasagna</span></div>
+        <div class="menu-item"><span class="menu-portata">Secondo</span><span class="menu-piatto">Stinco al forno e patate fritte</span></div>
+        <div class="menu-item"><span class="menu-portata">Dolce</span><span class="menu-piatto">Moretto</span></div>
+      </div>
+      <div class="gal-desc rv d1">
+        <h3>Una serata di <em>comunità</em></h3>
+        <p>Lunedì 16 dicembre 2024, la sala mensa del Convitto "Costaggini" si è trasformata per una sera in una sala da concerto. Convittori, convittrici, educatori, personale e famiglie si sono riuniti per la tradizionale Festa di Natale.</p>
+        <p>Gli studenti dell'indirizzo di sala hanno curato personalmente mise en place e servizio, mentre un gruppo di giovani talentuosi ha intrattenuto i presenti con un concerto dal vivo — voci, tastiera, batteria, chitarra, basso e tromba.</p>
+        <p>La serata si è conclusa con la grande tombola comunitaria, tra risate e il calore tipico del Natale al Costaggini.</p>
+        <div class="gal-tags">
+          <span class="tag">Dicembre 2024</span>
+          <span class="tag">Musica dal vivo</span>
+          <span class="tag">Comunità educante</span>
+          <span class="tag">Cena di gala</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="back-bar">
+    <a href="notizie.html" class="btn-gold">← Torna alle notizie</a>
+  </div>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+(function(){
+  /* Inietta sfondo sfumato in ogni slide */
+  document.querySelectorAll('.slide').forEach(slide => {
+    const img = slide.querySelector('img');
+    if (!img) return;
+    const bg = document.createElement('div');
+    bg.className = 'slide-bg';
+    bg.setAttribute('aria-hidden', 'true');
+    // Usa l'src dell'immagine come background
+    const setSrc = () => {
+      bg.style.backgroundImage = `url('${img.src}')`;
+    };
+    if (img.complete) setSrc();
+    else img.addEventListener('load', setSrc);
+    slide.insertBefore(bg, img);
+  });
+
+  const TOTAL = 15;
+  const FILES = ['a','b','c','d','e','f','g','h','i','l','m','n','o','p_','q'];
+  const AUTOPLAY_MS = 5000;
+
+  const track       = document.getElementById('slidesTrack');
+  const dotsEl      = document.getElementById('slDots');
+  const counter     = document.getElementById('slCounter');
+  const strip       = document.getElementById('thumbStrip');
+  const progressBar = document.getElementById('slProgressBar');
+  let current = 0;
+  let timer;
+
+  FILES.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'sl-dot' + (i===0?' active':'');
+    b.setAttribute('role','tab');
+    b.setAttribute('aria-label', `Foto ${i+1}`);
+    b.setAttribute('aria-selected', i===0?'true':'false');
+    b.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(b);
+  });
+
+  FILES.forEach((f, i) => {
+    const d = document.createElement('div');
+    d.className = 'thumb' + (i===0?' active':'');
+    d.setAttribute('role','listitem');
+    d.tabIndex = 0;
+    const img = document.createElement('img');
+    img.src = `img/natale2024/${f}.jpg`;
+    img.alt = '';
+    img.loading = 'lazy';
+    d.appendChild(img);
+    d.addEventListener('click', () => goTo(i));
+    d.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') goTo(i); });
+    strip.appendChild(d);
+  });
+
+  function goTo(n){
+    current = (n + TOTAL) % TOTAL;
+    track.style.transform = `translateX(-${current*100}%)`;
+    dotsEl.querySelectorAll('.sl-dot').forEach((d,i) => {
+      d.classList.toggle('active', i===current);
+      d.setAttribute('aria-selected', i===current?'true':'false');
+    });
+    const thumbs = strip.querySelectorAll('.thumb');
+    thumbs.forEach((t,i) => t.classList.toggle('active', i===current));
+    const thumbEl = thumbs[current];
+    const thumbLeft = thumbEl.offsetLeft;
+    const thumbRight = thumbLeft + thumbEl.offsetWidth;
+    const stripScroll = strip.scrollLeft;
+    const stripWidth = strip.offsetWidth;
+    if (thumbLeft < stripScroll) {
+      strip.scrollLeft = thumbLeft - 8;
+    } else if (thumbRight > stripScroll + stripWidth) {
+      strip.scrollLeft = thumbRight - stripWidth + 8;
+    }
+    counter.textContent = `${current+1} / ${TOTAL}`;
+    resetAutoplay();
+  }
+
+  document.getElementById('slPrev').addEventListener('click', e => { e.preventDefault(); goTo(current-1); });
+  document.getElementById('slNext').addEventListener('click', e => { e.preventDefault(); goTo(current+1); });
+
+  document.addEventListener('keydown', e => {
+    if(e.key==='ArrowLeft')  goTo(current-1);
+    if(e.key==='ArrowRight') goTo(current+1);
+  });
+
+  let tx = 0, ty = 0, swiping = false;
+  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; swiping = false; }, {passive:true});
+  track.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.touches[0].clientX - tx);
+    const dy = Math.abs(e.touches[0].clientY - ty);
+    if(dx > dy && dx > 8){ swiping = true; e.preventDefault(); }
+  }, {passive:false});
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if(swiping && Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+    swiping = false;
+  }, {passive:true});
+
+  function startProgress(){
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      progressBar.style.transition = `width ${AUTOPLAY_MS}ms linear`;
+      progressBar.style.width = '100%';
+    }));
+  }
+
+  function resetAutoplay(){
+    clearInterval(timer);
+    startProgress();
+    timer = setInterval(() => goTo(current+1), AUTOPLAY_MS);
+  }
+
+  const ss = document.getElementById('slideshow');
+  ss.addEventListener('mouseenter', () => { clearInterval(timer); progressBar.style.transition = 'none'; });
+  ss.addEventListener('mouseleave', () => resetAutoplay());
+
+  resetAutoplay();
+
+  const obs = new IntersectionObserver(es => es.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
+  }), {threshold:.08});
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+})();
+</script>
+</body>
+</html>

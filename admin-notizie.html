@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>Admin Notizie | Convitto "Costaggini"</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bosco: #2C3E2D; --oro: #B8922A; --oro2: #9a7820; --av: #F5F0E8;
+      --fu: 'Source Sans 3', sans-serif; --fd: 'Cormorant Garamond', serif;
+    }
+    body { font-family: var(--fu); background: #f0ebe0; color: #1a2e1b; min-height: 100vh; }
+
+    /* LOGIN */
+    #login-screen {
+      position: fixed; inset: 0; background: var(--bosco);
+      display: flex; align-items: center; justify-content: center; z-index: 100;
+    }
+    .login-box {
+      background: rgba(245,240,232,.06); border: 1px solid rgba(184,146,42,.3);
+      border-radius: 12px; padding: 2.5rem 2rem; width: 100%; max-width: 380px;
+      text-align: center;
+    }
+    .login-box h1 { font-family: var(--fd); font-size: 1.8rem; font-weight: 300; color: #fff; margin-bottom: .3rem; }
+    .login-box h1 em { font-style: italic; color: #D4AA4A; }
+    .login-box p { font-family: var(--fu); font-size: .7rem; color: rgba(255,255,255,.4); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1.75rem; }
+    .login-box input {
+      width: 100%; padding: .75rem 1rem; background: rgba(255,255,255,.07);
+      border: 1.5px solid rgba(184,146,42,.3); border-radius: 6px; color: #fff;
+      font-family: var(--fu); font-size: 16px; outline: none; margin-bottom: .75rem;
+      transition: border-color .2s;
+    }
+    .login-box input:focus { border-color: #B8922A; }
+    .login-box button {
+      width: 100%; padding: .8rem; background: linear-gradient(135deg, #B8922A, #D4AA4A);
+      color: var(--bosco); border: none; border-radius: 6px; font-family: var(--fu);
+      font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer;
+    }
+    #login-err { color: #e07070; font-size: .82rem; margin-top: .75rem; display: none; }
+
+    /* HEADER ADMIN */
+    .adm-header {
+      background: var(--bosco); padding: 1rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem;
+      position: sticky; top: 0; z-index: 50;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    .adm-header h1 { font-family: var(--fd); font-size: 1.3rem; font-weight: 300; color: #fff; }
+    .adm-header h1 em { font-style: italic; color: #D4AA4A; }
+    .adm-header-links { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+    .adm-header-links a { font-family: var(--fu); font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); text-decoration: none; }
+    .adm-header-links a:hover { color: #D4AA4A; }
+    .btn-logout { font-family: var(--fu); font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .4rem .9rem; border: 1px solid rgba(255,255,255,.2); background: none; color: rgba(255,255,255,.5); border-radius: 4px; cursor: pointer; }
+    .btn-logout:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+
+    /* AVVISO */
+    .adm-notice {
+      background: rgba(234,88,12,.1); border-left: 4px solid #ea580c;
+      padding: .9rem 1.25rem; font-size: .82rem; color: #92400e; line-height: 1.6;
+      margin: 1rem 1.5rem; border-radius: 0 6px 6px 0;
+    }
+
+    /* LAYOUT */
+    .adm-body { display: grid; grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem; }
+    @media(min-width: 900px) { .adm-body { grid-template-columns: 380px 1fr; } }
+
+    /* FORM */
+    .adm-card { background: #fff; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    .adm-card h2 { font-family: var(--fd); font-size: 1.3rem; font-weight: 400; color: var(--bosco); margin-bottom: 1.25rem; padding-bottom: .75rem; border-bottom: 1px solid #e8e0d0; }
+    .adm-card h2 em { font-style: italic; color: var(--oro); }
+    .fg { margin-bottom: .9rem; }
+    .fg label { display: block; font-family: var(--fu); font-size: .62rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #6b5a2a; margin-bottom: .3rem; }
+    .fg input, .fg select, .fg textarea {
+      width: 100%; padding: .65rem .9rem; border: 1.5px solid #d4c9a8;
+      border-radius: 6px; font-family: var(--fu); font-size: 15px; color: #1a2e1b;
+      background: #faf7f0; outline: none; transition: border-color .2s;
+    }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--oro); }
+    .fg textarea { resize: vertical; min-height: 100px; }
+    .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .fg-check { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: #2C3E2D; }
+    .fg-check input { width: auto; min-height: auto; accent-color: var(--oro); }
+    .adm-form-btns { display: flex; gap: .75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    .btn-save {
+      flex: 1; padding: .75rem; background: linear-gradient(135deg, var(--bosco), #1a3a1b);
+      color: #fff; border: none; border-radius: 6px; font-family: var(--fu);
+      font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer; transition: opacity .2s;
+    }
+    .btn-save:hover { opacity: .88; }
+    .btn-save.edit-mode { background: linear-gradient(135deg, #1a4a7a, #1e5a96); }
+    .btn-reset { padding: .75rem 1.1rem; background: none; border: 1.5px solid #d4c9a8; color: #6b5a2a; border-radius: 6px; font-family: var(--fu); font-size: .72rem; font-weight: 700; cursor: pointer; }
+    .btn-reset:hover { border-color: var(--oro); }
+    .save-ok { font-size: .8rem; color: #1d6f42; font-weight: 700; display: none; align-items: center; gap: .3rem; }
+
+    /* LISTA NOTIZIE */
+    .news-item {
+      border: 1px solid #e8e0d0; border-radius: 8px; padding: 1rem 1.1rem;
+      margin-bottom: .75rem; transition: box-shadow .2s; position: relative;
+    }
+    .news-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+    .news-item-header { display: flex; align-items: flex-start; gap: .75rem; }
+    .news-item-cat { font-family: var(--fu); font-size: .55rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; padding: .2rem .55rem; border-radius: 20px; background: rgba(44,62,45,.1); color: var(--bosco); flex-shrink: 0; margin-top: .15rem; }
+    .news-item-title { font-family: var(--fd); font-size: 1rem; font-weight: 400; color: var(--bosco); line-height: 1.3; flex: 1; }
+    .news-item-meta { font-family: var(--fu); font-size: .62rem; color: #8b7a5a; margin-top: .3rem; }
+    .news-item-actions { display: flex; gap: .5rem; margin-top: .85rem; flex-wrap: wrap; }
+    .btn-edit { font-family: var(--fu); font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .35rem .8rem; border-radius: 4px; border: 1.5px solid #1a4a7a; color: #1a4a7a; background: none; cursor: pointer; transition: all .2s; }
+    .btn-edit:hover { background: #1a4a7a; color: #fff; }
+    .btn-del { font-family: var(--fu); font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .35rem .8rem; border-radius: 4px; border: 1.5px solid #dc2626; color: #dc2626; background: none; cursor: pointer; transition: all .2s; }
+    .btn-del:hover { background: #dc2626; color: #fff; }
+    .btn-up, .btn-dn { font-size: .75rem; padding: .3rem .6rem; border: 1px solid #d4c9a8; border-radius: 4px; background: none; cursor: pointer; color: #6b5a2a; }
+    .btn-up:hover, .btn-dn:hover { border-color: var(--oro); color: var(--bosco); }
+    .news-count { font-family: var(--fu); font-size: .65rem; color: #8b7a5a; margin-bottom: 1rem; }
+    .badge-ev { background: rgba(184,146,42,.12); }
+    .badge-home { font-family: var(--fu); font-size: .5rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; background: #1d6f42; color: #fff; padding: .15rem .45rem; border-radius: 10px; margin-left: .4rem; }
+
+    /* AI box */
+    .ai-box { background: #f5f0e0; border: 1px solid #d4c9a8; border-radius: 8px; padding: 1rem; margin-bottom: .9rem; }
+    .ai-box h4 { font-family: var(--fu); font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--bosco); margin-bottom: .75rem; }
+    .ai-row { display: flex; gap: .5rem; }
+    .ai-input { flex: 1; padding: .6rem .85rem; border: 1.5px solid #d4c9a8; border-radius: 6px; font-family: var(--fu); font-size: 14px; background: #fff; outline: none; }
+    .ai-input:focus { border-color: var(--oro); }
+    .btn-ai { padding: .6rem 1rem; background: var(--bosco); color: #fff; border: none; border-radius: 6px; font-family: var(--fu); font-size: .65rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    .ai-status { font-size: .78rem; color: #8b7a5a; margin-top: .5rem; min-height: 1.2rem; }
+
+    /* Ordine */
+    .adm-card-list { background: #fff; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,.06); min-height: 300px; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1>Admin <em>Notizie</em></h1>
+    <p>Convitto "Costaggini" — Rieti</p>
+    <input type="password" id="pwd" placeholder="Password amministratore" autocomplete="current-password"/>
+    <button onclick="doLogin()">Accedi →</button>
+    <p id="login-err">Password errata. Riprova.</p>
+  </div>
+</div>
+
+<!-- PANNELLO ADMIN -->
+<div id="adm-wrap" style="display:none">
+
+  <header class="adm-header">
+    <h1>Admin <em>Notizie</em></h1>
+    <div class="adm-header-links">
+      <a href="notizie.html" target="_blank">→ Vedi notizie pubbliche</a>
+      <a href="index.html" target="_blank">→ Homepage</a>
+      <a href="avvisi.html" target="_blank">→ Admin Avvisi</a>
+      <button class="btn-logout" onclick="logout()">Esci</button>
+    </div>
+  </header>
+
+  <div class="adm-notice">
+    <strong>⚠️ Sistema demo locale:</strong> le modifiche vengono salvate nel browser (localStorage). Non sono condivise tra dispositivi diversi. Per un sistema permanente è necessario un database — disponibile dopo la pubblicazione su Netlify. Per aggiornare il sito, dopo aver salvato qui, esporta il JSON e sostituisci <code>notizie.json</code>.
+  </div>
+
+  <div class="adm-body">
+
+    <!-- FORM -->
+    <div class="adm-card">
+      <h2 id="form-title">+ Nuova <em>notizia</em></h2>
+
+      <!-- Assistente AI -->
+      <div class="ai-box">
+        <h4>⚡ Assistente AI — genera il testo automaticamente</h4>
+        <div class="ai-row">
+          <input type="text" class="ai-input" id="ai-prompt" placeholder="Es: inaugurazione palestra PNRR, ottobre 2025"/>
+          <button class="btn-ai" onclick="generateAI()">Genera</button>
+        </div>
+        <div class="ai-status" id="ai-status">Descrivi la notizia — l'AI scrive il testo per te.</div>
+      </div>
+
+      <div class="fg">
+        <label>Titolo *</label>
+        <input type="text" id="f-titolo" placeholder="Es: Inaugurazione nuova palestra — ottobre 2025"/>
+      </div>
+      <div class="fg-row">
+        <div class="fg">
+          <label>Data</label>
+          <input type="text" id="f-data" placeholder="Es: Ottobre 2025"/>
+        </div>
+        <div class="fg">
+          <label>Categoria</label>
+          <select id="f-cat">
+            <option value="Istituzionale">Istituzionale</option>
+            <option value="Vita al Convitto">Vita al Convitto</option>
+            <option value="PNRR">PNRR</option>
+            <option value="Successi">Successi</option>
+            <option value="Eventi">Eventi</option>
+            <option value="Erasmus+">Erasmus+</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Testo *</label>
+        <textarea id="f-testo" placeholder="Testo completo della notizia…" rows="5"></textarea>
+      </div>
+      <div class="fg">
+        <label>Link (URL o pagina interna)</label>
+        <input type="text" id="f-link" placeholder="Es: https://www.facebook.com/… oppure natale2024.html"/>
+      </div>
+      <div class="fg">
+        <label>Testo del link</label>
+        <input type="text" id="f-link-testo" placeholder="Es: Leggi su Facebook →"/>
+      </div>
+      <div class="fg">
+        <label>URL immagine</label>
+        <input type="text" id="f-img" placeholder="Es: https://images.unsplash.com/… oppure img/foto.jpg"/>
+      </div>
+      <div class="fg">
+        <label>Descrizione immagine (alt)</label>
+        <input type="text" id="f-img-alt" placeholder="Breve descrizione per accessibilità"/>
+      </div>
+      <div class="fg" style="display:flex;gap:1.5rem;flex-wrap:wrap">
+        <label class="fg-check"><input type="checkbox" id="f-evidenza"/> In evidenza (badge "Nuovo")</label>
+        <label class="fg-check"><input type="checkbox" id="f-featured"/> Notizia in primo piano</label>
+      </div>
+      <input type="hidden" id="f-edit-id"/>
+      <div class="adm-form-btns">
+        <button class="btn-save" id="btn-salva" onclick="salva()">📌 Pubblica notizia</button>
+        <button class="btn-reset" onclick="resetForm()">Annulla</button>
+        <span class="save-ok" id="save-ok">✅ Salvata!</span>
+      </div>
+    </div>
+
+    <!-- LISTA -->
+    <div class="adm-card-list">
+      <h2 style="font-family:var(--fd);font-size:1.3rem;font-weight:400;color:var(--bosco);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid #e8e0d0">Notizie pubblicate <em style="font-style:italic;color:var(--oro)">— gestisci</em></h2>
+      <p class="news-count" id="news-count"></p>
+      <div id="news-list"></div>
+
+      <!-- Esporta JSON -->
+      <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid #e8e0d0">
+        <p style="font-size:.8rem;color:#6b5a2a;margin-bottom:.75rem">Per aggiornare il sito online: esporta il JSON e sostituisci il file <code>notizie.json</code> su Netlify.</p>
+        <button onclick="esportaJSON()" style="font-family:var(--fu);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1.1rem;border:1.5px solid var(--bosco);color:var(--bosco);background:none;border-radius:6px;cursor:pointer">
+          ⬇️ Esporta notizie.json
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════
+// AUTH
+// ════════════════════════════════
+const PWD = 'Alluquartelachiazzetta_2025';
+const KEY = 'costaggini_notizie_admin_v1';
+
+function doLogin() {
+  if (document.getElementById('pwd').value === PWD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('adm-wrap').style.display = 'block';
+    loadNotizie();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+    document.getElementById('pwd').select();
+  }
+}
+document.getElementById('pwd').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function logout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('adm-wrap').style.display = 'none';
+  document.getElementById('pwd').value = '';
+}
+
+// ════════════════════════════════
+// DATI — carica da localStorage o notizie.json
+// ════════════════════════════════
+let notizie = [];
+
+async function loadNotizie() {
+  // Prima guarda il localStorage (modifiche locali)
+  const saved = localStorage.getItem(KEY);
+  if (saved) {
+    notizie = JSON.parse(saved);
+    renderList();
+    return;
+  }
+  // Altrimenti carica il JSON originale
+  try {
+    const r = await fetch('notizie.json?nocache=' + Date.now());
+    notizie = await r.json();
+    renderList();
+  } catch(e) {
+    notizie = [];
+    renderList();
+  }
+}
+
+function save() {
+  localStorage.setItem(KEY, JSON.stringify(notizie));
+}
+
+// ════════════════════════════════
+// RENDER LISTA
+// ════════════════════════════════
+function renderList() {
+  const list = document.getElementById('news-list');
+  document.getElementById('news-count').textContent =
+    `${notizie.length} notizie · le prime 3 appaiono in homepage`;
+
+  if (!notizie.length) {
+    list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:1rem 0">Nessuna notizia. Crea la prima con il form a sinistra.</p>';
+    return;
+  }
+
+  list.innerHTML = notizie.map((n, i) => `
+    <div class="news-item" id="ni-${n.id}">
+      <div class="news-item-header">
+        <span class="news-item-cat badge-ev">${n.categoria||'—'}</span>
+        <div>
+          <div class="news-item-title">
+            ${i < 3 ? '<span class="badge-home">HOME</span>' : ''}
+            ${n.titolo}
+          </div>
+          <div class="news-item-meta">${n.data||''} · ${(n.testo||'').substring(0,80)}…</div>
+        </div>
+      </div>
+      <div class="news-item-actions">
+        <button class="btn-edit" onclick="modifica('${n.id}')">✏️ Modifica</button>
+        <button class="btn-del"  onclick="elimina('${n.id}')">🗑 Elimina</button>
+        <button class="btn-up"   onclick="sposta(${i},-1)" ${i===0?'disabled':''} title="Sposta su">▲</button>
+        <button class="btn-dn"   onclick="sposta(${i},+1)" ${i===notizie.length-1?'disabled':''} title="Sposta giù">▼</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ════════════════════════════════
+// SALVA / MODIFICA
+// ════════════════════════════════
+function salva() {
+  const titolo = document.getElementById('f-titolo').value.trim();
+  const testo  = document.getElementById('f-testo').value.trim();
+  if (!titolo || !testo) { alert('Titolo e testo sono obbligatori.'); return; }
+
+  const editId = document.getElementById('f-edit-id').value;
+  const n = {
+    id:          editId || 'n-' + Date.now(),
+    titolo,
+    testo,
+    data:        document.getElementById('f-data').value.trim(),
+    categoria:   document.getElementById('f-cat').value,
+    link:        document.getElementById('f-link').value.trim() || '#',
+    link_testo:  document.getElementById('f-link-testo').value.trim() || 'Leggi →',
+    immagine:    document.getElementById('f-img').value.trim() || 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80',
+    immagine_alt:document.getElementById('f-img-alt').value.trim() || titolo,
+    in_evidenza: document.getElementById('f-evidenza').checked,
+    featured:    document.getElementById('f-featured').checked,
+  };
+
+  if (editId) {
+    const idx = notizie.findIndex(x => x.id === editId);
+    if (idx >= 0) notizie[idx] = n;
+  } else {
+    notizie.unshift(n); // Inserisce in cima
+  }
+
+  save();
+  renderList();
+  resetForm();
+  const ok = document.getElementById('save-ok');
+  ok.style.display = 'flex';
+  setTimeout(() => ok.style.display = 'none', 2500);
+}
+
+function modifica(id) {
+  const n = notizie.find(x => x.id === id);
+  if (!n) return;
+  document.getElementById('f-titolo').value    = n.titolo || '';
+  document.getElementById('f-testo').value     = n.testo || '';
+  document.getElementById('f-data').value      = n.data || '';
+  document.getElementById('f-cat').value       = n.categoria || 'Istituzionale';
+  document.getElementById('f-link').value      = n.link || '';
+  document.getElementById('f-link-testo').value= n.link_testo || '';
+  document.getElementById('f-img').value       = n.immagine || '';
+  document.getElementById('f-img-alt').value   = n.immagine_alt || '';
+  document.getElementById('f-evidenza').checked= !!n.in_evidenza;
+  document.getElementById('f-featured').checked= !!n.featured;
+  document.getElementById('f-edit-id').value   = id;
+  document.getElementById('form-title').innerHTML = '✏️ Modifica <em>notizia</em>';
+  document.getElementById('btn-salva').textContent = '💾 Aggiorna notizia';
+  document.getElementById('btn-salva').classList.add('edit-mode');
+  // Scroll al form
+  document.querySelector('.adm-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function elimina(id) {
+  const n = notizie.find(x => x.id === id);
+  if (!confirm(`Eliminare la notizia:\n"${n?.titolo}"?\n\nQuesta azione non è reversibile.`)) return;
+  notizie = notizie.filter(x => x.id !== id);
+  save();
+  renderList();
+}
+
+function sposta(idx, dir) {
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= notizie.length) return;
+  [notizie[idx], notizie[newIdx]] = [notizie[newIdx], notizie[idx]];
+  save();
+  renderList();
+}
+
+function resetForm() {
+  ['f-titolo','f-testo','f-data','f-link','f-link-testo','f-img','f-img-alt','f-edit-id'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-cat').value = 'Istituzionale';
+  document.getElementById('f-evidenza').checked = false;
+  document.getElementById('f-featured').checked = false;
+  document.getElementById('form-title').innerHTML = '+ Nuova <em>notizia</em>';
+  document.getElementById('btn-salva').textContent = '📌 Pubblica notizia';
+  document.getElementById('btn-salva').classList.remove('edit-mode');
+}
+
+// ════════════════════════════════
+// ESPORTA JSON
+// ════════════════════════════════
+function esportaJSON() {
+  const blob = new Blob([JSON.stringify(notizie, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'notizie.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ════════════════════════════════
+// ASSISTENTE AI
+// ════════════════════════════════
+async function generateAI() {
+  const prompt = document.getElementById('ai-prompt').value.trim();
+  if (!prompt) { alert('Descrivi brevemente la notizia.'); return; }
+  const status = document.getElementById('ai-status');
+  status.textContent = '⏳ Generazione in corso…';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [{
+          role: 'user',
+          content: `Sei il redattore del sito del Convitto "Costaggini" di Rieti (IPSSEOA).
+Scrivi una notizia breve (3-4 frasi, tono istituzionale ma vivace) su questo argomento: ${prompt}.
+Rispondi SOLO con il testo della notizia, senza titolo, senza virgolette, senza prefazioni.`
+        }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '';
+    if (text) {
+      document.getElementById('f-testo').value = text;
+      status.textContent = '✅ Testo generato — puoi modificarlo prima di pubblicare.';
+    } else {
+      status.textContent = '⚠️ Nessun testo generato. Riprova.';
+    }
+  } catch(e) {
+    status.textContent = '⚠️ Errore di connessione. Scrivi il testo manualmente.';
+  }
+}
+</script>
+</body>
+</html>

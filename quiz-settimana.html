@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>La tua Settimana Tipo | Convitto "Costaggini"</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background:#0a0f0a; }
+    .sw-wrap { max-width:780px; margin:0 auto; padding:2rem 1.25rem 5rem; }
+
+    /* Catalogo attività */
+    .sw-catalog { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:.65rem; margin-bottom:2rem; }
+    @media(max-width:420px){ .sw-catalog { grid-template-columns:1fr 1fr; } }
+    .sw-item { background:#141e14; border:1.5px solid rgba(184,146,42,.15); border-radius:10px; padding:.85rem .75rem; cursor:pointer; text-align:center; transition:all .2s; user-select:none; }
+    .sw-item:hover { border-color:var(--oro2); }
+    .sw-item.sel { border-color:var(--oro2); background:rgba(184,146,42,.1); }
+    .sw-item-icon { font-size:1.6rem; display:block; margin-bottom:.35rem; }
+    .sw-item-name { font-family:var(--fu); font-size:.65rem; font-weight:700; color:rgba(245,240,232,.8); line-height:1.4; }
+    .sw-item-time { font-family:var(--fu); font-size:.55rem; color:rgba(245,240,232,.3); margin-top:.2rem; }
+
+    /* Griglia settimana */
+    .sw-grid { overflow-x:auto; margin-bottom:1.5rem; }
+    .sw-table { width:100%; border-collapse:collapse; min-width:520px; }
+    .sw-table th { font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--oro2); padding:.6rem .5rem; text-align:center; border-bottom:1px solid rgba(184,146,42,.2); }
+    .sw-table th:first-child { text-align:left; color:rgba(245,240,232,.3); }
+    .sw-table td { padding:.45rem .4rem; border-bottom:1px solid rgba(255,255,255,.04); text-align:center; vertical-align:middle; }
+    .sw-table td:first-child { font-family:var(--fu); font-size:.6rem; font-weight:700; color:rgba(245,240,232,.3); text-align:left; white-space:nowrap; }
+    .sw-cell { border-radius:6px; padding:.3rem .4rem; font-family:var(--fu); font-size:.58rem; font-weight:700; cursor:pointer; min-height:28px; display:flex; align-items:center; justify-content:center; gap:.2rem; transition:all .2s; }
+    .sw-cell.empty { background:rgba(255,255,255,.03); color:rgba(255,255,255,.1); border:1px dashed rgba(255,255,255,.08); }
+    .sw-cell.empty:hover { border-color:rgba(184,146,42,.3); color:rgba(184,146,42,.4); }
+    .sw-cell.filled { color:#fff; }
+    .sw-cell.fixed { cursor:default; opacity:.7; }
+
+    /* Slot fissi per orario scolastico */
+    .sw-cell.scuola { background:rgba(44,62,45,.4); color:rgba(245,240,232,.5); font-size:.55rem; }
+
+    .sw-legend { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.5rem; }
+    .sw-legend-item { display:flex; align-items:center; gap:.35rem; font-family:var(--fu); font-size:.6rem; color:rgba(245,240,232,.4); }
+    .sw-legend-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+
+    /* Riepilogo */
+    .sw-summary { background:#141e14; border:1px solid rgba(184,146,42,.15); border-radius:10px; padding:1.25rem; margin-bottom:1.5rem; }
+    .sw-summary h3 { font-family:var(--fu); font-size:.62rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--oro2); margin-bottom:.75rem; }
+    .sw-tags { display:flex; flex-wrap:wrap; gap:.4rem; }
+    .sw-tag { font-family:var(--fu); font-size:.62rem; padding:.2rem .6rem; border-radius:12px; font-weight:700; }
+  </style>
+</head>
+<body data-page="quiz-settimana">
+<main id="main">
+  <div style="background:linear-gradient(160deg,#0a0f0a,#0d2e2a);padding:3.5rem 1.25rem 2.5rem;text-align:center">
+    <div class="w">
+      <nav class="breadcrumb" style="justify-content:center;margin-bottom:1.25rem">
+        <a href="scopri-talento.html" style="color:rgba(245,240,232,.35)">← Scopri il tuo Talento</a>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">Builder · Interattivo</p>
+      <h1 style="font-family:var(--fd);font-size:clamp(1.8rem,6vw,3.2rem);font-weight:300;color:#fff;margin-bottom:.5rem">La tua <em style="font-style:italic;color:var(--oro3)">settimana tipo</em></h1>
+      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:480px;margin:0 auto">Costruisci la tua settimana ideale al Convitto Costaggini. Scegli le attività e guarda come si riempie la tua agenda.</p>
+    </div>
+  </div>
+
+  <div class="sw-wrap">
+
+    <p style="font-family:var(--fu);font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.4);margin-bottom:.75rem">1 — Scegli le attività extra che ti piacciono:</p>
+
+    <div class="sw-catalog" id="sw-catalog"></div>
+
+    <p style="font-family:var(--fu);font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.4);margin-bottom:.75rem">2 — La tua settimana:</p>
+
+    <div class="sw-legend" id="sw-legend"></div>
+    <div class="sw-grid"><table class="sw-table" id="sw-table"></table></div>
+
+    <div class="sw-summary" id="sw-summary" style="display:none">
+      <h3>La tua settimana include:</h3>
+      <div class="sw-tags" id="sw-tags"></div>
+    </div>
+
+    <div style="text-align:center;margin-top:2rem">
+      <p style="font-family:var(--fd);font-size:1rem;font-style:italic;color:rgba(245,240,232,.5);margin-bottom:1rem">Ti piace quello che vedi? Al Costaggini è davvero così.</p>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+        <button onclick="resetWeek()" style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.7rem 1.5rem;background:transparent;border:1.5px solid rgba(184,146,42,.3);color:var(--oro2);border-radius:8px;cursor:pointer">↺ Ricomincia</button>
+        <a href="ammissione.html" class="btn-gold">Scopri come iscriverti →</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+const ATTIVITA = [
+  { id:'musica',   nome:'Lab Musicale',     icona:'🎵', colore:'#7c3aed', tempo:'Gio 17-19' },
+  { id:'sport',    nome:'Sport & Palestra',  icona:'⚽', colore:'#0891b2', tempo:'Lun/Mer 17-18' },
+  { id:'cinema',   nome:'Cinema & Serate',   icona:'🎬', colore:'#be123c', tempo:'Ven sera' },
+  { id:'cucina',   nome:'Lab di Cucina',     icona:'🍳', colore:'#b45309', tempo:'Mar 16-18' },
+  { id:'natura',   nome:'Escursioni',        icona:'🏔️', colore:'#166534', tempo:'Sab mattina' },
+  { id:'giochi',   nome:'Giochi e tornei',   icona:'🎮', colore:'#1d4ed8', tempo:'Mer sera' },
+  { id:'lettura',  nome:'Biblioteca',        icona:'📚', colore:'#64748b', tempo:'Ogni sera' },
+  { id:'teatro',   nome:'Teatro e recitaz.', icona:'🎭', colore:'#9d174d', tempo:'Mar sera' },
+];
+
+const GIORNI = ['Lun','Mar','Mer','Gio','Ven'];
+const FASCE = [
+  { label:'07:00–08:00', tipo:'fisso', nome:'🌅 Colazione e sveglia' },
+  { label:'08:00–13:30', tipo:'fisso', nome:'📚 Scuola' },
+  { label:'13:30–15:00', tipo:'fisso', nome:'🍽️ Pranzo' },
+  { label:'15:00–17:15', tipo:'fisso', nome:'📖 Studio guidato' },
+  { label:'17:15–19:00', tipo:'libero' },
+  { label:'19:00–20:00', tipo:'fisso', nome:'🍽️ Cena' },
+  { label:'20:00–22:00', tipo:'libero' },
+  { label:'22:00–22:30', tipo:'fisso', nome:'🌙 Luci spente' },
+];
+
+let settimana = {}; // key: "giorno-fascia" -> attivita id
+let sel = null; // attività selezionata
+
+function init() {
+  // Catalogo
+  const cat = document.getElementById('sw-catalog');
+  cat.innerHTML = ATTIVITA.map(a => `
+    <div class="sw-item" id="item-${a.id}" onclick="selectAtt('${a.id}')">
+      <span class="sw-item-icon">${a.icona}</span>
+      <div class="sw-item-name">${a.nome}</div>
+      <div class="sw-item-time">${a.tempo}</div>
+    </div>`).join('');
+
+  // Legenda
+  const leg = document.getElementById('sw-legend');
+  leg.innerHTML = [
+    {colore:'rgba(44,62,45,.5)',nome:'Fisso (scuola, pasti, studio)'},
+    {colore:'rgba(255,255,255,.06)',nome:'Slot libero — clicca per aggiungere'},
+  ].map(l => `<div class="sw-legend-item"><div class="sw-legend-dot" style="background:${l.colore}"></div>${l.nome}</div>`).join('');
+
+  renderTable();
+}
+
+function renderTable() {
+  const table = document.getElementById('sw-table');
+  let html = '<thead><tr><th>Orario</th>' + GIORNI.map(g=>`<th>${g}</th>`).join('') + '</tr></thead><tbody>';
+  FASCE.forEach((f,fi) => {
+    html += `<tr><td>${f.label}</td>`;
+    GIORNI.forEach((g,gi) => {
+      const key = `${gi}-${fi}`;
+      if (f.tipo === 'fisso') {
+        html += `<td><div class="sw-cell scuola fixed">${f.nome||''}</div></td>`;
+      } else {
+        const att = settimana[key] ? ATTIVITA.find(a=>a.id===settimana[key]) : null;
+        if (att) {
+          html += `<td><div class="sw-cell filled" style="background:${att.colore}20;border:1px solid ${att.colore}50" onclick="removeAtt('${key}')" title="Clicca per rimuovere">${att.icona} <span style="font-size:.55rem">${att.nome}</span></div></td>`;
+        } else {
+          html += `<td><div class="sw-cell empty" onclick="addAtt('${key}')">+</div></td>`;
+        }
+      }
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  table.innerHTML = html;
+  updateSummary();
+}
+
+function selectAtt(id) {
+  sel = id;
+  document.querySelectorAll('.sw-item').forEach(el => el.classList.remove('sel'));
+  document.getElementById('item-'+id).classList.add('sel');
+}
+
+function addAtt(key) {
+  if (!sel) {
+    // Evidenzia il catalogo
+    document.getElementById('sw-catalog').style.outline = '2px solid rgba(184,146,42,.4)';
+    setTimeout(() => document.getElementById('sw-catalog').style.outline = '', 1200);
+    return;
+  }
+  settimana[key] = sel;
+  renderTable();
+}
+
+function removeAtt(key) {
+  delete settimana[key];
+  renderTable();
+}
+
+function updateSummary() {
+  const used = [...new Set(Object.values(settimana))];
+  const sum = document.getElementById('sw-summary');
+  const tags = document.getElementById('sw-tags');
+  if (!used.length) { sum.style.display='none'; return; }
+  sum.style.display='block';
+  tags.innerHTML = used.map(id => {
+    const a = ATTIVITA.find(a=>a.id===id);
+    const count = Object.values(settimana).filter(v=>v===id).length;
+    return `<span class="sw-tag" style="background:${a.colore}20;color:${a.colore};border:1px solid ${a.colore}40">${a.icona} ${a.nome} ×${count}</span>`;
+  }).join('');
+}
+
+function resetWeek() {
+  settimana = {}; sel = null;
+  document.querySelectorAll('.sw-item').forEach(el=>el.classList.remove('sel'));
+  renderTable();
+}
+
+init();
+</script>
+</body>
+</html>

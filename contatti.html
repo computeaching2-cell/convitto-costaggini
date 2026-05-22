@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Contatta il Convitto Costaggini di Rieti: telefono, email, PEC e modulo di contatto diretto." />
+  <meta property="og:title" content="Contatti — Convitto "Costaggini" Rieti"/>
+  <meta property="og:description" content="Contatta il Convitto Costaggini di Rieti: telefono, email, PEC, mappa e calcolo itinerario."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Convitto Costaggini — Rieti"/>
+  <meta property="og:image" content="https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4374-scaled.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="theme-color" content="#2C3E2D" />
+  <title>Contatti | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .cinfo-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+    .ci-ico { width: 36px; height: 36px; border-radius: 50%; background: var(--bosco); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ci-ico svg { width: 16px; height: 16px; fill: var(--oro2); }
+    .citxt label { display: block; font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--oro); margin-bottom: .12rem; }
+    .citxt p, .citxt a { font-size: .86rem; color: var(--txt); line-height: 1.55; text-decoration: none; margin-bottom: 0; }
+    .citxt a { color: var(--bosco2); }
+
+    .cfrm { display: flex; flex-direction: column; gap: 1rem; }
+    .frow { display: flex; flex-direction: column; gap: 1rem; }
+    .fg { display: flex; flex-direction: column; gap: .3rem; }
+    .fg label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--bosco); }
+    .fg label .req { color: var(--oro); }
+    .fg input, .fg select, .fg textarea {
+      font-size: 1rem; font-family: var(--fu); color: var(--txt);
+      background: var(--av); border: 1.5px solid var(--av3); border-radius: 3px;
+      padding: .72rem .9rem; width: 100%; min-height: 48px;
+      transition: border-color var(--ease), box-shadow var(--ease);
+      -webkit-appearance: none;
+    }
+    .fg textarea { min-height: 120px; resize: vertical; }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { outline: none; border-color: var(--bosco2); box-shadow: 0 0 0 3px rgba(61,92,62,.1); }
+    .fpriv { display: flex; gap: .65rem; align-items: flex-start; font-size: .77rem; color: #666; line-height: 1.55; }
+    .fpriv input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; margin-top: .1rem; cursor: pointer; accent-color: var(--bosco); }
+    .bsub { background: linear-gradient(135deg,var(--bosco),var(--bosco2)); color: var(--av); border: none; cursor: pointer; font-family: var(--fu); font-size: .84rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .9rem 1.5rem; border-radius: 40px; min-height: 48px; width: 100%; box-shadow: 0 4px 14px rgba(44,62,45,.3); transition: var(--ease); }
+    .bsub:hover { opacity: .9; transform: translateY(-1px); }
+    @media(min-width:560px){ .frow { flex-direction: row; } .frow .fg { flex: 1; } .bsub { width: auto; align-self: flex-start; } }
+    @media(min-width:900px){ .cgrid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; } .cinfo-list { margin-bottom: 0; } }
+
+    /* Orari */
+    .orari-strip { background: var(--bosco); padding: 2.5rem 1rem; }
+    .orari-strip h2 { color: var(--av); }
+    .orari-strip h2 em { color: var(--oro3); }
+    .orari-strip .lbl { color: var(--oro2); }
+    .orari-strip .lbl::before { background: var(--oro2); }
+    .orari-grid { display: grid; gap: .75rem; margin-top: 1.5rem; }
+    .og-item { background: rgba(255,255,255,.06); border: 1px solid rgba(184,146,42,.15); border-radius: 6px; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .og-label { font-size: .8rem; font-weight: 600; color: var(--av); }
+    .og-time { font-family: var(--fd); font-size: 1.1rem; font-weight: 300; color: var(--oro3); }
+    @media(min-width:640px){ .orari-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:900px){ .orari-strip { padding: 4rem 2rem; } .orari-grid { grid-template-columns: repeat(3,1fr); } }
+
+    /* Success/error messages */
+    .form-msg { display: none; padding: 1rem 1.25rem; border-radius: 4px; font-size: .88rem; font-weight: 600; margin-top: .75rem; }
+    .form-msg.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .form-msg.error   { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+  @media(min-width:560px){.cnt-grid{grid-template-columns:1fr 1fr}}</style>
+</head>
+<body data-page="contatti">
+<main id="main">
+
+  <div class="page-hero">
+    <div class="w">
+      <nav class="breadcrumb" aria-label="Percorso"><a href="index.html">Home</a><span>›</span><span aria-current="page">Contatti</span></nav>
+      <div class="gold-bar"></div>
+      <h1>Contatti e <em>informazioni</em></h1>
+      <p class="sub">Il nostro staff è disponibile per rispondere a qualsiasi domanda sul Convitto "Costaggini". Scrivici, chiamaci o vieni a trovarci a Rieti.</p>
+    </div>
+  </div>
+
+  <!-- CONTATTI + FORM -->
+  <section style="background:var(--bco)">
+    <div class="w cgrid">
+      <!-- Info contatti -->
+      <div>
+        <p class="lbl">I nostri recapiti</p>
+        <h2>Come <em>contattarci</em></h2>
+        <div class="cinfo-list" role="list">
+          <div class="irow"><div class="ci-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div class="citxt"><label>Indirizzo</label><p>Via Salaria s.n.c.<br>02100 Rieti (RI)</p></div></div>
+          <div class="irow"><div class="ci-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div><div class="citxt"><label>Telefono Convitto</label><a href="tel:+390746296862">0746 296862</a></div></div>
+          <div class="irow"><div class="ci-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div><div class="citxt"><label>Telefono Istituto</label><a href="tel:+390746201113">0746 201113</a></div></div>
+          <div class="irow"><div class="ci-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="citxt"><label>Email Convitto</label><a href="mailto:convitto@alberghierorieti.it">convitto@alberghierorieti.it</a></div></div>
+          <div class="irow"><div class="ci-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="citxt"><label>Email Istituto</label><a href="mailto:rirh010007@istruzione.it">rirh010007@istruzione.it</a></div></div>
+          <div class="irow"><div class="ci-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="citxt"><label>PEC — Posta Elettronica Certificata</label><a href="mailto:rirh010007@pec.istruzione.it" style="font-weight:700;color:var(--bosco);word-break:break-all">rirh010007@pec.istruzione.it</a><p style="font-size:.72rem;color:var(--txt2);margin-top:.2rem">Per comunicazioni ufficiali con valore legale</p></div></div>
+          <div class="irow"><div class="ci-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg></div><div class="citxt"><label>Orari sportello</label><p>Lun–Ven 8:00–13:00 / 14:30–17:00<br>Sabato 9:00–12:00</p></div></div>
+          <div class="irow"><div class="ci-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div><div class="citxt"><label>Dirigente Scolastico</label><p>Prof. Giovanni Luca Barbonetti<br><a href="mailto:rirh010007@istruzione.it">rirh010007@istruzione.it</a></p></div></div>
+        </div>
+      </div>
+
+      <!-- FORM con Netlify Forms — server EU, GDPR compliant -->
+      <div>
+        <h2 style="margin-bottom:1.25rem">Scrivici un <em>messaggio</em></h2>
+        <p style="font-size:.83rem;color:var(--txt2);margin-bottom:1.5rem">
+          Compila il modulo: il messaggio arriverà direttamente nella casella email del Convitto.
+        </p>
+        <form
+          class="cfrm"
+          id="contact-form"
+          name="contatti"
+          netlify
+          netlify-honeypot="bot-field"
+          method="POST"
+          action="/grazie.html"
+          novalidate
+          aria-label="Modulo di contatto">
+
+          <!-- Netlify Forms — campi di sistema -->
+          <input type="hidden" name="form-name" value="contatti"/>
+          <p style="display:none"><label>Non compilare: <input name="bot-field"/></label></p>
+
+          <div class="frow">
+            <div class="fg">
+              <label for="nome">Nome <span class="req">*</span></label>
+              <input style="font-size:16px" type="text" id="nome" name="nome" required autocomplete="given-name" placeholder="Mario"/>
+            </div>
+            <div class="fg">
+              <label for="cognome">Cognome <span class="req">*</span></label>
+              <input style="font-size:16px" type="text" id="cognome" name="cognome" required autocomplete="family-name" placeholder="Rossi"/>
+            </div>
+          </div>
+          <div class="fg">
+            <label for="email">Email <span class="req">*</span></label>
+            <input style="font-size:16px" type="email" id="email" name="email" required autocomplete="email" placeholder="mario@email.it"/>
+          </div>
+          <div class="fg">
+            <label for="telefono">Telefono</label>
+            <input style="font-size:16px" type="tel" id="telefono" name="telefono" autocomplete="tel" placeholder="333 1234567"/>
+          </div>
+          <div class="fg">
+            <label for="oggetto">Motivo della richiesta <span class="req">*</span></label>
+            <select id="oggetto" name="oggetto" required>
+              <option value="">— Seleziona —</option>
+              <option value="colloquio-educatori">Colloquio con gli Educatori</option>
+              <option value="emergenza">Emergenza / Urgenza</option>
+              <option value="ammissione">Informazioni sull'ammissione</option>
+              <option value="servizi">Informazioni su servizi e strutture</option>
+              <option value="visita">Prenotazione visita / Open Day</option>
+              <option value="documentazione">Richiesta documentazione</option>
+              <option value="tariffe">Tariffe e contributi</option>
+              <option value="altro">Altro</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label for="messaggio">Messaggio <span class="req">*</span></label>
+            <textarea id="messaggio" name="messaggio" required placeholder="Scrivi qui il tuo messaggio…"></textarea>
+          </div>
+          <div class="fpriv">
+            <input style="font-size:16px" type="checkbox" id="priv" name="privacy_accettata" required aria-required="true" value="si"/>
+            <label for="priv">
+              Ho letto e accetto l'<a href="privacy.html" style="color:var(--bosco2)">informativa sul trattamento dei dati personali</a> ai sensi del Reg. UE 2016/679 (GDPR). <span class="req">*</span>
+            </label>
+          </div>
+          <button type="submit" class="bsub">Invia messaggio →</button>
+          <div class="form-msg success" id="form-success" role="alert">
+            ✓ Messaggio inviato con successo! Ti risponderemo entro 24 ore nei giorni lavorativi.
+          </div>
+          <div class="form-msg error" id="form-error" role="alert">
+            ✗ Si è verificato un errore. Riprova o contattaci direttamente per email.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORARI SPORTELLO -->
+  <div class="orari-strip">
+    <div class="w">
+      <p class="lbl">Orari</p>
+      <h2>Orari dello <em>sportello</em></h2>
+
+      <!-- Nota segreteria -->
+      <div style="background:rgba(184,146,42,.08);border:1px solid rgba(184,146,42,.25);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.85rem;color:var(--bosco2);line-height:1.7">
+        <strong>📋 Segreteria didattica:</strong> il Dirigente Scolastico e gli uffici di segreteria ricevono in presenza
+        <strong>esclusivamente per appuntamento</strong>, prenotabile tramite centralino al
+        <a href="tel:07462011113" style="color:var(--bosco);font-weight:700">0746 201113</a>
+        oppure via email a <a href="mailto:rirh010007@istruzione.it" style="color:var(--bosco);font-weight:700">rirh010007@istruzione.it</a>.
+      </div>
+
+      <div class="orari-grid">
+        <div class="og-item"><span class="og-label">Lunedì – Venerdì (mattina)</span><span class="og-time">8:00 – 13:00</span></div>
+        <div class="og-item"><span class="og-label">Pomeriggio (lun–ven)</span><span class="og-time">14:30 – 17:00</span></div>
+        <div class="og-item"><span class="og-label">Sabato mattina</span><span class="og-time">Chiuso</span></div>
+        <div class="og-item"><span class="og-label">Domenica e festivi</span><span class="og-time">Chiuso</span></div>
+        <div class="og-item"><span class="og-label">Dirigente (su appuntamento)</span><span class="og-time">Centralino 0746 201113</span></div>
+        <div class="og-item"><span class="og-label">Risposta email/PEC</span><span class="og-time">Entro 2 gg lavorativi</span></div>
+      </div>
+
+      <!-- Nota Educatori — punto 4 -->
+      <div style="background:linear-gradient(135deg,rgba(44,62,45,.06),rgba(44,62,45,.03));border:1px solid rgba(44,62,45,.15);border-radius:10px;padding:1.25rem 1.5rem;margin-top:1.5rem;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-1rem;right:1rem;font-size:3rem;opacity:.06;font-family:var(--fd)">❤</div>
+        <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro);margin-bottom:.6rem">👨‍🏫 Gli Educatori sono sempre disponibili</p>
+        <p style="font-size:.88rem;color:var(--bosco2);line-height:1.8;margin:0">
+          Preferiamo sempre un appuntamento concordato — per garantire la giusta attenzione e il tempo necessario. Ma un genitore che si presenta spontaneamente chiedendo notizie sull'andamento del figlio
+          <strong>troverà sempre ascolto e disponibilità</strong> da parte degli Educatori.
+          Nessun genitore viene mai rimandato indietro.
+        </p>
+        <a href="educatori.html" style="display:inline-block;margin-top:.85rem;font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bosco2);text-decoration:none;border-bottom:1px solid rgba(44,62,45,.25);padding-bottom:1px">→ Conosci gli Educatori</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- DOVE SIAMO -->
+  <section id="dove-siamo" style="background:var(--av2);padding:4rem 1.25rem 0">
+    <div class="w">
+      <p class="lbl">Come raggiungerci</p>
+      <h2>Dove <em>siamo</em></h2>
+      <p style="color:var(--txt2);max-width:580px;margin:.4rem 0 2rem;font-size:.9rem">Il Convitto "Costaggini" si trova a Rieti, in Via Salaria s.n.c. Inserisci la tua città di partenza per calcolare distanza e tempo di percorrenza.</p>
+
+      <!-- Widget calcola itinerario -->
+      <div style="background:var(--bosco);border-radius:10px;padding:1.5rem;margin-bottom:2rem;border:1px solid rgba(184,146,42,.2)" class="rv">
+        <p style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:1rem">🗺️ Calcola il tuo itinerario</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end">
+          <div style="flex:1;min-width:200px">
+            <label for="from-city" style="display:block;font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.5);margin-bottom:.4rem">Da dove parti?</label>
+            <input id="from-city" type="text" placeholder="Es. Milano, Roma, Napoli…"
+              style="width:100%;padding:.7rem 1rem;border-radius:6px;border:1.5px solid rgba(184,146,42,.3);background:rgba(245,240,232,.06);color:var(--av);font-family:var(--fu);font-size:.85rem;outline:none;box-sizing:border-box"
+              onkeydown="if(event.key==='Enter')calcolaItinerario()"/>
+          </div>
+          <button onclick="calcolaItinerario()" style="padding:.7rem 1.4rem;background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--bosco);border:none;border-radius:6px;font-family:var(--fu);font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:transform .2s,box-shadow .2s"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 18px rgba(184,146,42,.5)'"
+            onmouseout="this.style.transform='';this.style.boxShadow=''">
+            Calcola →
+          </button>
+        </div>
+        <div id="itinerario-result" style="margin-top:1rem;display:none">
+          <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:.75rem">
+            <div id="res-auto" style="background:rgba(245,240,232,.06);border:1px solid rgba(184,146,42,.2);border-radius:6px;padding:.7rem 1.1rem;flex:1;min-width:140px">
+              <span style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);display:block;margin-bottom:.25rem">🚗 In auto</span>
+              <span id="auto-dist" style="font-family:var(--fd);font-size:1.1rem;color:var(--av)">—</span>
+              <span id="auto-time" style="display:block;font-size:.75rem;color:rgba(245,240,232,.5);margin-top:.15rem">—</span>
+            </div>
+            <div id="res-treno" style="background:rgba(245,240,232,.06);border:1px solid rgba(184,146,42,.2);border-radius:6px;padding:.7rem 1.1rem;flex:1;min-width:140px">
+              <span style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);display:block;margin-bottom:.25rem">🚂 In treno</span>
+              <span style="font-family:var(--fd);font-size:.9rem;color:rgba(245,240,232,.6)">Linea Roma Tiburtina–Rieti</span>
+              <a href="https://www.trenitalia.com" target="_blank" rel="noopener" style="display:block;font-size:.72rem;color:var(--oro2);margin-top:.2rem">Orari Trenitalia →</a>
+            </div>
+          </div>
+          <a id="gmaps-link" href="#" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fu);font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oro2);text-decoration:none;border-bottom:1px solid rgba(184,146,42,.3);padding-bottom:2px">
+            Apri in Google Maps con navigazione →
+          </a>
+        </div>
+        <p id="itinerario-error" style="display:none;font-size:.82rem;color:#e07070;margin-top:.75rem">Città non trovata. Prova con un nome più preciso (es. "Milano, Italia").</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAPPA GOOGLE -->
+  <section style="padding:0" aria-label="Mappa di localizzazione">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2961.5!2d12.8624!3d42.4056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132ef7b7b1c3e6b1%3A0x0!2sVia+Salaria%2C+Rieti+RI!5e0!3m2!1sit!2sit!4v1"
+      title="Posizione del Convitto Costaggini — Rieti, Via Salaria"
+      style="width:100%;height:380px;border:none;display:block"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+    <div style="background:var(--bosco);padding:.9rem 1rem;font-size:.8rem;color:rgba(245,240,232,.6);text-align:center;display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;align-items:center">
+      <span>📍 Convitto "Costaggini" — Via Salaria s.n.c. — 02100 Rieti (RI)</span>
+      <a href="https://maps.google.com/?q=Via+Salaria,+Rieti+RI+Italia" target="_blank" rel="noopener"
+         style="color:var(--oro2);font-family:var(--fu);font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none">
+        Apri in Google Maps ↗
+      </a>
+      <a href="https://maps.google.com/?q=Via+Salaria,+Rieti+RI+Italia&dirflg=d" target="_blank" rel="noopener"
+         style="color:var(--oro2);font-family:var(--fu);font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none">
+        Avvia navigazione GPS ↗
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+function calcolaItinerario() {
+  const from = document.getElementById('from-city').value.trim();
+  if (!from) return;
+
+  const dest = 'Via Salaria, Rieti, RI, Italia';
+  const resultEl = document.getElementById('itinerario-result');
+  const errorEl  = document.getElementById('itinerario-error');
+  const distEl   = document.getElementById('auto-dist');
+  const timeEl   = document.getElementById('auto-time');
+  const linkEl   = document.getElementById('gmaps-link');
+
+  resultEl.style.display = 'none';
+  errorEl.style.display  = 'none';
+  distEl.textContent = '…';
+  timeEl.textContent = '';
+
+  // Usa Google Maps Distance Matrix API via URL publico (no key) — fallback su Maps link
+  const fromEnc = encodeURIComponent(from + ', Italia');
+  const destEnc = encodeURIComponent(dest);
+
+  // Costruiamo il link Google Maps diretto con from e to
+  const mapsUrl = `https://www.google.com/maps/dir/${fromEnc}/${destEnc}`;
+  linkEl.href = mapsUrl;
+
+  // Stima approssimativa distanza lineare tramite coordinate (no API key necessaria)
+  // Usiamo Nominatim (OpenStreetMap) per geocodifica gratuita
+  fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(from + ', Italia')}&limit=1`, {
+    headers: { 'Accept-Language': 'it' }
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (!data || data.length === 0) throw new Error('not found');
+    const lat1 = parseFloat(data[0].lat);
+    const lon1 = parseFloat(data[0].lon);
+    // Coordinate Rieti Via Salaria
+    const lat2 = 42.4056, lon2 = 12.8624;
+
+    // Distanza Haversine (in linea d'aria)
+    const R = 6371;
+    const dLat = (lat2-lat1) * Math.PI/180;
+    const dLon = (lon2-lon1) * Math.PI/180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+    const distLinea = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    // Fattore correzione stradale (~1.3x) e velocità media (80 km/h)
+    const distStrada = Math.round(distLinea * 1.32);
+    const mins = Math.round((distStrada / 80) * 60);
+    const ore = Math.floor(mins / 60);
+    const minRest = mins % 60;
+    const tempoStr = ore > 0
+      ? `circa ${ore}h ${minRest > 0 ? minRest + ' min' : ''}`
+      : `circa ${minRest} min`;
+
+    distEl.textContent = `${distStrada} km`;
+    timeEl.textContent = tempoStr + ' di guida';
+    resultEl.style.display = 'block';
+  })
+  .catch(() => {
+    errorEl.style.display = 'block';
+  });
+}
+</script>
+<script src="shared.js?v=2"></script>
+<script>
+  /* Netlify Forms — validazione prima dell'invio nativo */
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      const required = form.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(el => {
+        el.style.borderColor = '';
+        if (el.type === 'checkbox' ? !el.checked : !el.value.trim()) {
+          valid = false;
+          el.style.borderColor = '#dc2626';
+        }
+      });
+      if (!valid) {
+        e.preventDefault();
+        form.querySelector('[style*="border-color"]')?.scrollIntoView({ behavior:'smooth', block:'center' });
+      }
+    });
+  }
+</script>
+</body>
+</html>

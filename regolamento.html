@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Regolamento del Convitto 'Costaggini' di Rieti — versione aggiornata al 30 gennaio 2025."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Regolamento di Convitto | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* HERO compatto */
+    .reg-hero {
+      background: linear-gradient(135deg, var(--bosco), #1a3a1b);
+      padding: 4rem 1.25rem 2.5rem;
+    }
+    .reg-hero h1 { font-family:var(--fd); font-size:clamp(1.8rem,5vw,3rem); font-weight:300; color:#fff; margin-bottom:.4rem; }
+    .reg-hero h1 em { font-style:italic; color:var(--oro3); }
+    .reg-hero p { color:rgba(245,240,232,.6); font-size:.88rem; max-width:560px; line-height:1.7; margin-top:.5rem; }
+
+    /* Barra azioni */
+    .reg-toolbar {
+      background: var(--bosco);
+      border-bottom: 1px solid rgba(184,146,42,.2);
+      padding: .75rem 1.25rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: .75rem;
+      position: sticky; top: 68px; z-index: 50;
+    }
+    .reg-info {
+      font-family: var(--fu); font-size: .62rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(245,240,232,.5); display: flex; align-items: center; gap: .6rem;
+      width: 100%; justify-content: center; text-align: center;
+    }
+    .reg-info span { color: var(--oro2); }
+    .reg-actions { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; }
+    .reg-btn {
+      font-family: var(--fu); font-size: .62rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .45rem .9rem; border-radius: 4px; cursor: pointer;
+      display: inline-flex; align-items: center; gap: .35rem;
+      text-decoration: none; transition: all .2s; border: none;
+    }
+    .reg-btn-primary {
+      background: linear-gradient(135deg, var(--oro), var(--oro2));
+      color: var(--bosco);
+    }
+    .reg-btn-primary:hover { opacity: .88; }
+    .reg-btn-secondary {
+      background: rgba(245,240,232,.08); color: rgba(245,240,232,.7);
+      border: 1px solid rgba(245,240,232,.15);
+    }
+    .reg-btn-secondary:hover { background: rgba(245,240,232,.14); color: #fff; }
+
+    /* Viewer PDF */
+    .reg-viewer {
+      background: #2a2a2a;
+      min-height: 80vh;
+      padding: 1.5rem 1.25rem;
+    }
+    .pdf-frame-wrap {
+      max-width: 900px; margin: 0 auto;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.5);
+      overflow: hidden;
+    }
+    .pdf-frame-wrap iframe {
+      width: 100%; height: 85vh; border: none; display: block;
+    }
+    /* Fallback per browser che non supportano iframe PDF */
+    .pdf-fallback {
+      display: none;
+      padding: 3rem 2rem; text-align: center;
+      background: var(--av); border-radius: 4px;
+    }
+    .pdf-fallback h3 { font-family:var(--fd); font-size:1.4rem; color:var(--bosco); margin-bottom:.75rem; }
+    .pdf-fallback p { font-size:.85rem; color:var(--txt2); margin-bottom:1.25rem; }
+
+    /* Indice articoli accordion */
+    .reg-indice { background: var(--av2); padding: 3rem 1.25rem; }
+    .reg-indice h2 { font-family:var(--fd); font-size:1.6rem; font-weight:400; color:var(--bosco); margin-bottom:.4rem; }
+    .reg-indice h2 em { font-style:italic; color:var(--oro); }
+    .reg-indice p { color:var(--txt2); font-size:.85rem; margin-bottom:1.5rem; }
+
+    .art-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: .5rem;
+    }
+    .art-item {
+      background: var(--av); border: 1px solid var(--av3);
+      border-radius: 6px; padding: .75rem 1rem;
+      display: flex; align-items: center; gap: .75rem;
+      transition: background .2s, border-color .2s, transform .15s;
+      cursor: pointer; text-decoration: none;
+    }
+    .art-item:hover {
+      background: rgba(44,62,45,.05);
+      border-color: rgba(184,146,42,.3);
+      transform: translateY(-1px);
+    }
+    .art-num {
+      font-family: var(--fd); font-size: 1rem; font-style: italic;
+      color: var(--oro); flex-shrink: 0; min-width: 2rem;
+    }
+    .art-title { font-family: var(--fu); font-size: .72rem; font-weight: 700; letter-spacing: .04em; color: var(--bosco); line-height: 1.3; }
+
+    /* Mobile: sostituisce iframe con link download */
+    @media(max-width: 640px) {
+      .pdf-frame-wrap iframe { height: 60vh; }
+      .reg-toolbar { top: 56px; }
+    }
+
+    /* ── CARD INDICE ── */
+    .art-card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:.6rem; margin-top:1.5rem; }
+    .art-card {
+      display:flex; align-items:center; gap:.85rem;
+      background:var(--av); border:1px solid var(--av3);
+      border-radius:8px; padding:.85rem 1.1rem;
+      cursor:pointer; text-align:left; width:100%;
+      transition:background .2s, border-color .2s, transform .15s, box-shadow .15s;
+    }
+    .art-card:hover { background:rgba(44,62,45,.06); border-color:rgba(184,146,42,.4); transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.1); }
+    .art-card-num { font-family:var(--fd); font-size:.9rem; font-style:italic; color:var(--oro); flex-shrink:0; min-width:46px; }
+    .art-card-title { font-family:var(--fu); font-size:.72rem; font-weight:700; letter-spacing:.04em; color:var(--bosco); flex:1; line-height:1.3; }
+    .art-card-arrow { color:rgba(184,146,42,.4); font-size:.8rem; flex-shrink:0; transition:color .2s, transform .2s; }
+    .art-card:hover .art-card-arrow { color:var(--oro2); transform:translateX(3px); }
+
+    /* ── OVERLAY ── */
+
+    @keyframes overlayIn { from{opacity:0} to{opacity:1} }
+
+    /* ── MODALE ── */
+    /* Modale articoli regolamento */
+    .art-overlay {
+      display:none; position:fixed; inset:0;
+      background:rgba(10,15,10,.75); z-index:1999;
+      backdrop-filter:blur(4px);
+    }
+    .art-overlay.open { display:block; }
+
+    .art-modal {
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:2000;
+      overflow-y:auto;
+      box-sizing:border-box;
+    }
+    .art-modal.open { display:block; }
+
+    .art-modal-box {
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 24px 64px rgba(0,0,0,.4);
+      display:flex;
+      flex-direction:column;
+      width:min(660px,92%);
+      max-height:65vh;
+      overflow:hidden;
+      margin:130px auto 2rem;
+      animation:modalIn .28s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes modalIn {
+      from { opacity:0; transform:scale(.95); }
+      to   { opacity:1; transform:scale(1); }
+    }
+      to   { opacity:1; transform:scale(1)   translateY(0); }
+    }
+      to   { opacity:1; transform:scale(1); }
+    }
+
+    .art-modal-box {
+      background:#fff; border-radius:12px;
+      box-shadow:0 24px 64px rgba(0,0,0,.35);
+      display:flex; flex-direction:column;
+      width:min(660px,100%);
+      max-height:calc(100vh - 100px);
+      overflow:hidden;
+    }
+
+    .art-modal-header {
+      display:flex; align-items:flex-start; justify-content:space-between; gap:1rem;
+      padding:1.5rem 1.75rem 1rem;
+      border-bottom:1px solid var(--av3);
+      background:linear-gradient(135deg,var(--bosco),#1a3a1b);
+      flex-shrink:0;
+    }
+    .art-modal-num { font-family:var(--fd); font-size:.9rem; font-style:italic; color:var(--oro2); display:block; margin-bottom:.2rem; }
+    .art-modal-title { font-family:var(--fd); font-size:1.4rem; font-weight:300; color:#fff; margin:0; line-height:1.2; }
+    .art-modal-close {
+      background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+      color:rgba(255,255,255,.7); width:34px; height:34px; border-radius:50%;
+      cursor:pointer; font-size:1rem; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .2s, color .2s;
+    }
+    .art-modal-close:hover { background:rgba(255,255,255,.2); color:#fff; }
+
+    .art-modal-body {
+      padding:1.5rem 1.75rem; overflow-y:auto; flex:1;
+      font-size:.88rem; color:var(--txt2); line-height:1.85;
+    }
+    .art-modal-body p { margin-bottom:.85rem; }
+    .art-modal-body p:last-child { margin-bottom:0; }
+    .art-modal-body blockquote.art-modal-quote {
+      font-family:var(--fd); font-size:1.05rem; font-style:italic; color:var(--bosco);
+      border-left:3px solid var(--oro); padding:.75rem 1rem;
+      background:rgba(184,146,42,.06); border-radius:0 6px 6px 0; margin:.75rem 0;
+    }
+    .art-modal-list { margin:.5rem 0 .85rem 0; padding-left:0; list-style:none; }
+    .art-modal-list li { padding:.3rem 0 .3rem 1.3rem; position:relative; border-bottom:1px solid var(--av3); font-size:.86rem; }
+    .art-modal-list li:last-child { border-bottom:none; }
+    .art-modal-list li::before { content:"→"; position:absolute; left:0; color:var(--oro); font-size:.7rem; top:.4rem; }
+
+    .art-modal-footer {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1rem 1.75rem;
+      border-top:1px solid var(--av3);
+      background:var(--av2); flex-shrink:0;
+    }
+    .art-modal-counter { font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--txt2); }
+    .art-modal-nav {
+      font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.06em;
+      text-transform:uppercase; padding:.45rem .9rem; border-radius:4px;
+      border:1.5px solid var(--av3); background:none; color:var(--bosco2);
+      cursor:pointer; transition:all .2s; max-width:200px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .art-modal-nav:hover:not(:disabled) { border-color:var(--oro2); color:var(--bosco); }
+    .art-modal-nav:disabled { opacity:.3; cursor:default; }
+    @media(max-width:480px){
+      .art-modal-footer { flex-direction:column; gap:.5rem; }
+      .art-modal-nav { max-width:100%; }
+    }
+
+  </style>
+</head>
+<body data-page="regolamento">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="reg-hero">
+    <div class="w">
+      <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:1.25rem">
+        <a href="index.html" style="color:rgba(245,240,232,.45)">Home</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <a href="ammissione.html" style="color:rgba(245,240,232,.45)">Ammissione</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <span aria-current="page" style="color:var(--oro2)">Regolamento</span>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.6rem">— Documento ufficiale</p>
+      <h1>Regolamento <em>di Convitto</em></h1>
+      <p>Il documento che disciplina la vita comunitaria al Convitto "Costaggini" di Rieti. 35 articoli che definiscono diritti, doveri e valori della nostra comunità educante.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.25rem;font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.4)">
+        <span>📄 35 articoli</span>
+        <span>·</span>
+        <span>📅 Versione 30 gennaio 2025</span>
+        <span>·</span>
+        <span>🏛️ IPSSEOA "R. A. Costaggini" — Rieti</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="reg-toolbar">
+    <div class="reg-info">
+      <svg viewBox="0 0 24 24" width="14" height="14" style="fill:var(--oro2)"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+      Regolamento di Convitto &nbsp;·&nbsp; <span>Versione 30/01/2025</span>
+    </div>
+    <div class="reg-actions">
+      <a href="regolamento-guida.html"
+         class="reg-btn reg-btn-primary">
+        📖 Lettura guidata
+      </a>
+      <a href="Regolamento-di-Convitto-versione-30-01-2025__1_.pdf" download
+         class="reg-btn reg-btn-primary">
+        ⬇️ Scarica PDF
+      </a>
+      <a href="Regolamento-di-Convitto-versione-30-01-2025__1_.pdf" target="_blank" rel="noopener"
+         class="reg-btn reg-btn-secondary">
+        ↗ Apri in nuova scheda
+      </a>
+      <button onclick="window.print()" class="reg-btn reg-btn-secondary">
+        🖨️ Stampa
+      </button>
+    </div>
+  </div>
+
+  <!-- INDICE DEGLI ARTICOLI -->
+  <section class="reg-indice">
+    <div class="w">
+      <p class="lbl">Orientarsi nel documento</p>
+      <h2>Indice degli <em>articoli</em></h2>
+      <p>Clicca su un articolo per aprire una scheda di lettura immediata — senza aprire il PDF, senza perdere il filo.</p>
+      <div class="art-card-grid">
+        
+        <button class="art-card rv" onclick="openArt(0)" aria-label="Apri articolo: Il Convitto e la Scuola">
+          <span class="art-card-num">Premessa</span>
+          <span class="art-card-title">Il Convitto e la Scuola</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d1" onclick="openArt(1)" aria-label="Apri articolo: Organizzazione del Convitto">
+          <span class="art-card-num">Art. 1</span>
+          <span class="art-card-title">Organizzazione del Convitto</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d2" onclick="openArt(2)" aria-label="Apri articolo: Organi del Convitto">
+          <span class="art-card-num">Art. 2</span>
+          <span class="art-card-title">Organi del Convitto</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv" onclick="openArt(3)" aria-label="Apri articolo: Il Collaboratore del DS per il Convitto">
+          <span class="art-card-num">Art. 3</span>
+          <span class="art-card-title">Il Collaboratore del DS per il Convitto</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d1" onclick="openArt(4)" aria-label="Apri articolo: Il Collegio degli Educatori">
+          <span class="art-card-num">Art. 4</span>
+          <span class="art-card-title">Il Collegio degli Educatori</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d2" onclick="openArt(5)" aria-label="Apri articolo: Gli Educatori">
+          <span class="art-card-num">Art. 5</span>
+          <span class="art-card-title">Gli Educatori</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv" onclick="openArt(6)" aria-label="Apri articolo: Il Responsabile della Funzione Strumentale">
+          <span class="art-card-num">Art. 6</span>
+          <span class="art-card-title">Il Responsabile della Funzione Strumentale</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d1" onclick="openArt(7)" aria-label="Apri articolo: Il Personale del Convitto">
+          <span class="art-card-num">Art. 7</span>
+          <span class="art-card-title">Il Personale del Convitto</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d2" onclick="openArt(8)" aria-label="Apri articolo: Igiene, Servizi Sanitari e Locali">
+          <span class="art-card-num">Art. 8–9</span>
+          <span class="art-card-title">Igiene, Servizi Sanitari e Locali</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv" onclick="openArt(9)" aria-label="Apri articolo: Chi può iscriversi e come si viene ammessi">
+          <span class="art-card-num">Art. 10–11</span>
+          <span class="art-card-title">Chi può iscriversi e come si viene ammessi</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d1" onclick="openArt(10)" aria-label="Apri articolo: La Domanda di Ammissione">
+          <span class="art-card-num">Art. 12</span>
+          <span class="art-card-title">La Domanda di Ammissione</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d2" onclick="openArt(11)" aria-label="Apri articolo: Riammissione">
+          <span class="art-card-num">Art. 13</span>
+          <span class="art-card-title">Riammissione</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv" onclick="openArt(12)" aria-label="Apri articolo: Obblighi dei Genitori e Comunicazioni">
+          <span class="art-card-num">Art. 14–15</span>
+          <span class="art-card-title">Obblighi dei Genitori e Comunicazioni</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d1" onclick="openArt(13)" aria-label="Apri articolo: Periodo di Funzionamento">
+          <span class="art-card-num">Art. 19</span>
+          <span class="art-card-title">Periodo di Funzionamento</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d2" onclick="openArt(14)" aria-label="Apri articolo: Permanenza in Convitto e Corredo">
+          <span class="art-card-num">Art. 20</span>
+          <span class="art-card-title">Permanenza in Convitto e Corredo</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv" onclick="openArt(15)" aria-label="Apri articolo: Orario di Vita Convittuale">
+          <span class="art-card-num">Art. 22</span>
+          <span class="art-card-title">Orario di Vita Convittuale</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d1" onclick="openArt(16)" aria-label="Apri articolo: Sala Pranzo e Vitto">
+          <span class="art-card-num">Art. 24</span>
+          <span class="art-card-title">Sala Pranzo e Vitto</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d2" onclick="openArt(17)" aria-label="Apri articolo: Uscite e Libera Uscita">
+          <span class="art-card-num">Art. 25–26</span>
+          <span class="art-card-title">Uscite e Libera Uscita</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv" onclick="openArt(18)" aria-label="Apri articolo: Assistenza Medica e Malattia">
+          <span class="art-card-num">Art. 28–29</span>
+          <span class="art-card-title">Assistenza Medica e Malattia</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d1" onclick="openArt(19)" aria-label="Apri articolo: Doveri dei Convittori">
+          <span class="art-card-num">Art. 30</span>
+          <span class="art-card-title">Doveri dei Convittori</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d2" onclick="openArt(20)" aria-label="Apri articolo: Sanzioni Disciplinari">
+          <span class="art-card-num">Art. 31</span>
+          <span class="art-card-title">Sanzioni Disciplinari</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv" onclick="openArt(21)" aria-label="Apri articolo: Tipologia di Mancanze">
+          <span class="art-card-num">Art. 32</span>
+          <span class="art-card-title">Tipologia di Mancanze</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d1" onclick="openArt(22)" aria-label="Apri articolo: Consiglio di Disciplina e Cogestione">
+          <span class="art-card-num">Art. 33–34</span>
+          <span class="art-card-title">Consiglio di Disciplina e Cogestione</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+        <button class="art-card rv d2" onclick="openArt(23)" aria-label="Apri articolo: Disposizioni Finali">
+          <span class="art-card-num">Art. 35</span>
+          <span class="art-card-title">Disposizioni Finali</span>
+          <span class="art-card-arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERLAY MODALE -->
+  <div class="art-overlay" id="art-overlay" onclick="closeArt()"></div>
+  
+  <div class="art-modal" id="art-modal-0" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-0">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Premessa</span>
+          <h3 class="art-modal-title" id="art-modal-title-0">Il Convitto e la Scuola</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il Convitto annesso all'IPSSEOA "R. A. Costaggini" di Rieti è organizzato sia come Scuola che come Convitto maschile e femminile. Scuola e Convitto cooperano entrambi alla crescita didattica ed educativa degli alunni, in costante collegamento con le famiglie.</p><p>Il Convitto è un servizio a disposizione degli studenti per rendere più agevole il conseguimento dello sviluppo intellettuale e fisico dei giovani accolti. Rappresenta un mezzo per favorire il pieno sviluppo della personalità dell'educando, attraverso l'interazione tra il momento scolastico e quello educativo.</p><p>Gli obiettivi del Progetto Educativo comprendono:
+• Realizzazione della convivenza e integrazione tra i convittori
+• Uguaglianza delle opportunità educative
+• Promozione della conoscenza delle regole civili e dei propri diritti e doveri
+• Sostegno nella progressiva conquista dell'autonomia
+• Valorizzazione dell'identità e dei talenti di ciascuno</p><blockquote class="art-modal-quote">"Il Convitto è un laboratorio di vita democratica, di autonomia, di crescita e di consapevolezza."</blockquote>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" disabled>
+          —
+        </button>
+        <span class="art-modal-counter">1 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(1)">
+          Organizzazione del Convitto →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-1" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-1">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 1</span>
+          <h3 class="art-modal-title" id="art-modal-title-1">Organizzazione del Convitto</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il Dirigente Scolastico dell'Istituto sovrintende anche all'andamento educativo e disciplinare del Convitto.</p><p>Il Collegio degli Educatori cura l'organizzazione e la programmazione educativa inserita nel Progetto Educativo, che è da ritenersi parte integrante del Regolamento.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(0)">
+          ← Il Convitto e la Scuola
+        </button>
+        <span class="art-modal-counter">2 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(2)">
+          Organi del Convitto →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-2" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-2">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 2</span>
+          <h3 class="art-modal-title" id="art-modal-title-2">Organi del Convitto</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Sono organi del Convitto:
+• Il Consiglio d'Istituto
+• Il Dirigente Scolastico
+• Il Collaboratore del DS per il Convitto
+• Il Collegio degli Educatori
+• Gli Educatori</p><p>Il Consiglio d'Istituto gestisce l'amministrazione, delibera il bilancio e adotta il Regolamento interno.
+Il Dirigente Scolastico è il rappresentante legale del Convitto e vigila sul buon andamento dello stesso.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(1)">
+          ← Organizzazione del Convitto
+        </button>
+        <span class="art-modal-counter">3 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(3)">
+          Il Collaboratore del DS per il Conv… →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-3" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-3">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 3</span>
+          <h3 class="art-modal-title" id="art-modal-title-3">Il Collaboratore del DS per il Convitto</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il Collaboratore del DS per il Convitto viene nominato annualmente dal Dirigente Scolastico. Coadiuva il Capo d'Istituto nel funzionamento del Convitto sia ai fini del coordinamento degli Educatori sia per il corretto svolgimento della vita comunitaria.</p><p>Mantiene rapporti costanti con il Dirigente Scolastico, coordina il Personale Educativo, dialoga con i genitori in situazioni particolari e coordina i rapporti tra Personale Educativo e Docenti.</p><p>In caso di gravi infrazioni, può allontanare temporaneamente il convittore dal Convitto, dandone immediato avviso alla famiglia, in attesa del procedimento disciplinare formale.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(2)">
+          ← Organi del Convitto
+        </button>
+        <span class="art-modal-counter">4 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(4)">
+          Il Collegio degli Educatori →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-4" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-4">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 4</span>
+          <h3 class="art-modal-title" id="art-modal-title-4">Il Collegio degli Educatori</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il Collegio degli Educatori si riunisce periodicamente e svolge le seguenti funzioni:
+• Propone il Piano delle Attività educative ad inizio anno
+• Indica criteri e modalità per gli incontri con le famiglie
+• Formula ipotesi per i gruppi di studio e l'orario di servizio
+• Esamina i casi di alunni con particolari difficoltà
+• Si esprime sulla riammissione dei convittori
+• Individua gli Educatori che parteciperanno al Collegio dei Docenti</p><p>Si riunisce con cadenza periodica e/o quando ne faccia richiesta 1/3 dei componenti.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(3)">
+          ← Il Collaboratore del DS per il Conv…
+        </button>
+        <span class="art-modal-counter">5 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(5)">
+          Gli Educatori →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-5" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-5">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 5</span>
+          <h3 class="art-modal-title" id="art-modal-title-5">Gli Educatori</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>L'Educatore è una figura professionale dell'area Docente, peculiare dell'istituzione educativa. Attraverso una serie di interventi, partecipa al processo di formazione degli allievi.</p><p>L'Educatore promuove processi di crescita umana, civile e culturale nonché di socializzazione. Assiste i convittori nei vari momenti della vita comune: organizza lo studio e il tempo libero, le iniziative culturali, ricreative e sportive.</p><p>Partecipa alla formazione degli alunni attraverso rapporti e intese con le famiglie e con i Docenti dell'Istituto.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(4)">
+          ← Il Collegio degli Educatori
+        </button>
+        <span class="art-modal-counter">6 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(6)">
+          Il Responsabile della Funzione Stru… →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-6" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-6">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 6</span>
+          <h3 class="art-modal-title" id="art-modal-title-6">Il Responsabile della Funzione Strumentale</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Tra il personale Educativo sono insediati uno o più Responsabili di Funzione Strumentale, nominati annualmente dal Dirigente Scolastico su indicazione del Collegio degli Educatori.</p><p>Loro compito è coordinare i progetti definiti dal Collegio degli Educatori in aderenza al Piano Triennale dell'Offerta Formativa. Intrattengono riunioni periodiche per monitorare l'andamento dei progetti e individuarne eventuali punti critici.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(5)">
+          ← Gli Educatori
+        </button>
+        <span class="art-modal-counter">7 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(7)">
+          Il Personale del Convitto →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-7" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-7">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 7</span>
+          <h3 class="art-modal-title" id="art-modal-title-7">Il Personale del Convitto</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Oltre agli Educatori, fanno parte dell'organizzazione del Convitto:</p><ul class="art-modal-list"><li>Cuoco: responsabile dei servizi di cucina</li><li>Infermiere: gestisce l'infermeria, conserva i medicinali, pratica le terapie prescritte, effettua il primo soccorso</li><li>Collaboratori scolastici (accudienti): pulizia, custodia dei locali, collaborazione in cucina e sorveglianza dei piani</li><li>Custodi: depositari delle chiavi, presidiano gli accessi H24, chiudono il cancello alle 22:30 e lo riaprono alle 6:00</li><li>Guardarobiere: offre il servizio di lavaggio e stiratura del corredo personale</li></ul>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(6)">
+          ← Il Responsabile della Funzione Stru…
+        </button>
+        <span class="art-modal-counter">8 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(8)">
+          Igiene, Servizi Sanitari e Locali →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-8" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-8">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 8–9</span>
+          <h3 class="art-modal-title" id="art-modal-title-8">Igiene, Servizi Sanitari e Locali</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>La vigilanza sull'igiene dei locali è esercitata dal DSGA. Il servizio sanitario è affidato a un medico convenzionato.</p><p>Locali del Convitto: camere per convittori ed educatori, aula musicale, presidio custodi, sala mensa, cucina, dispensa, magazzino, guardaroba, infermeria, ufficio educatori.</p><p>In comune con la scuola: palestra, sala convegni/TV, aule studio, spazi esterni sportivi.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(7)">
+          ← Il Personale del Convitto
+        </button>
+        <span class="art-modal-counter">9 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(9)">
+          Chi può iscriversi e come si viene … →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-9" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-9">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 10–11</span>
+          <h3 class="art-modal-title" id="art-modal-title-9">Chi può iscriversi e come si viene ammessi</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Possono presentare domanda di iscrizione tutti gli allievi frequentanti l'IPSSEOA "R. A. Costaggini". Possono iscriversi anche studenti di altri istituti, fatta salva la precedenza degli alunni del Costaggini.</p><p>L'ammissione avviene per graduatoria. Ha la precedenza chi si iscrive per la prima volta rispetto ai ripetenti.</p><p>Requisiti di base:
+• Disponibilità a convivere con persone diverse
+• Accettazione delle osservazioni degli Educatori
+• Rispetto degli ambienti e delle strutture
+• Volontà di applicarsi nello studio
+• Assenza di abitudini socialmente pericolose</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(8)">
+          ← Igiene, Servizi Sanitari e Locali
+        </button>
+        <span class="art-modal-counter">10 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(10)">
+          La Domanda di Ammissione →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-10" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-10">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 12</span>
+          <h3 class="art-modal-title" id="art-modal-title-10">La Domanda di Ammissione</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>La domanda si presenta contestualmente all'iscrizione scolastica. L'iscrizione online va perfezionata in segreteria.</p><p>Entro il 7 luglio:
+• Presentare la documentazione richiesta
+• Versare la quota di iscrizione stabilita dal Consiglio d'Istituto</p><p>La retta comprende: vitto (4 pasti al giorno), alloggio, servizio lavanderia, partecipazione a manifestazioni culturali e sportive, trasporto Convitto–scuola.</p><p>Al primo ingresso i genitori firmano: scheda informativa, scheda sanitaria, autorizzazione alle uscite, verbale di consegna materiale e Patto di Corresponsabilità.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(9)">
+          ← Chi può iscriversi e come si viene …
+        </button>
+        <span class="art-modal-counter">11 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(11)">
+          Riammissione →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-11" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-11">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 13</span>
+          <h3 class="art-modal-title" id="art-modal-title-11">Riammissione</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>I convittori saranno riconfermati se:
+• Non sono incorsi in provvedimenti di allontanamento definitivo
+• Hanno tenuto un comportamento corretto nell'anno precedente
+• Hanno ottenuto parere favorevole del Collegio degli Educatori
+• Hanno ottenuto l'ammissione alla classe successiva</p><p>I ripetenti possono essere riammessi sulla base di elementi che valutino l'idoneità dell'ambiente convittuale alla personalità del ragazzo e particolari problemi di salute.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(10)">
+          ← La Domanda di Ammissione
+        </button>
+        <span class="art-modal-counter">12 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(12)">
+          Obblighi dei Genitori e Comunicazio… →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-12" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-12">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 14–15</span>
+          <h3 class="art-modal-title" id="art-modal-title-12">Obblighi dei Genitori e Comunicazioni</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>I genitori accettano il Regolamento e sottoscrivono il Patto di Corresponsabilità, impegnandosi a collaborare con il Personale Educativo.</p><p>Il Convitto riconosce primaria importanza ai rapporti con la famiglia. Con il consenso della famiglia, gli Educatori possono accedere al Registro Elettronico del ragazzo.</p><p>Gli Educatori contattano direttamente la famiglia quando necessario. I genitori possono richiedere un colloquio in qualsiasi momento con il Dirigente o con gli Educatori di riferimento.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(11)">
+          ← Riammissione
+        </button>
+        <span class="art-modal-counter">13 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(13)">
+          Periodo di Funzionamento →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-13" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-13">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 19</span>
+          <h3 class="art-modal-title" id="art-modal-title-13">Periodo di Funzionamento</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il Convitto è aperto da domenica sera (ore 20:00) al venerdì mattina, per tutto l'anno scolastico.</p><p>È chiuso nei giorni festivi: 1 novembre, 4 dicembre (patrono), 8 dicembre, 6 gennaio, 25 aprile, 1 maggio, 2 giugno.</p><p>Il rientro della domenica sera è possibile dalle 20:00 alle 22:00. Sono organizzate corse con i mezzi del Convitto dai punti di ritrovo indicati a inizio anno.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(12)">
+          ← Obblighi dei Genitori e Comunicazio…
+        </button>
+        <span class="art-modal-counter">14 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(14)">
+          Permanenza in Convitto e Corredo →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-14" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-14">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 20</span>
+          <h3 class="art-modal-title" id="art-modal-title-14">Permanenza in Convitto e Corredo</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il Convitto assegna a ogni convittore: letto, materasso, cuscino, poggia-oggetti, armadietto.</p><p>Il convittore deve portare: coperte/piumino, completo da letto, 2 asciugamani, pigiama, ciabatte, sacchetto biancheria sporca, appendiabiti.</p><p>Ogni danneggiamento doloso o per colpa grave comporta addebito ai responsabili. Se non si identifica il responsabile, il danno è diviso tra i convittori della stanza.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(13)">
+          ← Periodo di Funzionamento
+        </button>
+        <span class="art-modal-counter">15 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(15)">
+          Orario di Vita Convittuale →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-15" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-15">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 22</span>
+          <h3 class="art-modal-title" id="art-modal-title-15">Orario di Vita Convittuale</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <ul class="art-modal-list"><li>06:30 — Sveglia e igiene personale</li><li>07:00 – 07:35 — Prima colazione</li><li>07:40 – 08:00 — Trasferimento a scuola</li><li>14:00 — Pranzo</li><li>15:00 – 15:30 — Tempo libero</li><li>15:30 – 17:15 — Studio guidato obbligatorio</li><li>17:15 — Merenda</li><li>17:30 – 19:15 — Libera uscita e/o attività convittuali</li><li>19:15 — Cena</li><li>20:30 – 22:00 — Tempo libero e/o attività serali</li><li>22:30 — Riposo notturno</li></ul>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(14)">
+          ← Permanenza in Convitto e Corredo
+        </button>
+        <span class="art-modal-counter">16 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(16)">
+          Sala Pranzo e Vitto →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-16" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-16">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 24</span>
+          <h3 class="art-modal-title" id="art-modal-title-16">Sala Pranzo e Vitto</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il menù è mensile con rotazione settimanale, concordato con specialista dell'alimentazione. È uguale per tutti, salvo prescrizioni mediche certificate.</p><p>Tutti devono presentarsi in mensa all'orario stabilito, anche senza consumare il pasto, in abbigliamento corretto e con buone maniere.</p><p>È vietato: portare lo zaino in mensa, introdurre cibo dall'esterno con qualsiasi servizio di consegna.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(15)">
+          ← Orario di Vita Convittuale
+        </button>
+        <span class="art-modal-counter">17 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(17)">
+          Uscite e Libera Uscita →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-17" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-17">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 25–26</span>
+          <h3 class="art-modal-title" id="art-modal-title-17">Uscite e Libera Uscita</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>La libera uscita è accordata previa autorizzazione scritta dei genitori (firmata a inizio anno), che solleva il Dirigente e il personale educativo da ogni responsabilità.</p><p>I minorenni vengono accompagnati al punto di ritrovo con i mezzi del Convitto. I maggiorenni possono usare la pista ciclopedonale in autonomia.</p><p>Il rientro deve avvenire entro le ore 22:00. Chi è malato non può usufruire della libera uscita.</p><p>Per visite infrasettimanali: richiesta scritta dei genitori (anche via email con documento allegato).</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(16)">
+          ← Sala Pranzo e Vitto
+        </button>
+        <span class="art-modal-counter">18 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(18)">
+          Assistenza Medica e Malattia →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-18" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-18">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 28–29</span>
+          <h3 class="art-modal-title" id="art-modal-title-18">Assistenza Medica e Malattia</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il Convitto dispone di un medico convenzionato SSN e di un'infermiera presente in Convitto.</p><p>Al primo ingresso: certificato medico di idoneità e scheda sanitaria con allergie/intolleranze/terapie. Tutti i farmaci sono custoditi in infermeria.</p><p>In caso di malattia lieve: il ragazzo resta in Convitto, la famiglia è sempre avvisata. In caso di malattia seria: rientro in famiglia nella stessa giornata della comunicazione. In emergenza: l'infermiera accompagna al pronto soccorso.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(17)">
+          ← Uscite e Libera Uscita
+        </button>
+        <span class="art-modal-counter">19 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(19)">
+          Doveri dei Convittori →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-19" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-19">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 30</span>
+          <h3 class="art-modal-title" id="art-modal-title-19">Doveri dei Convittori</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Ogni convittore si impegna a:
+• Rispettare le direttive del Personale Educativo
+• Rispettare l'orario di vita convittuale
+• Spegnere il cellulare in mensa, durante lo studio e il riposo notturno
+• Non riprendere immagini di compagni o personale senza consenso
+• Tenere in ordine la stanza e curare l'igiene personale
+• Non introdurre alcol, sostanze stupefacenti o oggetti pericolosi
+• Non introdurre dispositivi elettronici non autorizzati (TV, consolle, ecc.)
+• Mantenere un comportamento rispettoso dentro e fuori il Convitto</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(18)">
+          ← Assistenza Medica e Malattia
+        </button>
+        <span class="art-modal-counter">20 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(20)">
+          Sanzioni Disciplinari →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-20" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-20">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 31</span>
+          <h3 class="art-modal-title" id="art-modal-title-20">Sanzioni Disciplinari</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il sistema disciplinare è progressivo. Prima di qualsiasi sanzione il convittore viene ascoltato.</p><ul class="art-modal-list"><li>Mancanza lieve → avvertimento verbale</li><li>Mancanza lieve reiterata → avvertimento scritto, comunicazione alla famiglia, possibile limitazione della libera uscita</li><li>Mancanza grave → sospensione fino a 5 giorni (DS su proposta del Consiglio di Disciplina)</li><li>Mancanza gravissima → espulsione (deliberata dal Consiglio d'Istituto)</li></ul><p>Le sanzioni a, b, c possono essere convertite in attività utili alla comunità.
+Contro qualsiasi provvedimento si può ricorrere all'Organo di Garanzia.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(19)">
+          ← Doveri dei Convittori
+        </button>
+        <span class="art-modal-counter">21 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(21)">
+          Tipologia di Mancanze →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-21" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-21">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 32</span>
+          <h3 class="art-modal-title" id="art-modal-title-21">Tipologia di Mancanze</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Mancanze lievi: alzarsi in ritardo, stanza in disordine, disturbare lo studio, linguaggio volgare, trascurare l'igiene personale.</p><p>Mancanze gravi: fumare, mancare di rispetto al personale o ai compagni, arrecare danni, uso di alcol, uscire senza autorizzazione, reiterare mancanze lievi per tre volte.</p><p>Mancanze gravissime: violenza fisica, furto, vandalismo, uso o distribuzione di stupefacenti, falsificazione di documenti, eludere intenzionalmente la sorveglianza, diffondere immagini violando la privacy.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(20)">
+          ← Sanzioni Disciplinari
+        </button>
+        <span class="art-modal-counter">22 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(22)">
+          Consiglio di Disciplina e Cogestion… →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-22" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-22">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 33–34</span>
+          <h3 class="art-modal-title" id="art-modal-title-22">Consiglio di Disciplina e Cogestione</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il Consiglio di Disciplina è composto da: Collaboratore del DS, un Educatore, un rappresentante eletto tra i convittori.</p><p>I convittori eleggono ogni anno: un rappresentante per camera, dieci rappresentanti di corso (cinque per il maschile, cinque per il femminile) e un rappresentante di Convitto. Queste figure collaborano con gli Educatori e formulano proposte per migliorare la vita convittuale.</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(21)">
+          ← Tipologia di Mancanze
+        </button>
+        <span class="art-modal-counter">23 / 24</span>
+        <button class="art-modal-nav next" onclick="openArt(23)">
+          Disposizioni Finali →
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="art-modal" id="art-modal-23" role="dialog" aria-modal="true" aria-labelledby="art-modal-title-23">
+    <div class="art-modal-box">
+      <div class="art-modal-header">
+        <div>
+          <span class="art-modal-num">Art. 35</span>
+          <h3 class="art-modal-title" id="art-modal-title-23">Disposizioni Finali</h3>
+        </div>
+        <button class="art-modal-close" onclick="closeArt()" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="art-modal-body">
+        <p>Il presente Regolamento è valido nei confronti di tutti i convittori a prescindere dalla loro maggiore o minore età.</p><p>Per quanto non contemplato nel Regolamento si fa riferimento alle vigenti disposizioni di legge.</p><p>Il Regolamento si ispira alla Costituzione della Repubblica Italiana e allo Statuto delle Studentesse e degli Studenti (DPR 249/1998 e DPR 235/2007).</p>
+      </div>
+      <div class="art-modal-footer">
+        <button class="art-modal-nav prev" onclick="openArt(22)">
+          ← Consiglio di Disciplina e Cogestion…
+        </button>
+        <span class="art-modal-counter">24 / 24</span>
+        <button class="art-modal-nav next" disabled>
+          —
+        </button>
+      </div>
+    </div>
+  </div>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+  // Se il browser non supporta PDF in iframe, mostra il fallback
+  const iframe = document.getElementById('pdf-iframe');
+  const fallback = document.getElementById('pdf-fallback');
+  iframe.addEventListener('error', () => {
+    iframe.style.display = 'none';
+    fallback.style.display = 'block';
+  });
+  // Su mobile piccolo, suggerisci il download
+  if (window.innerWidth < 480) {
+    iframe.style.height = '50vh';
+  }
+</script>
+
+<script>
+let currentArt = -1;
+const TOTAL_ART = 24;
+
+function openArt(i) {
+  if (currentArt >= 0) {
+    document.getElementById('art-modal-' + currentArt).classList.remove('open');
+  }
+  currentArt = i;
+  // Porta la pagina in cima PRIMA di mostrare il modale
+  // così il position:fixed parte sempre dalla stessa origine
+  window.scrollTo(0, 0);
+  document.getElementById('art-overlay').classList.add('open');
+  const modal = document.getElementById('art-modal-' + i);
+  modal.classList.add('open');
+  modal.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeArt() {
+  if (currentArt >= 0) {
+    document.getElementById('art-modal-' + currentArt).classList.remove('open');
+    currentArt = -1;
+  }
+  document.getElementById('art-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Tastiera: Escape chiude, frecce navigano
+document.addEventListener('keydown', e => {
+  if (currentArt < 0) return;
+  if (e.key === 'Escape') closeArt();
+  if (e.key === 'ArrowRight' && currentArt < TOTAL_ART - 1) openArt(currentArt + 1);
+  if (e.key === 'ArrowLeft'  && currentArt > 0)              openArt(currentArt - 1);
+});
+</script>
+</body>
+</html>

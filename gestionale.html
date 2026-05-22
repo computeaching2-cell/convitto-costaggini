@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+  <meta name="description" content="Gestionale interno del Convitto Costaggini di Rieti — accesso riservato al personale educativo."/>
+  <meta name="theme-color" content="#1e3a8a"/>
+
+  <!-- PWA: si comporta come app nativa quando aggiunta alla homescreen -->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Registro Costaggini"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="application-name" content="Registro Costaggini"/>
+
+  <title>Gestionale | Convitto "Costaggini"</title>
+
+  <!-- Icone homescreen -->
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%231e3a8a' rx='40'/%3E%3Cpath fill='%23eab308' d='M96 24L40 52v52c0 52 33 98 56 112 23-14 56-60 56-112V52L96 24zm0 12l48 25v47c0 43-27 80-48 93-21-13-48-50-48-93V61l48-25z'/%3E%3C/svg%3E"/>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231e3a8a' rx='6'/%3E%3Cpath fill='%23eab308' d='M16 4L6 9v9c0 9 5.7 16.9 10 19.3C20.3 34.9 26 27 26 18V9L16 4z'/%3E%3C/svg%3E"/>
+
+  <style>
+    /* ── Reset completo ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      /* Safe area per iPhone con notch */
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+
+    /* ── Schermata di caricamento ── */
+    #splash {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0f172a;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.5rem;
+      transition: opacity .5s ease;
+    }
+    #splash.fade { opacity: 0; pointer-events: none; }
+
+    .splash-logo {
+      width: 88px; height: 88px; border-radius: 20px;
+      background: linear-gradient(135deg, #1e3a8a, #1e40af);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 6px rgba(234,179,8,.2), 0 16px 40px rgba(0,0,0,.5);
+    }
+    .splash-logo svg { width: 52px; height: 52px; fill: #eab308; }
+
+    .splash-title {
+      text-align: center; color: #f1f5f9;
+      font-size: 1.25rem; font-weight: 700; letter-spacing: .02em;
+    }
+    .splash-sub {
+      color: #64748b; font-size: .8rem;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+
+    .splash-spinner {
+      width: 36px; height: 36px;
+      border: 3px solid rgba(234,179,8,.2);
+      border-top-color: #eab308;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .splash-hint {
+      position: absolute; bottom: calc(1.5rem + env(safe-area-inset-bottom));
+      color: #334155; font-size: .72rem; text-align: center;
+      letter-spacing: .05em; padding: 0 2rem;
+    }
+
+    /* ── Barra di stato custom (solo quando NON è schermo intero) ── */
+    #topbar {
+      height: 44px;
+      background: #1e3a8a;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1rem;
+      flex-shrink: 0;
+      /* Nascosta di default: visibile solo su browser normali */
+    }
+    #topbar.fullscreen-hidden { display: none; }
+
+    .tb-logo {
+      display: flex; align-items: center; gap: .6rem;
+      text-decoration: none;
+    }
+    .tb-emblem {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: linear-gradient(135deg, #eab308, #fde047);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tb-emblem svg { width: 16px; height: 16px; fill: #1e293b; }
+    .tb-name {
+      font-size: .78rem; font-weight: 700; color: #f1f5f9;
+      letter-spacing: .02em; white-space: nowrap;
+    }
+    .tb-actions { display: flex; gap: .5rem; }
+    .tb-btn {
+      background: rgba(255,255,255,.1); border: none;
+      color: #f1f5f9; border-radius: 6px; cursor: pointer;
+      font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; padding: .35rem .7rem;
+      text-decoration: none; display: flex; align-items: center;
+      gap: .3rem; transition: background .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tb-btn:hover { background: rgba(255,255,255,.18); }
+    .tb-btn svg { width: 13px; height: 13px; fill: currentColor; }
+
+    /* ── Container iframe ── */
+    #frame-container {
+      position: fixed;
+      /* Sotto la topbar quando visibile, altrimenti da 0 */
+      top: 44px; left: 0; right: 0; bottom: 0;
+    }
+    body.standalone #frame-container {
+      top: 0;
+    }
+
+    #app-frame {
+      width: 100%; height: 100%;
+      border: none; display: block;
+      background: #0f172a;
+    }
+
+    /* ── Errore offline ── */
+    #offline-msg {
+      display: none;
+      position: fixed; inset: 0; z-index: 8000;
+      background: #0f172a;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem; text-align: center; padding: 2rem;
+      color: #f1f5f9;
+    }
+    #offline-msg.show { display: flex; }
+    #offline-msg svg { width: 56px; height: 56px; fill: #ef4444; }
+    #offline-msg h2 { font-size: 1.25rem; font-weight: 700; }
+    #offline-msg p { font-size: .88rem; color: #94a3b8; line-height: 1.6; }
+    .btn-retry {
+      background: #1e3a8a; color: #f1f5f9; border: none;
+      border-radius: 8px; cursor: pointer; font-size: .9rem;
+      font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: .85rem 2rem; margin-top: .5rem;
+    }
+
+    /* ── Modale "Aggiungi a homescreen" (solo prima volta) ── */
+    #install-hint {
+      display: none;
+      position: fixed; bottom: calc(1rem + env(safe-area-inset-bottom));
+      left: 50%; transform: translateX(-50%);
+      z-index: 7000; width: calc(100% - 2rem); max-width: 360px;
+      background: #1e293b; border: 1px solid #334155;
+      border-radius: 12px; padding: 1rem 1.1rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+      animation: slideUp .35s ease;
+    }
+    @keyframes slideUp { from { transform: translateX(-50%) translateY(20px); opacity:0; } to { transform: translateX(-50%) translateY(0); opacity:1; } }
+    #install-hint.show { display: block; }
+    .ih-row { display: flex; align-items: flex-start; gap: .85rem; }
+    .ih-icon { font-size: 2rem; flex-shrink: 0; }
+    .ih-text h4 { font-size: .88rem; font-weight: 700; color: #f1f5f9; margin-bottom: .2rem; }
+    .ih-text p { font-size: .78rem; color: #94a3b8; line-height: 1.5; }
+    .ih-close {
+      position: absolute; top: .6rem; right: .75rem;
+      background: none; border: none; color: #64748b;
+      cursor: pointer; font-size: 1.1rem; padding: .2rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-logo">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1z"/>
+    </svg>
+  </div>
+  <div>
+    <div class="splash-title">Registro Convitto</div>
+    <div class="splash-sub">Costaggini · Rieti</div>
+  </div>
+  <div class="splash-spinner" id="splash-spinner"></div>
+  <p class="splash-hint">
+    Per usarlo come app: tocca <strong>Condividi</strong> → <strong>Aggiungi a schermata Home</strong>
+  </p>
+</div>
+
+<!-- TOPBAR (visibile solo in browser, nascosta in modalità app) -->
+<div id="topbar">
+  <a class="tb-logo" href="index.html" aria-label="Torna al sito Costaggini">
+    <div class="tb-emblem" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1z"/></svg>
+    </div>
+    <span class="tb-name">Costaggini</span>
+  </a>
+  <div class="tb-actions">
+    <a href="index.html" class="tb-btn">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Sito
+    </a>
+    <button class="tb-btn" id="btn-fullscreen" title="Schermo intero" onclick="toggleFullscreen()">
+      <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+      Espandi
+    </button>
+  </div>
+</div>
+
+<!-- APP FRAME -->
+<div id="frame-container">
+  <iframe
+    id="app-frame"
+    src="https://script.google.com/macros/s/AKfycbyuZZTry0o7OQhnx0-LxTolWHOtfR3FumqISF3aD2ML36OHK5P7V_ZfQNZLzz663m7rIg/exec"
+    title="Registro Convitto Costaggini"
+    allow="camera; microphone; vibrate"
+    allowfullscreen
+    loading="eager"
+  ></iframe>
+</div>
+
+<!-- OFFLINE -->
+<div id="offline-msg" role="alert" aria-live="assertive">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M1 1l22 22-1.41 1.41-4.58-4.58C15.97 20.6 14.04 21 12 21c-4.97 0-9-4.03-9-9 0-2.04.4-3.97 1.17-5.59L1 3.41 1 1zm10.96 13.37l-3.32-3.33a3.53 3.53 0 0 0 3.32 3.33zm-3.61-5.95a3.5 3.5 0 0 1 3.62 3.62l3.3 3.3c.3-.95.49-1.95.49-2.99A9 9 0 0 0 9 4.19V1L5 5l4 4V5.81c2.97.52 5.5 2.39 7 5l-3.32-3.32zM12 3c-1.61 0-3.12.4-4.44 1.09l1.46 1.46C9.92 5.2 10.94 5 12 5c3.87 0 7 3.13 7 7 0 1.06-.2 2.08-.55 3.01L20 16.56A9 9 0 0 0 12 3z"/>
+  </svg>
+  <h2>Nessuna connessione</h2>
+  <p>Il Registro richiede una connessione internet.<br>Verifica il Wi-Fi o i dati mobili e riprova.</p>
+  <button class="btn-retry" onclick="reloadFrame()">Riprova</button>
+</div>
+
+<!-- HINT INSTALLAZIONE -->
+<div id="install-hint" role="complementary" aria-label="Suggerimento installazione">
+  <button class="ih-close" onclick="chiudiHint()" aria-label="Chiudi suggerimento">✕</button>
+  <div class="ih-row">
+    <span class="ih-icon">📲</span>
+    <div class="ih-text">
+      <h4>Installa come app</h4>
+      <p>
+        <strong>iPhone/iPad:</strong> tocca <strong>Condividi</strong> → <em>Aggiungi a schermata Home</em><br>
+        <strong>Android:</strong> menu <strong>⋮</strong> → <em>Aggiungi a schermata Home</em>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const APP_URL = 'https://script.google.com/macros/s/AKfycbyuZZTry0o7OQhnx0-LxTolWHOtfR3FumqISF3aD2ML36OHK5P7V_ZfQNZLzz663m7rIg/exec';
+  const frame  = document.getElementById('app-frame');
+  const splash = document.getElementById('splash');
+
+  /* ── Rilevamento modalità standalone (aggiunto a homescreen) ── */
+  const isStandalone = window.navigator.standalone === true ||
+    window.matchMedia('(display-mode: standalone)').matches;
+
+  if (isStandalone) {
+    document.body.classList.add('standalone');
+    document.getElementById('topbar').classList.add('fullscreen-hidden');
+    document.getElementById('frame-container').style.top = '0';
+  }
+
+  /* ── Splash: si nasconde quando l'iframe è caricato ── */
+  frame.addEventListener('load', () => {
+    setTimeout(() => splash.classList.add('fade'), 600);
+    setTimeout(() => splash.style.display = 'none', 1200);
+  });
+
+  /* ── Timeout: se dopo 12s non carica, mostra offline ── */
+  let loadTimeout = setTimeout(() => {
+    if (!navigator.onLine) showOffline();
+  }, 12000);
+
+  frame.addEventListener('load', () => clearTimeout(loadTimeout));
+
+  /* ── Offline/Online ── */
+  function showOffline() {
+    document.getElementById('offline-msg').classList.add('show');
+    splash.classList.add('fade');
+  }
+  function reloadFrame() {
+    document.getElementById('offline-msg').classList.remove('show');
+    splash.style.display = 'flex';
+    splash.classList.remove('fade');
+    frame.src = APP_URL + '?t=' + Date.now();
+  }
+  window.addEventListener('offline', showOffline);
+  window.addEventListener('online', () => {
+    document.getElementById('offline-msg').classList.remove('show');
+  });
+
+  /* ── Schermo intero ── */
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
+  }
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('btn-fullscreen');
+    if (document.fullscreenElement) {
+      document.getElementById('topbar').classList.add('fullscreen-hidden');
+      document.getElementById('frame-container').style.top = '0';
+    } else {
+      if (!isStandalone) {
+        document.getElementById('topbar').classList.remove('fullscreen-hidden');
+        document.getElementById('frame-container').style.top = '44px';
+      }
+    }
+  });
+
+  /* ── Hint installazione (mostrato una sola volta) ── */
+  const hint = document.getElementById('install-hint');
+  const hintKey = 'costaggini_install_hint_shown';
+  if (!isStandalone && !localStorage.getItem(hintKey)) {
+    setTimeout(() => hint.classList.add('show'), 4000);
+  }
+  function chiudiHint() {
+    hint.classList.remove('show');
+    localStorage.setItem(hintKey, '1');
+  }
+
+  /* ── Previeni double-tap zoom su iOS ── */
+  let lastTap = 0;
+  document.addEventListener('touchend', e => {
+    const now = Date.now();
+    if (now - lastTap < 300) e.preventDefault();
+    lastTap = now;
+  }, { passive: false });
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Una lettera a chi sta valutando il Convitto. Scritta da chi c'è già passato."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Lettera a un Futuro Convittore | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Hero carta */
+    .lt-hero {
+      background:linear-gradient(160deg,#f9f5ec 0%,#f0e8d5 100%);
+      padding:5rem 1.25rem 4rem; position:relative; overflow:hidden;
+    }
+    .lt-hero::before {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(44,62,45,.06) 28px);
+      pointer-events:none;
+    }
+    .lt-hero-inner { position:relative; z-index:1; max-width:680px; margin:0 auto; }
+    .lt-data { font-family:var(--fu); font-size:.65rem; color:rgba(44,62,45,.4); letter-spacing:.12em; text-transform:uppercase; margin-bottom:.5rem; text-align:right; }
+    .lt-hero h1 { font-family:var(--fd); font-size:clamp(1.8rem,5vw,3rem); font-weight:300; color:var(--bosco); margin-bottom:.4rem; }
+    .lt-hero h1 em { font-style:italic; color:var(--oro); }
+
+    /* La lettera */
+    .lt-body { background:linear-gradient(160deg,#fdfaf4,#f7f0e4); padding:3rem 1.25rem 5rem; }
+    .lt-carta {
+      max-width:680px; margin:0 auto;
+      background:#fff; border-radius:2px;
+      box-shadow:0 4px 24px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
+      padding:3.5rem 3.5rem;
+      position:relative;
+      background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(44,62,45,.04) 28px);
+    }
+    @media(max-width:560px){ .lt-carta { padding:2rem 1.5rem; } }
+
+    /* Effetto carta con margine sinistro */
+    .lt-carta::before {
+      content:''; position:absolute; top:0; bottom:0; left:80px;
+      width:1px; background:rgba(184,146,42,.15);
+    }
+
+    .lt-testo { font-family:var(--fd); font-size:1.05rem; line-height:2; color:#2a2010; margin-bottom:1.5rem; }
+    .lt-testo p { margin-bottom:1.5rem; }
+    .lt-testo p:last-child { margin-bottom:0; }
+    .lt-testo strong { font-weight:600; color:var(--bosco); }
+    .lt-testo em { font-style:italic; }
+
+    /* Firma */
+    .lt-firma { margin-top:3rem; text-align:right; }
+    .lt-firma-nome { font-family:var(--fd); font-size:1.3rem; font-style:italic; color:var(--bosco); }
+    .lt-firma-meta { font-family:var(--fu); font-size:.65rem; color:rgba(44,62,45,.4); letter-spacing:.1em; text-transform:uppercase; margin-top:.25rem; }
+
+    /* Navigatore lettere */
+    .lt-nav-bar { background:var(--bosco); padding:1.25rem; display:flex; align-items:center; justify-content:center; gap:.75rem; flex-wrap:wrap; }
+    .lt-nav-btn { font-family:var(--fu); font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.45rem .9rem; border-radius:20px; border:1.5px solid rgba(184,146,42,.3); background:none; color:rgba(245,240,232,.5); cursor:pointer; transition:all .2s; }
+    .lt-nav-btn:hover, .lt-nav-btn.on { background:rgba(184,146,42,.2); border-color:var(--oro2); color:var(--oro2); }
+
+    /* Scrivi tu */
+    .lt-scrivi { background:var(--av2); padding:4rem 1.25rem; text-align:center; }
+    .lt-scrivi h2 { font-family:var(--fd); font-size:clamp(1.4rem,4vw,2rem); font-weight:300; color:var(--bosco); margin-bottom:.5rem; }
+    .lt-scrivi h2 em { font-style:italic; color:var(--oro); }
+    .lt-scrivi p { color:var(--txt2); max-width:480px; margin:.5rem auto 1.5rem; font-size:.88rem; line-height:1.8; }
+  </style>
+</head>
+<body data-page="lettera">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="lt-hero">
+    <div class="lt-hero-inner rv">
+      <p class="lt-data">Rieti, anno scolastico 2025/2026</p>
+      <h1>Una lettera<br><em>a te</em></h1>
+      <p style="font-family:var(--fd);font-size:1rem;color:rgba(44,62,45,.6);line-height:1.75;margin:.75rem 0 0">Scritta da chi è già passato dal Convitto. Con i dubbi che aveva prima di entrare, e quello che ha trovato.</p>
+    </div>
+  </section>
+
+  <!-- Navigatore lettere -->
+  <nav class="lt-nav-bar" aria-label="Scegli una lettera">
+    <span style="font-family:var(--fu);font-size:.58rem;color:rgba(245,240,232,.3);letter-spacing:.1em;text-transform:uppercase">Voci dal Convitto:</span>
+    <button class="lt-nav-btn on" onclick="showLettera(0,this)">Un ex convittore</button>
+    <button class="lt-nav-btn" onclick="showLettera(1,this)">Una ex convittrice</button>
+    <button class="lt-nav-btn" onclick="showLettera(2,this)">Un genitore</button>
+    <button class="lt-nav-btn" onclick="showLettera(3,this)">Un educatore</button>
+  </nav>
+
+  <!-- LA LETTERA -->
+  <section class="lt-body">
+    <div class="lt-carta rv">
+      <div class="lt-testo" id="lt-contenuto"><!-- JS --></div>
+      <div class="lt-firma" id="lt-firma"><!-- JS --></div>
+    </div>
+  </section>
+
+  <!-- SCRIVI LA TUA -->
+  <section class="lt-scrivi">
+    <div class="w">
+      <p class="lbl">La tua voce</p>
+      <h2>Sei passato dal Costaggini?<br><em>Scrivi la tua lettera</em></h2>
+      <p>Se hai qualcosa da dire a chi sta per fare la scelta che hai fatto tu — scrivilo. Le lettere più belle vengono aggiunte a questa pagina.</p>
+      <a href="ricordi.html" class="btn-gold">✦ Lascia il tuo messaggio →</a>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+const LETTERE = [
+  {
+    contenuto: `<p>Caro futuro convittore,</p>
+<p>la prima cosa che voglio dirti è che avevo paura. Non te lo diranno facilmente, ma ce l'hanno quasi tutti. Paura di stare lontano da casa, paura dei coinquilini, paura degli educatori, paura di non farcela a scuola senza i genitori che ti svegliano, ti preparano la colazione, ti chiedono come è andata.</p>
+<p>La prima settimana ho pianto ogni sera. La seconda ho pianto solo due volte. Alla terza settimana avevo già smesso — non perché stessi meglio, ma perché non ne sentivo più il bisogno.</p>
+<p><strong>Il Convitto ti cambia.</strong> Non subito. Non in modo visibile. Ma dopo un mese sei già un'altra persona. Sai alzarti da solo. Sai organizzarti. Sai stare in un posto con persone che non hai scelto e trovare il modo di voler bene anche a quelle che all'inizio non sopportavi.</p>
+<p>Lo studio guidato all'inizio sembrava una tortura. Poi ho capito che era la cosa più utile della mia giornata. Arrivavo a scuola preparato — sempre. Mentre i miei amici pendolari si arrangiavano alle undici di sera staccando da WhatsApp, io avevo già finito i compiti alle sei e mezzo del pomeriggio.</p>
+<p>Cinque anni dopo, lavoro a Londra in un hotel a quattro stelle. I miei colleghi inglesi mi chiedono dove ho imparato a gestire la pressione. <em>«A Rieti»</em>, rispondo. Non capiscono. Va bene così.</p>
+<p>Vieni. Ne vale la pena.</p>`,
+    firma: 'Marco T.',
+    meta: 'Convittore 2012–2017 · Londra, Hotel manager'
+  },
+  {
+    contenuto: `<p>Cara futura convittrice,</p>
+<p>nessuno te lo dice, ma la parte più difficile non è stare lontana da casa. È stare con te stessa, finalmente, senza le distrazioni di casa che ti proteggono da te stessa.</p>
+<p>In Convitto non puoi fare finta. Se sei triste, qualcuno se ne accorge. Se hai un problema, qualcuno te lo chiede. Gli educatori non sono guardie — sono adulti che hanno scelto di stare lì con te, di sera, quando tutti vorrebbero essere altrove.</p>
+<p>Io ero una ragazza timidissima. Entravo nelle stanze senza far rumore. Sorridevo quando non capivo una cosa. Al Convitto ho imparato a parlare — davvero, non solo a rispondere. Ho imparato a dire quando non stavo bene. Ho imparato che chiedere aiuto non è una debolezza.</p>
+<p><strong>Il Laboratorio Musicale ha cambiato la mia vita.</strong> Non sapevo fare niente — letteralmente. Adesso suono in un gruppo. Non professionalmente, ma con una gioia che non avevo mai conosciuto prima.</p>
+<p>Se hai dubbi, vieni a visitarlo. Ma ti avverto: dopo la visita, non avrai più dubbi.</p>`,
+    firma: 'Federica L.',
+    meta: 'Convittrice 2015–2020 · Bologna'
+  },
+  {
+    contenuto: `<p>Caro genitore che ancora non sa,</p>
+<p>mia figlia aveva quindici anni quando l'abbiamo portata al Convitto per la prima volta. Il viaggio di ritorno, mio marito e io non abbiamo parlato quasi nulla. Non sapevamo cosa aspettarci. Avevamo paura di aver fatto la scelta sbagliata.</p>
+<p>Il primo mese ha chiamato ogni giorno. A volte piangeva. Noi cercavamo di essere rassicuranti pur non essendolo per niente.</p>
+<p>Poi le telefonate sono diventate ogni due giorni. Poi due volte a settimana. Non perché stesse peggio — perché stava <em>così bene</em> da non avere più tanto tempo per noi.</p>
+<p><strong>Quello che non mi aspettavo è quanto sarebbe cresciuta.</strong> Non a scuola — anche, ma non solo. Come persona. Tornava a casa il venerdì sera con una calma diversa, una maturità che non avevo visto nei suoi coetanei. Sapeva organizzare il suo tempo. Sapeva stare nel conflitto senza esplodere. Sapeva ascoltare.</p>
+<p>Gli educatori mi hanno chiamata tre volte in cinque anni — sempre con buone ragioni, sempre con rispetto, sempre con la chiarezza di chi conosce tua figlia meglio di quanto pensassi.</p>
+<p>Ridarei mia figlia al Convitto Costaggini senza esitare un secondo.</p>`,
+    firma: 'La mamma di Federica',
+    meta: 'Genitore · Rieti'
+  },
+  {
+    contenuto: `<p>Caro ragazzo, cara ragazza,</p>
+<p>ho scelto questo lavoro trent'anni fa. Non tutti capiscono perché. "Stare in un convitto di notte — ma non ti pesa?" No. Non mi pesa.</p>
+<p>Mi pesa quando un ragazzo arriva in settembre chiuso come un riccio e ci vogliono tre mesi per fargli abbassare le difese. Mi pesa quando una ragazza non mangia e non sa spiegare perché. Mi pesa quando la domenica sera rientrano e si vede dalla faccia che il fine settimana a casa non è stato facile.</p>
+<p>Ma poi succede qualcosa. Sempre. Ogni anno, con ogni ragazzo.</p>
+<p>Succede la sera in cui bussa alla porta dell'ufficio alle undici e dice "posso parlarti un momento?" E parliamo. Non di voti, non di regole. Di quello che conta davvero.</p>
+<p><strong>Il Convitto non è un servizio. È una comunità.</strong> E le comunità si costruiscono lentamente, con fatica, con cura. Con la costanza di essere presenti — anche la domenica sera, anche quando piove, anche quando non ne avresti voglia.</p>
+<p>Se stai valutando il Convitto per tuo figlio o tua figlia — vieni a trovarci. Non per vedere le stanze o la mensa. Per vedere le persone che ci lavorano. Perché alla fine è da loro che dipende tutto.</p>`,
+    firma: 'Un educatore del Convitto',
+    meta: 'Oltre trent\'anni di servizio'
+  }
+];
+
+function showLettera(i, btn) {
+  document.querySelectorAll('.lt-nav-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const l = LETTERE[i];
+  document.getElementById('lt-contenuto').innerHTML = l.contenuto;
+  document.getElementById('lt-firma').innerHTML = `
+    <div class="lt-firma-nome">${l.firma}</div>
+    <div class="lt-firma-meta">${l.meta}</div>
+  `;
+}
+
+showLettera(0, document.querySelector('.lt-nav-btn'));
+</script>
+</body>
+</html>

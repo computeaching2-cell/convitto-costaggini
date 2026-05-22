@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Cruciverba del Costaggini | Convitto "Costaggini"</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background:#0a0f0a; }
+    .cx-hero { background:linear-gradient(160deg,#0a0f0a,#1a0d07); padding:3.5rem 1.25rem 2.5rem; text-align:center; position:relative; overflow:hidden; }
+    .cx-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(184,146,42,.1),transparent); pointer-events:none; }
+    .cx-wrap { max-width:860px; margin:0 auto; padding:2rem 1rem 5rem; }
+    .cx-layout { display:grid; grid-template-columns:auto 1fr; gap:2rem; align-items:start; }
+    @media(max-width:680px){ .cx-layout { grid-template-columns:1fr; } }
+
+    /* Griglia */
+    .cx-grid { display:inline-grid; gap:3px; background:rgba(184,146,42,.08); border:1px solid rgba(184,146,42,.2); border-radius:10px; padding:8px; }
+    .cx-cell { width:42px; height:42px; position:relative; }
+    @media(max-width:400px){ .cx-cell { width:34px; height:34px; } }
+    .cx-cell.black { background:#0a0f0a; border-radius:3px; }
+    .cx-cell input {
+      width:100%; height:100%; background:rgba(245,240,232,.06);
+      border:1.5px solid rgba(184,146,42,.2); border-radius:4px;
+      color:#fff; font-family:var(--fd); font-size:1.05rem; font-weight:600;
+      text-align:center; text-transform:uppercase; outline:none;
+      transition:border-color .15s, background .15s; padding:0; cursor:pointer;
+    }
+    .cx-cell input:focus { border-color:var(--oro2); background:rgba(184,146,42,.14); }
+    .cx-cell input.hi { border-color:var(--oro); background:rgba(184,146,42,.2); }
+    .cx-cell input.ok { border-color:#4ade80; background:rgba(74,222,128,.12); color:#4ade80; pointer-events:none; }
+    .cx-cell input.err { border-color:#f87171; background:rgba(248,113,113,.1); color:#f87171; animation:shk .3s; }
+    @keyframes shk { 0%,100%{transform:translateX(0)} 30%{transform:translateX(-3px)} 70%{transform:translateX(3px)} }
+    .cx-num { position:absolute; top:2px; left:3px; font-family:var(--fu); font-size:.42rem; font-weight:800; color:var(--oro2); pointer-events:none; z-index:1; line-height:1; }
+
+    /* Definizioni */
+    .cx-clues h3 { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--oro2); margin-bottom:.6rem; }
+    .cx-clue { display:flex; gap:.5rem; padding:.45rem .6rem; border-radius:5px; cursor:pointer; transition:background .15s; margin-bottom:.2rem; }
+    .cx-clue:hover { background:rgba(184,146,42,.07); }
+    .cx-clue.act { background:rgba(184,146,42,.13); }
+    .cx-clue.done span:last-child { color:#4ade80; }
+    .cx-clue-n { font-family:var(--fu); font-size:.6rem; font-weight:800; color:var(--oro2); min-width:16px; flex-shrink:0; line-height:1.6; }
+    .cx-clue-t { font-family:var(--fu); font-size:.76rem; color:rgba(245,240,232,.65); line-height:1.55; }
+    .cx-section { margin-bottom:1.25rem; }
+
+    /* Bottoni */
+    .cx-btns { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:1.25rem; }
+    .cb { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:.5rem .9rem; border-radius:6px; cursor:pointer; border:1.5px solid rgba(184,146,42,.3); color:var(--oro2); background:transparent; transition:all .2s; }
+    .cb:hover { background:rgba(184,146,42,.1); }
+    .cb.pri { background:linear-gradient(135deg,var(--bosco),#1a3a1b); color:#fff; border-color:transparent; }
+
+    /* Progress */
+    .cx-prog-bar { height:4px; background:rgba(255,255,255,.06); border-radius:2px; margin-bottom:1rem; }
+    .cx-prog-fill { height:100%; background:linear-gradient(90deg,var(--bosco2),var(--oro)); border-radius:2px; transition:width .4s; }
+
+    /* Risultato */
+    .cx-res { display:none; text-align:center; background:#141e14; border:1px solid rgba(184,146,42,.2); border-radius:14px; padding:2.5rem 1.75rem; margin-top:1.5rem; }
+    .cx-res.show { display:block; animation:fadeUp .4s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+    .cx-res-score { font-family:var(--fd); font-size:4rem; font-weight:300; color:var(--oro3); }
+    .cx-res-msg { font-family:var(--fd); font-size:1.15rem; font-weight:300; color:#fff; line-height:1.7; max-width:440px; margin:.75rem auto 1.5rem; }
+    .cx-res-msg em { font-style:italic; color:var(--oro3); }
+  </style>
+</head>
+<body data-page="quiz-cruciverba">
+<main id="main">
+
+  <div class="cx-hero">
+    <div class="w" style="position:relative;z-index:1">
+      <nav class="breadcrumb" style="justify-content:center;margin-bottom:1.25rem">
+        <a href="scopri-talento.html" style="color:rgba(245,240,232,.35)">← Scopri il tuo Talento</a>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">Cruciverba · Vocabolario enogastronomico</p>
+      <h1 style="font-family:var(--fd);font-size:clamp(1.8rem,6vw,3.2rem);font-weight:300;color:#fff;margin-bottom:.5rem">Il Cruciverba del <em style="font-style:italic;color:var(--oro3)">Costaggini</em></h1>
+      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:500px;margin:0 auto">Parole della cucina italiana. Ogni parola si incrocia con un'altra — proprio come in cucina, dove tutto è connesso.</p>
+    </div>
+  </div>
+
+  <div class="cx-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;flex-wrap:wrap;gap:.5rem">
+      <p style="font-family:var(--fu);font-size:.6rem;color:rgba(245,240,232,.35)" id="cx-lbl">0 parole trovate su 7</p>
+      <p style="font-family:var(--fu);font-size:.65rem;font-weight:800;color:rgba(245,240,232,.25)" id="cx-timer">⏱ 0:00</p>
+    </div>
+    <div class="cx-prog-bar"><div class="cx-prog-fill" id="cx-pfill" style="width:0%"></div></div>
+
+    <div class="cx-layout">
+      <div>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <div class="cx-grid" id="cx-grid"></div>
+        </div>
+        <div class="cx-btns">
+          <button class="cb" onclick="checkAll()">✓ Controlla</button>
+          <button class="cb" onclick="hint()">💡 Aiuto</button>
+          <button class="cb" onclick="reset()">↺ Ricomincia</button>
+          <button class="cb pri" onclick="solveAll()">🏁 Soluzione</button>
+        </div>
+      </div>
+
+      <div class="cx-clues">
+        <div class="cx-section">
+          <h3>→ Orizzontali</h3>
+          <div id="cl-a"></div>
+        </div>
+        <div class="cx-section">
+          <h3>↓ Verticali</h3>
+          <div id="cl-d"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cx-res" id="cx-res">
+      <div id="cx-icon" style="font-size:3rem;margin-bottom:.5rem"></div>
+      <div class="cx-res-score" id="cx-score"></div>
+      <p class="cx-res-msg" id="cx-msg"></p>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+        <button onclick="reset()" style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.7rem 1.5rem;background:transparent;border:1.5px solid rgba(184,146,42,.3);color:var(--oro2);border-radius:8px;cursor:pointer">↺ Rigioca</button>
+        <a href="ammissione.html" class="btn-gold">Scopri come iscriverti →</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+// ══════════════════════════════════════════════════════
+// SCHEMA VERIFICATO — ogni parola incrocia almeno un'altra
+//
+//     c0 c1 c2 c3 c4
+// r0: R  O  U  X  .
+// r1: I  C  .  .  .
+// r2: S  A  U  T  E
+// r3: O  .  .  I  .
+// r4: T  R  A  M  A
+// r5: T  .  .  O  .
+// r6: O  S  T  I  A
+//
+// Incroci verificati:
+// ROUX[0]=R = RISOTTO[0] ✓
+// ROUX[1]=O = OCA[0]     ✓
+// OCA[1]=C  (r1c1)       (incrocia ROUX e SAUTE[1])
+// OCA[2]=A  = SAUTE[1]   ✓
+// SAUTE[0]=S = RISOTTO[2]✓
+// SAUTE[3]=T = TIMO[0]   ✓
+// TRAMA[0]=T = RISOTTO[4]✓
+// TRAMA[3]=M = TIMO[2]   ✓
+// OSTIA[0]=O = RISOTTO[6]✓
+// OSTIA[3]=I = TIMO[3]   ✓
+// ══════════════════════════════════════════════════════
+
+const WORDS = [
+  { w:'ROUX',    r:0, c:0, d:'A', n:1, cl:'Base di burro e farina per salse e vellutate' },
+  { w:'RISOTTO', r:0, c:0, d:'D', n:2, cl:'Piatto di riso tipico lombardo, mantecato con burro' },
+  { w:'OCA',     r:0, c:1, d:'D', n:3, cl:'Volatile da cortile, prezioso in cucina per le feste' },
+  { w:'SAUTE',   r:2, c:0, d:'A', n:4, cl:'Cottura rapida in padella con poco grasso e fuoco vivo' },
+  { w:'TIMO',    r:2, c:3, d:'D', n:5, cl:'Erba aromatica mediterranea per carni e zuppe' },
+  { w:'TRAMA',   r:4, c:0, d:'A', n:6, cl:'Il filo conduttore di ogni buon menu degustazione' },
+  { w:'OSTIA',   r:6, c:0, d:'A', n:7, cl:'Litorale laziale rinomato per la cucina di mare' },
+];
+
+const ROWS=7, COLS=5;
+let cur=null, solved=new Set(), timerSec=0, timerInt=null;
+
+// Costruisce mappa lettere
+function buildMap(){
+  const m={};
+  WORDS.forEach(w=>{
+    for(let i=0;i<w.w.length;i++){
+      const rr=w.r+(w.d==='D'?i:0), cc=w.c+(w.d==='A'?i:0);
+      m[`${rr},${cc}`]=w.w[i];
+    }
+  });
+  return m;
+}
+const LMAP=buildMap();
+
+function buildGrid(){
+  const g=document.getElementById('cx-grid');
+  g.style.gridTemplateColumns=`repeat(${COLS},1fr)`;
+  g.innerHTML='';
+  // numeri per cella
+  const nums={};
+  WORDS.forEach(w=>{ nums[`${w.r},${w.c}`]=w.n; });
+
+  for(let r=0;r<ROWS;r++){
+    for(let c=0;c<COLS;c++){
+      const div=document.createElement('div');
+      div.className='cx-cell';
+      const k=`${r},${c}`;
+      if(!LMAP[k]){
+        div.classList.add('black');
+      } else {
+        if(nums[k]){
+          const s=document.createElement('span');
+          s.className='cx-num'; s.textContent=nums[k];
+          div.appendChild(s);
+        }
+        const inp=document.createElement('input');
+        inp.maxLength=1; inp.dataset.k=k;
+        inp.autocomplete='off'; inp.spellcheck=false;
+        inp.addEventListener('input',onInput);
+        inp.addEventListener('focus',onFocus);
+        inp.addEventListener('keydown',onKey);
+        div.appendChild(inp);
+      }
+      g.appendChild(div);
+    }
+  }
+}
+
+function inp(k){ return document.querySelector(`input[data-k="${k}"]`); }
+
+function hiWord(w){
+  document.querySelectorAll('input.hi').forEach(i=>i.classList.remove('hi'));
+  for(let i=0;i<w.w.length;i++){
+    const rr=w.r+(w.d==='D'?i:0), cc=w.c+(w.d==='A'?i:0);
+    const el=inp(`${rr},${cc}`);
+    if(el&&!el.classList.contains('ok')) el.classList.add('hi');
+  }
+  document.querySelectorAll('.cx-clue.act').forEach(e=>e.classList.remove('act'));
+  const cl=document.getElementById(`cl-${w.d}-${w.n}`);
+  if(cl) cl.classList.add('act');
+}
+
+function focusWord(w){
+  cur=w; hiWord(w);
+  // focus prima cella vuota
+  for(let i=0;i<w.w.length;i++){
+    const rr=w.r+(w.d==='D'?i:0), cc=w.c+(w.d==='A'?i:0);
+    const el=inp(`${rr},${cc}`);
+    if(el&&!el.value&&!el.classList.contains('ok')){ el.focus(); return; }
+  }
+  inp(`${w.r},${w.c}`)?.focus();
+}
+
+function wordAt(k){
+  const [r,c]=k.split(',').map(Number);
+  return WORDS.find(w=>{
+    for(let i=0;i<w.w.length;i++){
+      if(w.r+(w.d==='D'?i:0)===r && w.c+(w.d==='A'?i:0)===c) return true;
+    }
+  });
+}
+
+function onFocus(e){
+  const w=wordAt(e.target.dataset.k);
+  if(w&&w!==cur) focusWord(w);
+}
+
+function onInput(e){
+  const el=e.target;
+  el.value=el.value.replace(/[^a-zA-Zàèìòù]/g,'').toUpperCase().slice(-1);
+  if(el.value) advance(el);
+  checkComplete();
+  updateProg();
+  if(!timerInt&&el.value) startTimer();
+}
+
+function advance(el){
+  if(!cur) return;
+  const [r,c]=el.dataset.k.split(',').map(Number);
+  const nr=r+(cur.d==='D'?1:0), nc=c+(cur.d==='A'?1:0);
+  inp(`${nr},${nc}`)?.focus();
+}
+
+function onKey(e){
+  const el=e.target;
+  if(e.key==='Backspace'&&!el.value){
+    e.preventDefault();
+    if(!cur) return;
+    const [r,c]=el.dataset.k.split(',').map(Number);
+    const pr=r-(cur.d==='D'?1:0), pc=c-(cur.d==='A'?1:0);
+    const prev=inp(`${pr},${pc}`);
+    if(prev){ prev.value=''; prev.focus(); }
+  }
+  const dirs={ArrowRight:[0,1],ArrowLeft:[0,-1],ArrowDown:[1,0],ArrowUp:[-1,0]};
+  if(dirs[e.key]){
+    const [r,c]=e.target.dataset.k.split(',').map(Number);
+    const [dr,dc]=dirs[e.key];
+    inp(`${r+dr},${c+dc}`)?.focus();
+  }
+}
+
+function checkComplete(){
+  if(!cur) return;
+  const w=cur;
+  let ok=true;
+  for(let i=0;i<w.w.length;i++){
+    const rr=w.r+(w.d==='D'?i:0), cc=w.c+(w.d==='A'?i:0);
+    const el=inp(`${rr},${cc}`);
+    if(!el||el.value!==w.w[i]){ ok=false; break; }
+  }
+  if(ok&&!solved.has(w.n+''+w.d)){
+    solved.add(w.n+''+w.d);
+    for(let i=0;i<w.w.length;i++){
+      const rr=w.r+(w.d==='D'?i:0), cc=w.c+(w.d==='A'?i:0);
+      const el=inp(`${rr},${cc}`);
+      if(el){ el.classList.remove('hi','err'); el.classList.add('ok'); }
+    }
+    const cl=document.getElementById(`cl-${w.d}-${w.n}`);
+    if(cl) cl.classList.add('done');
+    if(solved.size===WORDS.length) setTimeout(showResult,300);
+  }
+}
+
+function checkAll(){
+  WORDS.forEach(w=>{
+    if(solved.has(w.n+''+w.d)) return;
+    for(let i=0;i<w.w.length;i++){
+      const rr=w.r+(w.d==='D'?i:0), cc=w.c+(w.d==='A'?i:0);
+      const el=inp(`${rr},${cc}`);
+      if(el&&el.value&&el.value!==w.w[i]){
+        el.classList.add('err');
+        setTimeout(()=>el.classList.remove('err'),700);
+      }
+    }
+  });
+}
+
+function hint(){
+  if(!cur) return;
+  const w=cur;
+  for(let i=0;i<w.w.length;i++){
+    const rr=w.r+(w.d==='D'?i:0), cc=w.c+(w.d==='A'?i:0);
+    const el=inp(`${rr},${cc}`);
+    if(el&&!el.classList.contains('ok')&&!el.value){
+      el.value=w.w[i]; el.classList.add('ok'); el.style.opacity='.7';
+      checkComplete(); updateProg(); return;
+    }
+  }
+}
+
+function solveAll(){
+  WORDS.forEach(w=>{
+    cur=w;
+    for(let i=0;i<w.w.length;i++){
+      const rr=w.r+(w.d==='D'?i:0), cc=w.c+(w.d==='A'?i:0);
+      const el=inp(`${rr},${cc}`);
+      if(el){ el.value=w.w[i]; el.classList.add('ok'); }
+    }
+    solved.add(w.n+''+w.d);
+    document.getElementById(`cl-${w.d}-${w.n}`)?.classList.add('done');
+  });
+  updateProg(); showResult();
+}
+
+function reset(){
+  solved.clear(); cur=null;
+  clearInterval(timerInt); timerInt=null; timerSec=0;
+  document.getElementById('cx-timer').textContent='⏱ 0:00';
+  document.getElementById('cx-res').classList.remove('show');
+  document.querySelectorAll('input').forEach(el=>{
+    el.value=''; el.disabled=false; el.style.opacity='';
+    el.classList.remove('hi','ok','err');
+  });
+  document.querySelectorAll('.cx-clue').forEach(d=>d.classList.remove('act','done'));
+  updateProg();
+  setTimeout(()=>focusWord(WORDS[0]),100);
+}
+
+function updateProg(){
+  const pct=Math.round(solved.size/WORDS.length*100);
+  document.getElementById('cx-pfill').style.width=pct+'%';
+  document.getElementById('cx-lbl').textContent=
+    `${solved.size} ${solved.size===1?'parola trovata':'parole trovate'} su ${WORDS.length}`;
+}
+
+function startTimer(){
+  timerInt=setInterval(()=>{
+    timerSec++;
+    const m=Math.floor(timerSec/60),s=timerSec%60;
+    document.getElementById('cx-timer').textContent=`⏱ ${m}:${s.toString().padStart(2,'0')}`;
+  },1000);
+}
+
+function showResult(){
+  clearInterval(timerInt);
+  const res=document.getElementById('cx-res');
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+  const n=solved.size, tot=WORDS.length;
+  const m=Math.floor(timerSec/60),s=timerSec%60;
+  const t=timerSec>0?` in ${m>0?m+'m ':''}${s}s`:'';
+  const msgs=[
+    {min:0,max:2,icon:'🌱',msg:`${n} parole su ${tot}${t}. Non importa — <em>abbiamo cinque anni per imparare tutto questo e molto di più.</em> Il Costaggini è esattamente per questo.`},
+    {min:3,max:4,icon:'⭐',msg:`${n} parole su ${tot}${t}. Buone basi! <em>Con il percorso giusto, queste parole diventeranno gesti quotidiani e professione vera.</em>`},
+    {min:5,max:6,icon:'🏆',msg:`${n} parole su ${tot}${t}. Ottimo! Conosci già il vocabolario del settore. <em>Al Costaggini troverai il luogo giusto per questo talento.</em>`},
+    {min:7,max:7,icon:'👨‍🍳',msg:`Perfetto${t}! Tutte le parole trovate. <em>Sei già dentro questo mondo — al Costaggini troverai la famiglia giusta per farlo crescere.</em>`},
+  ];
+  const pick=msgs.find(x=>n>=x.min&&n<=x.max);
+  document.getElementById('cx-icon').textContent=pick.icon;
+  document.getElementById('cx-score').textContent=`${n}/${tot}`;
+  document.getElementById('cx-msg').innerHTML=pick.msg;
+}
+
+function buildClues(){
+  const a=document.getElementById('cl-a'), d=document.getElementById('cl-d');
+  WORDS.filter(w=>w.d==='A').sort((x,y)=>x.n-y.n).forEach(w=>{
+    const div=document.createElement('div');
+    div.className='cx-clue'; div.id=`cl-A-${w.n}`;
+    div.innerHTML=`<span class="cx-clue-n">${w.n}</span><span class="cx-clue-t">${w.cl}</span>`;
+    div.onclick=()=>focusWord(w); a.appendChild(div);
+  });
+  WORDS.filter(w=>w.d==='D').sort((x,y)=>x.n-y.n).forEach(w=>{
+    const div=document.createElement('div');
+    div.className='cx-clue'; div.id=`cl-D-${w.n}`;
+    div.innerHTML=`<span class="cx-clue-n">${w.n}</span><span class="cx-clue-t">${w.cl}</span>`;
+    div.onclick=()=>focusWord(w); d.appendChild(div);
+  });
+}
+
+buildGrid(); buildClues(); updateProg();
+setTimeout(()=>focusWord(WORDS[0]),300);
+</script>
+</body>
+</html>

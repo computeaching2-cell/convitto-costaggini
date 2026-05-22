@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Tutte le notizie, eventi e comunicati del Convitto Costaggini di Rieti." />
+  <meta property="og:title" content="Notizie — Convitto "Costaggini" Rieti"/>
+  <meta property="og:description" content="Ultime notizie ed eventi dall'IPSSEOA Costaggini di Rieti."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Convitto Costaggini — Rieti"/>
+  <meta property="og:image" content="https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4374-scaled.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="theme-color" content="#2C3E2D" />
+  <title>Notizie | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .filter-bar { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .fbtn { background: var(--av2); border: 1px solid var(--av3); color: var(--txt2); font-family: var(--fu); font-size: .75rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: .5rem 1rem; border-radius: 40px; cursor: pointer; transition: var(--ease); min-height: 40px; }
+    .fbtn.active, .fbtn:hover { background: var(--bosco); color: var(--av); border-color: var(--bosco); }
+
+    .news-grid { display: grid; gap: 1.25rem; }
+    .article-card { background: var(--bco); border-radius: 8px; overflow: hidden; border: 1px solid var(--av3); box-shadow: 0 2px 8px rgba(44,62,45,.05); transition: transform var(--ease), box-shadow var(--ease); }
+    .article-card:hover { transform: translateY(-3px); box-shadow: var(--sh-md); }
+    .article-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+    .ac-body { padding: 1.1rem 1.25rem 1.4rem; }
+    .ac-meta { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; flex-wrap: wrap; }
+    .ac-date { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--oro); }
+    .ac-cat { font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--av2); color: var(--bosco2); padding: .18rem .6rem; border-radius: 20px; border: 1px solid var(--av3); }
+    .ac-body h3 { font-family: var(--fd); font-size: 1.2rem; font-weight: 400; color: var(--bosco); margin-bottom: .4rem; line-height: 1.3; }
+    .ac-body p { font-size: .82rem; color: var(--txt2); line-height: 1.65; margin-bottom: 0; }
+    .ac-link { display: inline-flex; align-items: center; gap: .3rem; font-size: .73rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--bosco); text-decoration: none; margin-top: .75rem; border-bottom: 1px solid var(--bosco); padding-bottom: 1px; transition: color var(--ease), border-color var(--ease); }
+    .ac-link:hover { color: var(--oro); border-color: var(--oro); }
+    .article-card.featured { grid-column: 1/-1; }
+    .article-card.featured img { aspect-ratio: 21/9; }
+    .article-card.featured .ac-body { padding: 1.5rem 1.75rem 2rem; }
+    .article-card.featured h3 { font-size: 1.6rem; }
+
+    @media(min-width:640px){ .news-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:1024px){ .news-grid { grid-template-columns: repeat(3, 1fr); } .article-card.featured img { aspect-ratio: 32/9; } }
+
+    .comunicati-list { display: flex; flex-direction: column; gap: .55rem; }
+    .com-row { display: flex; align-items: center; gap: .85rem; background: var(--bco); border: 1px solid var(--av3); border-radius: 4px; padding: .85rem 1rem; text-decoration: none; color: var(--txt); min-height: 56px; transition: background var(--ease); }
+    .com-row:hover { background: var(--av2); }
+    .com-date { font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--oro); white-space: nowrap; flex-shrink: 0; min-width: 80px; }
+    .com-title { font-size: .85rem; font-weight: 600; color: var(--bosco); flex: 1; }
+    .com-arrow { color: var(--bosco2); flex-shrink: 0; }
+
+    .events-grid { display: grid; gap: 1rem; margin-top: 1.5rem; }
+    .ev-card { background: var(--bco); border: 1px solid var(--av3); border-radius: 8px; display: flex; gap: 1rem; padding: 1rem; align-items: flex-start; }
+    .ev-date { background: var(--bosco); color: var(--av); border-radius: 6px; padding: .6rem .75rem; text-align: center; flex-shrink: 0; min-width: 56px; }
+    .ev-date .day { font-family: var(--fd); font-size: 1.8rem; font-weight: 300; line-height: 1; color: var(--oro3); display: block; }
+    .ev-date .mon { font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(245,240,232,.65); }
+    .ev-body h3 { font-size: .95rem; color: var(--bosco); margin-bottom: .25rem; }
+    .ev-body p { font-size: .8rem; color: var(--txt2); margin-bottom: 0; }
+    .ev-body .ev-where { font-size: .72rem; font-weight: 700; color: var(--oro); letter-spacing: .05em; margin-top: .25rem; }
+    @media(min-width:640px){ .events-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:1024px){ .events-grid { grid-template-columns: repeat(3,1fr); } }
+  @media(min-width:560px){.news-grid{grid-template-columns:1fr 1fr}}</style>
+</head>
+<body data-page="notizie">
+<main id="main">
+
+  <div class="page-hero">
+    <div class="w">
+      <nav class="breadcrumb" aria-label="Percorso"><a href="index.html">Home</a><span>›</span><span aria-current="page">Notizie</span></nav>
+      <div class="gold-bar"></div>
+      <h1>Notizie ed <em>eventi</em></h1>
+      <p class="sub">Tutte le novità dal Convitto "Costaggini": successi degli studenti, eventi, comunicati e aggiornamenti istituzionali.</p>
+    </div>
+  </div>
+
+  <!-- IN EVIDENZA + NOTIZIE -->
+  <section style="background:var(--bco)">
+    <div class="w">
+      <p class="lbl">In primo piano</p>
+      <h2>Le ultime <em>notizie</em></h2>
+      <div class="filter-bar" role="group" aria-label="Filtra per categoria">
+        <button class="fbtn active" data-filter="all">Tutte</button>
+        <button class="fbtn" data-filter="eventi">Eventi</button>
+        <button class="fbtn" data-filter="successi">Successi</button>
+        <button class="fbtn" data-filter="istituzionale">Istituzionale</button>
+        <button class="fbtn" data-filter="comunicati">Comunicati</button>
+      </div>
+      <div class="news-grid" id="news-grid-main">
+
+        <article class="article-card rv" data-cat="istituzionale">
+          <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" alt="Aula magna per presentazione libro LILT al Costaggini di Rieti" loading="eager"/>
+          <div class="ac-body">
+            <div class="ac-meta"><span class="ac-date">Maggio 2026</span><span class="ac-cat">Istituzionale</span></div>
+            <h3>La LILT di Rieti all'Aula Magna del Costaggini — presentazione del libro del Prof. Schittulli</h3>
+            <p>L'Associazione Provinciale LILT di Rieti ha scelto l'Aula Magna dell'IPSSEOA "R. A. Costaggini" per accogliere il Presidente Nazionale prof. Francesco Schittulli, che ha presentato il volume "Una vita…</p>
+            <a href="https://www.formatrieti.it/2026/05/12/la-lilt-rieti-accoglie-francesco-schittulli-presentazione-del-libro-allipsseoa-costaggini/" target="_blank" rel="noopener" class="ac-link">Leggi su Format Rieti →</a>
+          </div>
+        </article>
+
+        <article class="article-card rv d1" data-cat="istituzionale">
+          <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80" alt="Semiconvitto Costaggini 2026" loading="lazy"/>
+          <div class="ac-body">
+            <div class="ac-meta"><span class="ac-date">A.S. 2026/27</span><span class="ac-cat">Istituzionale</span></div>
+            <h3>In arrivo il Semiconvitto — prenota una giornata di prova gratuita</h3>
+            <p>Studio guidato, pranzo e attività pomeridiane per chi non alloggia. Dal prossimo anno il servizio è attivo: già disponibile la giornata di prova gratuita.</p>
+            <a href="https://www.alberghierorieti.edu.it/semiconvitto/" target="_blank" rel="noopener" class="ac-link">Scopri il Semiconvitto →</a>
+          </div>
+        </article>
+
+        <article class="article-card rv d2" data-cat="pnrr">
+          <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80" alt="Cantiere nuova palestra Costaggini PNRR" loading="lazy"/>
+          <div class="ac-body">
+            <div class="ac-meta"><span class="ac-date">Luglio 2025 — in corso</span><span class="ac-cat" style="background:#ea580c;color:#fff">PNRR</span></div>
+            <h3>🏗️ In costruzione la nuova palestra polifunzionale — 1 milione di euro PNRR</h3>
+            <p>Dal 10 luglio 2025 è in corso la costruzione della nuova palestra dell'Istituto Costaggini, finanziata con circa 1 milione di euro dei fondi PNRR. Campo indoor polivalente, spogliatoi e pistino per l'atletica.</p>
+            <a href="https://www.rietilife.com/2026/03/09/il-presidente-cuneo-al-cantiere-della-palestra-dellistituto-costaggini-di-rieti/" target="_blank" rel="noopener" class="ac-link">Aggiornamento cantiere (marzo 2026) →</a>
+          </div>
+        </article>
+
+        <article class="article-card rv" data-cat="eventi">
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" alt="Open Night Costaggini Orienta dicembre 2025" loading="lazy"/>
+          <div class="ac-body">
+            <div class="ac-meta"><span class="ac-date">Dicembre 2025</span><span class="ac-cat" style="background:#1a4a7a;color:#fff">Eventi</span></div>
+            <h3>Open Night "Costaggini Orienta" — 18 dicembre 2025</h3>
+            <p>Giovedì 18 dicembre dalle 18:30 alle 22:00 si è tenuto l'Open Night del Costaggini. Le famiglie hanno visitato laboratori di enogastronomia, cucina, sala bar, accoglienza turistica, linguistico e informatico, oltre alle strutture convittuali.</p>
+            <a href="https://sites.google.com/alberghierorieti.it/costagginiorienta/open-day" target="_blank" rel="noopener" class="ac-link">Costaggini Orienta →</a>
+          </div>
+        </article>
+
+        <article class="article-card rv d1" data-cat="istituzionale">
+          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80" alt="Progetto Verde Lab Convitto Costaggini" loading="lazy"/>
+          <div class="ac-body">
+            <div class="ac-meta"><span class="ac-date">Maggio 2025</span><span class="ac-cat">Istituzionale</span></div>
+            <h3>🌿 Progetto "Verde Lab" — quando la scuola diventa più verde</h3>
+            <p>Il Convitto lancia il progetto Verde Lab: spazi comuni trasformati in ambienti verdi, coltivazione di piante aromatiche e ortaggi, educazione alla sostenibilità ambientale nel quotidiano convittuale.</p>
+            <a href="https://www.facebook.com/alberghierorieti/posts/-progetto-verde-lab-al-convitto-ipsseoa-di-rieti-quando-la-scuola-diventa-pi%C3%B9-ve/1785757866104359/" target="_blank" rel="noopener" class="ac-link">Leggi su Facebook →</a>
+          </div>
+        </article>
+
+        <article class="article-card rv d2" data-cat="vita">
+          <img src="https://img.youtube.com/vi/gQBUvoLzuDM/maxresdefault.jpg" alt="Podcast: Raffaele Castaldo intervista Stefania Marinetti — mensa Santa Chiara Rieti" loading="lazy"/>
+          <div class="ac-body">
+            <div class="ac-meta"><span class="ac-date">2025</span><span class="ac-cat" style="background:#2C3E2D;color:#D4AA4A">Vita al Convitto</span></div>
+            <h3>🎙️ Raffaele Castaldo intervista la responsabile della mensa di Santa Chiara — un convittore protagonista</h3>
+            <p>Una prestazione brillante: Raffaele Castaldo, nostro convittore, ha condotto con sicurezza e professionalità un'intervista a Stefania Marinetti nel podcast dell'Istituto. Doti comunicative, curiosità e capacità di ascolto non comuni.</p>
+            <a href="https://www.youtube.com/watch?v=gQBUvoLzuDM" target="_blank" rel="noopener" class="ac-link">▶ Ascolta il podcast →</a>
+          </div>
+        </article>
+
+        <article class="article-card rv" data-cat="vita al convitto">
+          <img src="https://images.unsplash.com/photo-1576867757603-05b134ebc379?w=600&q=80" alt="Festa di Natale Convitto Costaggini 2024" loading="lazy"/>
+          <div class="ac-body">
+            <div class="ac-meta"><span class="ac-date">Dicembre 2024</span><span class="ac-cat">Vita al Convitto</span></div>
+            <h3>Festa di Natale al Convitto — Cena di gala, musica e tombola</h3>
+            <p>La tradizionale Festa di Natale: cena preparata dai ragazzi, concerto dal vivo con band studentesca. Le foto ufficiali nella galleria del sito.</p>
+            <a href="natale2024.html" class="ac-link">Guarda la galleria →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COMUNICATI UFFICIALI -->
+  <section style="background:var(--av2)">
+    <div class="w">
+      <p class="lbl">Atti e comunicati</p>
+      <h2>Comunicati <em>ufficiali</em></h2>
+      <div class="comunicati-list">
+        <a class="com-row rv" href="https://www.alberghierorieti.edu.it" target="_blank" rel="noopener"><span class="com-date">Giu 2025</span><span class="com-title">Avviso n. 579 — Conferma iscrizione in convitto a.s. 2025/26 — Domanda di ammissione</span><span class="com-arrow">›</span></a>
+        <a class="com-row rv" href="https://www.alberghierorieti.edu.it" target="_blank" rel="noopener"><span class="com-date">Giu 2025</span><span class="com-title">Avviso n. 578 — Conferma iscrizione classe prima a.s. 2025/26</span><span class="com-arrow">›</span></a>
+        <a class="com-row rv" href="https://www.alberghierorieti.edu.it" target="_blank" rel="noopener"><span class="com-date">Giu 2025</span><span class="com-title">Lettera ai Maturandi di Mons. Piccinonna, Vescovo di Rieti</span><span class="com-arrow">›</span></a>
+        <a class="com-row rv" href="https://www.alberghierorieti.edu.it" target="_blank" rel="noopener"><span class="com-date">Gen 2026</span><span class="com-title">Avviso n. 152 — Partita di basket Sebastiani Rieti – Cividale del Friuli</span><span class="com-arrow">›</span></a>
+        <a class="com-row rv" href="https://www.alberghierorieti.edu.it/tutte-le-news/" target="_blank" rel="noopener"><span class="com-date">Tutti</span><span class="com-title">→ Consulta tutti gli avvisi sul sito ufficiale dell'istituto</span><span class="com-arrow">›</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROSSIMI EVENTI -->
+  <section style="background:var(--av)">
+    <div class="w">
+      <p class="lbl">Agenda</p>
+      <h2>Prossimi <em>eventi</em></h2>
+      <div class="events-grid">
+        <div class="ev-card rv">
+          <div class="ev-date"><span class="day">Lun</span><span class="mon">Ogni sett.</span></div>
+          <div class="ev-body"><h3>Orientamento individuale in sede</h3><p>Presentazione dell'offerta formativa dell'istituto e del convitto a famiglie e studenti delle classi terze medie.</p><p class="ev-where">📍 Via Salaria s.n.c. · 11:00–12:30 · Prenotazione: rirh010007@istruzione.it</p></div>
+        </div>
+        <div class="ev-card rv d1">
+          <div class="ev-date"><span class="day">Open</span><span class="mon">Day</span></div>
+          <div class="ev-body"><h3>Open Day — Date pubblicate annualmente</h3><p>Il Convitto apre le porte in occasione degli Open Day dell'istituto. Visita guidata agli spazi residenziali, incontro con gli educatori e presentazione del servizio.</p><p class="ev-where">📍 Via Salaria s.n.c. · Date sul sito ufficiale</p></div>
+        </div>
+        <div class="ev-card rv d2">
+          <div class="ev-date"><span class="day">Dic</span><span class="mon">Ogni anno</span></div>
+          <div class="ev-body"><h3>Festa di Natale del Convitto</h3><p>Tradizionale cena di gala preparata dagli studenti, con canti, performance musicali e momenti di condivisione tra convittori, educatori e personale.</p><p class="ev-where">📍 Convitto "Costaggini" · Sera</p></div>
+        </div>
+        <div class="ev-card rv">
+          <div class="ev-date"><span class="day">Set</span><span class="mon">Ogni anno</span></div>
+          <div class="ev-body"><h3>Accoglienza nuovi convittori</h3><p>Inizio anno scolastico: accoglienza dei nuovi iscritti, assegnazione camere e presentazione del programma educativo annuale.</p><p class="ev-where">📍 Convitto "Costaggini" · Data pubblicata sul sito</p></div>
+        </div>
+        <div class="ev-card rv d1">
+          <div class="ev-date"><span class="day">Todo</span><span class="mon">l'anno</span></div>
+          <div class="ev-body"><h3>Attività sportive e culturali</h3><p>Palestra, calcetto, basket, pallavolo, rugby, pallanuoto, cinema e teatro: attività proposte dagli educatori durante l'anno su base settimanale.</p><p class="ev-where">📍 Strutture sportive cittadine convenzionate</p></div>
+        </div>
+        <div class="ev-card rv d2">
+          <div class="ev-date"><span class="day">2026</span><span class="mon">Nuovo</span></div>
+          <div class="ev-body"><h3>Semiconvitto — Giornate di prova</h3><p>In vista dell'attivazione del Semiconvitto per il 2026/27, è possibile richiedere una giornata di prova gratuita. Modulo disponibile sul sito dell'istituto.</p><p class="ev-where">📍 Convitto "Costaggini" · Su prenotazione</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+document.querySelectorAll('.fbtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('#news-grid-main .article-card').forEach(card => {
+      card.style.display = (f === 'all' || card.dataset.cat === f) ? '' : 'none';
+    });
+  });
+});
+</script>
+</body>
+</html>

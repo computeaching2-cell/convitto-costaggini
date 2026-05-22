@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Domanda di ammissione al Convitto Costaggini di Rieti — A.S. 2025/2026. Compila online e invia alla segreteria."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Domanda di Ammissione | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── HERO ── */
+    .da-hero { background:linear-gradient(135deg,var(--bosco),#1a3a1b); padding:3.5rem 1.25rem 3rem; }
+    .da-hero h1 { font-family:var(--fd); font-size:clamp(1.8rem,5vw,3rem); font-weight:300; color:#fff; margin-bottom:.4rem; }
+    .da-hero h1 em { font-style:italic; color:var(--oro3); }
+    .da-hero p { color:rgba(245,240,232,.6); font-size:.9rem; max-width:560px; line-height:1.8; }
+
+    /* ── CARTA ── */
+    .da-paper { max-width:780px; margin:0 auto; }
+
+    /* Sezione del form */
+    .da-section { background:#fff; border-radius:10px; box-shadow:0 2px 16px rgba(0,0,0,.07); margin-bottom:1.5rem; overflow:hidden; }
+    .da-section-hdr { background:var(--bosco); padding:1rem 1.5rem; display:flex; align-items:center; gap:.75rem; }
+    .da-section-hdr h2 { font-family:var(--fu); font-size:.68rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--oro2); margin:0; }
+    .da-section-hdr span { font-family:var(--fd); font-size:.85rem; font-style:italic; color:rgba(245,240,232,.45); }
+    .da-section-body { padding:1.5rem; }
+
+    /* Grid campi */
+    .da-grid { display:grid; gap:.85rem; }
+    .da-grid-2 { grid-template-columns:1fr 1fr; }
+    .da-grid-3 { grid-template-columns:1fr 1fr 1fr; }
+    @media(max-width:580px){ .da-grid-2,.da-grid-3 { grid-template-columns:1fr; } }
+
+    /* Campo */
+    .da-field { display:flex; flex-direction:column; gap:.3rem; }
+    .da-field label { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--bosco2); }
+    .da-field label .req { color:#dc2626; margin-left:2px; }
+    .da-field input, .da-field select, .da-field textarea {
+      padding:.65rem .9rem; border:1.5px solid #d1d5db; border-radius:6px;
+      font-family:var(--fu); font-size:.88rem; color:#1a1a1a;
+      outline:none; transition:border-color .2s, box-shadow .2s;
+      background:#fafafa;
+    }
+    .da-field input:focus, .da-field select:focus, .da-field textarea:focus {
+      border-color:var(--bosco); box-shadow:0 0 0 3px rgba(44,62,45,.1); background:#fff;
+    }
+    .da-field textarea { resize:vertical; min-height:80px; }
+    .da-field input::placeholder { color:#9ca3af; }
+
+    /* Checkbox / Radio */
+    .da-check-row { display:flex; align-items:center; gap:.6rem; }
+    .da-check-row input[type=checkbox], .da-check-row input[type=radio] {
+      width:18px; height:18px; accent-color:var(--bosco); cursor:pointer; flex-shrink:0;
+    }
+    .da-check-row label { font-family:var(--fu); font-size:.82rem; color:#374151; cursor:pointer; line-height:1.5; }
+
+    /* Box rette */
+    .da-rette { background:linear-gradient(135deg,#f0f7f0,#f7f4ec); border:1px solid rgba(44,62,45,.15); border-radius:8px; padding:1.25rem; margin-bottom:1rem; }
+    .da-rette h3 { font-family:var(--fu); font-size:.65rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--bosco); margin-bottom:.85rem; }
+    .da-rata { display:flex; justify-content:space-between; align-items:center; padding:.55rem 0; border-bottom:1px solid rgba(44,62,45,.08); }
+    .da-rata:last-child { border-bottom:none; font-weight:700; color:var(--bosco); }
+    .da-rata-label { font-size:.83rem; color:#374151; }
+    .da-rata-label small { display:block; font-size:.72rem; color:#6b7280; margin-top:.1rem; }
+    .da-rata-amount { font-family:var(--fd); font-size:1.1rem; font-weight:400; color:var(--bosco); }
+    .da-rata:last-child .da-rata-amount { font-size:1.25rem; color:var(--oro); }
+
+    /* Allegati checklist */
+    .da-allegati { display:flex; flex-direction:column; gap:.5rem; }
+    .da-allegato { display:flex; align-items:flex-start; gap:.65rem; padding:.65rem .85rem; background:#f9fafb; border-radius:6px; border:1px solid #e5e7eb; cursor:pointer; transition:border-color .2s; }
+    .da-allegato:hover { border-color:var(--bosco); }
+    .da-allegato input { margin-top:2px; width:16px; height:16px; accent-color:var(--bosco); flex-shrink:0; }
+    .da-allegato-text { font-size:.83rem; color:#374151; line-height:1.5; }
+    .da-allegato-text strong { color:#111; }
+
+    /* Dichiarazioni */
+    .da-dichiarazione { background:#fefce8; border:1px solid #fde68a; border-radius:8px; padding:1.1rem 1.25rem; margin-bottom:.85rem; }
+    .da-dichiarazione p { font-size:.83rem; color:#374151; line-height:1.7; margin:0 0 .75rem; }
+    .da-dichiarazione p:last-child { margin:0; }
+
+    /* Bottoni */
+    .da-footer { display:flex; gap:1rem; flex-wrap:wrap; align-items:center; justify-content:space-between; padding:1.5rem; background:#f9fafb; border-radius:0 0 10px 10px; border-top:1px solid #e5e7eb; }
+    .btn-invia { font-family:var(--fu); font-size:.72rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; padding:.85rem 2rem; background:linear-gradient(135deg,var(--bosco),#1a3a1b); color:#fff; border:none; border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; gap:.5rem; transition:opacity .2s; }
+    .btn-invia:hover { opacity:.88; }
+    .btn-invia:disabled { opacity:.5; cursor:not-allowed; }
+    .btn-stampa { font-family:var(--fu); font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.75rem 1.25rem; background:none; border:1.5px solid #d1d5db; border-radius:8px; cursor:pointer; color:#374151; transition:all .2s; }
+    .btn-stampa:hover { border-color:var(--bosco); color:var(--bosco); }
+
+    /* Successo */
+    .da-success { display:none; background:linear-gradient(135deg,#f0fdf4,#f7fef4); border:1px solid #bbf7d0; border-radius:12px; padding:2.5rem; text-align:center; }
+    .da-success h2 { font-family:var(--fd); font-size:1.8rem; font-weight:300; color:var(--bosco); margin-bottom:.5rem; }
+    .da-success p { font-family:var(--fu); font-size:.85rem; color:#374151; line-height:1.75; max-width:460px; margin:0 auto .85rem; }
+
+    /* Note */
+    .da-nota { font-family:var(--fu); font-size:.65rem; color:#6b7280; line-height:1.6; }
+    .da-nota strong { color:#374151; }
+
+    /* Progress */
+    .da-progress { background:#e5e7eb; border-radius:4px; height:4px; margin-bottom:2rem; }
+    .da-progress-fill { height:100%; background:linear-gradient(90deg,var(--bosco),var(--oro)); border-radius:4px; transition:width .4s; }
+
+    @media print {
+      .da-hero, .da-footer, nav, footer, .da-progress { display:none !important; }
+      .da-section { box-shadow:none; border:1px solid #ccc; page-break-inside:avoid; }
+    }
+  </style>
+</head>
+<body data-page="domanda-ammissione">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="da-hero">
+    <div class="w">
+      <nav class="breadcrumb" style="margin-bottom:1.25rem">
+        <a href="index.html" style="color:rgba(245,240,232,.45)">Home</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <a href="ammissione.html" style="color:rgba(245,240,232,.45)">Ammissione</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <span style="color:var(--oro2)">Domanda di Ammissione</span>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">A.S. 2025/2026</p>
+      <h1>Domanda di <em>Ammissione</em><br>al Convitto</h1>
+      <p>Compila il modulo online e invialo direttamente alla segreteria. Riceverai una conferma via email. La firma autografa rimane obbligatoria — la segreteria ti contatterà per il completamento.</p>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section style="background:var(--av);padding:3rem 1.25rem 4rem">
+    <div class="da-paper">
+
+      <!-- Barra avanzamento -->
+      <div class="da-progress"><div class="da-progress-fill" id="da-prog" style="width:0%"></div></div>
+
+      <form id="da-form" name="domanda-ammissione" netlify netlify-honeypot="bot-field" method="POST" action="/grazie.html" novalidate>
+          <input type="hidden" name="form-name" value="domanda-ammissione"/>
+          <p style="display:none"><label>Non compilare: <input name="bot-field"/></label></p>
+
+        <!-- ── 1. GENITORE ── -->
+        <div class="da-section">
+          <div class="da-section-hdr">
+            <h2>1 — Il genitore / tutore</h2>
+            <span>richiedente</span>
+          </div>
+          <div class="da-section-body">
+            <div class="da-grid da-grid-2">
+              <div class="da-field">
+                <label>Cognome e nome <span class="req">*</span></label>
+                <input type="text" name="genitore_nome" required placeholder="es. Rossi Mario"/>
+              </div>
+              <div class="da-field">
+                <label>Ruolo <span class="req">*</span></label>
+                <select name="genitore_ruolo" required>
+                  <option value="">— seleziona —</option>
+                  <option>Padre</option>
+                  <option>Madre</option>
+                  <option>Tutore legale</option>
+                </select>
+              </div>
+              <div class="da-field">
+                <label>Cellulare padre/tutore <span class="req">*</span></label>
+                <input type="tel" name="cell_padre" required placeholder="es. 340 1234567"/>
+              </div>
+              <div class="da-field">
+                <label>Cellulare madre</label>
+                <input type="tel" name="cell_madre" placeholder="es. 340 7654321"/>
+              </div>
+              <div class="da-field">
+                <label>Email padre/tutore <span class="req">*</span></label>
+                <input type="email" name="email_padre" required placeholder="es. mario.rossi@email.it"/>
+              </div>
+              <div class="da-field">
+                <label>Email madre</label>
+                <input type="email" name="email_madre" placeholder="es. anna.rossi@email.it"/>
+              </div>
+              <div class="da-field">
+                <label>Altro cellulare (emergenze)</label>
+                <input type="tel" name="cell_altro" placeholder="nonni, parenti, ecc."/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 2. ALUNNO ── -->
+        <div class="da-section">
+          <div class="da-section-hdr">
+            <h2>2 — Il/la richiedente</h2>
+            <span>dati dell'alunno/a</span>
+          </div>
+          <div class="da-section-body">
+            <div class="da-grid da-grid-2">
+              <div class="da-field">
+                <label>Cognome e nome dell'alunno/a <span class="req">*</span></label>
+                <input type="text" name="alunno_nome" required placeholder="es. Rossi Luca"/>
+              </div>
+              <div class="da-field">
+                <label>Ammissione come <span class="req">*</span></label>
+                <select name="tipo" required>
+                  <option value="">— seleziona —</option>
+                  <option value="convittore">Convittore (maschio)</option>
+                  <option value="convittrice">Convittrice (femmina)</option>
+                </select>
+              </div>
+              <div class="da-field">
+                <label>Nato/a il <span class="req">*</span></label>
+                <input type="date" name="alunno_nascita" required/>
+              </div>
+              <div class="da-field">
+                <label>Cellulare del/la ragazzo/a</label>
+                <input type="tel" name="cell_ragazzo" placeholder="se disponibile"/>
+              </div>
+              <div class="da-field" style="grid-column:1/-1">
+                <label>Residente a <span class="req">*</span></label>
+                <input type="text" name="residenza_citta" required placeholder="Città di residenza"/>
+              </div>
+              <div class="da-field">
+                <label>Via / Indirizzo <span class="req">*</span></label>
+                <input type="text" name="residenza_via" required placeholder="Via e numero civico"/>
+              </div>
+              <div class="da-field">
+                <label>CAP <span class="req">*</span></label>
+                <input type="text" name="residenza_cap" required placeholder="es. 02100" maxlength="5"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 3. RETTE ── -->
+        <div class="da-section">
+          <div class="da-section-hdr">
+            <h2>3 — Iscrizione al Convitto</h2>
+            <span>piano di versamento A.S. 2025/26</span>
+          </div>
+          <div class="da-section-body">
+            <div class="da-rette">
+              <h3>Retta annuale — importi e scadenze</h3>
+              <div class="da-rata">
+                <div class="da-rata-label">Quota di iscrizione<small>Entro il 30 luglio 2025 — allega la ricevuta alla domanda</small></div>
+                <div class="da-rata-amount">€ 450,00</div>
+              </div>
+              <div class="da-rata">
+                <div class="da-rata-label">1ª rata<small>Entro il 1° settembre 2025</small></div>
+                <div class="da-rata-amount">€ 350,00</div>
+              </div>
+              <div class="da-rata">
+                <div class="da-rata-label">2ª rata<small>Entro il 30 novembre 2025</small></div>
+                <div class="da-rata-amount">€ 400,00</div>
+              </div>
+              <div class="da-rata">
+                <div class="da-rata-label">3ª rata<small>Entro il 28 febbraio 2026</small></div>
+                <div class="da-rata-amount">€ 400,00</div>
+              </div>
+              <div class="da-rata">
+                <div class="da-rata-label">Totale annuo</div>
+                <div class="da-rata-amount">€ 1.600,00</div>
+              </div>
+            </div>
+            <p class="da-nota">
+              <strong>Nota:</strong> La quota di iscrizione (€ 450,00) è destinata alle spese generali per l'ingresso in convitto e <strong>non può essere restituita</strong> qualora si chieda il nulla osta prima dell'inizio delle lezioni. In caso di ritiro o allontanamento successivo, nulla sarà dovuto oltre quanto già versato. Il mancato versamento alle scadenze comporta l'allontanamento immediato del convittore.
+            </p>
+          </div>
+        </div>
+
+        <!-- ── 4. ALLEGATI ── -->
+        <div class="da-section">
+          <div class="da-section-hdr">
+            <h2>4 — Documenti da allegare</h2>
+            <span>spunta quelli che allegherai all'invio</span>
+          </div>
+          <div class="da-section-body">
+            <p style="font-size:.83rem;color:#6b7280;margin-bottom:1rem;line-height:1.6">Spunta i documenti che stai allegando. I documenti fisici vanno consegnati in segreteria; puoi anche inviarli via email come scansioni.</p>
+            <div class="da-allegati">
+              <label class="da-allegato">
+                <input type="checkbox" name="all_sanitaria"/>
+                <div class="da-allegato-text"><strong>1.</strong> Copia tessera assistenza sanitaria</div>
+              </label>
+              <label class="da-allegato">
+                <input type="checkbox" name="all_vaccini"/>
+                <div class="da-allegato-text"><strong>2.</strong> Certificato delle vaccinazioni completo</div>
+              </label>
+              <label class="da-allegato">
+                <input type="checkbox" name="all_ricevuta"/>
+                <div class="da-allegato-text"><strong>3.</strong> Ricevuta di versamento quota iscrizione € 450,00 — <em>condiziona la garanzia del posto</em></div>
+              </label>
+              <label class="da-allegato">
+                <input type="checkbox" name="all_famiglia"/>
+                <div class="da-allegato-text"><strong>4.</strong> Stato di famiglia (e ove applicabile: atto di separazione, affido, ecc.)</div>
+              </label>
+              <label class="da-allegato">
+                <input type="checkbox" name="all_medica"/>
+                <div class="da-allegato-text"><strong>5.</strong> Dichiarazione medica di sana e robusta costituzione per attività non agonistiche</div>
+              </label>
+              <label class="da-allegato">
+                <input type="checkbox" name="all_documento"/>
+                <div class="da-allegato-text"><strong>6.</strong> Fotocopia documento di identità dei genitori</div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 5. DICHIARAZIONI ── -->
+        <div class="da-section">
+          <div class="da-section-hdr">
+            <h2>5 — Dichiarazioni del genitore</h2>
+            <span>obbligatorie — leggi attentamente</span>
+          </div>
+          <div class="da-section-body">
+
+            <div class="da-dichiarazione">
+              <p>Il sottoscritto si impegna a versare la somma di <strong>€ 1.600,00 in 4 rate</strong> secondo le scadenze indicate, pena l'allontanamento immediato dell'allievo dal convitto. Nel caso i pagamenti non siano effettuati rispettando le rate e le date esposte, la scuola procederà alla cessione del credito ad una società di riscossione abilitata al recupero.</p>
+              <p>La quota di iscrizione pari a <strong>€ 450,00</strong>, destinata alle spese generali per l'ingresso in convitto, non potrà essere chiesta in restituzione qualora si chieda il nulla osta prima dall'inizio delle lezioni; in caso di ritiro o allontanamento dal convitto in tempi successivi <strong>nulla avrò a pretendere di quanto versato</strong>.</p>
+              <div class="da-check-row" style="margin-top:.75rem">
+                <input type="checkbox" id="decl1" name="dichiarazione_1" required/>
+                <label for="decl1">Dichiaro di accettare e rispettare integralmente il regolamento del convitto e i termini del piano di versamento sopra indicato. <span class="req">*</span></label>
+              </div>
+            </div>
+
+            <div class="da-dichiarazione">
+              <p>Dichiaro di accettare incondizionatamente il Regolamento di Istituto e del Convitto e di impegnarmi a farlo rispettare a mio figlio/a. Sono consapevole che presso la struttura convittuale sono installate telecamere per la videosorveglianza nel rispetto della normativa vigente.</p>
+              <p>Sono consapevole che la presenza in convitto è funzionale all'attività scolastica, pertanto: sarò reperibile in ogni momento per comunicazioni della scuola; in caso di interruzione dell'attività didattica organizzerò con sollecitudine il viaggio di mio figlio al luogo di residenza; in caso di malattia preleverò mio figlio con estrema sollecitudine.</p>
+              <div class="da-check-row" style="margin-top:.75rem">
+                <input type="checkbox" id="decl2" name="dichiarazione_2" required/>
+                <label for="decl2">Dichiaro di aver letto e accettare tutte le condizioni di cui sopra. <span class="req">*</span></label>
+              </div>
+            </div>
+
+            <div class="da-dichiarazione" style="background:#f0f9ff;border-color:#bae6fd">
+              <p>Il sottoscritto dichiara di essere consapevole che la scuola può utilizzare i dati contenuti nell'autocertificazione esclusivamente nell'ambito e per fini istituzionali propri della Pubblica Amministrazione, secondo le condizioni riportate nell'informativa sul trattamento dei dati personali, in conformità agli artt. 13 e 14 del Regolamento (UE) 2016/679 – GDPR.</p>
+              <div class="da-check-row" style="margin-top:.75rem">
+                <input type="checkbox" id="decl3" name="privacy" required/>
+                <label for="decl3">Presto il consenso al trattamento dei dati personali ai sensi del GDPR. <span class="req">*</span></label>
+              </div>
+            </div>
+
+            <div class="da-field" style="margin-top:1rem">
+              <label>Data di compilazione <span class="req">*</span></label>
+              <input type="date" name="data_firma" required id="da-data"/>
+            </div>
+
+            <p class="da-nota" style="margin-top:1rem">
+              <strong>Nota:</strong> La firma autografa rimane obbligatoria per la validità legale della domanda. Dopo l'invio online, la segreteria ti contatterà per il completamento con firma. In alternativa puoi stampare il modulo, firmarlo e consegnarlo fisicamente in segreteria.
+            </p>
+          </div>
+        </div>
+
+        <!-- Note aggiuntive -->
+        <div class="da-section">
+          <div class="da-section-hdr">
+            <h2>6 — Note aggiuntive</h2>
+            <span>facoltativo</span>
+          </div>
+          <div class="da-section-body">
+            <div class="da-field">
+              <label>Eventuali comunicazioni, esigenze particolari o informazioni utili</label>
+              <textarea name="note" placeholder="es. allergie alimentari, esigenze particolari, domande per la segreteria…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer form -->
+        <div style="background:#fff;border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,.07)">
+          <div class="da-footer">
+            <div>
+              <p style="font-family:var(--fu);font-size:.65rem;font-weight:700;color:#374151;margin-bottom:.2rem">La domanda sarà inviata a:</p>
+              <p style="font-family:var(--fu);font-size:.72rem;color:var(--bosco);font-weight:800">Segreteria IPSSEOA "Costaggini" — rirh010007@istruzione.it</p>
+            </div>
+            <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+              <button type="button" class="btn-stampa" onclick="window.print()">🖨️ Stampa</button>
+              <button type="submit" class="btn-invia" id="da-submit">
+                <svg viewBox="0 0 24 24" width="16" height="16" style="fill:#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                Invia alla Segreteria
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form><!-- fine form -->
+
+      <!-- Messaggio successo -->
+      <div class="da-success" id="da-success">
+        <div style="font-size:3rem;margin-bottom:1rem">✅</div>
+        <h2>Domanda <em>inviata</em></h2>
+        <p>La tua domanda di ammissione è stata inviata alla segreteria dell'IPSSEOA "Costaggini" di Rieti.</p>
+        <p>Riceverai una conferma all'indirizzo email indicato. La segreteria ti contatterà per il completamento con firma autografa.</p>
+        <p style="color:#6b7280">Conserva una copia di questa domanda. Puoi stamparla usando il pulsante qui sopra.</p>
+        <div style="margin-top:1.5rem;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+          <a href="ammissione.html" class="btn-gold">← Torna all'Ammissione</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+// Pre-imposta data odierna
+document.getElementById('da-data').value = new Date().toISOString().split('T')[0];
+
+// Aggiorna barra di avanzamento
+function updateProgress() {
+  const inputs = document.querySelectorAll('#da-form input[required], #da-form select[required]');
+  let filled = 0;
+  inputs.forEach(i => {
+    if (i.type === 'checkbox') { if (i.checked) filled++; }
+    else { if (i.value.trim()) filled++; }
+  });
+  const pct = Math.round(filled / inputs.length * 100);
+  document.getElementById('da-prog').style.width = pct + '%';
+}
+document.getElementById('da-form').addEventListener('input', updateProgress);
+document.getElementById('da-form').addEventListener('change', updateProgress);
+
+// Submit — usa mailto per inviare un riepilogo
+document.getElementById('da-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Validazione base
+  const required = this.querySelectorAll('[required]');
+  let valid = true;
+  required.forEach(el => {
+    el.style.borderColor = '';
+    if (el.type === 'checkbox') {
+      if (!el.checked) { valid = false; el.closest('.da-check-row').style.outline = '2px solid #dc2626'; }
+    } else {
+      if (!el.value.trim()) { valid = false; el.style.borderColor = '#dc2626'; }
+    }
+  });
+
+  if (!valid) {
+    alert('Compila tutti i campi obbligatori (contrassegnati con *) prima di inviare.');
+    document.querySelector('[style*="border-color: rgb(220"]')?.scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+
+  // Costruisci corpo email
+  const d = Object.fromEntries(new FormData(this));
+  const allegati = ['sanitaria','vaccini','ricevuta','famiglia','medica','documento']
+    .filter(k => d['all_'+k])
+    .map((k,i) => {
+      const labels = ['Tessera sanitaria','Vaccinazioni','Ricevuta €450','Stato di famiglia','Dichiarazione medica','Doc. identità genitori'];
+      return (i+1) + '. ' + labels[i];
+    }).join('%0D%0A  ');
+
+  const corpo = encodeURIComponent(
+`DOMANDA DI AMMISSIONE AL CONVITTO A.S. 2025/2026
+================================================
+
+GENITORE / TUTORE
+Nome: ${d.genitore_nome || ''}
+Ruolo: ${d.genitore_ruolo || ''}
+Cell. padre/tutore: ${d.cell_padre || ''}
+Cell. madre: ${d.cell_madre || '—'}
+Email padre/tutore: ${d.email_padre || ''}
+Email madre: ${d.email_madre || '—'}
+Altro cell.: ${d.cell_altro || '—'}
+
+ALUNNO/A
+Nome: ${d.alunno_nome || ''}
+Ammissione come: ${d.tipo || ''}
+Nato/a il: ${d.alunno_nascita || ''}
+Cell. ragazzo/a: ${d.cell_ragazzo || '—'}
+Residenza: ${d.residenza_via || ''}, ${d.residenza_citta || ''} (${d.residenza_cap || ''})
+
+DOCUMENTI ALLEGATI
+${allegati || 'nessuno selezionato'}
+
+NOTE AGGIUNTIVE
+${d.note || '—'}
+
+DATA COMPILAZIONE: ${d.data_firma || ''}
+
+================================================
+Il genitore dichiara di aver letto e accettato:
+✓ Regolamento del convitto e piano di versamento
+✓ Condizioni di ammissione e videosorveglianza
+✓ Trattamento dati personali (GDPR)
+
+Questa domanda richiede firma autografa per la validità legale.
+Si prega di contattare il genitore per il completamento della procedura.`
+  );
+
+  const oggetto = encodeURIComponent(`Domanda di ammissione al Convitto A.S. 2025/26 — ${d.alunno_nome || ''}`);
+  window.location.href = `mailto:rirh010007@istruzione.it?cc=michele.gaggiano@alberghierorieti.it&subject=${oggetto}&body=${corpo}`;
+
+  // Mostra successo dopo breve pausa
+  setTimeout(() => {
+    document.getElementById('da-form').style.display = 'none';
+    document.getElementById('da-success').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 800);
+});
+
+updateProgress();
+</script>
+</body>
+</html>

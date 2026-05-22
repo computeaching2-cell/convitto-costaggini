@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Open Day Digitale del Convitto Costaggini — Tour degli spazi, FAQ interattiva, educatori e prenotazione visita."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Open Day Digitale | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+
+    /* ── HERO CON COUNTDOWN ── */
+    .od-hero {
+      position: relative; min-height: 65vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      background: transparent; overflow: hidden;
+    }
+    .od-hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg,rgba(12,20,13,.25) 0%,rgba(12,20,13,.6) 60%,rgba(12,20,13,.85) 100%),
+        url('https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4375-scaled.jpg') center/cover no-repeat;
+    }
+    /* Box testo con glassmorphism */
+    .od-hero-glass {
+      position: relative; z-index: 2;
+      background: rgba(12,20,13,.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(184,146,42,.2);
+      padding: 2rem 1.25rem 2.5rem;
+    }
+    @media(min-width:768px){
+      .od-hero-glass { padding: 2.5rem 2rem 3rem; }
+    }
+    .od-hero h1 { font-family:var(--fd); font-size:clamp(2rem,6vw,3.5rem); font-weight:300; color:#fff; line-height:1.1; margin-bottom:.5rem; }
+    .od-hero h1 em { font-style:italic; color:var(--oro3); display:block; }
+    .od-hero p { color:rgba(255,255,255,.7); font-size:.9rem; max-width:540px; line-height:1.75; margin-bottom:0; }
+    /* Link navigazione hero */
+    .hero-nav-links { font-size:.9rem; color:rgba(255,255,255,.7); max-width:540px; margin-bottom:0; line-height:2.4; }
+    .hero-nav-links a { color:var(--oro3); text-decoration:none; border-bottom:1px solid rgba(212,170,74,.35); padding-bottom:1px; transition:border-color .2s, color .2s; }
+    .hero-nav-links a:hover { border-color:var(--oro3); color:#fff; }
+    .hero-sep { color:rgba(212,170,74,.35); margin:0 .35rem; }
+    @media(max-width:480px){
+      .hero-sep { display:none; }
+      .hero-nav-links a { display:inline-block; margin:.15rem .5rem .15rem 0; }
+    }
+
+    /* Countdown */
+    .countdown { display:flex; gap:1rem; margin:1.75rem 0; flex-wrap:wrap; }
+    .cd-unit { background:rgba(12,20,13,.6); border:1px solid rgba(184,146,42,.3); border-radius:8px; padding:.75rem 1.1rem; text-align:center; min-width:72px; backdrop-filter:blur(8px); }
+    .cd-num { font-family:var(--fd); font-size:2.2rem; font-weight:300; color:var(--oro3); display:block; line-height:1; }
+    .cd-lbl { font-family:var(--fu); font-size:.55rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,240,232,.4); margin-top:.2rem; display:block; }
+
+    /* ── TOUR SPAZI ── */
+    .tour-slide {
+      position: relative; overflow: hidden;
+      height: clamp(300px,55vw,600px);
+      cursor: pointer;
+    }
+    .tour-slide img { width:100%; height:100%; object-fit:cover; transition:transform .6s ease; }
+    .tour-slide:hover img { transform:scale(1.03); }
+    .tour-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(180deg,transparent 30%,rgba(12,20,13,.9) 100%);
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:2rem 1.75rem;
+    }
+    .tour-badge { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--oro2); margin-bottom:.5rem; }
+    .tour-title { font-family:var(--fd); font-size:clamp(1.4rem,4vw,2rem); font-weight:300; color:#fff; margin-bottom:.5rem; line-height:1.2; }
+    .tour-desc { font-size:.85rem; color:rgba(255,255,255,.7); line-height:1.7; max-width:500px; }
+    .tour-nav { display:flex; gap:.5rem; margin-top:1rem; }
+    .tour-dot { width:8px; height:8px; border-radius:50%; border:1.5px solid rgba(184,146,42,.5); background:none; cursor:pointer; padding:0; transition:background .2s; }
+    .tour-dot.active { background:var(--oro2); border-color:var(--oro2); }
+
+    /* Su mobile: caption fuori dall'immagine, sotto */
+    @media(max-width:640px){
+      .tour-overlay {
+        position:static;
+        background:linear-gradient(135deg,var(--bosco),#1a3a1b);
+        padding:1.25rem 1.25rem 1.5rem;
+        border-radius:0 0 8px 8px;
+      }
+      .tour-slide {
+        height:auto !important;
+        border-radius:8px 8px 0 0;
+        overflow:visible;
+      }
+      .tour-slide img {
+        border-radius:8px 8px 0 0;
+        height:220px;
+      }
+      .tour-title { font-size:1.2rem; }
+      .tour-desc { font-size:.82rem; }
+      .tour-arr { top:110px; }
+    }
+
+    /* Frecce tour -->
+    .tour-arr {
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:48px; height:48px; border-radius:50%; border:1.5px solid rgba(184,146,42,.4);
+      background:rgba(12,20,13,.55); display:flex; align-items:center; justify-content:center;
+      cursor:pointer; z-index:10; backdrop-filter:blur(4px);
+      transition:background .2s, border-color .2s;
+    }
+    .tour-arr:hover { background:rgba(184,146,42,.2); border-color:var(--oro2); }
+    .tour-arr svg { width:20px; height:20px; fill:#fff; }
+    .tour-prev { left:.85rem; }
+    .tour-next { right:.85rem; }
+
+    /* ── FAQ CON RICERCA ── */
+    .faq-search-wrap { position:relative; margin-bottom:1.5rem; }
+    .faq-search {
+      width:100%; padding:.9rem 1.1rem .9rem 3rem;
+      background:var(--av2); border:1.5px solid var(--av3);
+      border-radius:8px; font-family:var(--fu); font-size:16px;
+      color:var(--bosco); outline:none; box-sizing:border-box;
+      transition:border-color .2s;
+    }
+    .faq-search:focus { border-color:var(--oro2); }
+    .faq-search-icon { position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:var(--bosco2); font-size:.9rem; pointer-events:none; }
+    .faq-count { font-family:var(--fu); font-size:.65rem; color:var(--txt2); margin-bottom:1rem; }
+    .faq-item { border:1px solid var(--av3); border-radius:8px; overflow:hidden; margin-bottom:.5rem; background:var(--av); }
+    .faq-q { font-family:var(--fu); font-size:.82rem; font-weight:700; color:var(--bosco); padding:1rem 1.25rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:1rem; transition:background .2s; list-style:none; }
+    .faq-q::-webkit-details-marker { display:none; }
+    .faq-q::marker { display:none; }
+    .faq-q:hover { background:rgba(44,62,45,.05); }
+    .faq-item[open] .faq-q { color:var(--bosco); border-bottom:1px solid var(--av3); }
+    .faq-q::after { content:'＋'; font-size:1.1rem; color:var(--oro); flex-shrink:0; transition:transform .3s; }
+    .faq-item[open] .faq-q::after { transform:rotate(45deg); }
+    .faq-a { font-size:.86rem; color:var(--txt2); line-height:1.8; padding:1rem 1.25rem 1.1rem; margin:0; }
+    .faq-a mark { background:rgba(184,146,42,.2); border-radius:2px; padding:0 2px; color:var(--bosco); }
+    .faq-hidden { display:none; }
+    .faq-cats { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1rem; }
+    .faq-cat { font-family:var(--fu); font-size:.58rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.3rem .75rem; border-radius:20px; border:1.5px solid var(--av3); background:none; cursor:pointer; color:var(--bosco2); transition:all .2s; }
+    .faq-cat.active, .faq-cat:hover { background:var(--bosco); color:var(--av); border-color:var(--bosco); }
+
+    /* ── EDUCATORI ── */
+    .edu-card { background:var(--av); border:1px solid var(--av3); border-radius:10px; overflow:hidden; transition:transform .2s, box-shadow .2s; }
+    .edu-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,.12); }
+    .edu-photo { width:100%; aspect-ratio:3/4; object-fit:cover; object-position:center; display:block; background:var(--bosco); }
+    .edu-photo-placeholder { width:100%; aspect-ratio:3/4; background:linear-gradient(135deg,var(--bosco),#1a3a1b); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem; }
+    .edu-body { padding:1.1rem 1.25rem; }
+    .edu-name { font-family:var(--fd); font-size:1.1rem; color:var(--bosco); margin-bottom:.2rem; }
+    .edu-role { font-family:var(--fu); font-size:.6rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--oro); margin-bottom:.6rem; }
+    .edu-bio { font-size:.8rem; color:var(--txt2); line-height:1.7; }
+    .edu-tags { display:flex; flex-wrap:wrap; gap:.3rem; margin-top:.75rem; }
+
+    /* ── PRENOTAZIONE ── */
+    .od-form { background:var(--bosco); border-radius:12px; padding:2rem; border:1px solid rgba(184,146,42,.2); }
+    .of-label { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,240,232,.4); display:block; margin-bottom:.35rem; margin-top:.9rem; }
+    .of-input { width:100%; padding:.7rem 1rem; background:rgba(255,255,255,.06); border:1.5px solid rgba(184,146,42,.25); border-radius:6px; color:#fff; font-family:var(--fu); font-size:16px; outline:none; box-sizing:border-box; transition:border-color .2s; }
+    .of-input:focus { border-color:var(--oro2); }
+
+  </style>
+</head>
+<body data-page="openday">
+<main id="main">
+
+  <!-- ═══ HERO + COUNTDOWN ═══ -->
+  <section class="od-hero">
+    <div class="od-hero-bg" aria-hidden="true"></div>
+    <div class="od-hero-glass">
+      <div class="w">
+        <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:1rem">
+          <a href="index.html" style="color:rgba(245,240,232,.5)">Home</a><span style="color:rgba(245,240,232,.25)">›</span>
+          <span aria-current="page" style="color:var(--oro2)">Open Day Digitale</span>
+        </nav>
+        <span style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);display:block;margin-bottom:.65rem">— Benvenuto al Convitto Costaggini</span>
+        <h1>Scopri il Convitto<br><em>in ogni dettaglio</em></h1>
+        <p style="line-height:2">Non aspettare l'Open Day — il Convitto "Costaggini" è aperto 365 giorni l'anno, almeno su questo schermo.</p>
+        <p class="hero-nav-links">
+          <a href="#tour"      onclick="document.getElementById('tour').scrollIntoView({behavior:'smooth'});return false">Esplora gli spazi</a><span class="hero-sep">·</span>
+          <a href="#faq-od"    onclick="document.getElementById('faq-od').scrollIntoView({behavior:'smooth'});return false">Leggi le risposte</a><span class="hero-sep">·</span>
+          <a href="#educatori" onclick="document.getElementById('educatori').scrollIntoView({behavior:'smooth'});return false">Conosci gli educatori</a><span class="hero-sep">·</span>
+          <a href="#prenota"   onclick="document.getElementById('prenota').scrollIntoView({behavior:'smooth'});return false">Prenota una visita guidata</a>
+        </p>
+
+        <div class="countdown" id="countdown" aria-label="Conto alla rovescia al prossimo Open Day" style="margin-top:1.25rem"></div>
+        <p style="font-family:var(--fu);font-size:.65rem;color:rgba(245,240,232,.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem">Prossimo Open Day — Dicembre 2026 (data da confermare)</p>
+        <div style="display:flex;flex-wrap:wrap;gap:1rem">
+          <a href="#tour" class="btn-gold" onclick="document.getElementById('tour').scrollIntoView({behavior:'smooth'});return false">🏛️ Tour degli spazi →</a>
+          <a href="#prenota" class="btn-outline" style="color:rgba(245,240,232,.7);border-color:rgba(245,240,232,.3)" onclick="document.getElementById('prenota').scrollIntoView({behavior:'smooth'});return false">📅 Prenota una visita</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TOUR SPAZI ═══ -->
+  <section id="tour" style="background:#0a0f0a">
+    <div style="position:relative">
+      <div class="tour-slide" id="tourSlide">
+        <img id="tourImg" src="" alt="" loading="lazy"/>
+        <div class="tour-overlay">
+          <span class="tour-badge" id="tourBadge"></span>
+          <h2 class="tour-title" id="tourTitle"></h2>
+          <p class="tour-desc" id="tourDesc"></p>
+          <div class="tour-nav" id="tourDots"></div>
+        </div>
+      </div>
+      <button class="tour-arr tour-prev" onclick="tourGo(-1)" aria-label="Spazio precedente">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+      <button class="tour-arr tour-next" onclick="tourGo(1)" aria-label="Spazio successivo">
+        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
+    </div>
+    <div class="w" style="padding-top:2rem;padding-bottom:.5rem">
+      <p style="font-family:var(--fu);font-size:.65rem;color:rgba(245,240,232,.3);letter-spacing:.1em;text-transform:uppercase">
+        Usa le frecce o swipe per esplorare tutti gli ambienti
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ INTERATTIVA ═══ -->
+  <section id="faq-od" style="background:var(--av);padding:5rem 1.25rem">
+    <div class="w">
+      <p class="lbl">Risposte immediate</p>
+      <h2>Chiedici <em>quello che vuoi</em></h2>
+      <p style="color:var(--txt2);max-width:540px;margin:.5rem 0 2rem;font-size:.9rem">Scrivi qualsiasi domanda — il sito filtra le risposte in tempo reale. Non trovi quello che cerchi? Scrivici.</p>
+
+      <!-- Ricerca live -->
+      <div class="faq-search-wrap rv">
+        <span class="faq-search-icon">🔍</span>
+        <input class="faq-search" id="faqSearch" type="search" placeholder="Es: quanto costa, posso chiamare, cosa si mangia..." autocomplete="off" oninput="filterFAQ()"/>
+      </div>
+      <p class="faq-count" id="faqCount"></p>
+
+      <!-- Categorie -->
+      <div class="faq-cats">
+        <button class="faq-cat active" data-cat="tutti" onclick="filterCat(this)">Tutte</button>
+        <button class="faq-cat" data-cat="vita" onclick="filterCat(this)">Vita quotidiana</button>
+        <button class="faq-cat" data-cat="costi" onclick="filterCat(this)">Costi & iscrizione</button>
+        <button class="faq-cat" data-cat="famiglia" onclick="filterCat(this)">Famiglia & contatti</button>
+        <button class="faq-cat" data-cat="studio" onclick="filterCat(this)">Studio & scuola</button>
+        <button class="faq-cat" data-cat="salute" onclick="filterCat(this)">Salute & sicurezza</button>
+      </div>
+
+      <!-- FAQ items -->
+      <div id="faqList">
+
+        <details class="faq-item rv" data-cat="costi" data-q="quanto costa retta convitto iscrizione pagamento">
+          <summary class="faq-q">Quanto costa iscriversi al Convitto?</summary>
+          <p class="faq-a">La retta comprende vitto completo (4 pasti al giorno), alloggio, studio guidato e trasporto Convitto–scuola. L'importo esatto viene deliberato ogni anno dal Consiglio d'Istituto. Scrivi a <a href="mailto:rirh010007@istruzione.it" style="color:var(--bosco2)">rirh010007@istruzione.it</a> per il preventivo aggiornato.</p>
+        </details>
+
+        <details class="faq-item rv d1" data-cat="vita" data-q="orario giornata sveglia colazione studio cena dormire">
+          <summary class="faq-q">Come si svolge la giornata tipo?</summary>
+          <p class="faq-a">Sveglia 6:30 → colazione 7:00 → scuola → pranzo 14:00 → tempo libero 15:00 → studio guidato 15:30–17:15 → merenda → libera uscita 17:30–19:15 → cena 19:15 → attività serali → riposo 22:30. <a href="giornata-tipo.html" style="color:var(--bosco2)">Leggi il racconto completo →</a></p>
+        </details>
+
+        <details class="faq-item rv d2" data-cat="famiglia" data-q="chiamare telefono cellulare genitori famiglia contatto">
+          <summary class="faq-q">Mio figlio può chiamarmi quando vuole?</summary>
+          <p class="faq-a">Sì, in qualsiasi momento. I ragazzi tengono il cellulare con sé. L'unico vincolo è spegnerlo in mensa, durante lo studio e il riposo notturno. Non ci sono orari fissi per le chiamate ai genitori.</p>
+        </details>
+
+        <details class="faq-item rv" data-cat="famiglia" data-q="venire trovare visita genitori settimana infrasettimanale">
+          <summary class="faq-q">Posso andare a trovare mio figlio durante la settimana?</summary>
+          <p class="faq-a">Sì. I genitori o una persona delegata per iscritto possono venire al Convitto durante la settimana. L'uscita viene autorizzata dall'educatore. Il rientro deve avvenire entro le 22:00.</p>
+        </details>
+
+        <details class="faq-item rv d1" data-cat="vita" data-q="weekend casa venerdì sabato domenica rientro">
+          <summary class="faq-q">Può tornare a casa nel weekend?</summary>
+          <p class="faq-a">Sì. Il Convitto funziona da domenica sera al venerdì mattina. Il fine settimana i ragazzi tornano a casa. Chi vuole rientrare domenica sera può farlo: sono previste corse con i mezzi del Convitto.</p>
+        </details>
+
+        <details class="faq-item rv d2" data-cat="salute" data-q="ammala malattia infermeria medico assistenza farmaci">
+          <summary class="faq-q">Cosa succede se si ammala?</summary>
+          <p class="faq-a">L'infermiera è presente ogni giorno. Per malattie lievi il ragazzo resta in Convitto, assistito e con i genitori avvisati subito. Per problemi seri, si dispone il rientro a casa in giornata. In emergenza l'infermiera accompagna al pronto soccorso.</p>
+        </details>
+
+        <details class="faq-item rv" data-cat="studio" data-q="studio voti registro scolastico profitto compiti pomeriggio">
+          <summary class="faq-q">Come seguono il profitto scolastico?</summary>
+          <p class="faq-a">Gli educatori hanno accesso al Registro Elettronico (con consenso della famiglia) e partecipano ai Consigli di Classe. Lo studio pomeridiano guidato (15:30–17:15) è obbligatorio e assistito. Se le cose non vanno, la famiglia viene contattata direttamente.</p>
+        </details>
+
+        <details class="faq-item rv d1" data-cat="vita" data-q="mangia mensa menu cibo pranzo cena colazione dieta allergie">
+          <summary class="faq-q">Cosa si mangia? Come funziona la mensa?</summary>
+          <p class="faq-a">Il menù mensile è concordato con la ASL di Rieti, con rotazione settimanale. Chi ha allergie o intolleranze (certificate da medico) riceve un pasto personalizzato. Il vitto include colazione, pranzo, merenda e cena. Si mangia tutti insieme in sala mensa.</p>
+        </details>
+
+        <details class="faq-item rv d2" data-cat="vita" data-q="camera stanza compagni letto bagno armadietto dormitorio">
+          <summary class="faq-q">Come sono le camere?</summary>
+          <p class="faq-a">Le camere sono prevalentemente triple, separate per maschi e femmine su piani diversi. Il Convitto fornisce letto, materasso, cuscino, armadietto e poggia-oggetti. Ogni convittore porta le proprie coperte, lenzuola, asciugamani e articoli personali.</p>
+        </details>
+
+        <details class="faq-item rv" data-cat="salute" data-q="sicurezza notte sorveglianza custode protezione educatore notturno">
+          <summary class="faq-q">Chi sorveglia di notte?</summary>
+          <p class="faq-a">Il Convitto è sorvegliato 24h/24. Di notte sono presenti educatori sui piani e custodi agli accessi. Il cancello si chiude alle 22:30 e riapre alle 6:00. In 54 anni di attività la sicurezza degli studenti è sempre stata la priorità assoluta.</p>
+        </details>
+
+        <details class="faq-item rv d1" data-cat="costi" data-q="iscrizione domanda modulistica quando scadenza luglio">
+          <summary class="faq-q">Quando e come si fa la domanda?</summary>
+          <p class="faq-a">La domanda si presenta contestualmente all'iscrizione scolastica. Entro il 7 luglio vanno consegnati i documenti e versata la quota di iscrizione. <a href="ammissione.html" style="color:var(--bosco2)">Vai alla pagina Ammissione →</a></p>
+        </details>
+
+        <details class="faq-item rv d2" data-cat="vita" data-q="musica laboratorio chitarra band concerto sport attività pomeriggio">
+          <summary class="faq-q">Ci sono attività extra oltre allo studio?</summary>
+          <p class="faq-a">Sì: laboratorio musicale (chitarra, voce, batteria, sax — attivo da 20 anni), sport (calcetto, basket, pallavolo, nuoto), uscite culturali, cineforum, tornei interni. Le attività serali sono proposte dagli educatori ma non obbligatorie.</p>
+        </details>
+
+        <details class="faq-item rv" data-cat="vita" data-q="semiconvitto solo pranzo studio pomeridiano non dormire">
+          <summary class="faq-q">Cos'è il Semiconvitto?</summary>
+          <p class="faq-a">Il Semiconvitto è per chi non dorme in Convitto ma vuole usufruire di pranzo e studio pomeridiano guidato. Dal prossimo anno scolastico (2026/27) il servizio è attivo. <a href="https://www.alberghierorieti.edu.it/semiconvitto/" target="_blank" rel="noopener" style="color:var(--bosco2)">Scopri di più →</a></p>
+        </details>
+
+      </div>
+
+      <div style="text-align:center;margin-top:2rem">
+        <p style="font-family:var(--fd);font-size:1.1rem;font-style:italic;color:var(--bosco);margin-bottom:1rem">Non hai trovato risposta alla tua domanda?</p>
+        <a href="contatti.html" class="btn-gold">Scrivici direttamente →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ EDUCATORI ═══ -->
+  <section id="educatori" style="background:var(--av2);padding:5rem 1.25rem">
+    <div class="w">
+      <p class="lbl">Chi ti accompagna</p>
+      <h2>Gli <em>Educatori</em></h2>
+      <p style="color:var(--txt2);max-width:560px;margin:.5rem 0 2.5rem;font-size:.9rem;line-height:1.8">Il cuore del Convitto. Professionisti dell'educazione selezionati per concorso, con una carriera trentennale nel campo, sempre disponibili ad ascoltare ragazzi e famiglie.</p>
+
+      <!-- Rimando elegante alla pagina dedicata -->
+      <div class="rv" style="background:linear-gradient(135deg,var(--bosco),#1a3a1b);border-radius:14px;padding:2rem 1.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem;border:1px solid rgba(184,146,42,.2);text-align:center;justify-content:center">
+        <div style="flex:1;min-width:220px">
+          <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--oro2);margin-bottom:.65rem">— Una sezione dedicata</p>
+          <h3 style="font-family:var(--fd);font-size:clamp(1.4rem,4vw,2rem);font-weight:300;color:#fff;margin-bottom:.75rem;line-height:1.2">Gli educatori hanno <em style="font-style:italic;color:var(--oro3)">una pagina tutta loro</em></h3>
+          <p style="font-family:var(--fu);font-size:.85rem;color:rgba(245,240,232,.6);line-height:1.8;max-width:460px">
+            Schede individuali, curriculum, competenze, domande e risposte per i genitori. Abbiamo dedicato loro lo spazio che meritano — non un paragrafo, un'intera sezione.
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.75rem;align-items:center;width:100%">
+          <a href="educatori.html" class="btn-gold" style="white-space:nowrap">
+            👥 Conosci gli Educatori →
+          </a>
+          <a href="educatori.html#team" style="font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,240,232,.45);text-decoration:none;border-bottom:1px solid rgba(245,240,232,.2);padding-bottom:1px;transition:color .2s"
+             onmouseover="this.style.color='var(--oro2)'" onmouseout="this.style.color='rgba(245,240,232,.45)'">
+            Vai direttamente alle schede ↓
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRENOTAZIONE VISITA ═══ -->
+  <section id="prenota" style="background:var(--bosco);padding:5rem 1.25rem">
+    <div class="w">
+      <p class="lbl" style="color:var(--oro2)">Vieni a trovarci</p>
+      <h2 style="color:var(--av)">Prenota una <em style="color:var(--oro3)">visita guidata</em></h2>
+      <p style="color:rgba(245,240,232,.6);max-width:540px;margin:.5rem 0 2rem;font-size:.9rem">Un'ora al Convitto vale più di mille pagine web. Vieni con la tua famiglia: vi mostriamo camere, mensa, laboratorio musicale e risponderemo a tutte le domande.</p>
+
+      <div style="display:grid;gap:2rem;max-width:700px">
+        <div class="od-form rv">
+          <p style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:1.25rem">Modulo di richiesta visita</p>
+
+          <form name="richiesta-visita" netlify netlify-honeypot="bot-field" method="POST" action="/grazie.html">
+            <input type="hidden" name="form-name" value="richiesta-visita"/>
+            <p style="display:none"><label>Non compilare: <input name="bot-field"/></label></p>
+
+          <!-- Layout 3+3 orizzontale -->
+          <div style="display:grid;grid-template-columns:1fr;gap:.85rem" id="od-form-grid">
+            <style>@media(min-width:560px){#od-form-grid{grid-template-columns:1fr 1fr}}</style>
+            <!-- Colonna sinistra -->
+            <div style="display:flex;flex-direction:column;gap:.85rem">
+              <div>
+                <label class="of-label">Nome e cognome</label>
+                <input class="of-input" type="text" name="nome" placeholder="Es. Mario Rossi" id="vis-nome" style="margin-bottom:0" required/>
+              </div>
+              <div>
+                <label class="of-label">Email</label>
+                <input class="of-input" type="email" name="email" placeholder="mario.rossi@email.it" id="vis-email" style="margin-bottom:0" required/>
+              </div>
+              <div>
+                <label class="of-label">Telefono</label>
+                <input class="of-input" type="tel" name="telefono" placeholder="+39 333 123 4567" id="vis-tel" style="margin-bottom:0"/>
+              </div>
+            </div>
+            <!-- Colonna destra -->
+            <div style="display:flex;flex-direction:column;gap:.85rem">
+              <div>
+                <label class="of-label">Preferenza data visita</label>
+                <input class="of-input" type="text" name="data_preferita" placeholder="Es. qualsiasi mattina" id="vis-data" style="margin-bottom:0"/>
+              </div>
+              <div>
+                <label class="of-label">Numero di persone</label>
+                <select class="of-input" name="persone" id="vis-persone" style="margin-bottom:0;background:rgba(255,255,255,.08);color:var(--av)">
+                  <option value="Solo genitore/i">Solo genitore/i</option>
+                  <option value="Genitore/i + studente">Genitore/i + studente</option>
+                  <option value="Gruppo familiare">Gruppo familiare</option>
+                </select>
+              </div>
+              <div>
+                <label class="of-label">Note o domande specifiche</label>
+                <textarea class="of-input" name="note" rows="2" placeholder="Cosa vorreste vedere o sapere?" id="vis-note" style="resize:none;margin-bottom:0"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pulsante centrato -->
+          <div style="text-align:center;margin-top:1.5rem">
+            <button type="submit" style="padding:.9rem 3rem;background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--bosco);border:none;border-radius:40px;font-family:var(--fu);font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s"
+              onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(184,146,42,.5)'"
+              onmouseout="this.style.transform='';this.style.boxShadow=''">
+              Invia richiesta visita →
+            </button>
+          </div>
+
+          <!-- Mobile: collassa a colonna singola -->
+          <style>
+            @media(max-width:580px){
+              .od-form > div[style*="grid-template-columns:1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+              }
+            }
+          </style>
+          <p style="font-family:var(--fu);font-size:.6rem;color:rgba(245,240,232,.3);margin-top:.75rem;text-align:center">
+            Oppure scrivi direttamente a <a href="mailto:rirh010007@istruzione.it" style="color:var(--oro2)">rirh010007@istruzione.it</a>
+          </p>
+          </form>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+
+// ═══════════════════════════════════════════════════
+// COUNTDOWN AL PROSSIMO OPEN DAY
+// ═══════════════════════════════════════════════════
+(function() {
+  // Prossimo Open Day: Dicembre 2026 (data da confermare)
+  const target = new Date('2025-10-20T09:00:00');
+  const now = new Date();
+  const diff = target - now;
+
+  if (diff <= 0) {
+    document.getElementById('countdown').innerHTML = '<div class="cd-unit"><span class="cd-num">🎉</span><span class="cd-lbl">Open Day oggi!</span></div>';
+    return;
+  }
+
+  const days  = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins  = Math.floor((diff % 3600000) / 60000);
+  const secs  = Math.floor((diff % 60000) / 1000);
+
+  function pad(n) { return String(n).padStart(2,'0'); }
+
+  const cd = document.getElementById('countdown');
+  cd.innerHTML = `
+    <div class="cd-unit"><span class="cd-num" id="cd-d">${days}</span><span class="cd-lbl">Giorni</span></div>
+    <div class="cd-unit"><span class="cd-num" id="cd-h">${pad(hours)}</span><span class="cd-lbl">Ore</span></div>
+    <div class="cd-unit"><span class="cd-num" id="cd-m">${pad(mins)}</span><span class="cd-lbl">Minuti</span></div>
+    <div class="cd-unit"><span class="cd-num" id="cd-s">${pad(secs)}</span><span class="cd-lbl">Secondi</span></div>
+  `;
+
+  setInterval(() => {
+    const d = target - new Date();
+    if (d <= 0) return;
+    document.getElementById('cd-d').textContent = Math.floor(d/86400000);
+    document.getElementById('cd-h').textContent = pad(Math.floor((d%86400000)/3600000));
+    document.getElementById('cd-m').textContent = pad(Math.floor((d%3600000)/60000));
+    document.getElementById('cd-s').textContent = pad(Math.floor((d%60000)/1000));
+  }, 1000);
+})();
+
+// ═══════════════════════════════════════════════════
+// TOUR SPAZI
+// ═══════════════════════════════════════════════════
+const SPACES = [
+  { badge:'🏛️ Struttura', title:'Il Convitto visto dall\'esterno', desc:'Via Salaria s.n.c., Rieti. Un complesso moderno immerso nel verde, a pochi minuti a piedi dalla pista ciclopedonale e dal centro città. 5 piani residenziali, mensa, aule studio, laboratori.', img:'https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4375-scaled.jpg', pos:'center center' },
+  { badge:'🏠 Residenza', title:'Le camere', desc:'Camere prevalentemente triple, separate per maschi e femmine su piani dedicati. Letto, armadietto personale, finestre luminose. Ogni piano ha bagni condivisi e spazi comuni per rilassarsi.', img:'https://www.alberghierorieti.edu.it/wp-content/uploads/CAMERE-300x225.jpg', pos:'center center' },
+  { badge:'🍽️ Mensa', title:'La sala mensa', desc:'Quattro pasti al giorno preparati dal personale interno. Menù mensile concordato con la ASL di Rieti. Prodotti del territorio, varietà stagionale. Educatori sempre presenti a tavola.', img:'https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4257-640x480.jpg', pos:'center center' },
+  { badge:'📚 Studio', title:'Lo studio guidato', desc:'Ogni pomeriggio dalle 15:30 alle 17:15. Educatori distribuiti tra i piani per seguire ogni ragazzo. Silenzio, concentrazione, supporto personalizzato. I convittori arrivano a scuola preparati.', img:'https://www.alberghierorieti.edu.it/wp-content/uploads/1702938319160-300x225.jpg', pos:'center center' },
+  { badge:'🎸 Laboratorio', title:'Il Laboratorio Musicale', desc:'Attivo da 20 anni grazie a Michele Gaggiano e Dino Barba. Chitarra classica, voce, batteria, sax, tromba. Ogni anno una band studentesca si esibisce alla Festa di Natale.', img:'img/natale2024/i.jpg', pos:'center center' },
+  { badge:'🤝 Comunità', title:'Educatori e convittori', desc:'Il cuore del Convitto. Educatori che non vigilano — accompagnano. Presenti a cena, nelle attività serali, nei momenti difficili e in quelli felici. Il Convitto è casa perché le persone lo fanno diventare tale.', img:'https://www.alberghierorieti.edu.it/wp-content/uploads/1704014837735-300x225.jpg', pos:'center center' },
+];
+
+let tourIdx = 0;
+
+function tourRender() {
+  const s = SPACES[tourIdx];
+  document.getElementById('tourImg').src = s.img;
+  document.getElementById('tourImg').alt = s.title;
+  document.getElementById('tourImg').style.objectPosition = s.pos;
+  document.getElementById('tourBadge').textContent = s.badge;
+  document.getElementById('tourTitle').textContent = s.title;
+  document.getElementById('tourDesc').textContent = s.desc;
+  const dots = document.getElementById('tourDots');
+  dots.innerHTML = SPACES.map((_,i) => `<button class="tour-dot${i===tourIdx?' active':''}" onclick="tourGo(${i-tourIdx})" aria-label="Spazio ${i+1}"></button>`).join('');
+}
+
+function tourGo(dir) {
+  tourIdx = (tourIdx + dir + SPACES.length) % SPACES.length;
+  tourRender();
+}
+
+// Touch swipe tour
+let tx=0;
+document.getElementById('tourSlide').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.getElementById('tourSlide').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>40) tourGo(dx<0?1:-1);
+},{passive:true});
+
+tourRender();
+
+// Auto-advance ogni 5s
+setInterval(()=>tourGo(1), 5000);
+
+// ═══════════════════════════════════════════════════
+// FAQ RICERCA LIVE
+// ═══════════════════════════════════════════════════
+let activeCat = 'tutti';
+
+function filterFAQ() {
+  const q = document.getElementById('faqSearch').value.toLowerCase().trim();
+  const items = document.querySelectorAll('#faqList .faq-item');
+  let visible = 0;
+  items.forEach(item => {
+    const keywords = (item.dataset.q || '') + ' ' + item.querySelector('.faq-q').textContent.toLowerCase() + ' ' + item.querySelector('.faq-a').textContent.toLowerCase();
+    const catOk = activeCat === 'tutti' || item.dataset.cat === activeCat;
+    const qOk = !q || keywords.includes(q);
+    item.classList.toggle('faq-hidden', !(catOk && qOk));
+    if (catOk && qOk) visible++;
+  });
+  document.getElementById('faqCount').textContent = visible === 0
+    ? 'Nessun risultato — prova con altre parole chiave'
+    : `${visible} risposta${visible!==1?'e':''} trovata${visible!==1?'e':''}`;
+}
+
+function filterCat(btn) {
+  activeCat = btn.dataset.cat;
+  document.querySelectorAll('.faq-cat').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterFAQ();
+}
+
+// Inizializza count
+window.addEventListener('load', () => {
+  const tot = document.querySelectorAll('#faqList .faq-item').length;
+  document.getElementById('faqCount').textContent = `${tot} risposte disponibili — filtra o cerca`;
+});
+
+// ═══════════════════════════════════════════════════
+// PRENOTAZIONE VISITA
+// ═══════════════════════════════════════════════════
+function prenotaVisita() {
+  const nome  = document.getElementById('vis-nome').value.trim();
+  const email = document.getElementById('vis-email').value.trim();
+  if (!nome || !email) { alert('Inserisci nome ed email per procedere.'); return; }
+
+  // Apri il mailto precompilato
+  const note = document.getElementById('vis-note').value.trim();
+  const data = document.getElementById('vis-data').value.trim();
+  const tel  = document.getElementById('vis-tel').value.trim();
+  const body = encodeURIComponent(`Richiesta visita guidata al Convitto Costaggini\n\nNome: ${nome}\nEmail: ${email}\nTelefono: ${tel}\nPreferenza: ${data}\n\nNote: ${note}`);
+  window.location.href = `mailto:convitto@alberghierorieti.it?subject=Richiesta%20visita%20guidata&body=${body}`;
+
+  document.getElementById('vis-ok').style.display = 'block';
+}
+
+// IntersectionObserver .rv
+const obs = new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
+}),{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+</script>
+</body>
+</html>

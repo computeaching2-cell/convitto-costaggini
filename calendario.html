@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Calendario eventi del Convitto Costaggini di Rieti — Open Day, feste, uscite, concerti e appuntamenti dell'anno scolastico."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Calendario Eventi | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Filtri categoria */
+    .cal-filters { display:flex; flex-wrap:wrap; gap:.5rem; margin:1.5rem 0; }
+    .cal-filter { font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.35rem .9rem; border-radius:20px; border:1.5px solid var(--av3); background:none; cursor:pointer; color:var(--bosco2); transition:all .2s; }
+    .cal-filter:hover, .cal-filter.active { background:var(--bosco); color:var(--av); border-color:var(--bosco); }
+    .cal-filter[data-cat="openday"].active    { background:#2C6E49; border-color:#2C6E49; }
+    .cal-filter[data-cat="festa"].active      { background:#b8451a; border-color:#b8451a; }
+    .cal-filter[data-cat="musica"].active     { background:#1a4a7a; border-color:#1a4a7a; }
+    .cal-filter[data-cat="sport"].active      { background:#4a7a1a; border-color:#4a7a1a; }
+    .cal-filter[data-cat="uscita"].active     { background:#7a4a1a; border-color:#7a4a1a; }
+
+    /* Card evento */
+    .ev-list { display:grid; gap:1rem; }
+    .ev-item {
+      display:grid; grid-template-columns:72px 1fr;
+      gap:0 1.25rem; background:var(--av2); border:1px solid var(--av3);
+      border-radius:8px; overflow:hidden; transition:transform .2s, box-shadow .2s;
+      border-left:4px solid var(--bosco);
+    }
+    .ev-item:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.1); }
+    .ev-item[data-cat="openday"]  { border-left-color:#2C6E49; }
+    .ev-item[data-cat="festa"]    { border-left-color:#b8451a; }
+    .ev-item[data-cat="musica"]   { border-left-color:#1a4a7a; }
+    .ev-item[data-cat="sport"]    { border-left-color:#4a7a1a; }
+    .ev-item[data-cat="uscita"]   { border-left-color:#7a4a1a; }
+    .ev-item.past { opacity:.55; }
+
+    .ev-date-box {
+      background:var(--bosco); display:flex; flex-direction:column;
+      align-items:center; justify-content:center; padding:.75rem .5rem;
+      flex-shrink:0;
+    }
+    .ev-day  { font-family:var(--fd); font-size:1.8rem; font-weight:300; color:var(--oro3); line-height:1; }
+    .ev-mon  { font-family:var(--fu); font-size:.55rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(245,240,232,.5); margin-top:.1rem; }
+    .ev-body { padding:.85rem .9rem .85rem 0; }
+    .ev-cat-badge { font-family:var(--fu); font-size:.55rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; padding:.15rem .5rem; border-radius:10px; background:rgba(0,0,0,.08); color:var(--bosco2); display:inline-block; margin-bottom:.35rem; }
+    .ev-title { font-family:var(--fd); font-size:1rem; font-weight:400; color:var(--bosco); line-height:1.3; margin-bottom:.3rem; }
+    .ev-meta { font-size:.75rem; color:var(--txt2); }
+    .ev-meta span + span::before { content:' · '; }
+
+    /* Mese header */
+    .month-header { font-family:var(--fu); font-size:.65rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--oro); padding:.5rem 0 .75rem; margin-top:2rem; border-bottom:1px solid var(--av3); margin-bottom:.75rem; }
+    .month-header:first-child { margin-top:0; }
+
+    /* Legenda */
+    .legend { display:flex; flex-wrap:wrap; gap:.75rem; margin-bottom:1.5rem; }
+    .leg-item { display:flex; align-items:center; gap:.4rem; font-family:var(--fu); font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--txt2); }
+    .leg-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  </style>
+</head>
+<body data-page="calendario">
+<main id="main">
+
+  <div class="page-hero rv">
+    <div class="w">
+      <nav class="breadcrumb" aria-label="Percorso">
+        <a href="index.html">Home</a><span>›</span>
+        <a href="notizie.html">Notizie</a><span>›</span>
+        <span aria-current="page">Calendario eventi</span>
+      </nav>
+      <p class="lbl">Anno scolastico 2025/26</p>
+      <h1>Calendario <em>eventi</em></h1>
+      <p class="sub">Open Day, feste, concerti, uscite e appuntamenti del Convitto "Costaggini". Un convitto vivo è un convitto che si vede.</p>
+    </div>
+  </div>
+
+  <section style="background:var(--av);padding:3rem 1.25rem">
+    <div class="w">
+
+      <!-- Legenda -->
+      <div class="legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#2C6E49"></div>Open Day</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#b8451a"></div>Festa</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#1a4a7a"></div>Musica</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#4a7a1a"></div>Sport</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#7a4a1a"></div>Uscita</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--bosco)"></div>Istituzionale</div>
+      </div>
+
+      <!-- Filtri -->
+      <div class="cal-filters" role="group" aria-label="Filtra per categoria">
+        <button class="cal-filter active" data-cat="tutti">Tutti</button>
+        <button class="cal-filter" data-cat="openday">Open Day</button>
+        <button class="cal-filter" data-cat="festa">Feste</button>
+        <button class="cal-filter" data-cat="musica">Musica</button>
+        <button class="cal-filter" data-cat="sport">Sport</button>
+        <button class="cal-filter" data-cat="uscita">Uscite</button>
+      </div>
+
+      <!-- ── SETTEMBRE 2025 ── -->
+      <div class="month-header">Settembre 2025</div>
+      <div class="ev-list">
+        <div class="ev-item rv" data-cat="istituzionale">
+          <div class="ev-date-box"><span class="ev-day">15</span><span class="ev-mon">Set</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge">Istituzionale</span>
+            <h3 class="ev-title">Inizio anno scolastico — Accoglienza nuovi convittori</h3>
+            <div class="ev-meta"><span>📍 Convitto "Costaggini"</span><span>Tutto il giorno</span></div>
+          </div>
+        </div>
+        <div class="ev-item rv d1" data-cat="istituzionale">
+          <div class="ev-date-box"><span class="ev-day">22</span><span class="ev-mon">Set</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge">Istituzionale</span>
+            <h3 class="ev-title">Elezioni rappresentanti convittori per camera e per corso</h3>
+            <div class="ev-meta"><span>📍 Convitto</span><span>Ottobre — data da confermare</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── OTTOBRE 2025 ── -->
+      <div class="month-header">Ottobre 2025</div>
+      <div class="ev-list">
+        <div class="ev-item rv" data-cat="openday">
+          <div class="ev-date-box"><span class="ev-day">20</span><span class="ev-mon">Ott</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(44,110,73,.12);color:#2C6E49">Open Day</span>
+            <h3 class="ev-title">Open Day autunnale — Porte aperte per le famiglie</h3>
+            <div class="ev-meta"><span>📍 Via Salaria s.n.c. — Rieti</span><span>Data da confermare</span><span>Prenotazione: rirh010007@istruzione.it</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── NOVEMBRE 2025 ── -->
+      <div class="month-header">Novembre 2025</div>
+      <div class="ev-list">
+        <div class="ev-item rv" data-cat="uscita">
+          <div class="ev-date-box"><span class="ev-day">TBD</span><span class="ev-mon">Nov</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(122,74,26,.12);color:#7a4a1a">Uscita</span>
+            <h3 class="ev-title">Uscita culturale — Teatro Flavio Vespasiano di Rieti</h3>
+            <div class="ev-meta"><span>📍 Rieti centro</span><span>Serale</span></div>
+          </div>
+        </div>
+        <div class="ev-item rv d1" data-cat="sport">
+          <div class="ev-date-box"><span class="ev-day">TBD</span><span class="ev-mon">Nov</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(74,122,26,.12);color:#4a7a1a">Sport</span>
+            <h3 class="ev-title">Torneo interno di calcetto — Convittori vs Staff</h3>
+            <div class="ev-meta"><span>📍 Campo sportivo convenzionato</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── DICEMBRE 2025 ── -->
+      <div class="month-header">Dicembre 2025</div>
+      <div class="ev-list">
+        <div class="ev-item rv" data-cat="festa">
+          <div class="ev-date-box"><span class="ev-day">18</span><span class="ev-mon">Dic</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(184,69,26,.12);color:#b8451a">Festa</span>
+            <h3 class="ev-title">Open Night "Costaggini Orienta" — Orientamento famiglie classi terze medie</h3>
+            <div class="ev-meta"><span>📍 Istituto Costaggini</span><span>18:30 – 22:00</span></div>
+          </div>
+        </div>
+        <div class="ev-item rv d1" data-cat="musica">
+          <div class="ev-date-box"><span class="ev-day">22</span><span class="ev-mon">Dic</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(26,74,122,.12);color:#1a4a7a">Musica</span>
+            <h3 class="ev-title">Festa di Natale al Convitto — Cena di gala e concerto dal vivo</h3>
+            <div class="ev-meta"><span>📍 Mensa del Convitto</span><span>Data indicativa — conferma a novembre</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── GENNAIO 2026 ── -->
+      <div class="month-header">Gennaio 2026</div>
+      <div class="ev-list">
+        <div class="ev-item rv" data-cat="istituzionale">
+          <div class="ev-date-box"><span class="ev-day">TBD</span><span class="ev-mon">Gen</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge">Istituzionale</span>
+            <h3 class="ev-title">Incontro genitori–educatori — Colloqui primo quadrimestre</h3>
+            <div class="ev-meta"><span>📍 Convitto</span><span>Data da definire</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MARZO 2026 ── -->
+      <div class="month-header">Marzo 2026</div>
+      <div class="ev-list">
+        <div class="ev-item rv" data-cat="sport">
+          <div class="ev-date-box"><span class="ev-day">22</span><span class="ev-mon">Mar</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(74,122,26,.12);color:#4a7a1a">Sport</span>
+            <h3 class="ev-title">Giornata Mondiale dell'Acqua — Progetto Water Travel con il Sindaco di Rieti</h3>
+            <div class="ev-meta"><span>📍 Rieti</span><span>Evento annuale del Convitto</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── APRILE 2026 ── -->
+      <div class="month-header">Aprile 2026</div>
+      <div class="ev-list">
+        <div class="ev-item rv" data-cat="uscita">
+          <div class="ev-date-box"><span class="ev-day">TBD</span><span class="ev-mon">Apr</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(122,74,26,.12);color:#7a4a1a">Uscita</span>
+            <h3 class="ev-title">Uscita di primavera — Gita sul territorio reatino o regionale</h3>
+            <div class="ev-meta"><span>Data e destinazione da definire</span></div>
+          </div>
+        </div>
+        <div class="ev-item rv d1" data-cat="musica">
+          <div class="ev-date-box"><span class="ev-day">TBD</span><span class="ev-mon">Apr</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(26,74,122,.12);color:#1a4a7a">Musica</span>
+            <h3 class="ev-title">Concerto di primavera — Laboratorio Musicale del Convitto</h3>
+            <div class="ev-meta"><span>📍 Da definire</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── GIUGNO 2026 ── -->
+      <div class="month-header">Giugno 2026</div>
+      <div class="ev-list">
+        <div class="ev-item rv" data-cat="festa">
+          <div class="ev-date-box"><span class="ev-day">TBD</span><span class="ev-mon">Giu</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(184,69,26,.12);color:#b8451a">Festa</span>
+            <h3 class="ev-title">Festa di fine anno — Saluto ai diplomandi e cerimonia di commiato</h3>
+            <div class="ev-meta"><span>📍 Convitto "Costaggini"</span><span>Data da definire</span></div>
+          </div>
+        </div>
+        <div class="ev-item rv d1" data-cat="openday">
+          <div class="ev-date-box"><span class="ev-day">TBD</span><span class="ev-mon">Giu</span></div>
+          <div class="ev-body">
+            <span class="ev-cat-badge" style="background:rgba(44,110,73,.12);color:#2C6E49">Open Day</span>
+            <h3 class="ev-title">Open Day estivo — Pre-iscrizioni A.S. 2026/27</h3>
+            <div class="ev-meta"><span>📍 Via Salaria s.n.c. — Rieti</span><span>Prenotazione: rirh010007@istruzione.it</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--av2);border:1px solid var(--av3);border-radius:8px;padding:1.25rem;margin-top:2rem;font-size:.82rem;color:var(--txt2)">
+        ℹ️ Le date indicate con <strong>TBD</strong> (To Be Defined) saranno confermate tramite avviso sul sito e comunicazione diretta alle famiglie. Per aggiornamenti: <a href="avvisi.html" style="color:var(--bosco2)">sezione Avvisi</a>.
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+// Filtri categoria
+document.querySelectorAll('.cal-filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.cal-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    document.querySelectorAll('.ev-item').forEach(item => {
+      item.style.display = (cat === 'tutti' || item.dataset.cat === cat) ? '' : 'none';
+    });
+    document.querySelectorAll('.month-header').forEach(h => {
+      // nascondi mesi vuoti
+      let next = h.nextElementSibling;
+      let hasVisible = false;
+      while(next && !next.classList.contains('month-header')) {
+        const items = next.querySelectorAll('.ev-item');
+        items.forEach(i => { if(i.style.display !== 'none') hasVisible = true; });
+        next = next.nextElementSibling;
+      }
+      h.style.display = hasVisible ? '' : 'none';
+    });
+  });
+});
+</script>
+</body>
+</html>

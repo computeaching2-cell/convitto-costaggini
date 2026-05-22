@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Sai già cucinare? | Convitto "Costaggini"</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background:#0a0f0a; }
+    .qz-wrap { max-width:680px; margin:0 auto; padding:2rem 1.25rem 5rem; }
+
+    /* Selezione percorso */
+    .qz-tracks { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:2rem 0; }
+    @media(max-width:480px){ .qz-tracks { grid-template-columns:1fr; } }
+    .qz-track { background:#141e14; border:2px solid rgba(184,146,42,.15); border-radius:12px; padding:1.5rem; cursor:pointer; transition:all .2s; text-align:center; }
+    .qz-track:hover, .qz-track.sel { border-color:var(--oro2); background:rgba(184,146,42,.08); }
+    .qz-track-icon { font-size:2.2rem; display:block; margin-bottom:.6rem; }
+    .qz-track-name { font-family:var(--fd); font-size:1.2rem; color:#fff; margin-bottom:.3rem; }
+    .qz-track-desc { font-family:var(--fu); font-size:.7rem; color:rgba(245,240,232,.45); line-height:1.6; }
+
+    /* Domanda */
+    .qz-card { background:#141e14; border:1px solid rgba(184,146,42,.15); border-radius:14px; padding:2rem; display:none; }
+    .qz-card.active { display:block; animation:fadeUp .35s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+    .qz-progress-bar { height:4px; background:rgba(255,255,255,.08); border-radius:2px; margin-bottom:1.75rem; }
+    .qz-progress-fill { height:100%; background:linear-gradient(90deg,var(--bosco2),var(--oro)); border-radius:2px; transition:width .4s; }
+    .qz-num { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--oro2); margin-bottom:.5rem; }
+    .qz-q { font-family:var(--fd); font-size:1.3rem; font-weight:300; color:#fff; line-height:1.45; margin-bottom:1.5rem; }
+    .qz-options { display:flex; flex-direction:column; gap:.65rem; }
+    .qz-opt { background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.08); border-radius:8px; padding:.9rem 1.1rem; cursor:pointer; font-family:var(--fu); font-size:.85rem; color:rgba(245,240,232,.75); transition:all .18s; text-align:left; }
+    .qz-opt:hover { border-color:var(--oro2); color:#fff; background:rgba(184,146,42,.08); }
+    .qz-opt.correct { border-color:#4ade80; background:rgba(74,222,128,.1); color:#4ade80; }
+    .qz-opt.wrong { border-color:#f87171; background:rgba(248,113,113,.1); color:#f87171; }
+    .qz-opt:disabled { cursor:default; }
+
+    /* Risultato */
+    .qz-result { display:none; text-align:center; background:#141e14; border:1px solid rgba(184,146,42,.2); border-radius:14px; padding:2.5rem 1.75rem; }
+    .qz-result.show { display:block; animation:fadeUp .4s ease; }
+    .qz-result-score { font-family:var(--fd); font-size:4rem; font-weight:300; color:var(--oro3); margin-bottom:.25rem; }
+    .qz-result-label { font-family:var(--fu); font-size:.65rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--oro2); margin-bottom:1.25rem; }
+    .qz-result-msg { font-family:var(--fd); font-size:1.2rem; font-weight:300; color:#fff; line-height:1.65; max-width:460px; margin:0 auto 1.5rem; }
+    .qz-result-msg em { font-style:italic; color:var(--oro3); }
+    .qz-stars { font-size:1.8rem; letter-spacing:.3rem; margin-bottom:1.5rem; }
+
+    .btn-restart { font-family:var(--fu); font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; padding:.7rem 1.5rem; background:transparent; border:1.5px solid rgba(184,146,42,.3); color:var(--oro2); border-radius:8px; cursor:pointer; margin-right:.5rem; transition:all .2s; }
+    .btn-restart:hover { background:rgba(184,146,42,.1); }
+  </style>
+</head>
+<body data-page="quiz-competenze">
+<main id="main">
+
+  <div style="background:linear-gradient(160deg,#0a0f0a,var(--bosco));padding:3.5rem 1.25rem 2.5rem;text-align:center">
+    <div class="w">
+      <nav class="breadcrumb" style="justify-content:center;margin-bottom:1.25rem">
+        <a href="scopri-talento.html" style="color:rgba(245,240,232,.35)">← Scopri il tuo Talento</a>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">Quiz · 8 domande</p>
+      <h1 style="font-family:var(--fd);font-size:clamp(1.8rem,6vw,3.2rem);font-weight:300;color:#fff;margin-bottom:.5rem">Sai già <em style="font-style:italic;color:var(--oro3)">cucinare</em>?</h1>
+      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:480px;margin:0 auto">Scegli il tuo percorso e metti alla prova le tue conoscenze di base. Qualunque sia il risultato, c'è sempre qualcosa di bello da scoprire.</p>
+    </div>
+  </div>
+
+  <div class="qz-wrap">
+
+    <!-- Selezione percorso -->
+    <div id="track-select">
+      <p style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:1rem">Scegli il tuo percorso:</p>
+      <div class="qz-tracks">
+        <div class="qz-track" onclick="selectTrack('cucina')">
+          <span class="qz-track-icon">🍳</span>
+          <div class="qz-track-name">Cucina</div>
+          <div class="qz-track-desc">Tecniche, ingredienti e segreti ai fornelli</div>
+        </div>
+        <div class="qz-track" onclick="selectTrack('sala')">
+          <span class="qz-track-icon">🍷</span>
+          <div class="qz-track-name">Sala & Bar</div>
+          <div class="qz-track-desc">Servizio, vini e arte dell'ospitalità</div>
+        </div>
+        <div class="qz-track" onclick="selectTrack('accoglienza')">
+          <span class="qz-track-icon">🛎️</span>
+          <div class="qz-track-name">Accoglienza</div>
+          <div class="qz-track-desc">Front office, lingue e gestione ospiti</div>
+        </div>
+        <div class="qz-track" onclick="selectTrack('pasticceria')">
+          <span class="qz-track-icon">🎂</span>
+          <div class="qz-track-name">Pasticceria</div>
+          <div class="qz-track-desc">Dolci, lievitati e laboratorio creativo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Domanda corrente -->
+    <div id="qz-card" class="qz-card">
+      <div class="qz-progress-bar"><div class="qz-progress-fill" id="qz-prog"></div></div>
+      <p class="qz-num" id="qz-num"></p>
+      <p class="qz-q" id="qz-q"></p>
+      <div class="qz-options" id="qz-opts"></div>
+    </div>
+
+    <!-- Risultato -->
+    <div class="qz-result" id="qz-result">
+      <div class="qz-stars" id="qz-stars"></div>
+      <div class="qz-result-score" id="qz-score"></div>
+      <p class="qz-result-label" id="qz-track-name"></p>
+      <p class="qz-result-msg" id="qz-msg"></p>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+        <button class="btn-restart" onclick="restart()">↺ Riprova</button>
+        <button class="btn-restart" onclick="changeTrack()">↕ Cambia percorso</button>
+        <a href="ammissione.html" class="btn-gold">Scopri come iscriverti →</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+const TRACKS = {
+  cucina: {
+    nome: 'Cucina',
+    icona: '🍳',
+    domande: [
+      { q:'Qual è la temperatura interna corretta per una bistecca "al sangue"?', opts:['45–50 °C','60–65 °C','70–75 °C','80 °C'], ok:0 },
+      { q:'Cosa significa "soffriggere" un aglio?', opts:['Bollirlo in acqua salata','Cuocerlo a fuoco basso in olio fino a dorarlo','Grattugiarlo direttamente sul piatto','Tostarlo in forno'], ok:1 },
+      { q:'Quale pasta si abbina tradizionalmente all\'amatriciana?', opts:['Spaghetti','Farfalle','Rigatoni o bucatini','Penne rigate'], ok:2 },
+      { q:'Il "roux" è un composto di:', opts:['Uova e farina','Burro e farina cotti insieme','Acqua e amido','Panna e formaggio'], ok:1 },
+      { q:'Quale tecnica di cottura usa vapore senza contatto con l\'acqua?', opts:['Bollire','Brasare','Cuocere al vapore','Saltare in padella'], ok:2 },
+      { q:'In cucina il "mise en place" indica:', opts:['Una ricetta francese','La preparazione e l\'organizzazione degli ingredienti prima di cucinare','Il piatto finale impiattato','Un tipo di taglio a julienne'], ok:1 },
+      { q:'Quale dei seguenti è un formaggio a pasta filata?', opts:['Parmigiano','Gorgonzola','Mozzarella','Pecorino'], ok:2 },
+      { q:'Il "soffritto" base della cucina italiana è composto da:', opts:['Cipolla, sedano e carota','Aglio, salvia e rosmarino','Pomodoro, basilico e origano','Prezzemolo, limone e olio'], ok:0 },
+    ],
+    giudizi: [
+      { min:0, max:2, stars:'⭐', msg:'Il talento c\'è, manca solo la tecnica giusta — ed è <em>esattamente quello che insegniamo noi</em>. Partire da zero è un vantaggio: non hai abitudini sbagliate da correggere.' },
+      { min:3, max:5, stars:'⭐⭐⭐', msg:'Buone basi! Hai già un senso innato per la cucina. Con il giusto percorso al Costaggini, <em>le tue intuizioni diventeranno professionalità</em>.' },
+      { min:6, max:7, stars:'⭐⭐⭐⭐', msg:'Ottimo! Hai già conoscenze solide. Sei il tipo di studente che da subito fa la differenza in laboratorio. <em>Il Costaggini ti darà il resto</em>.' },
+      { min:8, max:8, stars:'⭐⭐⭐⭐⭐', msg:'Perfetto! Hai già l\'istinto del cuoco. <em>Il Costaggini trasformerà questa passione in un mestiere</em>. Benvenuto — ti aspettiamo.' },
+    ]
+  },
+  sala: {
+    nome: 'Sala & Bar',
+    icona: '🍷',
+    domande: [
+      { q:'Cosa si intende per "mise en place" in sala?', opts:['La preparazione del menu','L\'allestimento del tavolo prima del servizio','Il conto finale','La disposizione dei tavoli'], ok:1 },
+      { q:'A che temperatura si serve un vino rosso strutturato?', opts:['6–8 °C','10–12 °C','16–18 °C','Temperatura ambiente (22+ °C)'], ok:2 },
+      { q:'Cosa significa "deglassare" un bicchiere?', opts:['Rompere il ghiaccio','Risciacquare con acqua tiepida','Pulire i residui di calcare','Raffreddarlo in ghiaccio'], ok:2 },
+      { q:'Quale è il primo servizio corretto al tavolo?', opts:['L\'ospite più anziano','La signora a destra del capotavola','Sempre da destra, in senso orario','L\'ospite d\'onore'], ok:3 },
+      { q:'Il Franciacorta è:', opts:['Un vino rosso toscano','Un vino bianco fermo piemontese','Un vino spumante metodo classico lombardo','Un vino dolce siciliano'], ok:2 },
+      { q:'Cosa è un "digestivo"?', opts:['Un aperitivo analcolico','Un liquore servito dopo il pasto','Un vino da dessert','Un caffè aromatizzato'], ok:1 },
+      { q:'L\'Espresso perfetto ha:', opts:['Un volume di 25–30 ml e crema nocciola','Un volume di 50 ml e colore nero','Un volume di 15 ml senza crema','Un volume di 60 ml e crema bianca'], ok:0 },
+      { q:'Cosa si offre all\'ospite prima di presentare il menu?', opts:['Niente, si porta subito il menu','Acqua e pane','Il dessert del giorno','Il conto preventivo'], ok:1 },
+    ],
+    giudizi: [
+      { min:0, max:2, stars:'⭐', msg:'Il mondo della sala è ricco e sofisticato — e si impara. <em>La gentilezza e la cura per gli ospiti si formano, non si nascono</em>. Siamo qui per questo.' },
+      { min:3, max:5, stars:'⭐⭐⭐', msg:'Hai intuito. Con le basi tecniche che il Costaggini ti darà, <em>quel senso per l\'ospite diventerà il tuo punto di forza</em> in qualsiasi ristorante o hotel.' },
+      { min:6, max:7, stars:'⭐⭐⭐⭐', msg:'Ottima conoscenza del servizio. Sei già a metà strada — <em>il Costaggini ti porta fino in fondo</em>.' },
+      { min:8, max:8, stars:'⭐⭐⭐⭐⭐', msg:'Perfetto punteggio! Hai già la mentalità del professionista di sala. <em>Al Costaggini troverai il terreno giusto per far crescere questo talento</em>.' },
+    ]
+  },
+  accoglienza: {
+    nome: 'Accoglienza Turistica',
+    icona: '🛎️',
+    domande: [
+      { q:'Cosa significa "check-in" in un hotel?', opts:['Il pagamento del conto','L\'arrivo e registrazione dell\'ospite','La pulizia della camera','La prenotazione telefonica'], ok:1 },
+      { q:'Qual è il numero di telefono internazionale di emergenza in Europa?', opts:['999','113','112','118'], ok:2 },
+      { q:'Come si dice "camera doppia" in inglese?', opts:['Single room','Double room','Twin room','Suite'], ok:1 },
+      { q:'Cosa è il "RevPAR" nell\'hotellerie?', opts:['Il ricavo per camera disponibile','Il numero di prenotazioni','Il costo del personale','La valutazione delle recensioni'], ok:0 },
+      { q:'"Il cliente ha sempre ragione" è:', opts:['Una legge italiana del turismo','Un principio guida del settore hospitality','Una regola obbligatoria UE','Un motto dei Bed & Breakfast'], ok:1 },
+      { q:'Cosa si fa se un ospite si lamenta della camera?', opts:['Si ignorano le lamentele','Si chiede al manager senza ascoltare','Si ascolta con attenzione, si chiede scusa e si propone una soluzione','Si risponde con le regole del contratto'], ok:2 },
+      { q:'Il "late check-out" è:', opts:['Un arrivo anticipato al mattino','Un ritardo nel pagamento','L\'accordo per lasciare la camera più tardi del normale','Un tipo di colazione'], ok:2 },
+      { q:'Quale lingua è più utile nel turismo internazionale oltre all\'italiano?', opts:['Solo l\'inglese','Inglese, e poi una seconda lingua europea','Solo lo spagnolo','Il cinese mandarino'], ok:1 },
+    ],
+    giudizi: [
+      { min:0, max:2, stars:'⭐', msg:'L\'accoglienza si impara con il cuore prima che con la testa. <em>Se ti piace stare con le persone, sei già a metà del percorso</em>. Il Costaggini fa il resto.' },
+      { min:3, max:5, stars:'⭐⭐⭐', msg:'Buon senso pratico e qualche conoscenza già solida. <em>Con il percorso di Accoglienza Turistica al Costaggini</em>, queste basi cresceranno in competenze professionali vere.' },
+      { min:6, max:7, stars:'⭐⭐⭐⭐', msg:'Già preparato/a! Hai la mentalità giusta per il turismo. <em>Il Costaggini ti darà la professionalità che manca ancora</em>.' },
+      { min:8, max:8, stars:'⭐⭐⭐⭐⭐', msg:'Eccellente! Hai già la testa del professionista dell\'accoglienza. <em>Al Costaggini troverai la famiglia giusta per questo talento</em>.' },
+    ]
+  },
+  pasticceria: {
+    nome: 'Pasticceria',
+    icona: '🎂',
+    domande: [
+      { q:'Cosa si intende per "montare" le uova?', opts:['Cuocerle sode','Sbatterle con forza fino a renderle spumose','Romperle nel tegame','Separarle tuorlo-albume'], ok:1 },
+      { q:'Quale ingrediente fa lievitare un dolce al forno?', opts:['Zucchero a velo','Amido di mais','Lievito chimico o bicarbonato','Sale fino'], ok:2 },
+      { q:'Il "Tiramisù" è originario di quale regione?', opts:['Sicilia','Veneto','Toscana','Lombardia'], ok:1 },
+      { q:'La "crème brûlée" si riconosce per:', opts:['La glassa al cioccolato','La crosta caramellata in superficie','Il cuore di marmellata','La copertura di panna montata'], ok:1 },
+      { q:'A che temperatura si tempera il cioccolato fondente?', opts:['20–22 °C','31–32 °C','40–45 °C','50–55 °C'], ok:1 },
+      { q:'Cosa è la "pasta frolla"?', opts:['Un impasto per pane','Un impasto a base di farina, burro, uova e zucchero per biscotti e crostate','Una pasta all\'uovo per tagliatelle','Un impasto per pizza dolce'], ok:1 },
+      { q:'Il lievito madre si differenzia dal lievito di birra perché:', opts:['È più veloce','Contiene batteri lattici e dona sapori complessi','Non fa lievitare il pane','Va usato solo in estate'], ok:1 },
+      { q:'Cosa è un "ganache"?', opts:['Un tipo di torta tedesca','Un\'emulsione di cioccolato e panna usata per farciture e glasse','Un utensile da pasticceria','Una crema a base di uova'], ok:1 },
+    ],
+    giudizi: [
+      { min:0, max:2, stars:'⭐', msg:'La pasticceria è un\'arte di precisione — e la precisione si impara. <em>La tua curiosità vale più di qualsiasi conoscenza pregressa</em>. Benvenuto/a in laboratorio.' },
+      { min:3, max:5, stars:'⭐⭐⭐', msg:'Qualche buona intuizione già c\'è. <em>Con il laboratorio di pasticceria del Costaggini, quelle intuizioni diventeranno tecnica</em> — e la tecnica diventerà arte.' },
+      { min:6, max:7, stars:'⭐⭐⭐⭐', msg:'Ottima base! Hai già l\'istinto del pasticcere. <em>Al Costaggini c\'è tutto quello che ti serve per trasformarlo in un mestiere vero</em>.' },
+      { min:8, max:8, stars:'⭐⭐⭐⭐⭐', msg:'Perfetto! Hai già la testa e il cuore del pasticcere. <em>Il Costaggini ti aspetta — e il laboratorio di pasticceria ti aspetta ancora di più</em>.' },
+    ]
+  }
+};
+
+let track = null, questions = [], current = 0, score = 0;
+
+function selectTrack(t) {
+  track = TRACKS[t];
+  questions = [...track.domande].sort(() => Math.random() - .5).slice(0,8);
+  current = 0; score = 0;
+  document.getElementById('track-select').style.display = 'none';
+  document.getElementById('qz-card').classList.add('active');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById('qz-num').textContent = `${track.icona} ${track.nome} — Domanda ${current+1} di ${questions.length}`;
+  document.getElementById('qz-q').textContent = q.q;
+  document.getElementById('qz-prog').style.width = ((current)/questions.length*100)+'%';
+  const opts = document.getElementById('qz-opts');
+  opts.innerHTML = '';
+  q.opts.forEach((o,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'qz-opt'; btn.textContent = o;
+    btn.onclick = () => answer(i, q.ok, btn);
+    opts.appendChild(btn);
+  });
+}
+
+function answer(chosen, correct, btn) {
+  document.querySelectorAll('.qz-opt').forEach(b => b.disabled = true);
+  if (chosen === correct) { btn.classList.add('correct'); score++; }
+  else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.qz-opt')[correct].classList.add('correct');
+  }
+  setTimeout(() => {
+    current++;
+    if (current < questions.length) showQuestion();
+    else showResult();
+  }, 900);
+}
+
+function showResult() {
+  document.getElementById('qz-card').classList.remove('active');
+  const res = document.getElementById('qz-result');
+  res.classList.add('show');
+  document.getElementById('qz-score').textContent = score + '/' + questions.length;
+  document.getElementById('qz-track-name').textContent = track.icona + ' ' + track.nome;
+  const giudizio = track.giudizi.find(g => score >= g.min && score <= g.max);
+  document.getElementById('qz-stars').textContent = giudizio.stars;
+  document.getElementById('qz-msg').innerHTML = giudizio.msg;
+}
+
+function restart() {
+  document.getElementById('qz-result').classList.remove('show');
+  selectTrack(Object.keys(TRACKS).find(k => TRACKS[k] === track));
+}
+function changeTrack() {
+  document.getElementById('qz-result').classList.remove('show');
+  document.getElementById('qz-card').classList.remove('active');
+  document.getElementById('track-select').style.display = 'block';
+}
+</script>
+</body>
+</html>

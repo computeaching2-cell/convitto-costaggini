@@ -1,0 +1,38 @@
+════════════════════════════════════════════════════════
+  COME AGGIORNARE LE NOTIZIE DEL SITO
+  Convitto "Costaggini" — Rieti
+════════════════════════════════════════════════════════
+
+Per aggiungere una nuova notizia basta modificare il file
+"notizie.json" con un editor di testo (Blocco Note va bene).
+
+COME AGGIUNGERE UNA NUOVA NOTIZIA:
+
+1. Apri "notizie.json"
+2. Copia e incolla questo blocco IN CIMA all'elenco,
+   subito dopo il primo "[":
+
+  {
+    "id": "nome-univoco-senza-spazi",
+    "data": "Maggio 2026",
+    "categoria": "Istituzionale",
+    "titolo": "Il titolo della notizia",
+    "testo": "Il testo completo della notizia, anche lungo.",
+    "link": "https://www.facebook.com/alberghierorieti/...",
+    "link_testo": "Leggi su Facebook →",
+    "immagine": "https://images.unsplash.com/photo-XXXXX?w=600&q=80",
+    "immagine_alt": "Descrizione breve dell'immagine per accessibilità",
+    "in_evidenza": true
+  },
+
+3. Salva il file
+4. Ricarica il sito — la notizia appare automaticamente in homepage
+
+NOTA: Le prime 3 notizie del file appaiono in homepage.
+      Tutte le notizie appaiono in notizie.html.
+
+PER L'IMMAGINE:
+- Usa un'immagine da Unsplash (unsplash.com, gratuita)
+- Oppure carica una foto nella cartella "img/" e scrivi: "img/nomefile.jpg"
+
+════════════════════════════════════════════════════════

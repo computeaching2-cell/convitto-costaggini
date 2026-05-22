@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="robots" content="noindex"/>
+  <meta name="description" content="Area Riservata — Convitto Costaggini Rieti. Accesso per famiglie e convittori."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Area Riservata | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .ar-hero{background:linear-gradient(135deg,#0a0f0a,var(--bosco));padding:5rem 1.25rem 3.5rem;text-align:center}
+    .ar-hero h1{font-family:var(--fd);font-size:clamp(2rem,6vw,3.5rem);font-weight:300;color:#fff;margin-bottom:.5rem}
+    .ar-hero h1 em{font-style:italic;color:var(--oro3)}
+    .ar-hero p{color:rgba(245,240,232,.55);font-size:.9rem;max-width:500px;margin:.75rem auto 2rem;line-height:1.75}
+    .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:680px;margin:0 auto}
+    @media(max-width:560px){.profile-grid{grid-template-columns:1fr}}
+    .profile-card{background:rgba(245,240,232,.05);border:1.5px solid rgba(184,146,42,.25);border-radius:14px;padding:2.5rem 2rem;text-align:center;cursor:pointer;transition:all .25s}
+    .profile-card:hover{background:rgba(184,146,42,.12);border-color:var(--oro2);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+    .profile-card.selected{background:rgba(184,146,42,.18);border-color:var(--oro2);box-shadow:0 0 0 3px rgba(184,146,42,.3)}
+    .profile-icon{font-size:3rem;display:block;margin-bottom:1rem}
+    .profile-title{font-family:var(--fd);font-size:1.4rem;font-weight:300;color:#fff;margin-bottom:.4rem}
+    .profile-sub{font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.45)}
+    #login-box{display:none;max-width:420px;margin:2rem auto 0}
+    .login-card{background:rgba(245,240,232,.06);border:1px solid rgba(184,146,42,.25);border-radius:12px;padding:2rem}
+    .login-card h3{font-family:var(--fd);font-size:1.3rem;font-weight:300;color:#fff;margin-bottom:.25rem}
+    .login-card h3 em{font-style:italic;color:var(--oro3)}
+    .login-card p{font-family:var(--fu);font-size:.68rem;color:rgba(245,240,232,.4);margin-bottom:1.25rem;line-height:1.5}
+    .ar-input{width:100%;padding:.75rem 1rem;background:rgba(255,255,255,.08);border:1.5px solid rgba(184,146,42,.3);border-radius:8px;color:#fff;font-family:var(--fu);font-size:16px;outline:none;margin-bottom:.75rem;box-sizing:border-box;transition:border-color .2s}
+    .ar-input:focus{border-color:var(--oro2)}
+    .ar-input::placeholder{color:rgba(255,255,255,.3)}
+    .btn-login{width:100%;padding:.85rem;background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--bosco);border:none;border-radius:8px;font-family:var(--fu);font-size:.75rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:opacity .2s}
+    .btn-login:hover{opacity:.88}
+    .login-note{font-family:var(--fu);font-size:.62rem;color:rgba(245,240,232,.25);text-align:center;margin-top:.75rem;line-height:1.5}
+    #area-famiglie,#area-convittori{display:none}
+    .dash-hero{background:var(--bosco);padding:3rem 1.25rem 2rem}
+    .dash-hero h2{font-family:var(--fd);font-size:clamp(1.5rem,4vw,2.2rem);font-weight:300;color:#fff}
+    .dash-hero h2 em{font-style:italic;color:var(--oro3)}
+    .dash-hero p{color:rgba(245,240,232,.55);font-size:.85rem;margin:.4rem 0 0}
+    .dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;padding:2rem 1.25rem;background:var(--av2)}
+    .dash-card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--av3);transition:box-shadow .2s,transform .2s}
+    .dash-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.1);transform:translateY(-3px)}
+    .dash-card-head{background:linear-gradient(135deg,var(--bosco),#1a3a1b);padding:1.1rem 1.25rem;display:flex;align-items:center;gap:.75rem}
+    .dash-card-icon{font-size:1.5rem;flex-shrink:0}
+    .dash-card-title{font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2)}
+    .dash-card-body{padding:1.1rem 1.25rem}
+    .dash-card-body p{font-size:.83rem;color:var(--txt2);line-height:1.7;margin-bottom:.75rem}
+    .dash-link{font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bosco2);text-decoration:none;border-bottom:1px solid rgba(44,62,45,.2);padding-bottom:1px;display:inline-block;transition:color .2s}
+    .dash-link:hover{color:var(--bosco)}
+    .coming-soon{background:var(--av);padding:3rem 1.25rem;text-align:center}
+    .coming-soon p{font-family:var(--fd);font-size:1.1rem;font-style:italic;color:var(--bosco2);max-width:480px;margin:0 auto 1.25rem;line-height:1.65}
+  </style>
+</head>
+<body data-page="area-riservata">
+<main id="main">
+
+  <section class="ar-hero" id="ar-hero">
+    <div class="w">
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">🔒 Accesso riservato</p>
+      <h1>Area <em>Riservata</em></h1>
+      <p>Scegli il tuo profilo per accedere ai servizi riservati al Convitto "Costaggini".</p>
+      <div class="profile-grid">
+        <div class="profile-card rv" onclick="selectProfile('famiglie',this)">
+          <span class="profile-icon">👨‍👩‍👧</span>
+          <div class="profile-title">Famiglie</div>
+          <div class="profile-sub">Genitori e tutori legali</div>
+        </div>
+        <div class="profile-card rv d1" onclick="selectProfile('convittori',this)">
+          <span class="profile-icon">🎓</span>
+          <div class="profile-title">Convittori</div>
+          <div class="profile-sub">Studenti residenti</div>
+        </div>
+      </div>
+      <div id="login-box">
+        <div class="login-card">
+          <h3 id="login-title">Accesso <em>famiglie</em></h3>
+          <p id="login-desc">Inserisci le credenziali fornite dalla segreteria.</p>
+          <input type="email" class="ar-input" id="ar-email" placeholder="Email registrata"/>
+          <input type="password" class="ar-input" id="ar-pwd" placeholder="Password"/>
+          <button class="btn-login" onclick="doLogin()">Accedi →</button>
+          <div id="login-err-msg" style="display:none;color:#fca5a5;font-family:var(--fu);font-size:.72rem;text-align:center;margin-top:.5rem">
+            Credenziali non riconosciute. Riprova.
+          </div>
+          <div style="margin-top:1rem;padding:.85rem 1rem;background:rgba(184,146,42,.08);border:1px solid rgba(184,146,42,.2);border-radius:8px">
+            <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">🔑 Account demo per il Collegio</p>
+            <p style="font-family:var(--fu);font-size:.72rem;color:rgba(245,240,232,.55);line-height:1.8">
+              <strong style="color:rgba(245,240,232,.8)">Famiglia:</strong> famiglia@costaggini.it<br/>
+              <strong style="color:rgba(245,240,232,.8)">Convittore:</strong> convittore@costaggini.it<br/>
+              <strong style="color:rgba(245,240,232,.8)">Password:</strong> Costaggini2025!
+            </p>
+          </div>
+          <p class="login-note">Credenziali fornite dalla segreteria · <a href="contatti.html" style="color:rgba(245,240,232,.4)">Hai problemi? Contattaci</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AREA FAMIGLIE -->
+  <div id="area-famiglie">
+    <div class="dash-hero">
+      <div class="w">
+        <h2>Benvenuto, <em>Famiglia</em></h2>
+        <p>Servizi e informazioni riservate alle famiglie dei convittori.</p>
+        <button onclick="logout()" style="margin-top:1rem;font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .9rem;border:1px solid rgba(255,255,255,.2);background:none;color:rgba(255,255,255,.45);border-radius:4px;cursor:pointer">← Esci</button>
+      </div>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card rv">
+        <div class="dash-card-head"><span class="dash-card-icon">📅</span><span class="dash-card-title">Presenze e assenze</span></div>
+        <div class="dash-card-body">
+          <p>Registro delle presenze aggiornato in tempo reale dagli educatori. Accessibile tramite il Registro Elettronico dell'Istituto.</p>
+          <a href="https://www.alberghierorieti.edu.it" target="_blank" rel="noopener" class="dash-link">Accedi al Registro Elettronico →</a>
+        </div>
+      </div>
+      <div class="dash-card rv d1">
+        <div class="dash-card-head"><span class="dash-card-icon">💬</span><span class="dash-card-title">Comunicazioni</span></div>
+        <div class="dash-card-body">
+          <p>Avvisi, circolari e comunicazioni ufficiali del Convitto riservate alle famiglie.</p>
+          <a href="avvisi.html" class="dash-link">Vai agli avvisi →</a>
+        </div>
+      </div>
+      <div class="dash-card rv d2">
+        <div class="dash-card-head"><span class="dash-card-icon">📞</span><span class="dash-card-title">Contatti educatori</span></div>
+        <div class="dash-card-body">
+          <p><strong>Convitto:</strong> 0746 296862<br/><strong>Email:</strong> convitto@alberghierorieti.it</p>
+          <a href="educatori.html" class="dash-link">Conosci il team →</a>
+        </div>
+      </div>
+      <div class="dash-card rv">
+        <div class="dash-card-head"><span class="dash-card-icon">📄</span><span class="dash-card-title">Moduli e documenti</span></div>
+        <div class="dash-card-body">
+          <p>Modulistica per uscite straordinarie, autorizzazioni e comunicazioni ufficiali.</p>
+          <a href="ammissione.html" class="dash-link">Modulistica →</a>
+        </div>
+      </div>
+      <div class="dash-card rv d1">
+        <div class="dash-card-head"><span class="dash-card-icon">💰</span><span class="dash-card-title">Pagamenti e rette</span></div>
+        <div class="dash-card-body">
+          <p>Per informazioni sulla situazione contabile contattare la segreteria amministrativa: <strong>0746 201113</strong></p>
+          <a href="contatti.html" class="dash-link">Contatta la segreteria →</a>
+        </div>
+      </div>
+      <div class="dash-card rv d2">
+        <div class="dash-card-head"><span class="dash-card-icon">📋</span><span class="dash-card-title">Regolamento</span></div>
+        <div class="dash-card-body">
+          <p>Il Regolamento di Convitto con tutte le norme che disciplinano la vita comunitaria.</p>
+          <a href="regolamento.html" class="dash-link">Leggi il Regolamento →</a>
+        </div>
+      </div>
+    </div>
+    <div class="coming-soon">
+      <p>"Presto sarà possibile gestire tutto online — presenze, autorizzazioni, comunicazioni e pagamenti."</p>
+      <a href="contatti.html" class="btn-gold" style="display:inline-block">Per ora, contattaci direttamente →</a>
+    </div>
+  </div>
+
+  <!-- AREA CONVITTORI -->
+  <div id="area-convittori">
+    <div class="dash-hero">
+      <div class="w">
+        <h2>Benvenuto, <em>Convittore</em></h2>
+        <p>I tuoi servizi e le tue comunicazioni.</p>
+        <button onclick="logout()" style="margin-top:1rem;font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .9rem;border:1px solid rgba(255,255,255,.2);background:none;color:rgba(255,255,255,.45);border-radius:4px;cursor:pointer">← Esci</button>
+      </div>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card rv">
+        <div class="dash-card-head"><span class="dash-card-icon">📅</span><span class="dash-card-title">Orario giornaliero</span></div>
+        <div class="dash-card-body">
+          <p>📚 Studio guidato: <strong>15:30–17:15</strong><br/>🍽️ Pranzo: <strong>14:00</strong> · Cena: <strong>19:15</strong><br/>🌙 Riposo: <strong>22:30</strong></p>
+          <a href="giornata-tipo.html" class="dash-link">Vedi la giornata tipo →</a>
+        </div>
+      </div>
+      <div class="dash-card rv d1">
+        <div class="dash-card-head"><span class="dash-card-icon">📢</span><span class="dash-card-title">Bacheca avvisi</span></div>
+        <div class="dash-card-body">
+          <p>Comunicazioni degli educatori, cambi orario e attività straordinarie.</p>
+          <a href="avvisi.html" class="dash-link">Vai alla bacheca →</a>
+        </div>
+      </div>
+      <div class="dash-card rv d2">
+        <div class="dash-card-head"><span class="dash-card-icon">🎵</span><span class="dash-card-title">Laboratorio Musicale</span></div>
+        <div class="dash-card-body">
+          <p>Iscrizioni, programma e concerti. Puoi iscriverti in qualsiasi momento dell'anno.</p>
+          <a href="laboratorio-musicale.html" class="dash-link">Scopri il Laboratorio →</a>
+        </div>
+      </div>
+      <div class="dash-card rv">
+        <div class="dash-card-head"><span class="dash-card-icon">🏥</span><span class="dash-card-title">Infermeria</span></div>
+        <div class="dash-card-body">
+          <p>L'infermeria è aperta nelle ore diurne. In caso di malessere avvisa subito l'educatore. I farmaci si consegnano all'infermiera.</p>
+        </div>
+      </div>
+      <div class="dash-card rv d1">
+        <div class="dash-card-head"><span class="dash-card-icon">🚶</span><span class="dash-card-title">Uscite</span></div>
+        <div class="dash-card-body">
+          <p>Libera uscita: <strong>17:30–22:00</strong> con autorizzazione genitori. Per uscite straordinarie parla con l'educatore di turno.</p>
+        </div>
+      </div>
+      <div class="dash-card rv d2">
+        <div class="dash-card-head"><span class="dash-card-icon">🗳️</span><span class="dash-card-title">Rappresentanza</span></div>
+        <div class="dash-card-body">
+          <p>Hai una proposta o una critica? Rivolgiti al tuo rappresentante di piano o di corso.</p>
+          <a href="regolamento-guida.html" class="dash-link">Il Regolamento →</a>
+        </div>
+      </div>
+    </div>
+    <div class="coming-soon">
+      <p>"Presto potrai gestire online le richieste di uscita e prenotare i colloqui con gli educatori."</p>
+      <a href="contatti.html" class="btn-gold" style="display:inline-block">Per ora, parla con il tuo educatore →</a>
+    </div>
+  </div>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+let currentProfile=null;
+function selectProfile(type,card){
+  document.querySelectorAll('.profile-card').forEach(c=>c.classList.remove('selected'));
+  card.classList.add('selected');
+  currentProfile=type;
+  const box=document.getElementById('login-box');
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  const t=document.getElementById('login-title');
+  const d=document.getElementById('login-desc');
+  if(type==='famiglie'){t.innerHTML='Accesso <em>famiglie</em>';d.textContent='Inserisci le credenziali fornite dalla segreteria.';}
+  else{t.innerHTML='Accesso <em>convittori</em>';d.textContent='Inserisci le tue credenziali personali. Per assistenza parla con l\'educatore.';}
+}
+function doLogin(){
+  const email=document.getElementById('ar-email').value.trim().toLowerCase();
+  const pwd=document.getElementById('ar-pwd').value;
+  const err=document.getElementById('login-err-msg');
+
+  // Credenziali demo
+  const ACCOUNTS = {
+    'famiglia@costaggini.it':  { pwd:'Costaggini2025!', profile:'famiglie' },
+    'convittore@costaggini.it':{ pwd:'Costaggini2025!', profile:'convittori' },
+  };
+
+  const account = ACCOUNTS[email];
+  if (!account || account.pwd !== pwd) {
+    err.style.display='block';
+    document.getElementById('ar-pwd').value='';
+    document.getElementById('ar-pwd').focus();
+    return;
+  }
+  err.style.display='none';
+
+  // Forza il profilo corretto in base all'account
+  currentProfile = account.profile;
+
+  document.getElementById('ar-hero').style.display='none';
+  document.getElementById(currentProfile==='famiglie'?'area-famiglie':'area-convittori').style.display='block';
+  window.scrollTo(0,0);
+}
+function logout(){
+  document.getElementById('ar-hero').style.display='block';
+  document.getElementById('area-famiglie').style.display='none';
+  document.getElementById('area-convittori').style.display='none';
+  document.querySelectorAll('.profile-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('login-box').style.display='none';
+  document.getElementById('ar-email').value='';
+  document.getElementById('ar-pwd').value='';
+  window.scrollTo(0,0);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('login-box').style.display!=='none')doLogin();});
+</script>
+</body>
+</html>

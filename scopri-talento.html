@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Scopri il tuo talento — giochi, quiz e simulatori interattivi per i futuri studenti del Convitto Costaggini di Rieti."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Scopri il tuo Talento | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .st-hero { background:linear-gradient(160deg,#0a0f0a,var(--bosco)); padding:4rem 1.25rem 3rem; text-align:center; position:relative; overflow:hidden; }
+    .st-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,146,42,.12), transparent); pointer-events:none; }
+    .st-hero h1 { font-family:var(--fd); font-size:clamp(2rem,7vw,4rem); font-weight:300; color:#fff; margin-bottom:.5rem; position:relative; }
+    .st-hero h1 em { font-style:italic; color:var(--oro3); }
+    .st-hero p { color:rgba(245,240,232,.55); max-width:540px; margin:.6rem auto 0; font-size:.9rem; line-height:1.85; position:relative; }
+
+    /* Card griglia */
+    .st-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem; padding:3rem 1.25rem 5rem; max-width:1100px; margin:0 auto; }
+    @media(max-width:560px){ .st-grid { grid-template-columns:1fr; } }
+
+    .st-card { position:relative; border-radius:14px; overflow:hidden; text-decoration:none; display:block; transition:transform .25s, box-shadow .25s; border:1px solid rgba(184,146,42,.15); }
+    .st-card:hover { transform:translateY(-5px); box-shadow:0 20px 48px rgba(0,0,0,.3); }
+    .st-card-bg { position:absolute; inset:0; z-index:0; }
+    .st-card-body { position:relative; z-index:1; padding:2rem 1.75rem 1.75rem; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; }
+    .st-card-icon { font-size:2.5rem; margin-bottom:1rem; display:block; }
+    .st-card-tag { font-family:var(--fu); font-size:.56rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--oro2); margin-bottom:.4rem; }
+    .st-card-title { font-family:var(--fd); font-size:1.45rem; font-weight:300; color:#fff; line-height:1.25; margin-bottom:.6rem; }
+    .st-card-title em { font-style:italic; color:var(--oro3); }
+    .st-card-desc { font-family:var(--fu); font-size:.78rem; color:rgba(245,240,232,.6); line-height:1.7; flex:1; }
+    .st-card-cta { display:inline-flex; align-items:center; gap:.4rem; margin-top:1.25rem; font-family:var(--fu); font-size:.65rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--oro2); }
+    .st-card-cta::after { content:'→'; transition:transform .2s; }
+    .st-card:hover .st-card-cta::after { transform:translateX(4px); }
+
+    /* Badge "Nuovo" */
+    .st-badge-new { position:absolute; top:1rem; right:1rem; background:var(--oro); color:var(--bosco); font-family:var(--fu); font-size:.55rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:.2rem .55rem; border-radius:10px; z-index:2; }
+
+    /* Intro strip */
+    .st-intro { background:var(--av); padding:2.5rem 1.25rem; text-align:center; border-bottom:1px solid var(--av3); }
+    .st-intro p { font-family:var(--fu); font-size:.82rem; color:var(--txt2); max-width:600px; margin:0 auto; line-height:1.85; }
+    .st-intro strong { color:var(--bosco); }
+  </style>
+</head>
+<body data-page="scopri-talento">
+<main id="main">
+
+  <section class="st-hero">
+    <div class="w" style="position:relative;z-index:1">
+      <nav class="breadcrumb" style="justify-content:center;margin-bottom:1.5rem">
+        <a href="index.html" style="color:rgba(245,240,232,.35)">Home</a>
+        <span style="color:rgba(245,240,232,.15)">›</span>
+        <span style="color:var(--oro2)">Scopri il tuo Talento</span>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.6rem">— Laboratorio interattivo</p>
+      <h1>Scopri il tuo <em>Talento</em></h1>
+      <p>Quiz, giochi e simulatori creati appositamente per chi vuole capire se il mondo dell'enogastronomia, dell'accoglienza e della ristorazione fa per lui. Nessuna valutazione — solo scoperta.</p>
+    </div>
+  </section>
+
+  <div class="st-intro">
+    <p>Ogni esperienza qui dentro ti rivela qualcosa di diverso su di te. <strong>Non ci sono risposte giuste o sbagliate</strong> — ci sono risposte tue. Prenditi 5 minuti e scopri dove potrebbe portarti il Costaggini.</p>
+  </div>
+
+  <section style="background:#0a0f0a">
+    <div class="st-grid">
+
+      <!-- 1. Quiz Cucina/Sala/etc -->
+      <a href="quiz-competenze.html" class="st-card">
+        <div class="st-card-bg" style="background:linear-gradient(160deg,#1a2e1a,#0d1a0d)"></div>
+        <span class="st-badge-new">Nuovo</span>
+        <div class="st-card-body">
+          <span class="st-card-icon">🍳</span>
+          <div>
+            <p class="st-card-tag">Quiz · 4 percorsi · 8 domande</p>
+            <h2 class="st-card-title">Sai già <em>cucinare</em>?</h2>
+            <p class="st-card-desc">Metti alla prova le tue conoscenze di base in Cucina, Sala, Accoglienza e Pasticceria. Giudizi benevoli garantiti — qualunque sia il risultato.</p>
+          </div>
+          <span class="st-card-cta">Inizia il quiz</span>
+        </div>
+      </a>
+
+      <!-- 2. Simulatore percorso -->
+      <a href="quiz-percorso.html" class="st-card">
+        <div class="st-card-bg" style="background:linear-gradient(160deg,#1a1a2e,#0d0d1a)"></div>
+        <span class="st-badge-new">Nuovo</span>
+        <div class="st-card-body">
+          <span class="st-card-icon">🗺️</span>
+          <div>
+            <p class="st-card-tag">Simulatore · 5 scelte</p>
+            <h2 class="st-card-title">Scegli il tuo <em>percorso</em></h2>
+            <p class="st-card-desc">Cinque scelte narrative ti guidano verso l'indirizzo che fa per te. Non un test — una mappa. Cucina, Sala, Pasticceria o Accoglienza?</p>
+          </div>
+          <span class="st-card-cta">Inizia il viaggio</span>
+        </div>
+      </a>
+
+      <!-- 3. Riconosci il piatto -->
+      <a href="quiz-piatti.html" class="st-card">
+        <div class="st-card-bg" style="background:linear-gradient(160deg,#2e1a0d,#1a0d0a)"></div>
+        <span class="st-badge-new">Nuovo</span>
+        <div class="st-card-body">
+          <span class="st-card-icon">🧑‍🍳</span>
+          <div>
+            <p class="st-card-tag">Gioco · 10 piatti · Timer 20s</p>
+            <h2 class="st-card-title">Riconosci il <em>piatto</em></h2>
+            <p class="st-card-desc">Dieci piatti della cucina italiana classica. Riesci a riconoscerli tutti? Gioco veloce, punteggio finale, ranking di giornata.</p>
+          </div>
+          <span class="st-card-cta">Gioca ora</span>
+        </div>
+      </a>
+
+      <!-- 4. Roleplay accoglienza -->
+      <a href="quiz-accoglienza.html" class="st-card">
+        <div class="st-card-bg" style="background:linear-gradient(160deg,#2e2a0d,#1a180a)"></div>
+        <span class="st-badge-new">Nuovo</span>
+        <div class="st-card-body">
+          <span class="st-card-icon">🏨</span>
+          <div>
+            <p class="st-card-tag">Roleplay · Scenario a cascata</p>
+            <h2 class="st-card-title">Sei pronto per <em>l'accoglienza</em>?</h2>
+            <p class="st-card-desc">Un ospite arriva tardi, una prenotazione è sbagliata, il telefono squilla. Come ti comporti? Scenari reali, scelte tue, finali multipli.</p>
+          </div>
+          <span class="st-card-cta">Affronta lo scenario</span>
+        </div>
+      </a>
+
+      <!-- 5. Settimana builder -->
+      <a href="quiz-settimana.html" class="st-card" style="grid-column:auto">
+        <div class="st-card-bg" style="background:linear-gradient(160deg,#0d2e2a,#0a1a18)"></div>
+        <span class="st-badge-new">Nuovo</span>
+        <div class="st-card-body">
+          <span class="st-card-icon">📅</span>
+          <div>
+            <p class="st-card-tag">Builder interattivo · Scaricabile</p>
+            <h2 class="st-card-title">La tua <em>settimana tipo</em></h2>
+            <p class="st-card-desc">Costruisci la tua settimana ideale al Convitto scegliendo tra le attività disponibili. Visualizzala e scaricala come immagine da condividere.</p>
+          </div>
+          <span class="st-card-cta">Costruisci la tua settimana</span>
+        </div>
+      </a>
+
+      <!-- 6. Cruciverba -->
+      <a href="quiz-cruciverba.html" class="st-card">
+        <div class="st-card-bg" style="background:linear-gradient(160deg,#1a1207,#0f0a03)"></div>
+        <span class="st-badge-new">Nuovo</span>
+        <div class="st-card-body">
+          <span class="st-card-icon">📝</span>
+          <div>
+            <p class="st-card-tag">Cruciverba · 12 parole · Vocabolario pro</p>
+            <h2 class="st-card-title">Il Cruciverba del <em>Costaggini</em></h2>
+            <p class="st-card-desc">Parole di cucina, sala e accoglienza. Controllo lettera per lettera in tempo reale. Non sai tutto? Pazienza — abbiamo cinque anni per rimediare.</p>
+          </div>
+          <span class="st-card-cta">Inizia il cruciverba</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+</body>
+</html>

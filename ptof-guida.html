@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Il Piano Triennale dell'Offerta Formativa del Convitto e dell'IPSSEOA Costaggini di Rieti — spiegato in modo chiaro, per sezioni tematiche."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Il PTOF spiegato | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .ptof-hero { background:linear-gradient(135deg,#1a2e1b,var(--bosco)); padding:4rem 1.25rem 3rem; }
+    .ptof-hero h1 { font-family:var(--fd); font-size:clamp(1.8rem,5vw,3rem); font-weight:300; color:#fff; }
+    .ptof-hero h1 em { font-style:italic; color:var(--oro3); }
+
+    /* Navigatore */
+    .ptof-nav { background:var(--bosco); padding:1rem 1.25rem; position:sticky; top:68px; z-index:40; border-bottom:1px solid rgba(184,146,42,.15); }
+    .ptof-nav-row { display:flex; flex-wrap:wrap; gap:.4rem; }
+    .ptof-nb { font-family:var(--fu); font-size:.58rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.4rem .85rem; border-radius:20px; border:1.5px solid rgba(184,146,42,.25); background:none; color:rgba(245,240,232,.55); cursor:pointer; transition:all .2s; white-space:nowrap; }
+    .ptof-nb:hover, .ptof-nb.on { background:rgba(184,146,42,.2); border-color:var(--oro2); color:var(--oro2); }
+
+    /* Sezioni */
+    .ptof-sec { padding:4rem 1.25rem; }
+    .ptof-sec:nth-child(odd) { background:var(--av); }
+    .ptof-sec:nth-child(even) { background:var(--av2); }
+    .ptof-sec-hdr { display:flex; align-items:flex-start; gap:1.1rem; margin-bottom:2rem; }
+    .ptof-icon { font-size:2.5rem; flex-shrink:0; line-height:1; }
+    .ptof-sec-hdr h2 { font-family:var(--fd); font-size:clamp(1.4rem,3.5vw,2rem); font-weight:300; color:var(--bosco); margin-bottom:.2rem; }
+    .ptof-sec-hdr h2 em { font-style:italic; color:var(--oro); }
+    .ptof-sec-hdr p { color:var(--txt2); font-size:.88rem; max-width:560px; line-height:1.7; }
+
+    /* Accordion */
+    .ptof-acc { border:1px solid var(--av3); border-radius:8px; overflow:hidden; margin-bottom:.6rem; }
+    .ptof-acc[open] { border-color:rgba(184,146,42,.3); }
+    .ptof-sum {
+      list-style:none; display:flex; align-items:center; gap:.85rem;
+      padding:.95rem 1.2rem; cursor:pointer; background:var(--av); transition:background .2s;
+    }
+    .ptof-sum::-webkit-details-marker { display:none; }
+    .ptof-sum::marker { display:none; }
+    .ptof-sum:hover { background:rgba(44,62,45,.04); }
+    details[open] .ptof-sum { background:rgba(44,62,45,.04); border-bottom:1px solid var(--av3); }
+    .ptof-sum-num { font-family:var(--fd); font-size:.85rem; font-style:italic; color:var(--oro); flex-shrink:0; min-width:28px; }
+    .ptof-sum-title { font-family:var(--fu); font-size:.75rem; font-weight:700; letter-spacing:.04em; color:var(--bosco); flex:1; line-height:1.3; }
+    .ptof-sum-arr { font-size:.7rem; color:var(--oro); flex-shrink:0; transition:transform .3s; }
+    details[open] .ptof-sum-arr { transform:rotate(180deg); }
+    .ptof-body { padding:1.1rem 1.4rem; background:var(--av); font-size:.87rem; color:var(--txt2); line-height:1.85; }
+    .ptof-body p { margin-bottom:.75rem; }
+    .ptof-body p:last-child { margin-bottom:0; }
+    .ptof-body strong { color:var(--bosco); font-weight:700; }
+    .ptof-pill { display:inline-block; font-family:var(--fu); font-size:.57rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:.18rem .55rem; border-radius:20px; background:rgba(44,62,45,.08); color:var(--bosco2); margin-bottom:.6rem; }
+    .ptof-pill.oro { background:rgba(184,146,42,.1); color:#7a5a10; }
+    .ptof-box { background:rgba(184,146,42,.06); border:1px solid rgba(184,146,42,.2); border-radius:8px; padding:.85rem 1.1rem; margin:.75rem 0; }
+    .ptof-box-lbl { font-family:var(--fu); font-size:.57rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--oro); margin-bottom:.4rem; display:block; }
+    .ptof-box p { font-size:.83rem; color:var(--bosco2); line-height:1.7; margin:0; }
+    .ptof-list { margin:.5rem 0; padding-left:0; list-style:none; }
+    .ptof-list li { padding:.3rem 0 .3rem 1.3rem; position:relative; border-bottom:1px solid var(--av3); font-size:.86rem; }
+    .ptof-list li:last-child { border-bottom:none; }
+    .ptof-list li::before { content:"→"; position:absolute; left:0; color:var(--oro); font-size:.7rem; top:.4rem; }
+
+    /* CTA finale */
+    .ptof-cta { background:var(--bosco); padding:4rem 1.25rem; text-align:center; }
+    .ptof-cta h2 { font-family:var(--fd); font-size:clamp(1.6rem,4vw,2.5rem); font-weight:300; color:#fff; margin-bottom:.75rem; }
+    .ptof-cta h2 em { font-style:italic; color:var(--oro3); }
+    .ptof-cta p { color:rgba(245,240,232,.65); max-width:520px; margin:0 auto 1.75rem; font-size:.9rem; line-height:1.75; }
+    @media(max-width:480px){ .ptof-sec-hdr { flex-direction:column; gap:.75rem; } }
+  </style>
+</head>
+<body data-page="ptof-guida">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="ptof-hero">
+    <div class="w">
+      <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:1.25rem">
+        <a href="index.html" style="color:rgba(245,240,232,.45)">Home</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <a href="trasparenza.html" style="color:rgba(245,240,232,.45)">Trasparenza</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <span aria-current="page" style="color:var(--oro2)">PTOF</span>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.6rem">— Il documento fondamentale</p>
+      <h1>Il PTOF<br><em>spiegato bene</em></h1>
+      <p style="color:rgba(245,240,232,.65);max-width:560px;margin:.75rem 0 0;font-size:.9rem;line-height:1.75">Il Piano Triennale dell'Offerta Formativa non è un documento burocratico da archiviare. È la promessa della scuola alle famiglie. Vale la pena leggerlo — e capirlo.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.25rem">
+        <span style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .75rem;border-radius:20px;background:rgba(184,146,42,.15);color:var(--oro2);border:1px solid rgba(184,146,42,.25)">📋 A.S. 2025–2028</span>
+        <span style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .75rem;border-radius:20px;background:rgba(184,146,42,.15);color:var(--oro2);border:1px solid rgba(184,146,42,.25)">🎯 6 sezioni tematiche</span>
+        <span style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .75rem;border-radius:20px;background:rgba(184,146,42,.15);color:var(--oro2);border:1px solid rgba(184,146,42,.25)">⏱ ~8 min di lettura</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section style="background:var(--av);padding:3.5rem 1.25rem" class="rv">
+    <div class="w">
+      <p class="lbl">Prima di cominciare</p>
+      <h2>Cos'è il <em>PTOF</em> — e perché leggerlo</h2>
+      <p style="color:var(--txt2);font-size:.9rem;line-height:1.85;max-width:680px;margin:.75rem 0 1rem">Il <strong>Piano Triennale dell'Offerta Formativa</strong> è il documento con cui ogni istituzione scolastica dichiara pubblicamente chi è, cosa fa e come lo fa. Definisce gli obiettivi educativi, i percorsi di studio, i progetti, i valori e l'organizzazione dell'intera vita scolastica.</p>
+      <p style="color:var(--txt2);font-size:.9rem;line-height:1.85;max-width:680px">Per una famiglia che valuta di iscrivere il figlio al Costaggini — o che vuole capire in quale contesto culturale e formativo vive il proprio ragazzo — il PTOF è il documento più importante. Non un obbligo normativo. Una conversazione aperta.</p>
+    </div>
+  </section>
+
+  <!-- NAVIGATORE -->
+  <nav class="ptof-nav" aria-label="Navigazione sezioni PTOF">
+    <div class="ptof-nav-row">
+      <button class="ptof-nb" onclick="jump('ptof-1')">🏛️ L'istituto</button>
+      <button class="ptof-nb" onclick="jump('ptof-2')">🎓 I percorsi</button>
+      <button class="ptof-nb" onclick="jump('ptof-3')">📚 La didattica</button>
+      <button class="ptof-nb" onclick="jump('ptof-4')">🌍 I progetti</button>
+      <button class="ptof-nb" onclick="jump('ptof-5')">🏠 Il Convitto</button>
+      <button class="ptof-nb" onclick="jump('ptof-6')">👨‍👩‍👧 Le famiglie</button>
+    </div>
+  </nav>
+
+  <!-- ═══ SEZIONE 1 — L'ISTITUTO ═══ -->
+  <section class="ptof-sec" id="ptof-1">
+    <div class="w">
+      <div class="ptof-sec-hdr rv">
+        <div class="ptof-icon">🏛️</div>
+        <div>
+          <h2>L'istituto e <em>la sua storia</em></h2>
+          <p>Chi siamo, dove siamo, da dove veniamo. Il Costaggini nel contesto del territorio reatino.</p>
+        </div>
+      </div>
+
+      <details class="ptof-acc rv" open>
+        <summary class="ptof-sum"><span class="ptof-sum-num">§1</span><span class="ptof-sum-title">L'identità dell'istituto</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Dal 1962</span>
+          <p>L'IPSSEOA "Ranieri Antonelli Costaggini" di Rieti nasce nel 1962 per iniziativa dell'imprenditore reatino che gli dà il nome — il primo istituto alberghiero del Lazio. In sessant'anni ha attraversato una trasformazione profonda: da scuola a vocazione addestrativa a istituto di eccellenza nel settore dell'enogastronomia e dell'ospitalità alberghiera.</p>
+          <p>Oggi è un punto di riferimento per l'intera area reatina e limitrofa: accoglie studenti da Roma, dalla cintura metropolitana, dalle province di Viterbo, L'Aquila e Terni.</p>
+          <div class="ptof-box">
+            <span class="ptof-box-lbl">💡 Il nome e la sua storia</span>
+            <p>Ranieri Antonelli Costaggini non è solo un nome su una targa. È l'uomo che credette — per primo in tutto il Lazio — che l'ospitalità e la ristorazione fossero professioni degne di una grande scuola. La sua intuizione ha formato decine di migliaia di professionisti.</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="ptof-acc rv d1">
+        <summary class="ptof-sum"><span class="ptof-sum-num">§2</span><span class="ptof-sum-title">Il territorio e la vocazione turistica</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Rieti e il suo intorno</span>
+          <p>Il Costaggini si inserisce in un territorio a forte vocazione turistica — il Monte Terminillo, il Lago del Salto, i borghi medievali della Sabina, le terme di Cotilia. Un contesto che offre sbocchi professionali reali e immediati ai propri diplomati.</p>
+          <p>La scuola collabora attivamente con imprese alberghiere e ristorative del territorio, in eventi e manifestazioni che consentono agli studenti di operare sul campo in contesti lavorativi reali.</p>
+          <ul class="ptof-list">
+            <li>Alternanza scuola-lavoro con periodi di circa 5 settimane ogni anno</li>
+            <li>Certificazioni HACCP e sicurezza sul lavoro integrate nel curricolo</li>
+            <li>Accordi con AIS, FIC, AIBES, Coldiretti e Accademia Italiana della Cucina</li>
+            <li>Esperienze internazionali Erasmus+ in 10+ paesi</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="ptof-acc rv d2">
+        <summary class="ptof-sum"><span class="ptof-sum-num">§3</span><span class="ptof-sum-title">Missione e valori fondanti</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill oro">Orientamento valoriale</span>
+          <p>Il PTOF dichiara esplicitamente i valori che guidano ogni scelta educativa e organizzativa:</p>
+          <ul class="ptof-list">
+            <li><strong>Inclusione</strong> — ogni studente è accolto per quello che è e accompagnato verso ciò che può diventare</li>
+            <li><strong>Eccellenza professionale</strong> — formare non solo operatori, ma persone capaci di pensare, innovare e guidare</li>
+            <li><strong>Apertura internazionale</strong> — il mondo del turismo e della ristorazione è globale, e la formazione deve esserlo</li>
+            <li><strong>Corresponsabilità</strong> — scuola, famiglie e territorio come sistema integrato</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ═══ SEZIONE 2 — I PERCORSI ═══ -->
+  <section class="ptof-sec" id="ptof-2">
+    <div class="w">
+      <div class="ptof-sec-hdr rv">
+        <div class="ptof-icon">🎓</div>
+        <div>
+          <h2>I percorsi <em>formativi</em></h2>
+          <p>Cosa si studia, come si studia, dove porta. Gli indirizzi dell'IPSSEOA Costaggini.</p>
+        </div>
+      </div>
+
+      <details class="ptof-acc rv" open>
+        <summary class="ptof-sum"><span class="ptof-sum-num">§4</span><span class="ptof-sum-title">Gli indirizzi di studio</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">5 anni di formazione</span>
+          <p>Il Costaggini offre percorsi quinquennali nell'ambito dei <strong>Servizi per l'Enogastronomia e l'Ospitalità Alberghiera</strong>, con quattro articolazioni:</p>
+          <ul class="ptof-list">
+            <li><strong>Enogastronomia</strong> — cucina, pasticceria, panificazione, tecnologia alimentare</li>
+            <li><strong>Servizi di sala e di vendita</strong> — sala bar, sommellerie, gestione eventi</li>
+            <li><strong>Accoglienza turistica</strong> — front office, marketing, lingue straniere, gestione alberghiera</li>
+            <li><strong>Prodotti dolciari artigianali e industriali</strong></li>
+          </ul>
+          <p>Al termine del quinquennio si consegue il <strong>Diploma di Istruzione Professionale</strong>, che consente di accedere all'università, agli ITS e direttamente al mondo del lavoro.</p>
+        </div>
+      </details>
+
+      <details class="ptof-acc rv d1">
+        <summary class="ptof-sum"><span class="ptof-sum-num">§5</span><span class="ptof-sum-title">Il biennio e il triennio</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Struttura del percorso</span>
+          <p>Il <strong>biennio</strong> (classi 1ª e 2ª) è comune a tutti gli indirizzi: costruisce le basi culturali e professionali, con forte attenzione alle competenze di base (italiano, matematica, storia) e ai primi approcci ai laboratori professionali.</p>
+          <p>Il <strong>triennio</strong> (classi 3ª, 4ª e 5ª) è specializzato per indirizzo. La quota di laboratorio aumenta significativamente. Il PCTO (ex alternanza scuola-lavoro) occupa circa 5 settimane per anno, in strutture reali del settore.</p>
+          <div class="ptof-box">
+            <span class="ptof-box-lbl">📅 Organizzazione dell'anno</span>
+            <p>L'anno scolastico è suddiviso in due <strong>quadrimestri</strong>. All'interno di ogni quadrimestre viene prodotto un "pagellino" intermedio, per consentire alle famiglie di monitorare l'andamento prima delle valutazioni finali.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ═══ SEZIONE 3 — LA DIDATTICA ═══ -->
+  <section class="ptof-sec" id="ptof-3">
+    <div class="w">
+      <div class="ptof-sec-hdr rv">
+        <div class="ptof-icon">📚</div>
+        <div>
+          <h2>Come si <em>insegna</em></h2>
+          <p>Metodologie, valutazione, inclusione, sostegno. Come il Costaggini affronta la complessità educativa quotidiana.</p>
+        </div>
+      </div>
+
+      <details class="ptof-acc rv" open>
+        <summary class="ptof-sum"><span class="ptof-sum-num">§6</span><span class="ptof-sum-title">Metodologie didattiche</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Apprendere facendo</span>
+          <p>Il Costaggini privilegia un approccio <strong>laboratoriale e situato</strong>: si impara facendo, in contesti il più possibile simili a quelli professionali reali. Le aule si integrano con i laboratori di cucina, sala bar e informatica. Le uscite didattiche e le visite aziendali completano il quadro.</p>
+          <ul class="ptof-list">
+            <li>Didattica per competenze — non solo conoscenze, ma saper fare e saper essere</li>
+            <li>Cooperative learning e lavoro di gruppo</li>
+            <li>Flipped classroom e uso delle tecnologie digitali</li>
+            <li>Simulazione di ambienti professionali reali</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="ptof-acc rv d1">
+        <summary class="ptof-sum"><span class="ptof-sum-num">§7</span><span class="ptof-sum-title">Inclusione e sostegno</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Ogni studente conta</span>
+          <p>Il PTOF dedica ampio spazio alle politiche di inclusione. Per gli studenti con <strong>Bisogni Educativi Speciali</strong> (BES), Disturbi Specifici di Apprendimento (DSA) o disabilità certificate, vengono predisposti Piani Educativi Individualizzati (PEI) o Piani Didattici Personalizzati (PDP).</p>
+          <p>È attivo il <strong>Centro di Informazione e Consulenza (CIC)</strong> per il supporto psicologico a studenti, famiglie e docenti.</p>
+        </div>
+      </details>
+
+      <details class="ptof-acc rv d2">
+        <summary class="ptof-sum"><span class="ptof-sum-num">§8</span><span class="ptof-sum-title">La valutazione</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Trasparente e motivante</span>
+          <p>La valutazione è <strong>continua e formativa</strong>: non serve a punire, serve a orientare. Ogni voto è accompagnato da feedback che aiuta lo studente a capire dove migliorare. Le verifiche scritte, orali e pratiche si integrano durante tutto l'anno.</p>
+          <p>I criteri di valutazione sono pubblici e approvati dal Collegio dei Docenti — consultabili nel PTOF completo sul sito della scuola.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ═══ SEZIONE 4 — I PROGETTI ═══ -->
+  <section class="ptof-sec" id="ptof-4">
+    <div class="w">
+      <div class="ptof-sec-hdr rv">
+        <div class="ptof-icon">🌍</div>
+        <div>
+          <h2>I progetti e <em>l'apertura al mondo</em></h2>
+          <p>Erasmus+, PCTO, progetti culturali e sportivi. Tutto ciò che va oltre le aule.</p>
+        </div>
+      </div>
+
+      <details class="ptof-acc rv" open>
+        <summary class="ptof-sum"><span class="ptof-sum-num">§9</span><span class="ptof-sum-title">Erasmus+ e mobilità internazionale</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill oro">Internazionale</span>
+          <p>Il Costaggini partecipa attivamente al programma <strong>Erasmus+ KA121-VET</strong> per la mobilità di studenti e docenti nell'ambito della formazione professionale. Le esperienze internazionali hanno coinvolto Inghilterra, Spagna, Germania, Francia, Finlandia, Grecia, Portogallo, Ungheria, Polonia, Cipro, Emirati Arabi Uniti e Stati Uniti.</p>
+          <p>Per l'anno 2025-2026 sono previste mobilità di 21 giorni per gli studenti e 7 giorni per i docenti.</p>
+        </div>
+      </details>
+
+      <details class="ptof-acc rv d1">
+        <summary class="ptof-sum"><span class="ptof-sum-num">§10</span><span class="ptof-sum-title">PCTO — Percorsi per le Competenze Trasversali</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Il mondo del lavoro entra in classe</span>
+          <p>Il PCTO (ex alternanza scuola-lavoro) è obbligatorio per il triennio. Gli studenti trascorrono circa 5 settimane all'anno in strutture aziendali reali — ristoranti, hotel, pasticcerie, aziende del settore. Non uno stage generico, ma un'esperienza guidata, preparata in aula e valutata.</p>
+          <div class="ptof-box">
+            <span class="ptof-box-lbl">📋 Prima del PCTO</span>
+            <p>Gli studenti ricevono formazione specifica su HACCP (sicurezza alimentare) e sicurezza sul lavoro, con conseguimento delle relative certificazioni riconosciute dal settore.</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="ptof-acc rv d2">
+        <summary class="ptof-sum"><span class="ptof-sum-num">§11</span><span class="ptof-sum-title">Progetti culturali, sportivi e sociali</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Oltre la scuola</span>
+          <p>Il PTOF prevede un ricco calendario di progetti extracurricolari:</p>
+          <ul class="ptof-list">
+            <li>Laboratorio Musicale del Convitto — oltre 20 anni di attività continuativa</li>
+            <li>Attività sportive (calcetto, basket, pallavolo, rugby, nuoto)</li>
+            <li>Uscite culturali e visite a musei, mostre, eventi del territorio</li>
+            <li>Partecipazione a concorsi e competizioni professionali nazionali</li>
+            <li>Progetti di educazione alla legalità, alla salute e alla cittadinanza</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ═══ SEZIONE 5 — IL CONVITTO ═══ -->
+  <section class="ptof-sec" id="ptof-5">
+    <div class="w">
+      <div class="ptof-sec-hdr rv">
+        <div class="ptof-icon">🏠</div>
+        <div>
+          <h2>Il Convitto nel <em>PTOF</em></h2>
+          <p>Come il Convitto si integra con la missione formativa della scuola. Una risorsa, non un servizio.</p>
+        </div>
+      </div>
+
+      <details class="ptof-acc rv" open>
+        <summary class="ptof-sum"><span class="ptof-sum-num">§12</span><span class="ptof-sum-title">Il Convitto come risorsa educativa</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Parte integrante dell'offerta</span>
+          <p>Il PTOF riconosce esplicitamente il Convitto come <strong>parte integrante dell'offerta formativa</strong> — non un servizio accessorio, ma un ambiente educativo con una propria funzione nel percorso di crescita degli studenti.</p>
+          <p>Gli educatori del Convitto partecipano ai Consigli di Classe, condividono con i docenti informazioni sull'andamento degli studenti e collaborano nella costruzione del profilo formativo individuale di ciascun convittore.</p>
+          <div class="ptof-box">
+            <span class="ptof-box-lbl">🤝 La sinergia scuola-convitto</span>
+            <p>Uno studente che vive in Convitto non porta mai i compiti arretrati in classe. Ha studiato, il pomeriggio prima, in un ambiente silenzioso con il supporto di un educatore qualificato. Questa sinergia produce risultati misurabili.</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="ptof-acc rv d1">
+        <summary class="ptof-sum"><span class="ptof-sum-num">§13</span><span class="ptof-sum-title">Il Progetto Educativo del Convitto</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Crescita integrale</span>
+          <p>Il Progetto Educativo del Convitto si allinea ai valori del PTOF: promuovere la <strong>crescita umana, civile e culturale</strong> di ogni studente, nel rispetto della propria identità e con attenzione alla dimensione comunitaria.</p>
+          <ul class="ptof-list">
+            <li>Studio guidato quotidiano con supporto educativo</li>
+            <li>Attività culturali, sportive e ricreative strutturate</li>
+            <li>Laboratorio Musicale aperto a tutti i convittori</li>
+            <li>Partecipazione democratica attraverso i rappresentanti eletti</li>
+            <li>Rapporto costante e trasparente con le famiglie</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ═══ SEZIONE 6 — LE FAMIGLIE ═══ -->
+  <section class="ptof-sec" id="ptof-6">
+    <div class="w">
+      <div class="ptof-sec-hdr rv">
+        <div class="ptof-icon">👨‍👩‍👧</div>
+        <div>
+          <h2>Il ruolo <em>delle famiglie</em></h2>
+          <p>Come la scuola coinvolge le famiglie. Non solo comunicati — una partecipazione vera.</p>
+        </div>
+      </div>
+
+      <details class="ptof-acc rv" open>
+        <summary class="ptof-sum"><span class="ptof-sum-num">§14</span><span class="ptof-sum-title">La corresponsabilità educativa</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill oro">Patto sottoscritto</span>
+          <p>Il PTOF fonda la relazione scuola-famiglia sul <strong>Patto Educativo di Corresponsabilità</strong> — un impegno reciproco che entrambe le parti sottoscrivono all'atto dell'iscrizione. Non una formalità: una dichiarazione di intenti condivisa.</p>
+          <p>La scuola si impegna a comunicare in modo trasparente, a rispettare la persona dello studente, a coinvolgere le famiglie nelle decisioni che le riguardano. Le famiglie si impegnano a sostenere l'impegno scolastico dei figli, a rispettare le regole dell'istituto, a collaborare con docenti ed educatori.</p>
+        </div>
+      </details>
+
+      <details class="ptof-acc rv d1">
+        <summary class="ptof-sum"><span class="ptof-sum-num">§15</span><span class="ptof-sum-title">Come partecipare alla vita scolastica</span><span class="ptof-sum-arr">▾</span></summary>
+        <div class="ptof-body">
+          <span class="ptof-pill">Canali di partecipazione</span>
+          <ul class="ptof-list">
+            <li><strong>Consiglio di Istituto</strong> — organo deliberante con rappresentanti dei genitori</li>
+            <li><strong>Consigli di Classe</strong> — riunioni periodiche con docenti e rappresentanti dei genitori</li>
+            <li><strong>Ricevimento docenti</strong> — prenotabile tramite Registro Elettronico</li>
+            <li><strong>Colloqui con gli Educatori</strong> — in qualsiasi momento, senza appuntamento obbligatorio</li>
+            <li><strong>Assemblee dei genitori</strong> — convocate dal Consiglio di Classe</li>
+          </ul>
+          <div class="ptof-box">
+            <span class="ptof-box-lbl">📱 Registro Elettronico</span>
+            <p>Le famiglie possono accedere al Registro Elettronico per verificare in tempo reale presenze, voti, comunicazioni e materiali. Le credenziali vengono fornite a inizio anno.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="ptof-cta">
+    <div class="w">
+      <div style="width:3rem;height:2px;background:linear-gradient(90deg,transparent,var(--oro2),transparent);margin:0 auto 2.5rem"></div>
+      <h2>Vuoi saperne di <em>più</em>?</h2>
+      <p>Il PTOF completo è disponibile sul sito ufficiale dell'istituto. Per qualsiasi domanda, il team educativo è sempre disponibile.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
+        <a href="https://www.alberghierorieti.edu.it/ptof/" target="_blank" rel="noopener" class="btn-gold">📄 PTOF completo sul sito della scuola →</a>
+        <a href="contatti.html" class="btn-outline" style="color:rgba(245,240,232,.7);border-color:rgba(245,240,232,.3)">Contattaci →</a>
+      </div>
+      <p style="font-family:var(--fu);font-size:.58rem;color:rgba(245,240,232,.2);margin-top:2rem;letter-spacing:.1em;text-transform:uppercase">
+        Questa guida sintetizza i contenuti del PTOF 2025–2028. In caso di discrepanza, fa fede il documento ufficiale.
+      </p>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+function jump(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+// Evidenzia nav button attivo
+const secs = ['ptof-1','ptof-2','ptof-3','ptof-4','ptof-5','ptof-6'];
+const btns = document.querySelectorAll('.ptof-nb');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const i = secs.indexOf(e.target.id);
+      btns.forEach((b,j) => b.classList.toggle('on', j===i));
+    }
+  });
+}, { threshold:0.3 });
+secs.forEach(id => { const el=document.getElementById(id); if(el) obs.observe(el); });
+</script>
+</body>
+</html>

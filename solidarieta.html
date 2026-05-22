@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="La Solidarietà — brano autoprodotto dal Laboratorio Musicale del Convitto Costaggini di Rieti, marzo 2019. Una storia di musica, amicizia e impegno civile."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>La Solidarietà | Laboratorio Musicale · Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background:#0a0f0a; }
+
+    /* ── HERO ── */
+    .sl-hero {
+      background:linear-gradient(160deg,#000 0%,#0d150d 60%,#0a0f0a 100%);
+      padding:5rem 1.25rem 4rem; text-align:center; position:relative; overflow:hidden;
+    }
+    /* Riga luminosa animata */
+    .sl-hero::before {
+      content:''; position:absolute; top:0; left:-100%; width:60%; height:1px;
+      background:linear-gradient(90deg,transparent,rgba(184,146,42,.4),transparent);
+      animation:scanline 4s ease-in-out infinite;
+    }
+    @keyframes scanline { to { left:150%; } }
+
+    .sl-hero-eyebrow { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--oro2); margin-bottom:.75rem; }
+    .sl-hero h1 { font-family:var(--fd); font-size:clamp(2.5rem,9vw,5.5rem); font-weight:300; color:#fff; line-height:1; margin-bottom:.4rem; }
+    .sl-hero h1 em { font-style:italic; color:var(--oro3); }
+    .sl-hero-meta { font-family:var(--fu); font-size:.7rem; color:rgba(245,240,232,.35); letter-spacing:.12em; text-transform:uppercase; margin-top:1rem; }
+    .sl-hero-meta span { color:var(--oro2); margin:0 .4rem; }
+
+    /* ── VIDEO ── */
+    .sl-video-section { background:#000; padding:0; }
+    .sl-video-wrap {
+      max-width:900px; margin:0 auto; position:relative;
+      background:#000;
+    }
+    .sl-video-inner {
+      position:relative; padding-bottom:56.25%;
+      overflow:hidden;
+    }
+    .sl-video-inner video {
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      background:#000;
+    }
+    /* Placeholder prima del caricamento video */
+    .sl-video-placeholder {
+      position:absolute; inset:0;
+      background:linear-gradient(135deg,#0d150d,#1a2e1a);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.5rem;
+    }
+    .sl-play-ring {
+      width:90px; height:90px; border-radius:50%;
+      border:2px solid rgba(184,146,42,.4);
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(184,146,42,.08);
+    }
+    .sl-play-ring svg { fill:var(--oro2); margin-left:6px; }
+
+    /* ── STORIA ── */
+    .sl-story { padding:5rem 1.25rem; background:#0d150d; }
+    .sl-story-inner { max-width:720px; margin:0 auto; }
+
+    .sl-chapter { margin-bottom:3.5rem; }
+    .sl-chapter:last-child { margin-bottom:0; }
+
+    .sl-chapter-label {
+      font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--oro2); margin-bottom:.75rem; display:flex;
+      align-items:center; gap:.75rem;
+    }
+    .sl-chapter-label::after { content:''; flex:1; height:1px; background:rgba(184,146,42,.2); }
+
+    .sl-chapter h2 { font-family:var(--fd); font-size:clamp(1.5rem,4vw,2.2rem); font-weight:300; color:#fff; margin-bottom:1.25rem; line-height:1.2; }
+    .sl-chapter h2 em { font-style:italic; color:var(--oro3); }
+
+    .sl-chapter p { font-family:var(--fd); font-size:1.05rem; color:rgba(245,240,232,.72); line-height:1.9; margin-bottom:1.1rem; }
+    .sl-chapter p:last-child { margin-bottom:0; }
+    .sl-chapter strong { color:rgba(245,240,232,.92); font-weight:600; }
+
+    /* Pull quote */
+    .sl-pullquote {
+      border-left:3px solid var(--oro);
+      padding:1rem 1.5rem;
+      margin:2rem 0;
+      background:rgba(184,146,42,.05);
+      border-radius:0 8px 8px 0;
+    }
+    .sl-pullquote p { font-family:var(--fd); font-size:1.15rem; font-style:italic; color:rgba(245,240,232,.85); line-height:1.75; margin:0; }
+
+    /* Badge info */
+    .sl-badges { display:flex; flex-wrap:wrap; gap:.5rem; margin:1.5rem 0; }
+    .sl-badge { font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:.3rem .75rem; border-radius:20px; border:1px solid rgba(184,146,42,.25); color:var(--oro2); background:rgba(184,146,42,.06); }
+
+    /* ── CREDITI ── */
+    .sl-credits { padding:4rem 1.25rem; background:#000; border-top:1px solid rgba(184,146,42,.1); }
+    .sl-credits-inner { max-width:720px; margin:0 auto; }
+    .sl-credits h3 { font-family:var(--fu); font-size:.65rem; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:rgba(245,240,232,.35); margin-bottom:1.5rem; }
+    .sl-credits-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; }
+    .sl-credit-item { border:1px solid rgba(255,255,255,.06); border-radius:8px; padding:1rem; }
+    .sl-credit-role { font-family:var(--fu); font-size:.57rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--oro2); margin-bottom:.3rem; }
+    .sl-credit-name { font-family:var(--fd); font-size:.95rem; color:rgba(245,240,232,.75); }
+
+    /* ── CTA ── */
+    .sl-cta { padding:4rem 1.25rem; background:#0d150d; text-align:center; }
+    .sl-cta p { font-family:var(--fd); font-size:1.1rem; font-style:italic; color:rgba(245,240,232,.45); max-width:480px; margin:0 auto 1.75rem; line-height:1.7; }
+
+    /* ── LAYOUT DUE COLONNE ── */
+    .sl-two-col {
+      display:grid;
+      grid-template-columns:3fr 2fr;
+      gap:2rem;
+      align-items:start;
+    }
+    /* La colonna video è sticky — scende con lo scroll */
+    .sl-col-video {
+      position:sticky;
+      top:88px;
+      align-self:start;
+    }
+    .sl-video-sticky { /* wrapper senza overflow che blocchi lo sticky */ }
+    .sl-video-inner {
+      position:relative;
+      padding-bottom:56.25%;
+      border-radius:8px;
+      background:#000;
+      /* NON mettere overflow:hidden qui — rompe lo sticky del genitore */
+    }
+    .sl-video-inner video {
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      border-radius:8px;
+    }
+    .sl-col-story { padding-top:.5rem; }
+
+    @media(max-width:860px){
+      .sl-two-col {
+        grid-template-columns:1fr;
+        gap:2rem;
+      }
+      .sl-col-video { position:static; }
+    }
+    @media(max-width:600px){ .sl-hero h1 { font-size:2.8rem; } }
+  </style>
+</head>
+<body data-page="solidarieta">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="sl-hero">
+    <div class="w" style="position:relative;z-index:1">
+      <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:2rem;justify-content:center">
+        <a href="index.html" style="color:rgba(245,240,232,.35)">Home</a>
+        <span style="color:rgba(245,240,232,.15)">›</span>
+        <a href="vinile.html" style="color:rgba(245,240,232,.35)">Il Vinile del Convitto</a>
+        <span style="color:rgba(245,240,232,.15)">›</span>
+        <span aria-current="page" style="color:var(--oro2)">La Solidarietà</span>
+      </nav>
+      <p class="sl-hero-eyebrow">Laboratorio Musicale · Convitto "Costaggini" — Rieti</p>
+      <h1><em>La</em> Solidarietà</h1>
+      <p style="font-family:var(--fd);font-size:clamp(.95rem,2.5vw,1.2rem);font-style:italic;color:rgba(245,240,232,.5);max-width:520px;margin:.75rem auto 0;line-height:1.75">Un brano nato dall'incontro tra ragazzi, musica e un'idea grande da custodire.</p>
+      <div class="sl-hero-meta">
+        Autoprodotto<span>·</span>Marzo 2019<span>·</span>Registrato in studio professionale
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO + STORIA AFFIANCATI -->
+  <section style="background:#0a0f0a;padding:2rem .5rem 4rem">
+    <div style="max-width:1400px;margin:0 auto;padding:0 .5rem">
+      <div class="sl-two-col">
+
+        <!-- Colonna sinistra: sticky sulla colonna intera -->
+        <div class="sl-col-video">
+          <div class="sl-video-sticky">
+            <div class="sl-video-inner">
+              <video controls preload="metadata" id="sl-video"
+                     style="position:absolute;top:0;left:0;width:100%;height:100%;background:#000">
+                <source src="video/la-solidarieta-2019.mp4" type="video/mp4"/>
+                Il tuo browser non supporta la riproduzione video.
+              </video>
+            </div>
+            <p style="font-family:var(--fu);font-size:.58rem;color:rgba(245,240,232,.2);letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-top:.75rem">
+              Laboratorio Musicale · Convitto "Costaggini" · Rieti · 2019
+            </p>
+            <div class="sl-badges" style="justify-content:center;margin-top:.85rem">
+              <span class="sl-badge">✍️ Autoprodotto</span>
+              <span class="sl-badge">🎙️ Studio professionale</span>
+              <span class="sl-badge">🏆 Concorso nazionale</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonna destra: storia scrollabile -->
+        <div class="sl-col-story">
+
+          <div class="sl-chapter">
+            <p class="sl-chapter-label">Come è nato</p>
+            <h2>Una <em>commissione</em> insolita</h2>
+            <p>Tutto cominciò con una telefonata. Era il 2019 e il Responsabile del Piano Triennale dell'Offerta Formativa dell'IPSSEOA "Costaggini" cercava un modo per partecipare a un concorso il cui tema era la <strong>solidarietà</strong> — uno dei valori fondanti della vita civile, forse il più necessario nella stagione che stavamo attraversando.</p>
+            <p>La chiamata arrivò a Michele Gaggiano, responsabile del Laboratorio Musicale: poteva il Laboratorio farsi carico di questo progetto? Poteva la musica — linguaggio universale per eccellenza — dire qualcosa di autentico su un tema così grande?</p>
+            <p>La risposta fu sì.</p>
+          </div>
+
+          <div class="sl-pullquote">
+            <p>"Nelle settimane seguenti, con i ragazzi del Laboratorio, ci mettemmo a discutere, provare, suonare. Cercavamo qualcosa che fosse davvero nostro — non una canzone su commissione, ma un'idea che nascesse da dentro."</p>
+          </div>
+
+          <div class="sl-chapter">
+            <p class="sl-chapter-label">Il percorso</p>
+            <h2>Settimane di <em>musica e ricerca</em></h2>
+            <p>Il Laboratorio Musicale non è un luogo dove si eseguono brani già scritti. È un luogo dove le cose nascono. E <em>La Solidarietà</em> nacque esattamente così: da settimane di incontri, discussioni, prove, ripensamenti.</p>
+            <p>I ragazzi portarono idee, parole, melodie abbozzate. Si confrontarono su cosa significasse davvero la solidarietà per loro — non il concetto astratto da dizionario, ma il gesto concreto, quotidiano, spesso silenzioso. Il tipo di solidarietà che si impara vivendo insieme, come si fa in un convitto.</p>
+            <p>Il risultato fu <strong>un brano autoprodotto</strong>, scritto collettivamente, arrangiato e registrato in uno studio professionale. Con animazioni realizzate appositamente per accompagnare la musica con immagini.</p>
+          </div>
+
+          <div class="sl-pullquote">
+            <p>"Lo ricordo come un periodo molto intenso e pieno di grande afflato, collaborazione, amicizia e affetto. Quei ragazzi non stavano solo facendo musica — stavano costruendo qualcosa insieme, e lo sapevano."</p>
+          </div>
+
+          <div class="sl-chapter">
+            <p class="sl-chapter-label">La memoria</p>
+            <h2>Un periodo <em>indimenticabile</em></h2>
+            <p>Michele Gaggiano lo ricorda come uno dei periodi più intensi della sua esperienza al Laboratorio. Non per il risultato — per il processo. Per quelle settimane di prove, di parole cercate insieme, di melodie nate dal confronto tra ragazzi che stavano crescendo.</p>
+            <p>È questo il senso più profondo del Laboratorio Musicale: non formare musicisti, ma dare ai ragazzi uno spazio dove la creatività collettiva è possibile. Dove un'idea vaga diventa, settimana dopo settimana, un brano registrato in studio.</p>
+            <p>Dove la solidarietà non è solo il tema di una canzone. È il modo in cui la canzone è nata.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDITI -->
+  <section class="sl-credits">
+    <div class="sl-credits-inner">
+      <h3>Crediti</h3>
+      <div class="sl-credits-grid rv">
+        <div class="sl-credit-item">
+          <p class="sl-credit-role">Responsabile e arrangiamento</p>
+          <p class="sl-credit-name">Michele Gaggiano</p>
+        </div>
+        <div class="sl-credit-item rv d1">
+          <p class="sl-credit-role">Realizzato da</p>
+          <p class="sl-credit-name">I ragazzi del Laboratorio Musicale · A.S. 2018/2019</p>
+        </div>
+        <div class="sl-credit-item rv d2">
+          <p class="sl-credit-role">Registrazione</p>
+          <p class="sl-credit-name">Studio professionale · Marzo 2019</p>
+        </div>
+        <div class="sl-credit-item rv d3">
+          <p class="sl-credit-role">Contesto</p>
+          <p class="sl-credit-name">Concorso a tema "Solidarietà" · Su commissione del PTOF</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="sl-cta">
+    <div class="w">
+      <p>"Il Laboratorio Musicale è ancora qui, dopo oltre vent'anni. Ogni anno nuovi ragazzi, nuove idee, nuove storie da raccontare."</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center">
+        <a href="laboratorio-musicale.html" class="btn-gold">Scopri il Laboratorio →</a>
+        <a href="vinile.html" style="font-family:var(--fu);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.6rem 1.2rem;border:1.5px solid rgba(184,146,42,.3);border-radius:6px;color:var(--oro2);text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(184,146,42,.1)'" onmouseout="this.style.background='none'">← Il Vinile del Convitto</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+const vid = document.getElementById('sl-video');
+if (vid) {
+  vid.volume = 1;
+  vid.muted  = false;
+  vid.addEventListener('loadedmetadata', () => {
+    vid.volume = 1;
+    vid.muted  = false;
+  });
+}
+</script>
+</body>
+</html>

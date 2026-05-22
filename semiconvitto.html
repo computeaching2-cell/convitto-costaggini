@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Richiesta di partecipazione al Semiconvitto del Costaggini di Rieti — A.S. 2026/27. Studio guidato, pranzo e attività pomeridiane."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Semiconvitto | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Sezioni card */
+    .sc-section { background:#fff; border-radius:10px; box-shadow:0 2px 16px rgba(0,0,0,.07); margin-bottom:1.25rem; overflow:hidden; }
+    .sc-hdr { background:var(--bosco); padding:.9rem 1.5rem; display:flex; align-items:center; gap:.65rem; }
+    .sc-hdr h2 { font-family:var(--fu); font-size:.65rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--oro2); margin:0; }
+    .sc-hdr span { font-family:var(--fd); font-size:.8rem; font-style:italic; color:rgba(245,240,232,.4); }
+    .sc-body { padding:1.5rem; }
+    .sc-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:.85rem; }
+    @media(max-width:520px){ .sc-grid-2 { grid-template-columns:1fr; } }
+    .sc-field { display:flex; flex-direction:column; gap:.3rem; margin-bottom:.75rem; }
+    .sc-field:last-child { margin-bottom:0; }
+    .sc-label { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--bosco2); }
+    .sc-label .req { color:#dc2626; margin-left:2px; }
+    .sc-field input, .sc-field select, .sc-field textarea {
+      padding:.65rem .9rem; border:1.5px solid #d1d5db; border-radius:6px;
+      font-family:var(--fu); font-size:.88rem; color:#1a1a1a;
+      outline:none; transition:border-color .2s; background:#fafafa; width:100%; box-sizing:border-box;
+    }
+    .sc-field input:focus, .sc-field select:focus, .sc-field textarea:focus { border-color:var(--bosco); box-shadow:0 0 0 3px rgba(44,62,45,.1); }
+    .sc-check { display:flex; align-items:flex-start; gap:.6rem; cursor:pointer; margin-bottom:.65rem; }
+    .sc-check input { width:18px; height:18px; accent-color:var(--bosco); flex-shrink:0; margin-top:2px; }
+    .sc-check-label { font-family:var(--fu); font-size:.82rem; color:#374151; line-height:1.55; }
+    .sc-check-label a { color:var(--bosco2); }
+
+    /* Box servizi */
+    .sc-services { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:1rem; }
+    @media(max-width:520px){ .sc-services { grid-template-columns:1fr; } }
+    .sc-service { border:1.5px solid #e5e7eb; border-radius:8px; padding:.9rem 1rem; cursor:pointer; transition:all .2s; }
+    .sc-service.sel { border-color:var(--bosco); background:rgba(44,62,45,.04); }
+    .sc-service input { display:none; }
+    .sc-service-icon { font-size:1.5rem; display:block; margin-bottom:.35rem; }
+    .sc-service-name { font-family:var(--fu); font-size:.72rem; font-weight:800; color:var(--bosco); margin-bottom:.2rem; }
+    .sc-service-desc { font-family:var(--fu); font-size:.68rem; color:#6b7280; line-height:1.5; }
+
+    /* Progress */
+    .sc-progress { background:#e5e7eb; border-radius:4px; height:3px; margin-bottom:2rem; }
+    .sc-progress-fill { height:100%; background:linear-gradient(90deg,var(--bosco),var(--oro)); border-radius:4px; transition:width .4s; }
+
+    /* Footer form */
+    .sc-form-foot { background:#f9fafb; border-top:1px solid #e5e7eb; padding:1.5rem; border-radius:0 0 10px 10px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .btn-invia { font-family:var(--fu); font-size:.72rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; padding:.85rem 2rem; background:linear-gradient(135deg,var(--bosco),#1a3a1b); color:#fff; border:none; border-radius:8px; cursor:pointer; transition:opacity .2s; }
+    .btn-invia:hover { opacity:.88; }
+
+    /* Successo */
+    .sc-success { display:none; background:linear-gradient(135deg,#f0fdf4,#f7fef4); border:1px solid #bbf7d0; border-radius:12px; padding:2.5rem; text-align:center; }
+    .sc-success h2 { font-family:var(--fd); font-size:1.8rem; font-weight:300; color:var(--bosco); }
+    .sc-success p { font-family:var(--fu); font-size:.85rem; color:#374151; line-height:1.75; max-width:440px; margin:.5rem auto .85rem; }
+  </style>
+</head>
+<body data-page="semiconvitto">
+<main id="main">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="w">
+      <nav class="breadcrumb" aria-label="Percorso">
+        <a href="index.html">Home</a><span>›</span>
+        <a href="servizi.html">Servizi</a><span>›</span>
+        <span aria-current="page">Semiconvitto</span>
+      </nav>
+      <div class="gold-bar"></div>
+      <h1>Il <em>Semiconvitto</em></h1>
+      <p class="sub">Da settembre 2026 — studio guidato, pranzo e attività pomeridiane per chi non alloggia. Tutto il valore del Convitto, su misura per la tua giornata.</p>
+    </div>
+  </div>
+
+  <!-- COSA È -->
+  <section style="background:var(--av)">
+    <div class="w">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;margin-bottom:2.5rem">
+        <div style="background:#fff;border-radius:10px;padding:1.5rem;border:1px solid var(--av3);text-align:center">
+          <span style="font-size:2rem;display:block;margin-bottom:.5rem">📚</span>
+          <p style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco);margin-bottom:.3rem">Studio Guidato</p>
+          <p style="font-size:.82rem;color:var(--txt2);line-height:1.6">15:30–17:15. Educatori professionisti supervisionano i compiti e il ripasso.</p>
+        </div>
+        <div style="background:#fff;border-radius:10px;padding:1.5rem;border:1px solid var(--av3);text-align:center">
+          <span style="font-size:2rem;display:block;margin-bottom:.5rem">🍽️</span>
+          <p style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco);margin-bottom:.3rem">Pranzo in mensa</p>
+          <p style="font-size:.82rem;color:var(--txt2);line-height:1.6">Menu vario, cucinato dal personale interno. Menù speciali su richiesta.</p>
+        </div>
+        <div style="background:#fff;border-radius:10px;padding:1.5rem;border:1px solid var(--av3);text-align:center">
+          <span style="font-size:2rem;display:block;margin-bottom:.5rem">🎵</span>
+          <p style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco);margin-bottom:.3rem">Attività pomeridiane</p>
+          <p style="font-size:.82rem;color:var(--txt2);line-height:1.6">Laboratorio Musicale, sport, attività culturali e ricreative.</p>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--bosco),#1a3a1b);border-radius:10px;padding:1.5rem;text-align:center">
+          <span style="font-size:2rem;display:block;margin-bottom:.5rem">🎁</span>
+          <p style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);margin-bottom:.3rem">Giornata di prova</p>
+          <p style="font-size:.82rem;color:rgba(245,240,232,.65);line-height:1.6">Già disponibile la giornata di prova gratuita. Compila il form qui sotto.</p>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div style="max-width:720px;margin:0 auto">
+
+        <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);margin-bottom:.75rem">Richiesta di iscrizione / giornata di prova — A.S. 2026/27</p>
+
+        <div class="sc-progress"><div class="sc-progress-fill" id="sc-prog" style="width:0%"></div></div>
+
+        <form id="sc-form" novalidate>
+
+          <!-- 1. Studente -->
+          <div class="sc-section">
+            <div class="sc-hdr"><h2>1 — Lo studente</h2><span>dati anagrafici</span></div>
+            <div class="sc-body">
+              <div class="sc-grid-2">
+                <div class="sc-field">
+                  <label class="sc-label">Cognome e nome <span class="req">*</span></label>
+                  <input type="text" name="studente_nome" required placeholder="es. Rossi Luca"/>
+                </div>
+                <div class="sc-field">
+                  <label class="sc-label">Data di nascita</label>
+                  <input type="date" name="studente_nascita"/>
+                </div>
+                <div class="sc-field">
+                  <label class="sc-label">Classe frequentata <span class="req">*</span></label>
+                  <select name="classe" required>
+                    <option value="">— seleziona —</option>
+                    <option>1ª — prima classe</option>
+                    <option>2ª</option><option>3ª</option><option>4ª</option><option>5ª</option>
+                  </select>
+                </div>
+                <div class="sc-field">
+                  <label class="sc-label">Indirizzo di studi</label>
+                  <select name="indirizzo">
+                    <option value="">— opzionale —</option>
+                    <option>Enogastronomia — Cucina</option>
+                    <option>Enogastronomia — Sala e Vendita</option>
+                    <option>Enogastronomia — Pasticceria</option>
+                    <option>Accoglienza Turistica</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Genitore -->
+          <div class="sc-section">
+            <div class="sc-hdr"><h2>2 — Genitore / tutore</h2><span>referente</span></div>
+            <div class="sc-body">
+              <div class="sc-grid-2">
+                <div class="sc-field">
+                  <label class="sc-label">Nome e cognome <span class="req">*</span></label>
+                  <input type="text" name="genitore_nome" required placeholder="es. Mario Rossi"/>
+                </div>
+                <div class="sc-field">
+                  <label class="sc-label">Cellulare <span class="req">*</span></label>
+                  <input type="tel" name="genitore_tel" required placeholder="es. 340 1234567"/>
+                </div>
+                <div class="sc-field" style="grid-column:1/-1">
+                  <label class="sc-label">Email <span class="req">*</span></label>
+                  <input type="email" name="genitore_email" required placeholder="email per la conferma"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Tipo richiesta -->
+          <div class="sc-section">
+            <div class="sc-hdr"><h2>3 — Tipo di richiesta</h2><span>cosa vuoi fare</span></div>
+            <div class="sc-body">
+              <p style="font-family:var(--fu);font-size:.72rem;color:var(--txt2);margin-bottom:1rem">Seleziona uno o più servizi:</p>
+              <div class="sc-services">
+                <label class="sc-service" onclick="this.classList.toggle('sel')">
+                  <input type="checkbox" name="srv_prova" value="1"/>
+                  <span class="sc-service-icon">🎁</span>
+                  <p class="sc-service-name">Giornata di prova gratuita</p>
+                  <p class="sc-service-desc">Un giorno al Semiconvitto per capire se fa per voi — senza impegno.</p>
+                </label>
+                <label class="sc-service" onclick="this.classList.toggle('sel')">
+                  <input type="checkbox" name="srv_studio" value="1"/>
+                  <span class="sc-service-icon">📚</span>
+                  <p class="sc-service-name">Solo studio guidato</p>
+                  <p class="sc-service-desc">15:30–17:15 con educatori professionisti.</p>
+                </label>
+                <label class="sc-service" onclick="this.classList.toggle('sel')">
+                  <input type="checkbox" name="srv_pranzo" value="1"/>
+                  <span class="sc-service-icon">🍽️</span>
+                  <p class="sc-service-name">Pranzo in mensa</p>
+                  <p class="sc-service-desc">Menu cucinato internamente, variato ogni giorno.</p>
+                </label>
+                <label class="sc-service" onclick="this.classList.toggle('sel')">
+                  <input type="checkbox" name="srv_full" value="1"/>
+                  <span class="sc-service-icon">⭐</span>
+                  <p class="sc-service-name">Pacchetto completo</p>
+                  <p class="sc-service-desc">Pranzo + studio guidato + attività pomeridiane.</p>
+                </label>
+              </div>
+              <div class="sc-field">
+                <label class="sc-label">Giorni della settimana preferiti</label>
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.3rem">
+                  <label style="display:flex;align-items:center;gap:.3rem;font-family:var(--fu);font-size:.75rem;color:var(--txt)"><input type="checkbox" name="giorno_lun" style="accent-color:var(--bosco)"/> Lun</label>
+                  <label style="display:flex;align-items:center;gap:.3rem;font-family:var(--fu);font-size:.75rem;color:var(--txt)"><input type="checkbox" name="giorno_mar" style="accent-color:var(--bosco)"/> Mar</label>
+                  <label style="display:flex;align-items:center;gap:.3rem;font-family:var(--fu);font-size:.75rem;color:var(--txt)"><input type="checkbox" name="giorno_mer" style="accent-color:var(--bosco)"/> Mer</label>
+                  <label style="display:flex;align-items:center;gap:.3rem;font-family:var(--fu);font-size:.75rem;color:var(--txt)"><input type="checkbox" name="giorno_gio" style="accent-color:var(--bosco)"/> Gio</label>
+                  <label style="display:flex;align-items:center;gap:.3rem;font-family:var(--fu);font-size:.75rem;color:var(--txt)"><input type="checkbox" name="giorno_ven" style="accent-color:var(--bosco)"/> Ven</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Note e consenso -->
+          <div class="sc-section">
+            <div class="sc-hdr"><h2>4 — Note e consenso</h2></div>
+            <div class="sc-body">
+              <div class="sc-field">
+                <label class="sc-label">Allergie, intolleranze o esigenze particolari</label>
+                <textarea name="note" placeholder="Indicare eventuali allergie alimentari, esigenze dietetiche o altre informazioni utili…" style="min-height:80px;resize:vertical"></textarea>
+              </div>
+              <label class="sc-check">
+                <input type="checkbox" name="privacy" required/>
+                <span class="sc-check-label">Ho letto l'<a href="privacy.html" target="_blank">informativa privacy</a> e acconsento al trattamento dei dati ai sensi del GDPR. <span style="color:#dc2626">*</span></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="sc-section">
+            <div class="sc-form-foot">
+              <div>
+                <p style="font-family:var(--fu);font-size:.65rem;font-weight:700;color:#374151;margin-bottom:.2rem">Inviato a:</p>
+                <p style="font-family:var(--fu);font-size:.72rem;color:var(--bosco);font-weight:800">Segreteria IPSSEOA "Costaggini" · rirh010007@istruzione.it</p>
+              </div>
+              <button type="submit" class="btn-invia">Invia richiesta →</button>
+            </div>
+          </div>
+
+        </form>
+
+        <!-- Successo -->
+        <div class="sc-success" id="sc-success">
+          <div style="font-size:3rem;margin-bottom:1rem">✅</div>
+          <h2>Richiesta <em style="font-style:italic;color:var(--oro)">ricevuta</em></h2>
+          <p>La tua richiesta per il Semiconvitto è stata inviata alla segreteria. Ti risponderemo all'email indicata entro 24 ore nei giorni lavorativi.</p>
+          <div style="margin-top:1.5rem;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+            <a href="servizi.html" class="btn-gold">← Torna ai Servizi</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+// Progress bar
+function updateProgress() {
+  const req = document.querySelectorAll('[required]');
+  let filled = 0;
+  req.forEach(el => {
+    if (el.type==='checkbox') { if(el.checked) filled++; }
+    else { if(el.value.trim()) filled++; }
+  });
+  document.getElementById('sc-prog').style.width = Math.round(filled/req.length*100)+'%';
+}
+document.getElementById('sc-form').addEventListener('input', updateProgress);
+document.getElementById('sc-form').addEventListener('change', updateProgress);
+
+// Submit
+document.getElementById('sc-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const req = this.querySelectorAll('[required]');
+  let ok = true;
+  req.forEach(el => {
+    if (el.type==='checkbox') { if(!el.checked){ ok=false; el.closest('label').style.color='#dc2626'; } }
+    else { if(!el.value.trim()){ ok=false; el.style.borderColor='#dc2626'; } }
+  });
+  if (!ok) { alert('Compila i campi obbligatori (*)'); return; }
+
+  const d = Object.fromEntries(new FormData(this));
+  const servizi = ['srv_prova','srv_studio','srv_pranzo','srv_full']
+    .filter(k=>d[k]).map(k=>({'srv_prova':'Giornata di prova','srv_studio':'Studio guidato','srv_pranzo':'Pranzo','srv_full':'Pacchetto completo'}[k])).join(', ') || '—';
+  const giorni = ['lun','mar','mer','gio','ven'].filter(g=>d[`giorno_${g}`]).map(g=>g[0].toUpperCase()+g.slice(1)).join(', ')||'—';
+
+  const body = encodeURIComponent(
+`RICHIESTA SEMICONVITTO — A.S. 2026/27
+======================================
+
+STUDENTE
+Nome: ${d.studente_nome||''}
+Classe: ${d.classe||''} — ${d.indirizzo||''}
+
+GENITORE / TUTORE
+Nome: ${d.genitore_nome||''}
+Tel: ${d.genitore_tel||''}
+Email: ${d.genitore_email||''}
+
+RICHIESTA
+Servizi: ${servizi}
+Giorni: ${giorni}
+
+NOTE / ALLERGIE
+${d.note||'—'}`
+  );
+
+  const sogg = encodeURIComponent(`Richiesta Semiconvitto A.S. 2026/27 — ${d.studente_nome||''}`);
+  window.location.href = `mailto:rirh010007@istruzione.it?cc=michele.gaggiano@alberghierorieti.it&subject=${sogg}&body=${body}`;
+
+  setTimeout(() => {
+    document.getElementById('sc-form').style.display = 'none';
+    document.getElementById('sc-success').style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }, 600);
+});
+</script>
+</body>
+</html>

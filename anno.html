@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="L'anno scolastico del Convitto Costaggini — dove siamo, cosa ci aspetta, cosa abbiamo già vissuto."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>L'Anno al Convitto | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Hero */
+    .an-hero { background:linear-gradient(135deg,var(--bosco),#1a3a1b); padding:3rem 1.25rem 2.5rem; text-align:center; }
+
+    /* Annulla completamente l'animazione rv su questa pagina */
+    .rv { opacity:1 !important; transform:none !important; transition:none !important; }
+    .an-hero h1 { font-family:var(--fd); font-size:clamp(2rem,6vw,3.5rem); font-weight:300; color:#fff; }
+    .an-hero h1 em { font-style:italic; color:var(--oro3); }
+
+    /* OGGI AL CONVITTO */
+    .an-oggi { background:#fff; border-bottom:1px solid var(--av3); padding:2rem 1.25rem; }
+    .an-oggi-inner { max-width:700px; margin:0 auto; display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+    .an-oggi-dot { width:14px; height:14px; border-radius:50%; background:#22c55e; box-shadow:0 0 0 4px rgba(34,197,94,.2); flex-shrink:0; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 4px rgba(34,197,94,.2)} 50%{box-shadow:0 0 0 8px rgba(34,197,94,.08)} }
+    .an-oggi-label { font-family:var(--fu); font-size:.55rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#22c55e; }
+    .an-oggi-text { font-family:var(--fd); font-size:1.05rem; color:var(--bosco); flex:1; line-height:1.5; }
+    .an-oggi-date { font-family:var(--fu); font-size:.62rem; color:var(--txt2); flex-shrink:0; }
+
+    /* TIMELINE ANNO */
+    .an-timeline { padding:1.5rem 1.25rem 2rem; background:var(--av); }
+    .an-tl-wrap { max-width:800px; margin:0 auto; }
+
+    /* Barra progresso anno */
+    .an-progress-bar { height:8px; background:var(--av3); border-radius:4px; margin:1rem 0 1rem; }
+    .an-progress-fill { height:100%; background:linear-gradient(90deg,var(--bosco),var(--oro)); border-radius:3px; transition:width 1s ease; }
+    .an-progress-pct { text-align:center; font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--oro); margin-top:.5rem; }
+
+    /* Tappe */
+    .an-steps { display:flex; flex-direction:column; gap:.6rem; }
+    .an-step {
+      display:flex; align-items:flex-start; gap:1rem;
+      padding:1rem 1.25rem; border-radius:8px;
+      border-left:3px solid transparent;
+      transition:all .2s;
+    }
+    .an-step.past   { background:rgba(44,62,45,.05); border-color:var(--bosco); }
+    .an-step.now    { background:linear-gradient(135deg,rgba(44,62,45,.08),rgba(184,146,42,.06)); border-color:var(--oro); box-shadow:0 4px 16px rgba(184,146,42,.1); }
+    .an-step.future { background:var(--av2); border-color:var(--av3); opacity:.6; }
+
+    .an-step-icon { font-size:1.6rem; flex-shrink:0; line-height:1; margin-top:.1rem; }
+    .an-step-date { font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.2rem; }
+    .an-step.past   .an-step-date { color:var(--bosco2); }
+    .an-step.now    .an-step-date { color:var(--oro); }
+    .an-step.future .an-step-date { color:var(--txt2); }
+    .an-step-title { font-family:var(--fu); font-size:.8rem; font-weight:700; color:var(--bosco); margin-bottom:.2rem; }
+    .an-step.future .an-step-title { color:var(--txt2); }
+    .an-step-desc { font-size:.82rem; color:var(--txt2); line-height:1.65; }
+    .an-step-badge { display:inline-flex; align-items:center; gap:.3rem; font-family:var(--fu); font-size:.55rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:.2rem .55rem; border-radius:10px; margin-top:.35rem; }
+    .an-step.past   .an-step-badge { background:rgba(44,62,45,.1); color:var(--bosco2); }
+    .an-step.now    .an-step-badge { background:rgba(184,146,42,.15); color:var(--oro); }
+    .an-step.future .an-step-badge { background:var(--av3); color:var(--txt2); }
+  </style>
+</head>
+<body data-page="anno">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="an-hero">
+    <div class="w">
+      <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">— A.S. 2025/2026</p>
+      <h1>L'anno<br><em>al Convitto</em></h1>
+      <p style="color:rgba(245,240,232,.6);max-width:480px;margin:.75rem auto 0;font-size:.9rem;line-height:1.8">Dove siamo nell'anno scolastico. Cosa abbiamo già vissuto. Cosa ci aspetta ancora.</p>
+    </div>
+  </section>
+
+  <!-- OGGI AL CONVITTO -->
+  <div class="an-oggi">
+    <div class="an-oggi-inner">
+      <div>
+        <div class="an-oggi-dot"></div>
+      </div>
+      <div>
+        <div class="an-oggi-label">Oggi al Convitto</div>
+        <div class="an-oggi-text" id="an-oggi-txt">Caricamento…</div>
+      </div>
+      <div class="an-oggi-date" id="an-oggi-date"></div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <section class="an-timeline">
+    <div class="an-tl-wrap">
+      <p class="lbl">Il percorso dell'anno</p>
+      <h2>Dove siamo<br><em>nell'anno scolastico</em></h2>
+
+      <!-- Barra progresso -->
+      <div class="an-progress-bar">
+        <div class="an-progress-fill" id="an-fill" style="width:88%"></div>
+      </div>
+      <p class="an-progress-pct" id="an-pct"></p>
+
+      <!-- Tappe -->
+      <div class="an-steps" id="an-steps"></div>
+
+      <!-- ADEMPIMENTI DEL PERIODO -->
+      <div id="an-adempimenti" style="margin-top:1.5rem"></div>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+// Tappe dell'anno scolastico
+const TAPPE = [
+  { data:'2025-09-15', icon:'🎒', titolo:'Inizio anno scolastico',      desc:'Rientro dei convittori, accoglienza dei nuovi iscritti, prime settimane di orientamento e conoscenza.',                  badge:'Completato' },
+  { data:'2025-10-01', icon:'🎵', titolo:'Iscrizioni Laboratorio Musicale', desc:'Apertura delle iscrizioni al Laboratorio Musicale per l\'a.s. 2025/2026. Tutti i convittori possono aderire.',          badge:'Completato' },
+  { data:'2025-11-10', icon:'📋', titolo:'Pagellino del 1° quadrimestre', desc:'Prima valutazione intermedia. Gli educatori monitorano l\'andamento con i docenti e contattano le famiglie se necessario.', badge:'Completato' },
+  { data:'2025-12-20', icon:'🎄', titolo:'Festa di Natale del Convitto',  desc:'Il tradizionale concerto natalizio del Laboratorio Musicale. Cena di fine anno, saluti, partenza per le vacanze.',        badge:'Completato' },
+  { data:'2026-01-07', icon:'📚', titolo:'Rientro e 2° quadrimestre',     desc:'Rientro dopo le vacanze natalizie. Inizio del secondo quadrimestre con intensificazione dei ritmi di studio.',             badge:'In corso' },
+  { data:'2026-02-15', icon:'📊', titolo:'Pagelle 1° quadrimestre',       desc:'Consegna ufficiale delle valutazioni del primo quadrimestre. Colloqui con le famiglie.',                                    badge:'Prossimo' },
+  { data:'2026-04-01', icon:'🌍', titolo:'Erasmus e PCTO',                desc:'Partenza dei gruppi per i percorsi Erasmus+ e inizio degli stage in azienda (PCTO) per le classi del triennio.',           badge:'Prossimo' },
+  { data:'2026-05-15', icon:'📝', titolo:'Pagellino del 2° quadrimestre', desc:'Seconda valutazione intermedia prima degli scrutini finali. Ultimi interventi di supporto agli studenti in difficoltà.',     badge:'Prossimo' },
+  { data:'2026-06-01', icon:'🎓', titolo:'Esami di maturità',             desc:'Inizio degli esami di Stato per le classi quinte. Il Convitto garantisce l\'assistenza agli studenti durante tutto il periodo.', badge:'Prossimo' },
+  { data:'2026-06-20', icon:'☀️', titolo:'Fine anno scolastico',          desc:'Saluti, cerimonia degli esami, chiusura del Convitto per l\'estate. Arrivederci a settembre.',                               badge:'Prossimo' },
+];
+
+// Messaggi giornalieri automatici
+function getOggi() {
+  const now = new Date();
+  const month = now.getMonth(); // 0-11
+  const day   = now.getDate();
+  const msgs = [
+    [8, [1,10],  "Inizio anno scolastico — i nuovi convittori stanno conoscendo la loro nuova casa."],
+    [8, [11,31], "Prime settimane al Convitto — si forma la comunità del nuovo anno."],
+    [9, [1,15],  "Ottobre: le iscrizioni al Laboratorio Musicale sono aperte."],
+    [9, [16,31], "Ottobre: studio guidato a pieno regime, le routine si consolidano."],
+    [10,[1,9],   "La settimana della valutazione intermedia — gli educatori incontrano i docenti."],
+    [10,[10,30], "Novembre: si studia con intensità in vista del primo pagellino."],
+    [11,[1,19],  "Dicembre: le ultime settimane prima delle vacanze natalizie."],
+    [11,[20,31], "🎄 Natale al Convitto — il concerto del Laboratorio Musicale è il momento più atteso dell'anno."],
+    [0, [1,6],   "Vacanze natalizie — il Convitto riapre il 7 gennaio."],
+    [0, [7,31],  "Rientro dalle vacanze — si riparte con il secondo quadrimestre."],
+    [1, [1,14],  "Febbraio: in attesa delle pagelle del primo quadrimestre."],
+    [1, [15,28], "Le pagelle del primo quadrimestre sono state consegnate — colloqui con le famiglie in corso."],
+    [2, [1,31],  "Marzo: ritmo sostenuto di studio, PCTO in preparazione."],
+    [3, [1,30],  "Aprile: alcuni convittori sono partiti per Erasmus+ o per i tirocini aziendali."],
+    [4, [1,14],  "Maggio: il pagellino del secondo quadrimestre si avvicina."],
+    [4, [15,31], "Seconda metà di maggio: ultimi interventi di recupero prima degli scrutini."],
+    [5, [1,19],  "Giugno: gli studenti del quinto anno affrontano gli esami di maturità. In bocca al lupo!"],
+    [5, [20,30], "☀️ Fine anno scolastico — arrivederci a settembre."],
+    [6, [1,31],  "Estate — il Convitto è chiuso. Ci rivediamo a settembre!"],
+    [7, [1,31],  "Estate — ci stiamo preparando per il nuovo anno. A presto!"],
+  ];
+  for (const [m, [d1,d2], msg] of msgs) {
+    if (month === m && day >= d1 && day <= d2) return msg;
+  }
+  return "Il Convitto è attivo e operativo. Benvenuto!";
+}
+
+// Calcola progresso anno: 15 settembre → 20 giugno
+function getProgress() {
+  const now   = new Date();
+  const m     = now.getMonth(); // 0=gen ... 11=dic
+  // Se siamo tra gennaio e agosto: l'anno scolastico è iniziato a settembre SCORSO
+  const startYear = m < 8 ? now.getFullYear()-1 : now.getFullYear();
+  const start = new Date(startYear,     8, 15); // 15 settembre
+  const end   = new Date(startYear + 1, 5, 20); // 20 giugno anno dopo
+  if (now < start) return 0;
+  if (now > end)   return 100;
+  return Math.round((now-start)/(end-start)*100);
+}
+
+function getStatus(dataStr) {
+  const d   = new Date(dataStr);
+  const now = new Date();
+  const diff = (d - now) / 86400000;
+  if (diff < -7)  return 'past';
+  if (diff < 14)  return 'now';
+  return 'future';
+}
+
+// Popola
+const oggi = document.getElementById('an-oggi-txt');
+const dataEl = document.getElementById('an-oggi-date');
+oggi.textContent = getOggi();
+dataEl.textContent = new Date().toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+const pct = getProgress();
+document.getElementById('an-fill').style.width = pct+'%';
+document.getElementById('an-pct').textContent  = pct + "% dell'anno scolastico completato";
+
+const stepsEl = document.getElementById('an-steps');
+TAPPE.forEach(t => {
+  const st = getStatus(t.data);
+  const d  = new Date(t.data).toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'});
+  const div = document.createElement('div');
+  div.className = `an-step ${st}`;
+  div.innerHTML = `
+    <div class="an-step-icon">${t.icon}</div>
+    <div>
+      <div class="an-step-date">${d}</div>
+      <div class="an-step-title">${t.titolo}</div>
+      <div class="an-step-desc">${t.desc}</div>
+      <span class="an-step-badge">${st==='past'?'✓ ':st==='now'?'▶ ':'◦ '}${t.badge}</span>
+    </div>
+  `;
+  stepsEl.appendChild(div);
+});
+
+// ── ADEMPIMENTI DEL PERIODO ──────────────────────────────
+const ADEMPIMENTI = [
+  { mese:4, voci:[
+    { data:'12 maggio',    icona:'📋', titolo:'Presidenti di commissione',      desc:'Pubblicati dagli USR gli elenchi dei Presidenti di commissione dell\'Esame di Stato.',                                                                                                         chi:'Maturandi' },
+    { data:'15 maggio',    icona:'📄', titolo:'Documento del 15 maggio',        desc:'Ogni Consiglio di Classe pubblica la sintesi ufficiale del percorso scolastico — la "carta d\'identità" della classe su cui la commissione baserà il colloquio orale.',                       chi:'Classi 5ª' },
+    { data:'Entro maggio', icona:'🎓', titolo:'Curriculum dello Studente',      desc:'Gli studenti aggiornano il Curriculum sul portale MIM: sarà al centro del colloquio orale.',                                                                                                   chi:'Maturandi' },
+    { data:'Fine maggio',  icona:'👥', titolo:'Commissari esterni',             desc:'Pubblicazione degli elenchi dei commissari esterni e dei Presidenti definitivamente nominati.',                                                                                                chi:'Maturandi' },
+    { data:'Fine maggio',  icona:'📊', titolo:'Pagellino 2° quadrimestre',      desc:'Valutazione intermedia finale. Gli educatori del Convitto monitorano l\'andamento e contattano le famiglie in caso di difficoltà.',                                                          chi:'Tutti' },
+  ]},
+  { mese:5, voci:[
+    { data:'6–10 giugno',  icona:'📝', titolo:'Fine lezioni',                   desc:'Termine delle lezioni nella Regione Lazio. Inizio del periodo degli scrutini finali.',                                                                                                        chi:'Tutti' },
+    { data:'8–12 giugno',  icona:'🔍', titolo:'Scrutini finali',                desc:'I Consigli di Classe si riuniscono per le valutazioni definitive, ammissioni alla classe successiva, sospensioni del giudizio. Per le 5ª: attribuzione del credito scolastico.',             chi:'Docenti ed educatori' },
+    { data:'16 giugno',    icona:'🏛️', titolo:'Riunione plenaria commissioni',  desc:'Ore 8:30 — in tutta Italia le commissioni si riuniscono per la seduta plenaria. Si definiscono calendari e ordine dei candidati.',                                                          chi:'Maturandi' },
+    { data:'18 giugno',    icona:'✍️', titolo:'1ª prova scritta — Italiano',    desc:'Prima prova dell\'Esame di Stato, ore 8:30. Tema di italiano — durata 6 ore.',                                                                                                               chi:'Maturandi' },
+    { data:'19 giugno',    icona:'📐', titolo:'2ª prova scritta',               desc:'Materia caratterizzante dell\'indirizzo. Per il Costaggini: discipline dell\'area professionale enogastronomica o alberghiera.',                                                             chi:'Maturandi' },
+    { data:'Da 22 giugno', icona:'🎤', titolo:'Colloqui orali',                 desc:'I colloqui iniziano nella settimana successiva alle scritte. Commissione mista, con il Curriculum dello Studente come punto di partenza.',                                                   chi:'Maturandi' },
+    { data:'Fine giugno',  icona:'🏠', titolo:'Fine anno convittuale',          desc:'Chiusura del Convitto. Gli educatori accompagnano i ragazzi fino all\'ultimo giorno. Arrivederci a settembre.',                                                                              chi:'Convittori' },
+  ]},
+  { mese:6, voci:[
+    { data:'1° luglio',    icona:'📝', titolo:'Maturità — sessione suppletiva', desc:'Prima prova suppletiva per chi non ha potuto sostenere le prove a giugno per motivi documentati.',                                                                                           chi:'Maturandi' },
+    { data:'6–8 luglio',   icona:'📚', titolo:'Recupero debiti formativi',      desc:'Prove di recupero per gli studenti con sospensione del giudizio.',                                                                                                                           chi:'Studenti sospesi' },
+    { data:'9–11 luglio',  icona:'🔍', titolo:'Scrutini integrativi',           desc:'Scrutini finali dopo le prove di recupero. Decisione definitiva sull\'ammissione alla classe successiva.',                                                                                   chi:'Docenti' },
+  ]},
+];
+
+const meseNomi = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+
+function renderAdempimenti() {
+  const now   = new Date();
+  const month = now.getMonth();
+  const el    = document.getElementById('an-adempimenti');
+  if (!el) return;
+
+  const relevant = ADEMPIMENTI.filter(a => a.mese >= month && a.mese <= month + 1);
+  if (!relevant.length) return;
+
+  let html = `<div style="border-top:1px solid rgba(44,62,45,.15);padding-top:2rem">
+    <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);margin-bottom:.5rem">Adempimenti del periodo</p>
+    <h3 style="font-family:var(--fd);font-size:1.4rem;font-weight:300;color:var(--bosco);margin-bottom:1.5rem">Scadenze di <em style="font-style:italic;color:var(--oro)">${meseNomi[month]}${month < 6 ? '–' + meseNomi[Math.min(month+1,11)] : ''} 2026</em></h3>`;
+
+  relevant.forEach(gruppo => {
+    const isCurrent = gruppo.mese === month;
+    html += `<div style="margin-bottom:1.25rem">
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:${isCurrent?'var(--bosco2)':'var(--txt2)'};margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem">
+        ${meseNomi[gruppo.mese]} ${isCurrent?'<span style="font-size:.55rem;padding:.15rem .45rem;background:rgba(184,146,42,.12);color:var(--oro);border-radius:10px">mese corrente</span>':''}
+      </p>`;
+    gruppo.voci.forEach(v => {
+      html += `<div style="display:flex;align-items:flex-start;gap:.85rem;padding:.85rem 1rem;border-radius:8px;margin-bottom:.4rem;background:${isCurrent?'rgba(44,62,45,.04)':'rgba(44,62,45,.02)'};border:1px solid ${isCurrent?'rgba(44,62,45,.1)':'rgba(44,62,45,.06)'}">
+        <span style="font-size:1.25rem;flex-shrink:0;line-height:1.3">${v.icona}</span>
+        <div style="flex:1">
+          <div style="display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.2rem">
+            <span style="font-family:var(--fu);font-size:.72rem;font-weight:700;color:var(--bosco)">${v.titolo}</span>
+            <span style="font-family:var(--fu);font-size:.6rem;color:var(--oro);font-weight:700">${v.data}</span>
+            <span style="font-family:var(--fu);font-size:.55rem;padding:.1rem .45rem;background:rgba(44,62,45,.08);color:var(--bosco2);border-radius:10px">${v.chi}</span>
+          </div>
+          <p style="font-size:.82rem;color:var(--txt2);line-height:1.65;margin:0">${v.desc}</p>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+
+  html += `<p style="font-family:var(--fu);font-size:.6rem;color:rgba(44,62,45,.3);margin-top:.5rem;line-height:1.6">
+    Fonte: O.M. n. 54 del 26/03/2026 — MIM · Le date degli scrutini finali variano per istituto.
+  </p></div>`;
+
+  el.innerHTML = html;
+}
+
+renderAdempimenti();
+</script>
+</body>
+</html>

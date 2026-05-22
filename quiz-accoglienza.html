@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Sei pronto per l'Accoglienza? | Convitto "Costaggini"</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background:#0a0f0a; }
+    .rp-wrap { max-width:640px; margin:0 auto; padding:2rem 1.25rem 5rem; }
+    .sc-card { background:#141e14; border:1px solid rgba(184,146,42,.15); border-radius:14px; padding:2rem; display:none; }
+    .sc-card.active { display:block; animation:fadeUp .35s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+
+    .sc-scene { background:rgba(255,255,255,.03); border-left:3px solid rgba(184,146,42,.3); border-radius:0 8px 8px 0; padding:1.1rem 1.25rem; margin-bottom:1.25rem; }
+    .sc-scene-label { font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--oro2); margin-bottom:.4rem; }
+    .sc-scene-text { font-family:var(--fd); font-size:1rem; font-style:italic; color:rgba(245,240,232,.75); line-height:1.65; }
+    .sc-ospite { background:rgba(44,62,45,.25); border-radius:8px; padding:1rem 1.25rem; margin-bottom:1.25rem; display:flex; gap:.75rem; align-items:flex-start; }
+    .sc-ospite-avatar { font-size:1.8rem; flex-shrink:0; }
+    .sc-ospite-text { font-family:var(--fd); font-size:.95rem; font-style:italic; color:#fff; line-height:1.65; }
+    .sc-q { font-family:var(--fu); font-size:.82rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:rgba(245,240,232,.5); margin-bottom:1rem; }
+    .sc-opts { display:flex; flex-direction:column; gap:.65rem; }
+    .sc-opt { background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.08); border-radius:10px; padding:1rem 1.25rem; cursor:pointer; text-align:left; transition:all .2s; }
+    .sc-opt:hover { border-color:var(--oro2); background:rgba(184,146,42,.08); }
+    .sc-opt-text { font-family:var(--fu); font-size:.85rem; color:rgba(245,240,232,.8); line-height:1.6; }
+
+    /* Reazione ospite */
+    .sc-reaction { border-radius:8px; padding:1rem 1.25rem; margin-top:1rem; display:none; animation:fadeUp .3s ease; }
+    .sc-reaction.good { background:rgba(74,222,128,.08); border:1px solid rgba(74,222,128,.2); }
+    .sc-reaction.bad { background:rgba(248,113,113,.08); border:1px solid rgba(248,113,113,.2); }
+    .sc-reaction.neutral { background:rgba(184,146,42,.08); border:1px solid rgba(184,146,42,.2); }
+    .sc-reaction-text { font-family:var(--fd); font-size:.95rem; font-style:italic; line-height:1.65; }
+    .sc-reaction.good .sc-reaction-text { color:#4ade80; }
+    .sc-reaction.bad .sc-reaction-text { color:#f87171; }
+    .sc-reaction.neutral .sc-reaction-text { color:var(--oro2); }
+
+    /* Finale */
+    .sc-final { text-align:center; background:#141e14; border:1px solid rgba(184,146,42,.2); border-radius:14px; padding:2.5rem 1.75rem; display:none; }
+    .sc-final.show { display:block; animation:fadeUp .4s ease; }
+    .sc-final-stars { font-size:2rem; letter-spacing:.4rem; margin-bottom:.75rem; }
+    .sc-final-score { font-family:var(--fd); font-size:3.5rem; font-weight:300; color:var(--oro3); }
+    .sc-final-msg { font-family:var(--fd); font-size:1.2rem; font-weight:300; color:#fff; line-height:1.65; max-width:440px; margin:1rem auto 1.5rem; }
+    .sc-final-msg em { font-style:italic; color:var(--oro3); }
+
+    .sc-progress { display:flex; gap:.4rem; margin-bottom:1.5rem; }
+    .sc-dot { flex:1; height:4px; border-radius:2px; background:rgba(255,255,255,.1); transition:background .3s; }
+    .sc-dot.done { background:#4ade80; }
+    .sc-dot.bad { background:#f87171; }
+    .sc-dot.active { background:var(--bosco2); }
+  </style>
+</head>
+<body data-page="quiz-accoglienza">
+<main id="main">
+  <div style="background:linear-gradient(160deg,#0a0f0a,#2e2a0d);padding:3.5rem 1.25rem 2.5rem;text-align:center">
+    <div class="w">
+      <nav class="breadcrumb" style="justify-content:center;margin-bottom:1.25rem">
+        <a href="scopri-talento.html" style="color:rgba(245,240,232,.35)">← Scopri il tuo Talento</a>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">Roleplay · Scenari reali</p>
+      <h1 style="font-family:var(--fd);font-size:clamp(1.8rem,6vw,3.2rem);font-weight:300;color:#fff;margin-bottom:.5rem">Sei pronto per <em style="font-style:italic;color:var(--oro3)">l'accoglienza</em>?</h1>
+      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:480px;margin:0 auto">Situazioni reali, scelte tue. Come ti comporti quando l'ospite mette alla prova la tua professionalità?</p>
+    </div>
+  </div>
+
+  <div class="rp-wrap">
+    <div id="sc-game">
+      <div class="sc-card active" id="sc-0">
+        <p style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:1rem">Sei al front office di un hotel a 4 stelle. Inizia il turno.</p>
+        <div class="sc-scene">
+          <p class="sc-scene-label">📍 Scenario 1 di 4 — Arrivo tardivo</p>
+          <p class="sc-scene-text">Sono le 23:15. Un ospite arriva con la valigia, visibilmente stanco. Si avvicina alla reception con un'espressione tesa.</p>
+        </div>
+        <div class="sc-ospite">
+          <span class="sc-ospite-avatar">🧳</span>
+          <p class="sc-ospite-text">"Buonasera. Ho la prenotazione a nome Ferretti. Ho avuto un ritardo terribile con il treno — spero che la mia camera sia ancora disponibile."</p>
+        </div>
+        <p class="sc-q">Tu cosa fai?</p>
+        <div class="sc-opts">
+          <div class="sc-opt" onclick="choose(0,0,'good','✓ Perfetto. L\'ospite si rilassa visibilmente. &quot;Finalmente qualcuno che capisce.&quot; — sorride per la prima volta.','Ottima risposta. Empatia prima di tutto, poi efficienza. Un professionista dell\'accoglienza sa che il primo gesto conta più di mille parole.')">
+            <div class="sc-opt-text">Sorrido, lo accolgo con calore, confermo subito la prenotazione e gli chiedo se ha bisogno di qualcosa prima di salire in camera.</div>
+          </div>
+          <div class="sc-opt" onclick="choose(0,0,'neutral','L\'ospite annuisce, un po\' deluso dal tono burocratico. Si aspettava un sorriso.','Efficiente ma freddo. Nell\'accoglienza l\'efficienza senza calore è solo burocrazia.')">
+            <div class="sc-opt-text">Chiedo il documento, verifico la prenotazione in silenzio e consegno la chiave.</div>
+          </div>
+          <div class="sc-opt" onclick="choose(0,0,'bad','L\'ospite alza un sopracciglio. &quot;Scusi?&quot; — la tensione sale.','Mai trasferire il problema all\'ospite. È arrivato tardi per un ritardo del treno — non è colpa sua.')">
+            <div class="sc-opt-text">Gli dico che il check-in ufficiale era alle 22:00 e che dovrò verificare se la camera è ancora libera.</div>
+          </div>
+        </div>
+        <div class="sc-reaction" id="react-0"></div>
+        <div style="text-align:center;margin-top:1.25rem;display:none" id="next-0">
+          <button onclick="nextScene(1)" class="btn-gold" style="font-size:.72rem">Prossimo scenario →</button>
+        </div>
+      </div>
+
+      <div class="sc-card" id="sc-1">
+        <div class="sc-progress" id="prog-1"></div>
+        <div class="sc-scene">
+          <p class="sc-scene-label">📍 Scenario 2 di 4 — La prenotazione sbagliata</p>
+          <p class="sc-scene-text">Il mattino dopo. Una coppia si presenta alla colazione. Guardano il tavolo assegnato, poi si avvicinano con aria scontenta.</p>
+        </div>
+        <div class="sc-ospite">
+          <span class="sc-ospite-avatar">👫</span>
+          <p class="sc-ospite-text">"Avevamo chiesto un tavolo vicino alla finestra con vista sul giardino. Questo è in fondo alla sala, vicino alla cucina. Non va bene."</p>
+        </div>
+        <p class="sc-q">Tu cosa fai?</p>
+        <div class="sc-opts">
+          <div class="sc-opt" onclick="choose(1,1,'good','La coppia sorride sorpresa dalla reazione rapida. Vanno al loro nuovo tavolo soddisfatti.','Eccellente. Non si discute, non si giustifica — si risolve. L\'ospite ricorda come hai risolto il problema, non il problema stesso.')">
+            <div class="sc-opt-text">Mi scuso sinceramente, verifico se c'è un tavolo migliore disponibile e li accompagno personalmente, offrendo un succo di benvenuto.</div>
+          </div>
+          <div class="sc-opt" onclick="choose(1,1,'bad','La coppia si irrigidisce. La colazione inizia male.','Giustificarsi non risolve il disagio — lo aumenta. L\'ospite non vuole spiegazioni, vuole una soluzione.')">
+            <div class="sc-opt-text">Spiego che la prenotazione era generica e che i tavoli vicino alla finestra erano già assegnati.</div>
+          </div>
+          <div class="sc-opt" onclick="choose(1,1,'neutral','I clienti seduti intorno alzano gli occhi. L\'atmosfera è tesa.','La telefonata in presenza degli ospiti è una piccola gaffe. Meglio gestire il problema direttamente.')">
+            <div class="sc-opt-text">Chiamo il responsabile di sala al telefono per chiedere come procedere.</div>
+          </div>
+        </div>
+        <div class="sc-reaction" id="react-1"></div>
+        <div style="text-align:center;margin-top:1.25rem;display:none" id="next-1">
+          <button onclick="nextScene(2)" class="btn-gold" style="font-size:.72rem">Prossimo scenario →</button>
+        </div>
+      </div>
+
+      <div class="sc-card" id="sc-2">
+        <div class="sc-progress" id="prog-2"></div>
+        <div class="sc-scene">
+          <p class="sc-scene-label">📍 Scenario 3 di 4 — L'ospite difficile</p>
+          <p class="sc-scene-text">Pomeriggio. Un ospite torna alla reception con la chiave in mano, visibilmente infastidito.</p>
+        </div>
+        <div class="sc-ospite">
+          <span class="sc-ospite-avatar">😤</span>
+          <p class="sc-ospite-text">"Il wi-fi in camera non funziona da due ore. Ho chiamato tre volte. Sto lavorando da remoto e questo è inaccettabile. Voglio un rimborso immediato."</p>
+        </div>
+        <p class="sc-q">Tu cosa fai?</p>
+        <div class="sc-opts">
+          <div class="sc-opt" onclick="choose(2,2,'good','L\'ospite si calma. La sua postura si rilassa. &quot;Ok, grazie. Apprezzo la velocità.&quot;','Perfetto. Ascolto, empatia, azione immediata e soluzione concreta. È così che si gestisce un ospite irritato.')">
+            <div class="sc-opt-text">Ascolto senza interrompere, mi scuso per il disagio, chiamo subito la manutenzione e nel frattempo offro l'uso della saletta business con connessione cablata.</div>
+          </div>
+          <div class="sc-opt" onclick="choose(2,2,'neutral','L\'ospite sospira ma accetta. Non è soddisfatto ma si accontenta.','Prendere nota va bene, ma l\'ospite ha bisogno di una soluzione ora — non dopo.')">
+            <div class="sc-opt-text">Prendo nota del problema, mi scuso e dico che trasmetterò la segnalazione al responsabile tecnico entro la giornata.</div>
+          </div>
+          <div class="sc-opt" onclick="choose(2,2,'bad','L\'ospite alza la voce. La situazione peggiora. Altri ospiti guardano.','Non si nega mai il problema e non si discute mai con un ospite arrabbiato. Mai.')">
+            <div class="sc-opt-text">Spiego che il wi-fi funziona regolarmente e che probabilmente è un problema del suo dispositivo.</div>
+          </div>
+        </div>
+        <div class="sc-reaction" id="react-2"></div>
+        <div style="text-align:center;margin-top:1.25rem;display:none" id="next-2">
+          <button onclick="nextScene(3)" class="btn-gold" style="font-size:.72rem">Ultimo scenario →</button>
+        </div>
+      </div>
+
+      <div class="sc-card" id="sc-3">
+        <div class="sc-progress" id="prog-3"></div>
+        <div class="sc-scene">
+          <p class="sc-scene-label">📍 Scenario 4 di 4 — Il momento speciale</p>
+          <p class="sc-scene-text">Sera. Un signore si avvicina alla reception con aria emozionata e sottovoce le confida qualcosa di inaspettato.</p>
+        </div>
+        <div class="sc-ospite">
+          <span class="sc-ospite-avatar">💍</span>
+          <p class="sc-ospite-text">"Stasera faccio la proposta di matrimonio alla mia compagna nella vostra sala ristorante. Potete aiutarmi a rendere il momento speciale? Lei non sa niente."</p>
+        </div>
+        <p class="sc-q">Tu cosa fai?</p>
+        <div class="sc-opts">
+          <div class="sc-opt" onclick="choose(3,3,'good','Il signore le stringe la mano con gli occhi lucidi. &quot;Grazie. Non me lo dimenticherò.&quot;','Questo è l\'hospitality al suo massimo. Non si esegue solo una richiesta — si partecipa a un momento di vita.')">
+            <div class="sc-opt-text">Sorrido, lo rassicuro, coordino subito con il ristorante per un tavolo speciale, candele, petali, e chiedo se vuole un brindisi in omaggio dell'hotel al momento del sì.</div>
+          </div>
+          <div class="sc-opt" onclick="choose(3,3,'neutral','Il signore annuisce, un po\' deluso dall\'entusiasmo tiepido. &quot;Ok, grazie.&quot;','L\'ospite sperava in un alleato — e tu hai risposto come un impiegato. È la differenza tra hospitality e servizio.')">
+            <div class="sc-opt-text">Dico che posso avvisare il maitre del ristorante, ma che le decorazioni extra sono a carico suo.</div>
+          </div>
+          <div class="sc-opt" onclick="choose(3,3,'bad','Il signore rimane perplesso. &quot;Ah... capisco.&quot; — si allontana deluso.','Non è una questione di competenza — è una questione di cuore. L\'accoglienza vera non conosce orari né mansioni.')">
+            <div class="sc-opt-text">Spiego gentilmente che queste cose non rientrano nelle mie mansioni alla reception e lo invito a parlare direttamente con il ristorante.</div>
+          </div>
+        </div>
+        <div class="sc-reaction" id="react-3"></div>
+        <div style="text-align:center;margin-top:1.25rem;display:none" id="next-3">
+          <button onclick="showFinal()" class="btn-gold" style="font-size:.72rem">Vedi il tuo risultato →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sc-final" id="sc-final">
+      <div class="sc-final-stars" id="sf-stars"></div>
+      <div class="sc-final-score" id="sf-score"></div>
+      <p style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">Il tuo punteggio</p>
+      <p class="sc-final-msg" id="sf-msg"></p>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+        <button onclick="location.reload()" style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.7rem 1.5rem;background:transparent;border:1.5px solid rgba(184,146,42,.3);color:var(--oro2);border-radius:8px;cursor:pointer">↺ Ricomincia</button>
+        <a href="ammissione.html" class="btn-gold">Scopri come iscriverti →</a>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+let results = []; // 'good','neutral','bad' per ogni scenario
+
+function choose(scene, step, type, guestReaction, teacherNote) {
+  // Disabilita le opzioni
+  document.querySelectorAll(`#sc-${scene} .sc-opt`).forEach(b => b.style.pointerEvents='none');
+  results[scene] = type;
+
+  // Mostra reazione
+  const react = document.getElementById(`react-${scene}`);
+  react.className = `sc-reaction ${type}`;
+  react.style.display = 'block';
+  react.innerHTML = `<p class="sc-reaction-text">"${guestReaction}"</p><p style="font-family:var(--fu);font-size:.72rem;color:rgba(245,240,232,.4);margin-top:.6rem;line-height:1.6">${teacherNote}</p>`;
+
+  // Mostra pulsante avanti
+  document.getElementById(`next-${scene}`).style.display = 'block';
+}
+
+function nextScene(n) {
+  document.getElementById(`sc-${n-1}`).classList.remove('active');
+  document.getElementById(`sc-${n}`).classList.add('active');
+  // Aggiorna progress
+  const dots = results.map((r,i) => `<div class="sc-dot ${r}"></div>`);
+  for(let i=results.length; i<4; i++) dots.push(`<div class="sc-dot${i===n?' active':''}"></div>`);
+  const prog = document.getElementById(`prog-${n}`);
+  if(prog) prog.innerHTML = dots.join('');
+}
+
+function showFinal() {
+  document.getElementById('sc-game').style.display = 'none';
+  const fin = document.getElementById('sc-final');
+  fin.classList.add('show');
+  const good = results.filter(r=>r==='good').length;
+  const msgs = [
+    { min:0,max:1, stars:'⭐', msg:'L\'accoglienza si impara — e si impara lavorando con le persone. <em>La tua sensibilità è già un punto di partenza straordinario.</em>' },
+    { min:2,max:2, stars:'⭐⭐⭐', msg:'Buon istinto. Hai gestito bene le situazioni più facili. <em>Con il percorso di Accoglienza al Costaggini, le situazioni difficili diventeranno le tue preferite.</em>' },
+    { min:3,max:3, stars:'⭐⭐⭐⭐', msg:'Ottimo! Hai la testa giusta per l\'accoglienza. <em>Al Costaggini troverai il terreno perfetto per questo talento.</em>' },
+    { min:4,max:4, stars:'⭐⭐⭐⭐⭐', msg:'Eccellente! Hai gestito ogni situazione con la mentalità del professionista. <em>Il Costaggini ti aspetta — sei già a metà del percorso.</em>' },
+  ];
+  const m = msgs.find(m=>good>=m.min&&good<=m.max);
+  document.getElementById('sf-stars').textContent = m.stars;
+  document.getElementById('sf-score').textContent = good+'/4';
+  document.getElementById('sf-msg').innerHTML = m.msg;
+}
+</script>
+</body>
+</html>

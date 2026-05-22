@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Organizzazione del Convitto Costaggini di Rieti — organigramma, personale e Patto Educativo di Corresponsabilità."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Organizzazione | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Hero */
+    .org-hero { background:linear-gradient(135deg,var(--bosco),#1a3a1b); padding:4rem 1.25rem 3rem; }
+    .org-hero h1 { font-family:var(--fd); font-size:clamp(1.8rem,5vw,3rem); font-weight:300; color:#fff; }
+    .org-hero h1 em { font-style:italic; color:var(--oro3); }
+
+    /* Organigramma */
+    .org-chart { display:flex; flex-direction:column; align-items:center; gap:0; margin:2rem 0; }
+    .org-level { display:flex; justify-content:center; flex-wrap:wrap; gap:1rem; width:100%; }
+    .org-connector { width:2px; height:2rem; background:rgba(184,146,42,.3); margin:0 auto; }
+    .org-connector-h { display:flex; justify-content:center; gap:0; margin:0 auto; }
+
+    .org-node {
+      background:#fff; border:1.5px solid var(--av3); border-radius:10px;
+      padding:1rem 1.25rem; text-align:center; min-width:180px; max-width:220px;
+      transition:box-shadow .2s, border-color .2s, transform .2s;
+      position:relative;
+    }
+    .org-node:hover { box-shadow:0 8px 24px rgba(0,0,0,.1); border-color:rgba(184,146,42,.4); transform:translateY(-2px); }
+    .org-node.top { border-color:var(--bosco); background:var(--bosco); }
+    .org-node.top .org-role, .org-node.top .org-name { color:#fff; }
+    .org-node.top .org-label { color:var(--oro2); }
+    .org-node.mid { border-color:rgba(184,146,42,.4); }
+    .org-icon { font-size:1.75rem; margin-bottom:.4rem; display:block; }
+    .org-label { font-family:var(--fu); font-size:.55rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--oro); display:block; margin-bottom:.2rem; }
+    .org-name { font-family:var(--fd); font-size:.95rem; font-weight:400; color:var(--bosco); line-height:1.2; }
+    .org-role { font-family:var(--fu); font-size:.62rem; color:var(--txt2); margin-top:.2rem; line-height:1.3; }
+
+    /* Elenco personale */
+    .pers-grid { display:grid; grid-template-columns:1fr; gap:1rem; margin-top:1.75rem; }
+    @media(min-width:560px){ .pers-grid { grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); } }
+    .pers-card { background:#fff; border:1px solid var(--av3); border-radius:10px; padding:1.1rem 1.25rem; display:flex; align-items:flex-start; gap:.85rem; transition:box-shadow .2s; }
+    .pers-card:hover { box-shadow:0 4px 16px rgba(0,0,0,.08); }
+    .pers-ico { font-size:1.6rem; flex-shrink:0; line-height:1; }
+    .pers-role { font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--oro); margin-bottom:.2rem; display:block; }
+    .pers-name { font-family:var(--fd); font-size:.95rem; color:var(--bosco); line-height:1.2; }
+    .pers-note { font-family:var(--fu); font-size:.68rem; color:var(--txt2); margin-top:.2rem; line-height:1.4; }
+
+    /* Patto */
+    .patto-section { background:var(--bosco); padding:5rem 1.25rem; }
+    .patto-intro { font-family:var(--fd); font-size:clamp(1.1rem,3vw,1.5rem); font-style:italic; color:rgba(245,240,232,.75); max-width:640px; margin:1rem 0 2.5rem; line-height:1.65; }
+    .patto-grid { display:grid; grid-template-columns:1fr; gap:1.25rem; }
+    @media(max-width:640px){ .patto-grid { grid-template-columns:1fr; } }
+    .patto-col { background:rgba(245,240,232,.04); border:1px solid rgba(184,146,42,.2); border-radius:10px; padding:1.5rem; }
+    .patto-col-title { font-family:var(--fu); font-size:.62rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--oro2); margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
+    .patto-item { display:flex; align-items:flex-start; gap:.65rem; padding:.6rem 0; border-bottom:1px solid rgba(245,240,232,.06); }
+    .patto-item:last-child { border-bottom:none; }
+    .patto-check { color:var(--oro2); font-size:.8rem; flex-shrink:0; margin-top:.1rem; }
+    .patto-item p { font-family:var(--fu); font-size:.8rem; color:rgba(245,240,232,.65); line-height:1.65; margin:0; }
+    .patto-firma { background:rgba(245,240,232,.03); border:1px solid rgba(184,146,42,.15); border-radius:10px; padding:2rem; margin-top:2rem; text-align:center; }
+    .patto-firma p { font-family:var(--fd); font-size:1.1rem; font-style:italic; color:rgba(245,240,232,.5); line-height:1.65; }
+    .firma-line { width:120px; height:1px; background:rgba(184,146,42,.25); margin:.85rem auto; }
+
+    @media(max-width:600px){
+      .org-node { min-width:140px; padding:.75rem 1rem; }
+      .org-level { gap:.6rem; }
+    }
+  @media(min-width:560px){.org-grid{grid-template-columns:1fr 1fr}}</style>
+</head>
+<body data-page="organizzazione">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="org-hero">
+    <div class="w">
+      <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:1.25rem">
+        <a href="index.html" style="color:rgba(245,240,232,.45)">Home</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <a href="trasparenza.html" style="color:rgba(245,240,232,.45)">Trasparenza</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <span aria-current="page" style="color:var(--oro2)">Organizzazione</span>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.6rem">— Come siamo organizzati</p>
+      <h1>L'organizzazione<br><em>del Convitto</em></h1>
+      <p style="color:rgba(245,240,232,.65);max-width:560px;margin:.75rem 0 0;font-size:.9rem;line-height:1.75">Chi fa cosa, chi risponde di cosa, chi si prende cura di chi. La struttura organizzativa del Convitto "Costaggini" resa leggibile.</p>
+    </div>
+  </section>
+
+  <!-- ORGANIGRAMMA -->
+  <section style="background:var(--av2);padding:4rem 1.25rem">
+    <div class="w">
+      <p class="lbl">La struttura</p>
+      <h2>Organigramma <em>del Convitto</em></h2>
+      <p style="color:var(--txt2);font-size:.88rem;max-width:560px;margin:.5rem 0 2rem;line-height:1.75">Come si articola il governo del Convitto. Ogni ruolo ha competenze precise e responsabilità chiare.</p>
+
+      <div class="org-chart rv">
+
+        <!-- Livello 1: Dirigente -->
+        <div class="org-level">
+          <div class="org-node top">
+            <span class="org-icon">🏛️</span>
+            <span class="org-label">Responsabilità legale</span>
+            <div class="org-name">Prof. Giovanni Luca Barbonetti</div>
+            <div class="org-role" style="color:rgba(245,240,232,.65)">Dirigente Scolastico<br><em style="color:var(--oro2)">In reggenza</em></div>
+          </div>
+        </div>
+
+        <div class="org-connector"></div>
+
+        <!-- Livello 2: Consiglio d'Istituto + Collaboratore DS -->
+        <div class="org-level">
+          <div class="org-node mid rv">
+            <span class="org-icon">📋</span>
+            <span class="org-label">Organo deliberante</span>
+            <div class="org-name">Consiglio d'Istituto</div>
+            <div class="org-role">Gestione amministrativa e finanziaria · Adotta il Regolamento</div>
+          </div>
+          <div class="org-node mid rv d1">
+            <span class="org-icon">👤</span>
+            <span class="org-label">Coordinamento operativo</span>
+            <div class="org-name">Collaboratore DS per il Convitto</div>
+            <div class="org-role">Coordinamento educatori · Rapporti con le famiglie · Gestione disciplinare</div>
+          </div>
+        </div>
+
+        <div class="org-connector"></div>
+
+        <!-- Livello 3: Collegio Educatori -->
+        <div class="org-level">
+          <div class="org-node rv" style="border-color:rgba(184,146,42,.35);max-width:280px">
+            <span class="org-icon">👥</span>
+            <span class="org-label">Programmazione educativa</span>
+            <div class="org-name">Collegio degli Educatori</div>
+            <div class="org-role">Pianifica le attività · Monitora i casi difficili · Propone interventi educativi</div>
+          </div>
+        </div>
+
+        <div class="org-connector"></div>
+
+        <!-- Livello 4: Educatori + Personale -->
+        <div class="org-level">
+          <div class="org-node rv" style="background:rgba(44,62,45,.04);border-color:rgba(44,62,45,.2)">
+            <span class="org-icon">🎓</span>
+            <span class="org-label">Personale educativo</span>
+            <div class="org-name">Educatori</div>
+            <div class="org-role">Studio · Tempo libero · Assistenza · Famiglia</div>
+          </div>
+          <div class="org-node rv d1" style="background:rgba(44,62,45,.04);border-color:rgba(44,62,45,.2)">
+            <span class="org-icon">🏥</span>
+            <span class="org-label">Assistenza sanitaria</span>
+            <div class="org-name">Infermiera</div>
+            <div class="org-role">Infermeria · Farmaci · Primo soccorso</div>
+          </div>
+          <div class="org-node rv d2" style="background:rgba(44,62,45,.04);border-color:rgba(44,62,45,.2)">
+            <span class="org-icon">🔑</span>
+            <span class="org-label">Sicurezza e custodia</span>
+            <div class="org-name">Custodi</div>
+            <div class="org-role">Accessi H24 · Cancello 22:30–6:00</div>
+          </div>
+          <div class="org-node rv d3" style="background:rgba(44,62,45,.04);border-color:rgba(44,62,45,.2)">
+            <span class="org-icon">🍽️</span>
+            <span class="org-label">Servizi generali</span>
+            <div class="org-name">Cuoco · Guardarobiere · Collaboratori</div>
+            <div class="org-role">Cucina · Lavanderia · Pulizie</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ELENCO PERSONALE -->
+  <section style="background:var(--av);padding:4rem 1.25rem">
+    <div class="w">
+      <p class="lbl">Il team</p>
+      <h2>Elenco del <em>personale</em></h2>
+      <p style="color:var(--txt2);font-size:.88rem;max-width:560px;margin:.5rem 0 0;line-height:1.75">Il personale del Convitto nell'anno scolastico 2025/2026. Le schede complete degli Educatori sono nella <a href="educatori.html" style="color:var(--bosco2);font-weight:700">pagina dedicata</a>.</p>
+
+      <div class="pers-grid">
+        <div class="pers-card rv">
+          <span class="pers-ico">🏛️</span>
+          <div>
+            <span class="pers-role">Dirigente Scolastico</span>
+            <div class="pers-name">Prof. Giovanni Luca Barbonetti</div>
+            <p class="pers-note">In reggenza · Responsabile legale del Convitto e dell'Istituto</p>
+          </div>
+        </div>
+        <div class="pers-card rv d1">
+          <span class="pers-ico">👤</span>
+          <div>
+            <span class="pers-role">Collaboratore DS per il Convitto</span>
+            <div class="pers-name">Da nominare a.s. 2025/26</div>
+            <p class="pers-note">Coordinamento educativo e operativo del Convitto</p>
+          </div>
+        </div>
+        <div class="pers-card rv d2">
+          <span class="pers-ico">🎸</span>
+          <div>
+            <span class="pers-role">Educatore · Lab. Musicale</span>
+            <div class="pers-name">Michele Gaggiano</div>
+            <p class="pers-note">Oltre 20 anni di servizio · Responsabile Laboratorio Musicale</p>
+          </div>
+        </div>
+        <div class="pers-card rv">
+          <span class="pers-ico">👩‍🏫</span>
+          <div>
+            <span class="pers-role">Educatrice</span>
+            <div class="pers-name">Referente piano femminile</div>
+            <p class="pers-note">Turno pomeridiano · Dati in aggiornamento</p>
+          </div>
+        </div>
+        <div class="pers-card rv d1">
+          <span class="pers-ico">🌙</span>
+          <div>
+            <span class="pers-role">Educatore</span>
+            <div class="pers-name">Turno notturno</div>
+            <p class="pers-note">Vigilanza e assistenza notturna · Dati in aggiornamento</p>
+          </div>
+        </div>
+        <div class="pers-card rv d2">
+          <span class="pers-ico">🏥</span>
+          <div>
+            <span class="pers-role">Infermiera</span>
+            <div class="pers-name">Personale sanitario</div>
+            <p class="pers-note">Infermeria diurna · Medico convenzionato SSN di riferimento</p>
+          </div>
+        </div>
+        <div class="pers-card rv">
+          <span class="pers-ico">🍳</span>
+          <div>
+            <span class="pers-role">Cuoco</span>
+            <div class="pers-name">Responsabile cucina</div>
+            <p class="pers-note">4 pasti al giorno · Menù concordato con specialista dell'alimentazione</p>
+          </div>
+        </div>
+        <div class="pers-card rv d1">
+          <span class="pers-ico">🧺</span>
+          <div>
+            <span class="pers-role">Guardarobiere</span>
+            <div class="pers-name">Servizio lavanderia</div>
+            <p class="pers-note">Lavaggio e stiratura del corredo personale dei convittori</p>
+          </div>
+        </div>
+        <div class="pers-card rv d2">
+          <span class="pers-ico">🔑</span>
+          <div>
+            <span class="pers-role">Custodi</span>
+            <div class="pers-name">Sorveglianza H24</div>
+            <p class="pers-note">Presidio accessi · Cancello 22:30–6:00 · Sicurezza perimetrale</p>
+          </div>
+        </div>
+        <div class="pers-card rv">
+          <span class="pers-ico">🧹</span>
+          <div>
+            <span class="pers-role">Collaboratori scolastici</span>
+            <div class="pers-name">Personale ATA</div>
+            <p class="pers-note">Pulizie · Sorveglianza piani · Supporto cucina e mensa</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:rgba(184,146,42,.06);border:1px solid rgba(184,146,42,.2);border-radius:8px;padding:1rem 1.25rem;margin-top:1.5rem;font-size:.8rem;color:var(--bosco2)">
+        ℹ️ L'elenco completo del personale è aggiornato annualmente. Per informazioni specifiche: <a href="contatti.html" style="color:var(--bosco);font-weight:700">contatti</a>.
+      </div>
+    </div>
+  </section>
+
+  <!-- PATTO DI CORRESPONSABILITÀ -->
+  <section class="patto-section" id="patto">
+    <div class="w">
+      <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">— Art. 5 bis DPR 249/1998</p>
+      <h2 style="font-family:var(--fd);font-size:clamp(1.8rem,5vw,3rem);font-weight:300;color:#fff;margin-bottom:.25rem">Il Patto Educativo<br><em style="font-style:italic;color:var(--oro3)">di Corresponsabilità</em></h2>
+      <p class="patto-intro">Non è una firma da mettere su un foglio. È il momento in cui una famiglia e una scuola si guardano negli occhi e dicono: <strong style="font-style:normal;color:#fff">"Ci fidiamo l'uno dell'altro. Lavoriamo insieme."</strong></p>
+
+      <div class="patto-grid rv">
+
+        <!-- La Scuola si impegna -->
+        <div class="patto-col">
+          <div class="patto-col-title">🏛️ La Scuola si impegna a…</div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Offrire un ambiente sicuro, ordinato e stimolante per la crescita di ogni studente</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Rispettare la persona e la dignità di ogni studente, senza discriminazioni</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Comunicare in modo trasparente e tempestivo con le famiglie su ogni aspetto rilevante</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Garantire una valutazione equa, motivata e coerente con i criteri dichiarati</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Sostenere ogni studente nelle difficoltà, con interventi personalizzati e tempestivi</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Coinvolgere le famiglie nelle decisioni che riguardano il percorso formativo dei figli</p></div>
+        </div>
+
+        <!-- La Famiglia si impegna -->
+        <div class="patto-col">
+          <div class="patto-col-title">👨‍👩‍👧 La Famiglia si impegna a…</div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Sostenere l'impegno scolastico del figlio e valorizzare il lavoro dei docenti e degli educatori</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Rispettare le regole dell'istituto e del Convitto, e aiutare il figlio a farlo</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Comunicare tempestivamente assenze, problemi di salute e qualsiasi situazione rilevante</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Collaborare con docenti ed educatori nella gestione di eventuali difficoltà</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Partecipare agli incontri e alle assemblee previsti dalla scuola</p></div>
+          <div class="patto-item"><span class="patto-check">✦</span><p>Non sminuire l'autorità degli educatori davanti al figlio — anche quando si è in disaccordo</p></div>
+        </div>
+
+      </div>
+
+      <!-- Lo Studente si impegna -->
+      <div class="patto-col rv" style="margin-top:1.25rem;border-color:rgba(184,146,42,.3)">
+        <div class="patto-col-title">🎓 Lo Studente si impegna a…</div>
+        <div style="display:grid;grid-template-columns:1fr;gap:0">
+          <div>
+            <div class="patto-item"><span class="patto-check">✦</span><p>Frequentare con regolarità e rispettare gli orari</p></div>
+            <div class="patto-item"><span class="patto-check">✦</span><p>Rispettare compagni, docenti, educatori e personale</p></div>
+            <div class="patto-item"><span class="patto-check">✦</span><p>Prendersi cura degli spazi comuni come fossero propri</p></div>
+          </div>
+          <div>
+            <div class="patto-item"><span class="patto-check">✦</span><p>Impegnarsi nello studio con serietà e costanza</p></div>
+            <div class="patto-item"><span class="patto-check">✦</span><p>Partecipare alla vita della comunità con spirito collaborativo</p></div>
+            <div class="patto-item"><span class="patto-check">✦</span><p>Accettare le conseguenze dei propri comportamenti</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="patto-firma rv">
+        <p>"Un patto non si firma e si dimentica.<br>Si rinnova ogni giorno — con i gesti, le parole, la presenza."</p>
+        <div class="firma-line"></div>
+        <div style="display:flex;justify-content:center;gap:3rem;flex-wrap:wrap">
+          <div style="text-align:center">
+            <div class="firma-line" style="margin-bottom:.5rem"></div>
+            <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.3)">Il Dirigente Scolastico</p>
+          </div>
+          <div style="text-align:center">
+            <div class="firma-line" style="margin-bottom:.5rem"></div>
+            <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.3)">I Genitori</p>
+          </div>
+          <div style="text-align:center">
+            <div class="firma-line" style="margin-bottom:.5rem"></div>
+            <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.3)">Lo Studente</p>
+          </div>
+        </div>
+        <p style="font-family:var(--fu);font-size:.6rem;color:rgba(245,240,232,.2);margin-top:1.5rem;letter-spacing:.08em">Ai sensi dell'art. 5 bis del DPR 249/1998 (Statuto delle Studentesse e degli Studenti) e del DPR 235/2007</p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+</body>
+</html>

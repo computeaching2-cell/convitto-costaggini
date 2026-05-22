@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Il Vinile del Convitto — vent'anni di musica al Laboratorio Musicale del Costaggini. Ascolta le esibizioni dei ragazzi."/>
+  <meta name="theme-color" content="#0a0f0a"/>
+  <title>Il Vinile del Convitto | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background:#0a0f0a; }
+
+    /* HERO */
+    .vn-hero { background:linear-gradient(180deg,#000,#0a0f0a); padding:4rem 1.25rem 3rem; text-align:center; }
+    .vn-hero h1 { font-family:var(--fd); font-size:clamp(2rem,7vw,4.5rem); font-weight:300; color:#fff; }
+    .vn-hero h1 em { font-style:italic; color:var(--oro3); }
+    .vn-hero p { color:rgba(245,240,232,.5); max-width:500px; margin:.75rem auto 0; font-size:.9rem; line-height:1.8; }
+
+    /* GIRADISCHI */
+    .vn-player-wrap { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:3rem; padding:3rem 1.25rem; max-width:900px; margin:0 auto; }
+
+    /* Disco SVG animato */
+    .vn-disc-container { position:relative; width:260px; height:260px; flex-shrink:0; }
+    .vn-disc {
+      width:260px; height:260px; border-radius:50%;
+      background:conic-gradient(
+        #1a1a1a 0deg, #222 10deg, #1a1a1a 20deg, #222 30deg,
+        #1a1a1a 40deg, #222 50deg, #1a1a1a 60deg, #222 70deg,
+        #1a1a1a 80deg, #222 90deg, #1a1a1a 100deg, #222 110deg,
+        #1a1a1a 120deg, #222 130deg, #1a1a1a 140deg, #222 150deg,
+        #1a1a1a 160deg, #222 170deg, #1a1a1a 180deg, #222 190deg,
+        #1a1a1a 200deg, #222 210deg, #1a1a1a 220deg, #222 230deg,
+        #1a1a1a 240deg, #222 250deg, #1a1a1a 260deg, #222 270deg,
+        #1a1a1a 280deg, #222 290deg, #1a1a1a 300deg, #222 310deg,
+        #1a1a1a 320deg, #222 330deg, #1a1a1a 340deg, #222 350deg
+      );
+      box-shadow:0 0 40px rgba(0,0,0,.8), inset 0 0 20px rgba(0,0,0,.5);
+      animation:spinDisc 4s linear infinite;
+      animation-play-state:paused;
+      position:relative;
+    }
+    .vn-disc.playing { animation-play-state:running; }
+    @keyframes spinDisc { to { transform:rotate(360deg); } }
+
+    /* Riflesso sul disco */
+    .vn-disc::after {
+      content:''; position:absolute; inset:0; border-radius:50%;
+      background:radial-gradient(ellipse 60% 30% at 35% 30%, rgba(255,255,255,.06), transparent 60%);
+      pointer-events:none;
+    }
+
+    /* Etichetta centrale */
+    .vn-label {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:80px; height:80px; border-radius:50%;
+      background:radial-gradient(circle,var(--bosco) 0%,#1a3a1b 100%);
+      border:2px solid rgba(184,146,42,.4);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      pointer-events:none; z-index:2;
+    }
+    .vn-label span { font-family:var(--fd); font-size:.6rem; color:var(--oro2); text-align:center; line-height:1.3; }
+    .vn-label strong { font-size:.7rem; font-style:italic; }
+
+    /* Foro centrale */
+    .vn-hole {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:10px; height:10px; border-radius:50%; background:#0a0f0a; z-index:3;
+    }
+
+    /* Braccio pickup */
+    .vn-arm {
+      position:absolute; top:10px; right:10px; width:80px; height:130px;
+      transform-origin:top right;
+      transition:transform .8s cubic-bezier(.4,0,.2,1);
+      transform:rotate(-25deg);
+      z-index:4;
+    }
+    .vn-arm.on-disc { transform:rotate(-8deg); }
+    .vn-arm-line { width:3px; height:100%; background:linear-gradient(180deg,#888,#555); border-radius:2px; margin-left:auto; }
+    .vn-arm-head { width:14px; height:8px; background:#B8922A; border-radius:2px; margin-top:2px; margin-left:auto; }
+
+    /* Controlli */
+    .vn-controls { flex:1; min-width:260px; }
+    .vn-now-playing { margin-bottom:1.5rem; }
+    .vn-np-label { font-family:var(--fu); font-size:.55rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:rgba(245,240,232,.3); margin-bottom:.4rem; }
+    .vn-np-title { font-family:var(--fd); font-size:1.5rem; color:#fff; margin-bottom:.2rem; }
+    .vn-np-meta  { font-family:var(--fu); font-size:.68rem; color:var(--oro2); }
+
+    /* Progress bar */
+    .vn-progress { height:3px; background:rgba(255,255,255,.1); border-radius:2px; margin:1.25rem 0 .5rem; cursor:pointer; }
+    .vn-progress-fill { height:100%; background:linear-gradient(90deg,var(--bosco),var(--oro)); border-radius:2px; width:0%; transition:width .5s linear; }
+    .vn-time { display:flex; justify-content:space-between; font-family:var(--fu); font-size:.6rem; color:rgba(255,255,255,.3); margin-bottom:1.25rem; }
+
+    /* Bottoni play/prev/next */
+    .vn-btn-row { display:flex; align-items:center; gap:.85rem; margin-bottom:1.5rem; }
+    .vn-btn { background:none; border:1.5px solid rgba(255,255,255,.12); color:rgba(255,255,255,.5); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+    .vn-btn:hover { border-color:var(--oro2); color:var(--oro2); }
+    .vn-btn.play { width:56px; height:56px; background:linear-gradient(135deg,var(--bosco),#1a3a1b); border-color:var(--oro2); color:var(--oro2); font-size:1.3rem; }
+
+    /* Playlist */
+    .vn-playlist { border-top:1px solid rgba(255,255,255,.06); padding-top:1.25rem; }
+    .vn-pl-label { font-family:var(--fu); font-size:.55rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:rgba(245,240,232,.25); margin-bottom:.75rem; }
+    .vn-pl-item {
+      display:flex; align-items:center; gap:.85rem;
+      padding:.7rem .75rem; border-radius:6px; cursor:pointer;
+      transition:background .2s; margin-bottom:.2rem;
+    }
+    .vn-pl-item:hover { background:rgba(255,255,255,.04); }
+    .vn-pl-item.active { background:rgba(44,62,45,.4); }
+    .vn-pl-num { font-family:var(--fd); font-size:.85rem; font-style:italic; color:rgba(255,255,255,.2); width:20px; text-align:right; flex-shrink:0; }
+    .vn-pl-item.active .vn-pl-num { color:var(--oro2); }
+    .vn-pl-info { flex:1; }
+    .vn-pl-title { font-family:var(--fu); font-size:.75rem; font-weight:700; color:rgba(255,255,255,.7); }
+    .vn-pl-item.active .vn-pl-title { color:#fff; }
+    .vn-pl-sub { font-family:var(--fu); font-size:.6rem; color:rgba(255,255,255,.3); margin-top:.1rem; }
+    .vn-pl-dur { font-family:var(--fu); font-size:.6rem; color:rgba(255,255,255,.25); flex-shrink:0; }
+
+    /* Nota su file demo */
+    .vn-demo-note { background:rgba(184,146,42,.06); border:1px solid rgba(184,146,42,.15); border-radius:8px; padding:.85rem 1.1rem; margin-top:1.5rem; font-family:var(--fu); font-size:.65rem; color:rgba(245,240,232,.4); line-height:1.6; text-align:center; }
+
+    /* STORIA */
+    .vn-storia { padding:4rem 1.25rem; }
+    .vn-storia-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-top:2rem; }
+    .vn-anno-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:8px; padding:1.1rem; }
+    .vn-anno { font-family:var(--fd); font-size:1.4rem; font-style:italic; color:var(--oro2); margin-bottom:.3rem; }
+    .vn-anno-desc { font-family:var(--fu); font-size:.7rem; color:rgba(245,240,232,.45); line-height:1.6; }
+  </style>
+</head>
+<body data-page="vinile">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="vn-hero">
+    <div class="w">
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">— Laboratorio Musicale · Dal 2003</p>
+      <h1>Il Vinile<br>del <em>Convitto</em></h1>
+      <p>Vent'anni di musica. Decine di ragazzi che non sapevano suonare e hanno imparato. Qualche concerto memorabile. Tutto qui — da ascoltare.</p>
+    </div>
+  </section>
+
+  <!-- PLAYER -->
+  <section style="background:#0d120d;padding:3rem 1.25rem;border-top:1px solid rgba(184,146,42,.1);border-bottom:1px solid rgba(184,146,42,.1)">
+    <div class="vn-player-wrap">
+
+      <!-- Disco animato -->
+      <div class="vn-disc-container">
+        <div class="vn-disc" id="vn-disc"></div>
+        <div class="vn-label">
+          <span><strong>Convitto</strong><br>Costaggini<br>Rieti</span>
+        </div>
+        <div class="vn-hole"></div>
+        <div class="vn-arm" id="vn-arm">
+          <div class="vn-arm-line"></div>
+          <div class="vn-arm-head"></div>
+        </div>
+      </div>
+
+      <!-- Controlli -->
+      <div class="vn-controls">
+        <div class="vn-now-playing">
+          <p class="vn-np-label">In ascolto</p>
+          <div class="vn-np-title" id="vn-title">—</div>
+          <div class="vn-np-meta" id="vn-meta">Seleziona un brano</div>
+        </div>
+
+        <div class="vn-progress" onclick="seekTo(event)">
+          <div class="vn-progress-fill" id="vn-fill"></div>
+        </div>
+        <div class="vn-time">
+          <span id="vn-cur">0:00</span>
+          <span id="vn-tot">0:00</span>
+        </div>
+
+        <div class="vn-btn-row">
+          <button class="vn-btn" onclick="prevTrack()" title="Precedente">⏮</button>
+          <button class="vn-btn play" id="vn-play-btn" onclick="togglePlay()" title="Play/Pausa">▶</button>
+          <button class="vn-btn" onclick="nextTrack()" title="Successivo">⏭</button>
+        </div>
+
+        <!-- Playlist -->
+        <div class="vn-playlist">
+          <p class="vn-pl-label">Brani disponibili</p>
+          <div id="vn-playlist-items"></div>
+        </div>
+
+        <div class="vn-demo-note">
+          ℹ️ I brani del Laboratorio Musicale verranno caricati dal Responsabile Tecnico.<br>
+          Per aggiungere registrazioni: <a href="contatti.html" style="color:var(--oro2)">contatta il Convitto</a>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORIA DEL LABORATORIO -->
+  <section class="vn-storia">
+    <div class="w">
+      <p class="lbl" style="color:var(--oro2)">Una storia lunga vent'anni</p>
+      <h2 style="font-family:var(--fd);font-size:clamp(1.5rem,4vw,2.2rem);font-weight:300;color:#fff">Come è nato e cresciuto<br><em style="font-style:italic;color:var(--oro3)">il Laboratorio Musicale</em></h2>
+      <p style="color:rgba(245,240,232,.5);max-width:560px;margin:.75rem 0 0;font-size:.88rem;line-height:1.8">Tutto cominciò con una chitarra, un educatore e un gruppetto di ragazzi curiosi. Da allora il Laboratorio non si è mai fermato.</p>
+
+      <div class="vn-storia-grid rv">
+        <div class="vn-anno-card">
+          <div class="vn-anno">2003</div>
+          <p class="vn-anno-desc">Fondazione del Laboratorio Musicale insieme a Dino Barba. Primi corsi di chitarra classica.</p>
+        </div>
+        <div class="vn-anno-card rv d1">
+          <div class="vn-anno">2005–10</div>
+          <p class="vn-anno-desc">Espansione al canto corale e alla polifonia. Primi concerti nella sala convegni dell'Istituto.</p>
+        </div>
+        <div class="vn-anno-card rv d2">
+          <div class="vn-anno">2010–15</div>
+          <p class="vn-anno-desc">Apertura alla chitarra pop e al repertorio contemporaneo. Partecipazione a manifestazioni pubbliche a Rieti.</p>
+        </div>
+        <div class="vn-anno-card rv">
+          <div class="vn-anno">2015–20</div>
+          <p class="vn-anno-desc">Consolidamento come attività extracurriculare di punta. Decine di ragazzi formati ogni anno scolastico.</p>
+        </div>
+        <div class="vn-anno-card rv d1">
+          <div class="vn-anno">2020–25</div>
+          <p class="vn-anno-desc">Continuità anche negli anni più difficili. Il Laboratorio non ha mai smesso — neanche durante la pandemia.</p>
+        </div>
+        <div class="vn-anno-card rv d2">
+          <div class="vn-anno">Oggi</div>
+          <p class="vn-anno-desc">Aperto a tutti i convittori, qualunque sia il loro livello. Iscriversi è semplice — e ne vale sempre la pena.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem;text-align:center">
+        <a href="laboratorio-musicale.html" class="btn-gold">Scopri il Laboratorio Musicale →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+// Playlist — i file audio vengono aggiunti dal Responsabile Tecnico
+// Formato: { title, artist, year, duration, src }
+// src: percorso relativo al file audio (es. "audio/concerto-2023.mp3")
+const PLAYLIST = [
+  { title:"La Solidarietà", artist:"Laboratorio Musicale · Autoprodotto · Marzo 2019", year:2019, duration:"3:53", src:"video/la-solidarieta-2019.mp4", pagina:"solidarieta.html" },
+  { title:"Studio Minuet — Bach",       artist:"Laboratorio Chitarra · A.S. 2022/23", year:2023, duration:"2:34", src:null },
+  { title:"Lagrima — Tárrega",          artist:"Ensemble Chitarre · A.S. 2021/22",    year:2022, duration:"3:12", src:null },
+  { title:"Canzone d\'autunno",         artist:"Coro del Convitto · Natale 2023",      year:2023, duration:"4:05", src:null },
+  { title:"Romanza spagnola",           artist:"Laboratorio Chitarra · A.S. 2020/21", year:2021, duration:"2:58", src:null },
+  { title:"Concerto di Natale 2024",    artist:"Ensemble completo · Dicembre 2024",   year:2024, duration:"18:22", src:null },
+];
+
+let current = -1;
+let audio = null;
+let playing = false;
+
+function fmt(s) {
+  const m = Math.floor(s/60), ss = Math.floor(s%60);
+  return m + ':' + (ss<10?'0':'')+ss;
+}
+
+function buildPlaylist() {
+  const el = document.getElementById('vn-playlist-items');
+  el.innerHTML = PLAYLIST.map((t,i) => `
+    <div class="vn-pl-item" id="pl-${i}" onclick="selectTrack(${i})">
+      <span class="vn-pl-num">${i+1}</span>
+      <div class="vn-pl-info">
+        <div class="vn-pl-title">${t.title}</div>
+        <div class="vn-pl-sub">${t.artist}</div>
+      </div>
+      <span class="vn-pl-dur">${t.duration}</span>
+    </div>
+  `).join('');
+}
+
+function selectTrack(i) {
+  document.querySelectorAll('.vn-pl-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById(`pl-${i}`).classList.add('active');
+  current = i;
+  const t = PLAYLIST[i];
+  // Se il brano ha una pagina dedicata, mostra il link
+  const existing = document.getElementById('vn-dedicato');
+  if (existing) existing.remove();
+  if (t.pagina) {
+    const link = document.createElement('a');
+    link.id = 'vn-dedicato';
+    link.href = t.pagina;
+    link.style.cssText = 'display:inline-flex;align-items:center;gap:.4rem;margin-top:.5rem;font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);text-decoration:none;border-bottom:1px solid rgba(184,146,42,.3)';
+    link.textContent = '✦ Guarda il video e leggi la storia →';
+    document.querySelector('.vn-now-playing').appendChild(link);
+  }
+  document.getElementById('vn-title').textContent = t.title;
+  document.getElementById('vn-meta').textContent  = t.artist;
+  document.getElementById('vn-tot').textContent   = t.duration;
+  document.getElementById('vn-fill').style.width  = '0%';
+  document.getElementById('vn-cur').textContent   = '0:00';
+
+  if (t.src) {
+    if (audio) { audio.pause(); audio = null; }
+    audio = new Audio(t.src);
+    audio.ontimeupdate = () => {
+      const pct = audio.duration ? (audio.currentTime/audio.duration*100) : 0;
+      document.getElementById('vn-fill').style.width = pct+'%';
+      document.getElementById('vn-cur').textContent = fmt(audio.currentTime);
+    };
+    audio.onended = () => nextTrack();
+    audio.play();
+    setPlaying(true);
+  } else {
+    // Demo: simula avanzamento
+    if (audio) { audio.pause(); audio = null; }
+    setPlaying(true);
+    simulatePlay();
+  }
+}
+
+let simInterval = null;
+function simulatePlay() {
+  clearInterval(simInterval);
+  let s = 0;
+  const parts = PLAYLIST[current].duration.split(':');
+  const total = parseInt(parts[0])*60 + parseInt(parts[1]);
+  simInterval = setInterval(() => {
+    if (!playing) { clearInterval(simInterval); return; }
+    s++;
+    const pct = s/total*100;
+    document.getElementById('vn-fill').style.width = Math.min(pct,100)+'%';
+    document.getElementById('vn-cur').textContent = fmt(s);
+    if (s >= total) { clearInterval(simInterval); nextTrack(); }
+  }, 1000);
+}
+
+function setPlaying(val) {
+  playing = val;
+  document.getElementById('vn-disc').classList.toggle('playing', val);
+  document.getElementById('vn-arm').classList.toggle('on-disc', val);
+  document.getElementById('vn-play-btn').textContent = val ? '⏸' : '▶';
+}
+
+function togglePlay() {
+  if (current < 0) { selectTrack(0); return; }
+  if (audio) { playing ? audio.pause() : audio.play(); }
+  else { if (!playing) simulatePlay(); else clearInterval(simInterval); }
+  setPlaying(!playing);
+}
+
+function nextTrack() { selectTrack((current+1) % PLAYLIST.length); }
+function prevTrack() { selectTrack((current-1+PLAYLIST.length) % PLAYLIST.length); }
+
+function seekTo(e) {
+  const bar = e.currentTarget;
+  const pct = e.offsetX / bar.offsetWidth;
+  if (audio && audio.duration) { audio.currentTime = pct * audio.duration; }
+  document.getElementById('vn-fill').style.width = (pct*100)+'%';
+}
+
+buildPlaylist();
+selectTrack(0);
+// Autoplay — i browser richiedono un'interazione utente, quindi proviamo
+// silenziosamente e accettiamo se bloccato
+setTimeout(() => {
+  if (audio) {
+    audio.play().catch(() => {
+      // Browser ha bloccato l'autoplay — nessun problema, l'utente può cliccare play
+    });
+  }
+}, 500);
+</script>
+</body>
+</html>

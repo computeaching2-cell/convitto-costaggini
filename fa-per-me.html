@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Il Convitto fa per te? Un quiz rapido per capire se la vita convittuale è la scelta giusta."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Il Convitto fa per me? | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .quiz-hero { background:linear-gradient(135deg,#0a0f0a,var(--bosco)); padding:5rem 1.25rem 4rem; text-align:center; }
+    .quiz-hero h1 { font-family:var(--fd); font-size:clamp(2rem,7vw,4rem); font-weight:300; color:#fff; line-height:1.05; }
+    .quiz-hero h1 em { font-style:italic; color:var(--oro3); }
+    .quiz-hero p { color:rgba(245,240,232,.6); font-size:.95rem; max-width:500px; margin:.75rem auto 2rem; line-height:1.75; }
+
+    /* Progress */
+    .quiz-progress { height:3px; background:rgba(245,240,232,.1); position:relative; overflow:hidden; }
+    .quiz-progress-bar { height:100%; background:linear-gradient(90deg,var(--oro),var(--oro2)); transition:width .4s ease; }
+
+    /* Quiz body */
+    .quiz-body { background:var(--av); min-height:60vh; padding:4rem 1.25rem; display:flex; align-items:center; }
+    .quiz-inner { max-width:640px; margin:0 auto; width:100%; }
+    .quiz-step { display:none; animation:fadeIn .35s ease; }
+    .quiz-step.active { display:block; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+    .quiz-num { font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--oro); margin-bottom:.75rem; display:block; }
+    .quiz-q { font-family:var(--fd); font-size:clamp(1.3rem,4vw,1.9rem); font-weight:300; color:var(--bosco); line-height:1.35; margin-bottom:2rem; }
+
+    .quiz-options { display:grid; gap:.75rem; }
+    .quiz-opt {
+      background:#fff; border:1.5px solid var(--av3); border-radius:10px;
+      padding:1.1rem 1.4rem; cursor:pointer; text-align:left;
+      font-family:var(--fu); font-size:.85rem; color:var(--bosco2); line-height:1.5;
+      transition:all .2s; display:flex; align-items:flex-start; gap:.75rem;
+    }
+    .quiz-opt:hover { border-color:rgba(184,146,42,.4); background:rgba(184,146,42,.04); color:var(--bosco); }
+    .quiz-opt.selected { border-color:var(--bosco); background:var(--bosco); color:#fff; }
+    .quiz-opt-letter { font-family:var(--fd); font-size:1rem; font-style:italic; color:var(--oro); flex-shrink:0; }
+    .quiz-opt.selected .quiz-opt-letter { color:var(--oro2); }
+
+    /* Risultato */
+    .result-card { background:#fff; border-radius:14px; padding:2.5rem; text-align:center; border:1px solid var(--av3); }
+    .result-icon { font-size:4rem; display:block; margin-bottom:1rem; }
+    .result-title { font-family:var(--fd); font-size:2rem; font-weight:300; color:var(--bosco); margin-bottom:.5rem; }
+    .result-title em { font-style:italic; color:var(--oro); }
+    .result-desc { font-size:.9rem; color:var(--txt2); line-height:1.85; max-width:500px; margin:0 auto 1.75rem; }
+    .result-cta { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; }
+
+    @media(max-width:480px) { .quiz-body { padding:2.5rem 1rem; } }
+  </style>
+</head>
+<body data-page="fa-per-me">
+<main id="main">
+
+  <section class="quiz-hero">
+    <div class="w">
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">— 12 domande, 3 minuti</p>
+      <h1>Il Convitto<br><em>fa per me?</em></h1>
+      <p>Non esiste una risposta giusta o sbagliata. Ci sono solo scelte — e questa vuole essere una bussola per orientarsi.</p>
+    </div>
+  </section>
+
+  <!-- Progress bar -->
+  <div class="quiz-progress"><div class="quiz-progress-bar" id="qpb" style="width:0%"></div></div>
+
+  <!-- Quiz -->
+  <section class="quiz-body">
+    <div class="quiz-inner">
+
+      <!-- Step 1 -->
+      <div class="quiz-step active" id="qs-1">
+        <span class="quiz-num">Domanda 1 di 12</span>
+        <p class="quiz-q">Quanto dista casa tua da Rieti?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Meno di 30 minuti — arrivo a scuola senza problemi</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> 30–60 minuti — un po' scomodo ma fattibile</div>
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Più di un'ora — ogni giorno sarebbe un'impresa</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="quiz-step" id="qs-2">
+        <span class="quiz-num">Domanda 2 di 12</span>
+        <p class="quiz-q">Come ti rapporti alla convivenza con persone nuove?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Mi piace stare per conto mio — ho bisogno di spazio e silenzio</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Dipende — con le persone giuste va benissimo</div>
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Adoro stare in compagnia — mi annoio da solo</div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="quiz-step" id="qs-3">
+        <span class="quiz-num">Domanda 3 di 12</span>
+        <p class="quiz-q">Come ti organizzi nello studio?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Faccio fatica — mi distraggo spesso e rimando</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> A volte studio, a volte no — dipende dall'umore</div>
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Sono abbastanza autonomo — ma un po' di struttura non guasterebbe</div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="quiz-step" id="qs-4">
+        <span class="quiz-num">Domanda 4 di 12</span>
+        <p class="quiz-q">Cosa pensi degli adulti che ti danno regole?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Non le sopporto — voglio fare quello che voglio</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Le accetto se hanno senso — non voglio burocrazia inutile</div>
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Capisco che ci vogliono — aiutano a vivere bene insieme</div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="quiz-step" id="qs-5">
+        <span class="quiz-num">Domanda 5 di 12</span>
+        <p class="quiz-q">Hai interessi o passioni al di là della scuola?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Non molto — preferisco rilassarmi sul divano</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Qualcosa sì — musica, sport, cinema…</div>
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Moltissimi — non mi bastano mai le ore</div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="quiz-step" id="qs-6">
+        <span class="quiz-num">Domanda 6 di 12</span>
+        <p class="quiz-q">Cosa speri di trovare in un convitto?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">A</span> Un posto sicuro dove crescere, fare amicizie durature e costruire la mia autonomia</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Principalmente una soluzione pratica per stare vicino alla scuola</div>
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">C</span> Onestamente, non lo so ancora</div>
+        </div>
+      </div>
+
+
+      <!-- Step 7 -->
+      <div class="quiz-step" id="qs-7">
+        <span class="quiz-num">Domanda 7 di 12</span>
+        <p class="quiz-q">È la prima volta che dormi lontano da casa per un lungo periodo?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Sì — e solo pensarci mi mette un po' d'ansia</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Ho già fatto qualche esperienza — gita, campo estivo…</div>
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Sono abituato — anzi mi piace l'idea di avere più autonomia</div>
+        </div>
+      </div>
+
+      <!-- Step 8 -->
+      <div class="quiz-step" id="qs-8">
+        <span class="quiz-num">Domanda 8 di 12</span>
+        <p class="quiz-q">Quando litighi con qualcuno, come ti comporti di solito?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Tendo a esplodere — e poi rimpiango quello che ho detto</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Mi chiudo — preferisco evitare il confronto</div>
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Cerco di capire il punto di vista dell'altro — anche quando è difficile</div>
+        </div>
+      </div>
+
+      <!-- Step 9 -->
+      <div class="quiz-step" id="qs-9">
+        <span class="quiz-num">Domanda 9 di 12</span>
+        <p class="quiz-q">Alle 22:30 il cancello chiude. Come ti senti?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Inaccettabile — la libertà è fondamentale</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Un po' rigido, ma capisco il perché</div>
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Ragionevole — alle 22:30 dovrei già essere dentro comunque</div>
+        </div>
+      </div>
+
+      <!-- Step 10 -->
+      <div class="quiz-step" id="qs-10">
+        <span class="quiz-num">Domanda 10 di 12</span>
+        <p class="quiz-q">Condividi la stanza con altri due ragazzi. Il tuo coinquilino ascolta musica a volume alto mentre studi. Cosa fai?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">A</span> Gli chiedo cortesemente di abbassare — o uso le cuffie</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Soffro in silenzio — non voglio creare problemi</div>
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">C</span> Rispondo alzando ancora di più il volume</div>
+        </div>
+      </div>
+
+      <!-- Step 11 -->
+      <div class="quiz-step" id="qs-11">
+        <span class="quiz-num">Domanda 11 di 12</span>
+        <p class="quiz-q">Cosa ti attira di più dell'idea di vivere in convitto?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">A</span> Fare amicizie profonde — quelle che durano per sempre</div>
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">B</span> Crescere davvero in autonomia — senza i genitori che decidono tutto</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">C</span> Onestamente, non mi attira molto — è una scelta obbligata per la distanza</div>
+        </div>
+      </div>
+
+      <!-- Step 12 -->
+      <div class="quiz-step" id="qs-12">
+        <span class="quiz-num">Domanda 12 di 12</span>
+        <p class="quiz-q">Ultima domanda. Tra dieci anni, come vorresti ricordare gli anni al Costaggini?</p>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">A</span> Come gli anni più formativi della mia vita — amici, esperienze, musica, crescita</div>
+          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Come un periodo utile — ho imparato una professione e trovato la mia strada</div>
+          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">C</span> Come qualcosa che ho attraversato e basta — la vera vita era altrove</div>
+        </div>
+      </div>
+
+      <!-- Risultato -->
+      <div class="quiz-step" id="qs-result">
+        <div class="result-card" id="result-card">
+          <!-- Popolato da JS -->
+        </div>
+        <div style="text-align:center;margin-top:1.5rem">
+          <button onclick="restart()" style="font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:none;border:none;color:var(--txt2);cursor:pointer;text-decoration:underline">Rifai il quiz →</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+const RISULTATI = [
+  {
+    min: 0, max: 7,
+    icon: '🤔',
+    title: 'Ancora da <em>scoprire</em>',
+    desc: 'Il Convitto potrebbe non essere la scelta più immediata per te — ma non escluderlo a priori. Vieni a visitarlo, parla con gli educatori, passa un pomeriggio qui. Spesso chi è più scettico all\'inizio diventa il convittore più felice.',
+    ctas: [
+      { href:'openday.html', label:'Prenota una visita →', gold:true },
+      { href:'contatti.html', label:'Parlaci direttamente →', gold:false }
+    ]
+  },
+  {
+    min: 8, max: 16,
+    icon: '⚖️',
+    title: 'Potrebbe <em>funzionare</em>',
+    desc: 'Hai qualità che si adattano bene alla vita convittuale — e qualche riserva comprensibile. È normale. Il Convitto non è per tutti allo stesso modo: c\'è chi ci entra scettico e ne esce trasformato. Venite a trovarci per capire di persona.',
+    ctas: [
+      { href:'servizi.html', label:'Scopri i servizi →', gold:true },
+      { href:'educatori.html', label:'Conosci gli educatori →', gold:false }
+    ]
+  },
+  {
+    min: 17, max: 24,
+    icon: '✨',
+    title: 'Il Convitto <em>fa per te</em>',
+    desc: 'Le tue risposte disegnano il profilo di qualcuno che non solo si troverebbe bene in Convitto — ma che probabilmente ci crescerebbe. Autonomia, convivenza, struttura, passioni: tutti elementi che il Convitto Costaggini sa valorizzare.',
+    ctas: [
+      { href:'ammissione.html', label:'Come iscriversi →', gold:true },
+      { href:'openday.html', label:'Open Day Digitale →', gold:false }
+    ]
+  }
+];
+
+let step = 1;
+let score = 0;
+
+function answer(el, pts) {
+  // Deseleziona altre opzioni dello step
+  el.closest('.quiz-options').querySelectorAll('.quiz-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  score += pts;
+  setTimeout(() => nextStep(), 450);
+}
+
+function nextStep() {
+  document.getElementById('qs-' + step).classList.remove('active');
+  step++;
+  if (step > 12) {
+    showResult();
+    step = 7;
+  } else {
+    document.getElementById('qs-' + step).classList.add('active');
+  }
+  const pct = Math.min((step - 1) / 12 * 100, 100);
+  document.getElementById('qpb').style.width = pct + '%';
+}
+
+function showResult() {
+  const r = RISULTATI.find(x => score >= x.min && score <= x.max) || RISULTATI[1];
+  const card = document.getElementById('result-card');
+  card.innerHTML = `
+    <span class="result-icon">${r.icon}</span>
+    <div class="result-title">${r.title}</div>
+    <p class="result-desc">${r.desc}</p>
+    <div class="result-cta">
+      ${r.ctas.map(c => `<a href="${c.href}" class="${c.gold?'btn-gold':'btn-outline-dark'}">${c.label}</a>`).join('')}
+    </div>
+  `;
+  document.getElementById('qs-result').classList.add('active');
+  document.getElementById('qpb').style.width = '100%';
+}
+
+function restart() {
+  score = 0; step = 1;
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.quiz-opt').forEach(o => o.classList.remove('selected'));
+  document.getElementById('qs-1').classList.add('active');
+  document.getElementById('qpb').style.width = '0%';
+}
+</script>
+</body>
+</html>

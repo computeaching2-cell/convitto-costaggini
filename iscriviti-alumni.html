@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Registrati alla community degli alumni del Convitto Costaggini — aggiungi la tua scheda, il tuo ricordo e il tuo pin sulla mappa."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Unisciti agli Alumni | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background:#0a0f0a; }
+
+    /* HERO */
+    .ia-hero { background:linear-gradient(160deg,#000,#0d150d); padding:4.5rem 1.25rem 3.5rem; text-align:center; position:relative; overflow:hidden; }
+    .ia-hero::before { content:''; position:absolute; top:0; left:-100%; width:60%; height:1px; background:linear-gradient(90deg,transparent,rgba(184,146,42,.4),transparent); animation:scan 4s ease-in-out infinite; }
+    @keyframes scan { to { left:150%; } }
+    .ia-hero h1 { font-family:var(--fd); font-size:clamp(2rem,7vw,4rem); font-weight:300; color:#fff; margin-bottom:.5rem; }
+    .ia-hero h1 em { font-style:italic; color:var(--oro3); }
+    .ia-hero p { color:rgba(245,240,232,.55); max-width:520px; margin:.6rem auto 0; font-size:.9rem; line-height:1.8; }
+
+    /* ANTEPRIMA CARD */
+    .ia-preview { background:#0d150d; border-top:1px solid rgba(184,146,42,.1); padding:2.5rem 1.25rem; }
+    .ia-preview-label { font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--oro2); text-align:center; margin-bottom:1.25rem; }
+    .ia-card-preview {
+      max-width:280px; margin:0 auto;
+      background:var(--bosco); border-radius:10px; overflow:hidden;
+      border:1px solid rgba(184,146,42,.2);
+      box-shadow:0 16px 48px rgba(0,0,0,.5);
+    }
+    .ia-card-avatar {
+      width:100%; aspect-ratio:1;
+      background:linear-gradient(135deg,rgba(245,240,232,.08),rgba(245,240,232,.03));
+      display:flex; align-items:center; justify-content:center;
+      border-bottom:1px solid rgba(184,146,42,.1);
+      font-family:var(--fd); font-size:4rem; font-style:italic; color:rgba(184,146,42,.5);
+      transition:all .3s;
+    }
+    .ia-card-body { padding:1.25rem; }
+    .ia-card-name { font-family:var(--fd); font-size:1.2rem; color:var(--av); margin-bottom:.2rem; min-height:1.4em; }
+    .ia-card-role { font-family:var(--fu); font-size:.6rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--oro2); margin-bottom:.7rem; min-height:1em; }
+    .ia-card-quote { font-size:.82rem; color:rgba(245,240,232,.65); line-height:1.75; font-style:italic; min-height:3em; }
+    .ia-card-years { font-family:var(--fu); font-size:.58rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(245,240,232,.3); margin-top:.75rem; }
+
+    /* FORM */
+    .ia-form-wrap { max-width:680px; margin:0 auto; padding:3rem 1.25rem 5rem; }
+
+    .ia-section { background:#141e14; border:1px solid rgba(184,146,42,.15); border-radius:10px; overflow:hidden; margin-bottom:1.25rem; }
+    .ia-section-hdr { background:rgba(44,62,45,.6); padding:.9rem 1.25rem; display:flex; align-items:center; gap:.65rem; border-bottom:1px solid rgba(184,146,42,.1); }
+    .ia-section-hdr h2 { font-family:var(--fu); font-size:.62rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--oro2); margin:0; }
+    .ia-section-hdr span { font-family:var(--fd); font-size:.8rem; font-style:italic; color:rgba(245,240,232,.35); }
+    .ia-section-body { padding:1.25rem; }
+
+    .ia-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:.85rem; }
+    @media(max-width:520px){ .ia-grid-2 { grid-template-columns:1fr; } }
+
+    .ia-field { display:flex; flex-direction:column; gap:.3rem; margin-bottom:.75rem; }
+    .ia-field:last-child { margin-bottom:0; }
+    .ia-label { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--oro2); }
+    .ia-label .req { color:#f87171; margin-left:2px; }
+    .ia-input, .ia-select, .ia-textarea {
+      padding:.7rem 1rem; background:rgba(255,255,255,.06);
+      border:1.5px solid rgba(184,146,42,.2); border-radius:7px;
+      color:#fff; font-family:var(--fu); font-size:.88rem;
+      outline:none; transition:border-color .2s;
+      width:100%; box-sizing:border-box;
+    }
+    .ia-input:focus, .ia-select:focus, .ia-textarea:focus { border-color:var(--oro2); background:rgba(255,255,255,.09); }
+    .ia-input::placeholder, .ia-textarea::placeholder { color:rgba(255,255,255,.2); }
+    .ia-select { background:#141e14; }
+    .ia-select option { background:#141e14; }
+    .ia-textarea { resize:vertical; min-height:90px; font-family:var(--fd); font-style:italic; font-size:.95rem; }
+    .ia-charcount { font-family:var(--fu); font-size:.58rem; color:rgba(255,255,255,.25); text-align:right; margin-top:.2rem; }
+
+    /* Checkbox */
+    .ia-check { display:flex; align-items:flex-start; gap:.65rem; cursor:pointer; }
+    .ia-check input { width:18px; height:18px; accent-color:var(--oro); flex-shrink:0; margin-top:2px; }
+    .ia-check-label { font-family:var(--fu); font-size:.78rem; color:rgba(245,240,232,.6); line-height:1.6; }
+    .ia-check-label a { color:var(--oro2); }
+
+    /* Progress */
+    .ia-progress { height:3px; background:rgba(255,255,255,.08); border-radius:2px; margin-bottom:2rem; }
+    .ia-progress-fill { height:100%; background:linear-gradient(90deg,var(--bosco),var(--oro)); border-radius:2px; transition:width .4s; width:0%; }
+
+    /* Submit */
+    .ia-submit {
+      width:100%; padding:1rem; margin-top:1.25rem;
+      background:linear-gradient(135deg,var(--bosco),#1a3a1b);
+      color:#fff; border:none; border-radius:8px;
+      font-family:var(--fu); font-size:.78rem; font-weight:800;
+      letter-spacing:.14em; text-transform:uppercase;
+      cursor:pointer; display:flex; align-items:center;
+      justify-content:center; gap:.5rem; transition:opacity .2s;
+      border:1px solid rgba(184,146,42,.25);
+    }
+    .ia-submit:hover { opacity:.88; }
+
+    .ia-note { font-family:var(--fu); font-size:.65rem; color:rgba(245,240,232,.3); line-height:1.7; margin-top:1rem; text-align:center; }
+
+    /* Successo */
+    .ia-success { display:none; text-align:center; background:#141e14; border:1px solid rgba(184,146,42,.2); border-radius:12px; padding:3rem 2rem; margin-top:1.25rem; }
+    .ia-success h2 { font-family:var(--fd); font-size:2rem; font-weight:300; color:#fff; margin-bottom:.5rem; }
+    .ia-success h2 em { font-style:italic; color:var(--oro3); }
+    .ia-success p { font-family:var(--fu); font-size:.82rem; color:rgba(245,240,232,.55); line-height:1.75; max-width:420px; margin:0 auto .85rem; }
+  </style>
+</head>
+<body data-page="iscriviti-alumni">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="ia-hero">
+    <div class="w" style="position:relative;z-index:1">
+      <nav class="breadcrumb" style="justify-content:center;margin-bottom:1.5rem">
+        <a href="index.html" style="color:rgba(245,240,232,.35)">Home</a>
+        <span style="color:rgba(245,240,232,.15)">›</span>
+        <a href="alumni.html" style="color:rgba(245,240,232,.35)">Alumni</a>
+        <span style="color:rgba(245,240,232,.15)">›</span>
+        <span style="color:var(--oro2)">Unisciti</span>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.6rem">— Community Alumni</p>
+      <h1>Sei passato dal<br><em>Costaggini</em>?</h1>
+      <p>Aggiungi la tua scheda alla gallery degli alumni. Pochi minuti — poi la tua storia entra a far parte di questa comunità per sempre.</p>
+    </div>
+  </section>
+
+  <!-- ANTEPRIMA LIVE -->
+  <section class="ia-preview">
+    <p class="ia-preview-label">✦ Così apparirà la tua scheda — si aggiorna mentre scrivi</p>
+    <div class="ia-card-preview">
+      <div class="ia-card-avatar" id="prev-avatar">?</div>
+      <div class="ia-card-body">
+        <div class="ia-card-name" id="prev-name">Il tuo nome</div>
+        <div class="ia-card-role" id="prev-role">Cosa fai adesso · Dove</div>
+        <div class="ia-card-quote" id="prev-quote"><em>Il tuo ricordo apparirà qui…</em></div>
+        <div class="ia-card-years" id="prev-years">Anni al Convitto: —</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section style="background:#0a0f0a">
+    <div class="ia-form-wrap">
+
+      <!-- Progress -->
+      <div class="ia-progress"><div class="ia-progress-fill" id="ia-prog"></div></div>
+
+      <form id="ia-form" novalidate>
+
+        <!-- 1. CHI SEI -->
+        <div class="ia-section">
+          <div class="ia-section-hdr">
+            <h2>1 — Chi sei</h2>
+            <span>dati per la scheda pubblica</span>
+          </div>
+          <div class="ia-section-body">
+            <div class="ia-grid-2">
+              <div class="ia-field">
+                <label class="ia-label">Nome e cognome <span class="req">*</span></label>
+                <input class="ia-input" id="ia-nome" type="text" placeholder="es. Marco Rossi" required oninput="updatePreview()"/>
+              </div>
+              <div class="ia-field">
+                <label class="ia-label">Come vuoi firmare</label>
+                <input class="ia-input" id="ia-firma" type="text" placeholder="es. Marco R. oppure solo Marco"/>
+              </div>
+              <div class="ia-field">
+                <label class="ia-label">Anni al Convitto <span class="req">*</span></label>
+                <input class="ia-input" id="ia-anni" type="text" placeholder="es. 2008–2013" required oninput="updatePreview()"/>
+              </div>
+              <div class="ia-field">
+                <label class="ia-label">Città dove abiti adesso</label>
+                <input class="ia-input" id="ia-citta" type="text" placeholder="es. Milano" oninput="updatePreview()"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. COSA FAI -->
+        <div class="ia-section">
+          <div class="ia-section-hdr">
+            <h2>2 — Cosa fai adesso</h2>
+            <span>per la didascalia della scheda</span>
+          </div>
+          <div class="ia-section-body">
+            <div class="ia-grid-2">
+              <div class="ia-field">
+                <label class="ia-label">Professione / Ruolo <span class="req">*</span></label>
+                <input class="ia-input" id="ia-lavoro" type="text" placeholder="es. Chef · Hotel Manager · Studentessa" required oninput="updatePreview()"/>
+              </div>
+              <div class="ia-field">
+                <label class="ia-label">Settore</label>
+                <select class="ia-select" id="ia-settore" onchange="updatePreview()">
+                  <option value="">— opzionale —</option>
+                  <option>Ristorazione</option>
+                  <option>Hotellerie</option>
+                  <option>Turismo</option>
+                  <option>Pasticceria e panificazione</option>
+                  <option>Istruzione</option>
+                  <option>Musica e arte</option>
+                  <option>Imprenditoria</option>
+                  <option>Altro</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. IL TUO RICORDO -->
+        <div class="ia-section">
+          <div class="ia-section-hdr">
+            <h2>3 — Il tuo ricordo</h2>
+            <span>apparirà nella scheda e sul Muro dei Ricordi</span>
+          </div>
+          <div class="ia-section-body">
+            <div class="ia-field">
+              <label class="ia-label">Un momento, una frase, un'emozione <span class="req">*</span></label>
+              <textarea class="ia-textarea" id="ia-ricordo" maxlength="200" placeholder="Anche solo una riga. Quella che ti viene in mente adesso." required oninput="updatePreview();updateCount()"></textarea>
+              <p class="ia-charcount"><span id="ia-chars">0</span>/200</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. CONTATTI (privati) -->
+        <div class="ia-section">
+          <div class="ia-section-hdr">
+            <h2>4 — Contatti</h2>
+            <span>privati — non pubblicati sul sito</span>
+          </div>
+          <div class="ia-section-body">
+            <div class="ia-grid-2">
+              <div class="ia-field">
+                <label class="ia-label">Email <span class="req">*</span></label>
+                <input class="ia-input" id="ia-email" type="email" placeholder="la tua email privata" required/>
+              </div>
+              <div class="ia-field">
+                <label class="ia-label">Telefono (opzionale)</label>
+                <input class="ia-input" id="ia-tel" type="tel" placeholder="opzionale"/>
+              </div>
+            </div>
+            <p style="font-family:var(--fu);font-size:.62rem;color:rgba(245,240,232,.25);line-height:1.6;margin-top:.5rem">
+              Email e telefono sono visibili solo all'amministratore del sito — non vengono mai pubblicati.
+            </p>
+          </div>
+        </div>
+
+        <!-- 5. SOCIAL (pubblici nella scheda) -->
+        <div class="ia-section">
+          <div class="ia-section-hdr">
+            <h2>5 — Social &amp; Connessioni</h2>
+            <span>opzionali — appaiono sulla tua scheda pubblica</span>
+          </div>
+          <div class="ia-section-body">
+            <p style="font-family:var(--fu);font-size:.68rem;color:rgba(245,240,232,.45);line-height:1.7;margin-bottom:1.1rem">
+              Inserisci i profili che vuoi rendere visibili agli altri alumni — un modo per ritrovarsi dopo anni. Lascia vuoti quelli che non vuoi condividere.
+            </p>
+
+            <div class="ia-grid-2">
+              <div class="ia-field">
+                <label class="ia-label">
+                  <span style="margin-right:.4rem">📘</span>Facebook
+                </label>
+                <input class="ia-input" id="ia-fb" type="url" placeholder="https://facebook.com/tuonome"/>
+              </div>
+              <div class="ia-field">
+                <label class="ia-label">
+                  <span style="margin-right:.4rem">📸</span>Instagram
+                </label>
+                <input class="ia-input" id="ia-ig" type="text" placeholder="@tuonome oppure link profilo"/>
+              </div>
+              <div class="ia-field">
+                <label class="ia-label">
+                  <span style="margin-right:.4rem">💼</span>LinkedIn
+                </label>
+                <input class="ia-input" id="ia-li" type="url" placeholder="https://linkedin.com/in/tuonome"/>
+              </div>
+              <div class="ia-field">
+                <label class="ia-label">
+                  <span style="margin-right:.4rem">🌐</span>Sito / altro
+                </label>
+                <input class="ia-input" id="ia-web" type="url" placeholder="il tuo sito, blog, portfolio…"/>
+              </div>
+            </div>
+
+            <!-- Disponibilità a essere contattato -->
+            <div style="margin-top:1rem;background:rgba(184,146,42,.06);border:1px solid rgba(184,146,42,.15);border-radius:8px;padding:1rem 1.1rem">
+              <label class="ia-check">
+                <input type="checkbox" id="ia-contattabile" checked/>
+                <span class="ia-check-label" style="color:rgba(245,240,232,.75)">
+                  <strong style="color:#fff">Sono disponibile a essere contattato/a</strong> da altri ex convittori tramite il sito. Sulla mia scheda apparirà il pulsante "📩 Scrivimi" — riceverò i messaggi alla mia email privata senza che venga pubblicata.
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. CONSENSI -->
+        <div class="ia-section">
+          <div class="ia-section-hdr">
+            <h2>6 — Consensi</h2>
+            <span>obbligatori</span>
+          </div>
+          <div class="ia-section-body" style="display:flex;flex-direction:column;gap:.85rem">
+            <label class="ia-check">
+              <input type="checkbox" id="ia-cons1" required/>
+              <span class="ia-check-label">Acconsento alla pubblicazione della mia scheda sul sito del Convitto "Costaggini" dopo approvazione dell'amministratore. <span style="color:#f87171">*</span></span>
+            </label>
+            <label class="ia-check">
+              <input type="checkbox" id="ia-cons2" required/>
+              <span class="ia-check-label">Ho letto l'<a href="privacy.html" target="_blank">informativa privacy</a> e acconsento al trattamento dei miei dati ai sensi del GDPR. <span style="color:#f87171">*</span></span>
+            </label>
+            <label class="ia-check">
+              <input type="checkbox" id="ia-mappa"/>
+              <span class="ia-check-label">Aggiungi automaticamente un pin con la mia città anche sulla <a href="mondo.html" target="_blank">Mappa degli Alumni nel mondo</a>. (Opzionale)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <button type="submit" class="ia-submit">
+          <svg viewBox="0 0 24 24" width="16" height="16" style="fill:#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          Invia la mia scheda
+        </button>
+
+        <p class="ia-note">
+          La tua scheda sarà visibile dopo l'approvazione dell'amministratore — di solito entro 24 ore.<br/>
+          Potrai richiedere modifiche o cancellazione in qualsiasi momento scrivendo a <a href="mailto:rirh010007@istruzione.it" style="color:var(--oro2)">rirh010007@istruzione.it</a>
+        </p>
+
+      </form>
+
+      <!-- SUCCESSO -->
+      <div class="ia-success" id="ia-success">
+        <div style="font-size:3.5rem;margin-bottom:1rem">✦</div>
+        <h2>Scheda <em>ricevuta</em></h2>
+        <p>Grazie. La tua scheda è in attesa di approvazione — apparirà nella gallery degli alumni entro 24 ore.</p>
+        <p>Hai anche lasciato una traccia sul Muro dei Ricordi. Benvenuto nella comunità del Costaggini.</p>
+        <div style="margin-top:1.75rem;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+          <a href="alumni.html" class="btn-gold">Vai agli Alumni →</a>
+          <a href="ricordi.html" style="font-family:var(--fu);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1.1rem;border:1.5px solid rgba(184,146,42,.3);border-radius:6px;color:var(--oro2);text-decoration:none">Muro dei Ricordi →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+<script src="supabase.js"></script>
+<script src="shared.js?v=2"></script>
+<script>
+// ── ANTEPRIMA LIVE ─────────────────────────────────────
+function updatePreview() {
+  const nome    = document.getElementById('ia-nome').value.trim();
+  const anni    = document.getElementById('ia-anni').value.trim();
+  const lavoro  = document.getElementById('ia-lavoro').value.trim();
+  const citta   = document.getElementById('ia-citta').value.trim();
+  const ricordo = document.getElementById('ia-ricordo').value.trim();
+
+  // Avatar: iniziale del nome
+  const av = document.getElementById('prev-avatar');
+  av.textContent = nome ? nome[0].toUpperCase() : '?';
+
+  document.getElementById('prev-name').textContent  = nome  || 'Il tuo nome';
+  document.getElementById('prev-years').textContent = anni  ? 'Convittore/trice ' + anni : 'Anni al Convitto: —';
+
+  const roleStr = [lavoro, citta].filter(Boolean).join(' · ');
+  document.getElementById('prev-role').textContent = roleStr || 'Cosa fai adesso · Dove';
+
+  const q = document.getElementById('prev-quote');
+  if (ricordo) {
+    q.innerHTML = '"' + ricordo + '"';
+    q.style.fontStyle = 'italic';
+  } else {
+    q.innerHTML = '<em>Il tuo ricordo apparirà qui…</em>';
+  }
+}
+
+function updateCount() {
+  document.getElementById('ia-chars').textContent = document.getElementById('ia-ricordo').value.length;
+}
+
+// ── PROGRESS BAR ──────────────────────────────────────
+function updateProgress() {
+  const req = ['ia-nome','ia-anni','ia-lavoro','ia-ricordo','ia-email','ia-cons1','ia-cons2'];
+  let filled = 0;
+  req.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.type === 'checkbox') { if (el.checked) filled++; }
+    else { if (el.value.trim()) filled++; }
+  });
+  document.getElementById('ia-prog').style.width = Math.round(filled / req.length * 100) + '%';
+}
+document.getElementById('ia-form').addEventListener('input', updateProgress);
+document.getElementById('ia-form').addEventListener('change', updateProgress);
+
+// ── SUBMIT ────────────────────────────────────────────
+document.getElementById('ia-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Validazione
+  const required = ['ia-nome','ia-anni','ia-lavoro','ia-ricordo','ia-email'];
+  let ok = true;
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { el.style.borderColor='#f87171'; ok=false; }
+    else el.style.borderColor='';
+  });
+  if (!document.getElementById('ia-cons1').checked ||
+      !document.getElementById('ia-cons2').checked) {
+    alert('Accetta i consensi obbligatori prima di procedere.');
+    ok = false;
+  }
+  if (!ok) return;
+
+  const btn = document.querySelector('.ia-submit');
+  btn.disabled = true;
+  btn.textContent = 'Invio in corso…';
+
+  const nome    = document.getElementById('ia-nome').value.trim();
+  const firma   = document.getElementById('ia-firma').value.trim() || nome.split(' ')[0];
+  const anni    = document.getElementById('ia-anni').value.trim();
+  const citta   = document.getElementById('ia-citta').value.trim();
+  const lavoro  = document.getElementById('ia-lavoro').value.trim();
+  const settore = document.getElementById('ia-settore').value;
+  const ricordo = document.getElementById('ia-ricordo').value.trim();
+  const email   = document.getElementById('ia-email').value.trim();
+  const tel     = document.getElementById('ia-tel').value.trim();
+  const fb      = document.getElementById('ia-fb').value.trim();
+  const ig      = document.getElementById('ia-ig').value.trim();
+  const li      = document.getElementById('ia-li').value.trim();
+  const web     = document.getElementById('ia-web').value.trim();
+  const contattabile = document.getElementById('ia-contattabile').checked;
+  const mappa   = document.getElementById('ia-mappa').checked;
+
+  try {
+    // 1. Salva scheda alumni su Supabase (approvato=false → in attesa)
+    await sb.insert('alumni', {
+      nome, firma, anni, citta, lavoro, settore, ricordo, email,
+      social_fb: fb, social_ig: ig, social_li: li, social_web: web,
+      contattabile,
+      colore: Math.floor(Math.random()*5),
+      approvato: false
+    });
+
+    // 2. Salva ricordo su Supabase (approvato=false)
+    await sb.insert('ricordi', {
+      testo: ricordo,
+      nome: firma,
+      anni,
+      dove: [citta, lavoro].filter(Boolean).join(' · '),
+      colore: Math.floor(Math.random()*5),
+      approvato: false
+    });
+
+    // 3. Se ha acconsentito alla mappa → geocodifica e salva pin
+    if (mappa && citta) {
+      try {
+        const geo = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(citta)}&limit=1`,
+          { headers: { 'Accept-Language':'it' } }
+        );
+        const gd = await geo.json();
+        if (gd && gd[0]) {
+          await sb.insert('pin_mappa', {
+            nome: firma, citta, tipo: 'alumni',
+            anni, ruolo: lavoro,
+            lat: parseFloat(gd[0].lat),
+            lng: parseFloat(gd[0].lon),
+            from_alumni: true,
+            approvato: false
+          });
+        }
+      } catch(e) { /* geocoding fallito — non blocca */ }
+    }
+
+    // Mostra successo
+    document.getElementById('ia-form').style.display = 'none';
+    document.getElementById('ia-success').style.display = 'block';
+    window.scrollTo({ top:0, behavior:'smooth' });
+
+  } catch(err) {
+    btn.disabled = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" style="fill:#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Invia la mia scheda';
+    alert('Errore durante l\'invio. Riprova tra qualche momento.');
+    console.error(err);
+  }
+});
+</script>
+</body>
+</html>

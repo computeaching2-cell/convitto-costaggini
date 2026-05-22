@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Gli educatori del Convitto Costaggini di Rieti — chi sono, cosa fanno, perché sono il cuore del Convitto. Profilo CCNL, competenze e schede personali."/>
+  <meta property="og:title" content="Gli Educatori — Convitto Costaggini Rieti"/>
+  <meta property="og:description" content="A chi affiderete vostro figlio. Il profilo professionale, le competenze, i volti e le voci degli educatori del Convitto Costaggini."/>
+  <meta property="og:image" content="https://www.alberghierorieti.edu.it/wp-content/uploads/1704014837735-300x225.jpg"/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Gli Educatori | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+
+    /* ══════════════════════════════════════
+       HERO CINEMATOGRAFICO
+    ══════════════════════════════════════ */
+    .edu-hero {
+      position: relative;
+      min-height: 85vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      overflow: hidden; background: #0a0f0a;
+    }
+    .edu-hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(10,15,10,.3) 0%, rgba(10,15,10,.95) 100%),
+        url('https://www.alberghierorieti.edu.it/wp-content/uploads/1704014837735-300x225.jpg') center/cover no-repeat;
+      transform: scale(1.05);
+      animation: heroZoom 12s ease-out forwards;
+    }
+    @keyframes heroZoom { from{transform:scale(1.05)} to{transform:scale(1)} }
+
+    .edu-hero-content {
+      position: relative; z-index: 2;
+      padding: 3rem 1.25rem 4rem; max-width: 800px;
+    }
+    .hero-eyebrow {
+      font-family: var(--fu); font-size: .62rem; font-weight: 800;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--oro2); display: block; margin-bottom: 1rem;
+    }
+    .edu-hero h1 {
+      font-family: var(--fd); font-size: clamp(2.5rem, 8vw, 5.5rem);
+      font-weight: 300; color: #fff; line-height: 1; margin-bottom: 1rem;
+    }
+    .edu-hero h1 em { font-style: italic; color: var(--oro3); }
+    .edu-hero-sub {
+      font-family: var(--fd); font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-weight: 300; font-style: italic; color: rgba(255,255,255,.6);
+      max-width: 580px; line-height: 1.65; margin-bottom: 2rem;
+    }
+    /* Indicatore scroll */
+    .scroll-hint {
+      display: flex; align-items: center; gap: .6rem;
+      font-family: var(--fu); font-size: .6rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.35);
+    }
+    .scroll-arrow { animation: scrollBounce 1.6s ease-in-out infinite; }
+    @keyframes scrollBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+
+    /* ══════════════════════════════════════
+       STATEMENT — UNA CITAZIONE ENORME
+    ══════════════════════════════════════ */
+    .edu-statement {
+      background: var(--av);
+      padding: 6rem 1.25rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .edu-statement::before {
+      content: '"';
+      position: absolute; top: -2rem; left: 50%; transform: translateX(-50%);
+      font-family: var(--fd); font-size: 20rem; font-weight: 300;
+      color: rgba(44,62,45,.05); line-height: 1; pointer-events: none;
+      user-select: none;
+    }
+    .edu-statement blockquote {
+      font-family: var(--fd); font-size: clamp(1.4rem, 4vw, 2.5rem);
+      font-weight: 300; font-style: italic; color: var(--bosco);
+      max-width: 800px; margin: 0 auto 1.5rem; line-height: 1.45;
+      position: relative; z-index: 1;
+    }
+    .edu-statement blockquote strong { font-style: normal; font-weight: 600; color: var(--bosco); }
+    .edu-statement cite {
+      font-family: var(--fu); font-size: .65rem; font-weight: 800;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--oro);
+    }
+
+    /* ══════════════════════════════════════
+       PROFILO CONTRATTUALE — NUMERI ANIMATI
+    ══════════════════════════════════════ */
+    .edu-contratto { background: var(--bosco); padding: 5rem 1.25rem; }
+    .edu-contratto .lbl { color: var(--oro2); }
+    .edu-contratto h2 { color: var(--av); }
+    .edu-contratto h2 em { color: var(--oro3); }
+
+    /* Barre competenze */
+    .skill-list { margin-top: 2.5rem; display: grid; gap: 1.25rem; }
+    .skill-item { }
+    .skill-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .45rem; }
+    .skill-name { font-family: var(--fu); font-size: .78rem; font-weight: 700; letter-spacing: .06em; color: var(--av); }
+    .skill-pct  { font-family: var(--fd); font-size: .85rem; font-style: italic; color: var(--oro2); }
+    .skill-bar-bg { height: 3px; background: rgba(245,240,232,.1); border-radius: 3px; overflow: hidden; }
+    .skill-bar-fill {
+      height: 100%; background: linear-gradient(90deg, var(--oro), var(--oro2));
+      border-radius: 3px; width: 0;
+      transition: width 1.4s cubic-bezier(.22,1,.36,1);
+    }
+
+    /* ══════════════════════════════════════
+       COSA FA — TIMELINE ORIZZONTALE
+    ══════════════════════════════════════ */
+    .edu-cosa { background: var(--av2); padding: 5rem 1.25rem; }
+    .edu-cosa h2 em { color: var(--oro); }
+
+    .cosa-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem; margin-top: 2.5rem;
+    }
+    @media(max-width:720px){ .cosa-grid { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:480px){ .cosa-grid { grid-template-columns: 1fr; } }
+    .cosa-card {
+      background: var(--av); border-radius: 10px;
+      padding: 1.75rem 1.5rem; border: 1px solid var(--av3);
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .cosa-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,.1); }
+    .cosa-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: linear-gradient(90deg, var(--oro), var(--oro2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .35s ease;
+    }
+    .cosa-card:hover::after { transform: scaleX(1); }
+    .cosa-icon { font-size: 2.2rem; margin-bottom: .9rem; display: block; }
+    .cosa-label {
+      font-family: var(--fu); font-size: .6rem; font-weight: 800;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--oro);
+      margin-bottom: .5rem; display: block;
+    }
+    .cosa-title { font-family: var(--fd); font-size: 1.15rem; color: var(--bosco); margin-bottom: .6rem; line-height: 1.25; }
+    .cosa-body { font-size: .83rem; color: var(--txt2); line-height: 1.75; }
+    .cosa-fonte {
+      font-family: var(--fu); font-size: .58rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(44,62,45,.35); margin-top: .85rem; display: block;
+    }
+
+    /* ══════════════════════════════════════
+       LA DOMANDA DEL GENITORE
+    ══════════════════════════════════════ */
+    .edu-genitore {
+      background: linear-gradient(135deg, #0a0f0a, var(--bosco));
+      padding: 6rem 1.25rem; text-align: center;
+    }
+    .geo-intro {
+      font-family: var(--fd); font-size: clamp(1.3rem,3.5vw,2rem);
+      font-weight: 300; font-style: italic; color: rgba(255,255,255,.55);
+      max-width: 640px; margin: 0 auto 3rem; line-height: 1.55;
+    }
+    .geo-intro strong { font-style: normal; color: #fff; }
+    .geo-pillole {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+      max-width: 720px; margin: 0 auto 3rem;
+    }
+    .geo-pill {
+      background: rgba(245,240,232,.06); border: 1px solid rgba(184,146,42,.25);
+      border-radius: 40px; padding: .65rem 1.25rem;
+      font-family: var(--fu); font-size: .72rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase; color: rgba(245,240,232,.75);
+      transition: all .2s;
+    }
+    .geo-pill:hover { background: rgba(184,146,42,.15); border-color: var(--oro2); color: #fff; }
+
+    /* ══════════════════════════════════════
+       PANNELLO CCNL INLINE
+    ══════════════════════════════════════ */
+    .ccnl-block {
+      background: rgba(245,240,232,.04);
+      border: 1px solid rgba(184,146,42,.15);
+      border-radius: 8px; overflow: hidden;
+      margin-bottom: .6rem;
+      transition: border-color .2s;
+    }
+    .ccnl-block[open] { border-color: rgba(184,146,42,.35); }
+
+    .ccnl-sum {
+      list-style: none; display: flex; align-items: center; gap: .85rem;
+      padding: 1rem 1.25rem; cursor: pointer;
+      transition: background .2s;
+    }
+    .ccnl-sum::-webkit-details-marker { display: none; }
+    .ccnl-sum::marker { display: none; }
+    .ccnl-sum:hover { background: rgba(245,240,232,.04); }
+
+    .ccnl-num {
+      font-family: var(--fd); font-size: .85rem; font-style: italic;
+      color: var(--oro2); flex-shrink: 0; min-width: 52px;
+    }
+    .ccnl-title {
+      font-family: var(--fu); font-size: .72rem; font-weight: 700;
+      letter-spacing: .04em; color: rgba(245,240,232,.8); flex: 1;
+      line-height: 1.4;
+    }
+    .ccnl-arrow {
+      font-size: .7rem; color: var(--oro2); flex-shrink: 0;
+      transition: transform .3s;
+    }
+    details[open] .ccnl-arrow { transform: rotate(180deg); }
+
+    .ccnl-body {
+      padding: 0 1.25rem 1.25rem;
+      border-top: 1px solid rgba(184,146,42,.1);
+      margin-top: 0;
+    }
+    .ccnl-body p {
+      font-size: .83rem; color: rgba(245,240,232,.65);
+      line-height: 1.8; margin-top: .5rem;
+    }
+    .ccnl-body strong { color: rgba(245,240,232,.9); font-weight: 700; }
+
+    .ccnl-pill {
+      display: inline-block; margin-top: .9rem;
+      font-family: var(--fu); font-size: .58rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase;
+      background: rgba(184,146,42,.12); color: var(--oro2);
+      padding: .22rem .65rem; border-radius: 20px;
+    }
+
+    .ccnl-quote {
+      margin-top: 1.1rem;
+      border-left: 3px solid rgba(184,146,42,.4);
+      padding: .75rem 1rem;
+      background: rgba(184,146,42,.06);
+      border-radius: 0 6px 6px 0;
+      font-family: var(--fd); font-size: .88rem; font-style: italic;
+      color: rgba(245,240,232,.5); line-height: 1.65;
+    }
+    .ccnl-quote cite {
+      display: block; margin-top: .4rem;
+      font-family: var(--fu); font-size: .55rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(184,146,42,.45); font-style: normal;
+    }
+    .edu-team { background: var(--av); padding: 5rem 1.25rem; }
+    .edu-team h2 em { color: var(--oro); }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+    .team-card {
+      background: #fff; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--av3);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .team-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,.12); }
+
+    /* Foto / placeholder */
+    .tc-photo {
+      position: relative; aspect-ratio: 3/4; overflow: hidden;
+      background: linear-gradient(135deg, var(--bosco), #1a3a1b);
+    }
+    .tc-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform .5s; }
+    .team-card:hover .tc-photo img { transform: scale(1.04); }
+    .tc-photo-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: .75rem;
+    }
+    .tc-placeholder-icon { font-size: 4rem; opacity: .25; }
+    .tc-placeholder-text {
+      font-family: var(--fd); font-size: .85rem; font-style: italic;
+      color: rgba(245,240,232,.3); text-align: center; padding: 0 1rem;
+    }
+    /* Badge ruolo sovrapposto */
+    .tc-badge {
+      position: absolute; bottom: .75rem; left: .75rem;
+      font-family: var(--fu); font-size: .58rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase;
+      background: rgba(12,20,13,.8); color: var(--oro2);
+      padding: .3rem .7rem; border-radius: 4px; backdrop-filter: blur(6px);
+    }
+    /* Video play overlay */
+    .tc-video-btn {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 54px; height: 54px; border-radius: 50%;
+      background: rgba(184,146,42,.85); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .2s;
+    }
+    .team-card:hover .tc-video-btn { opacity: 1; }
+    .tc-video-btn svg { fill: #fff; width: 22px; height: 22px; margin-left: 3px; }
+
+    .tc-body { padding: 1.4rem; }
+    .tc-name { font-family: var(--fd); font-size: 1.2rem; color: var(--bosco); margin-bottom: .15rem; line-height: 1.2; }
+    .tc-role { font-family: var(--fu); font-size: .6rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--oro); margin-bottom: .7rem; }
+    .tc-anni { font-family: var(--fu); font-size: .65rem; color: var(--txt2); margin-bottom: .65rem; }
+    .tc-bio { font-size: .82rem; color: var(--txt2); line-height: 1.75; }
+    .tc-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .85rem; }
+    .tc-tag { font-family: var(--fu); font-size: .55rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .2rem .55rem; border-radius: 12px; background: rgba(44,62,45,.08); color: var(--bosco2); }
+    .tc-contatta {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-family: var(--fu); font-size: .62rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--bosco2); text-decoration: none;
+      border-bottom: 1px solid rgba(44,62,45,.25);
+      padding-bottom: 1px; margin-top: 1rem;
+      transition: color .2s, border-color .2s;
+    }
+    .tc-contatta:hover { color: var(--bosco); border-color: var(--bosco); }
+
+    /* Placeholder richiesta foto -->
+    .tc-richiesta {
+      background: rgba(184,146,42,.06); border: 1px dashed rgba(184,146,42,.3);
+      border-radius: 6px; padding: .75rem 1rem; margin-top: .9rem;
+      font-size: .75rem; color: rgba(44,62,45,.55); font-style: italic;
+    }
+
+    /* ══════════════════════════════════════
+       CTA FINALE
+    ══════════════════════════════════════ */
+    .edu-cta { background: var(--bosco); padding: 5rem 1.25rem; text-align: center; }
+    .edu-cta h2 { font-family: var(--fd); font-size: clamp(1.8rem,5vw,3rem); font-weight: 300; color: var(--av); margin-bottom: 1rem; }
+    .edu-cta h2 em { font-style: italic; color: var(--oro3); }
+    .edu-cta p { color: rgba(245,240,232,.6); max-width: 520px; margin: 0 auto 2rem; font-size: .92rem; line-height: 1.75; }
+
+  @media(min-width:480px){.team-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:860px){.team-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}</style>
+</head>
+<body data-page="educatori">
+<main id="main">
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="edu-hero" aria-labelledby="edu-h1">
+    <div class="edu-hero-bg" aria-hidden="true"></div>
+    <div class="edu-hero-content w">
+      <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:1.5rem">
+        <a href="index.html" style="color:rgba(245,240,232,.45)">Home</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <a href="il-convitto.html" style="color:rgba(245,240,232,.45)">Il Convitto</a>
+        <span style="color:rgba(245,240,232,.2)">›</span>
+        <span aria-current="page" style="color:var(--oro2)">Gli Educatori</span>
+      </nav>
+      <span class="hero-eyebrow">— Il cuore del Convitto "Costaggini"</span>
+      <h1 id="edu-h1">Gli<br><em>Educatori</em></h1>
+      <p class="edu-hero-sub">Non sono sorveglianti. Non sono professori. Sono qualcosa di più raro: adulti che scelgono di stare accanto ai ragazzi nel tempo in cui non si è in classe.</p>
+      <button class="scroll-hint" onclick="document.querySelector('.edu-statement').scrollIntoView({behavior:'smooth'})"
+              aria-label="Scorri alla sezione successiva"
+              style="background:none;border:none;cursor:pointer;padding:.5rem 0">
+        <span>Scorri per conoscerli</span>
+        <svg class="scroll-arrow" viewBox="0 0 24 24" width="16" height="16" style="fill:rgba(245,240,232,.35)"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══════════ STATEMENT ═══════════ -->
+  <section class="edu-statement rv">
+    <blockquote>
+      "Affidarmi a qualcuno<br>è un atto d'amore.<br>
+      <strong>Non basta sapere che è qualificato.</strong><br>
+      Voglio guardarlo negli occhi."
+    </blockquote>
+    <cite>— La domanda di ogni genitore. Giusta.</cite>
+  </section>
+
+  <!-- ═══════════ PROFILO CONTRATTUALE ═══════════ -->
+  <section class="edu-contratto">
+    <div class="w">
+      <div style="display:grid;gap:3rem;grid-template-columns:1fr">
+
+        <div class="rv">
+          <p class="lbl">Cosa dice la legge</p>
+          <h2>Il profilo <em>contrattuale</em></h2>
+          <p style="color:rgba(245,240,232,.6);max-width:620px;margin:.75rem 0 1.5rem;font-size:.9rem;line-height:1.8">
+            L'educatore di convitto è una figura definita e tutelata dal <strong style="color:var(--oro2)">CCNL Istruzione e Ricerca</strong> (artt. 127–129). Non è personale ausiliario. È personale educativo — alla pari, per status professionale e funzione formativa, con il personale docente.
+          </p>
+          <button onclick="toggleCCNL()" id="ccnl-btn"
+            style="font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);background:none;border:none;border-bottom:1px solid rgba(184,146,42,.3);padding-bottom:2px;cursor:pointer;transition:color .2s,border-color .2s;display:inline-flex;align-items:center;gap:.4rem"
+            onmouseover="this.style.borderColor='var(--oro2)'"
+            onmouseout="this.style.borderColor='rgba(184,146,42,.3)'">
+            <span id="ccnl-btn-label">Leggi il CCNL Art. 127–129</span>
+            <span id="ccnl-btn-arrow" style="transition:transform .3s;display:inline-block">▾</span>
+          </button>
+
+          <!-- PANNELLO CCNL — visibile solo dopo il clic -->
+          <div id="ccnl-panel" style="display:none;margin-top:1.5rem">
+
+            <!-- Intro -->
+            <div style="background:rgba(245,240,232,.04);border:1px solid rgba(184,146,42,.15);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1rem">
+              <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">CCNL Istruzione e Ricerca — Personale educativo</p>
+              <p style="font-size:.82rem;color:rgba(245,240,232,.55);line-height:1.7">Il contratto collettivo nazionale dedica tre articoli specifici alla figura dell'educatore di convitto. Non sono norme astratte — descrivono esattamente chi è la persona a cui affiderete vostro figlio. Scorrete: ogni sezione è breve e leggibile.</p>
+            </div>
+
+            <!-- Art. 127 -->
+            <details class="ccnl-block" open>
+              <summary class="ccnl-sum">
+                <span class="ccnl-num">Art. 127</span>
+                <span class="ccnl-title">Chi è, professionalmente, un educatore di convitto</span>
+                <span class="ccnl-arrow">▾</span>
+              </summary>
+              <div class="ccnl-body">
+                <div class="ccnl-pill">🎓 Profilo professionale</div>
+                <p>L'educatore non è personale ausiliario. Il suo profilo è costituito da <strong>competenze psicopedagogiche, metodologiche e organizzativo-relazionali</strong>, tra loro integrate — competenze che si sviluppano attraverso la maturazione dell'esperienza e l'attività di studio e ricerca continuativa.</p>
+                <div class="ccnl-pill" style="margin-top:.9rem">🔗 Rapporto con i docenti</div>
+                <p>La sua funzione educativa <strong>partecipa al processo di formazione degli allievi</strong> in modo coordinato con i docenti delle scuole frequentate dai convittori — non in modo subordinato, ma complementare. Il contratto riconosce esplicitamente "l'autonomia culturale e professionale del personale educativo".</p>
+                <div class="ccnl-quote">
+                  "Il profilo professionale del personale educativo è costituito da competenze di tipo psicopedagogico, metodologico ed organizzativo-relazionale, tra loro correlate ed integrate."
+                  <cite>— CCNL art. 127, comma 1</cite>
+                </div>
+              </div>
+            </details>
+
+            <!-- Art. 128 -->
+            <details class="ccnl-block">
+              <summary class="ccnl-sum">
+                <span class="ccnl-num">Art. 128</span>
+                <span class="ccnl-title">Cosa fa ogni giorno — l'attività educativa</span>
+                <span class="ccnl-arrow">▾</span>
+              </summary>
+              <div class="ccnl-body">
+                <div class="ccnl-pill">🌱 La missione</div>
+                <p>L'attività educativa è volta alla <strong>promozione dei processi di crescita umana, civile e culturale</strong>, nonché di socializzazione. I convittori vengono assistiti e guidati nella loro partecipazione ai vari momenti della vita comune.</p>
+                <div class="ccnl-pill" style="margin-top:.9rem">📚 Lo studio</div>
+                <p>L'educatore si occupa dell'<strong>organizzazione degli studi</strong> — non solo di far fare i compiti, ma di costruire nel ragazzo un metodo, un'abitudine, una capacità di lavorare in autonomia.</p>
+                <div class="ccnl-pill" style="margin-top:.9rem">🎭 Il tempo libero</div>
+                <p>Gestisce e anima le <strong>iniziative culturali, sportive e ricreative</strong>. Il laboratorio musicale, i tornei, le uscite — tutto nasce dal lavoro dell'educatore, non accade spontaneamente.</p>
+                <div class="ccnl-pill" style="margin-top:.9rem">🧭 L'orientamento</div>
+                <p>Cura anche "gli <strong>aspetti psicopedagogici e di orientamento</strong>" — aiuta ogni ragazzo a capire se stesso, a fare scelte, a costruire un'identità. È il lavoro più invisibile e più prezioso.</p>
+                <div class="ccnl-quote">
+                  "L'attività educativa è volta alla promozione dei processi di crescita umana, civile e culturale, nonché di socializzazione degli allievi, convittori e semiconvittori."
+                  <cite>— CCNL art. 128, comma 1</cite>
+                </div>
+              </div>
+            </details>
+
+            <!-- Art. 129 -->
+            <details class="ccnl-block">
+              <summary class="ccnl-sum">
+                <span class="ccnl-num">Art. 129</span>
+                <span class="ccnl-title">Le attività funzionali — cosa c'è dietro le quinte</span>
+                <span class="ccnl-arrow">▾</span>
+              </summary>
+              <div class="ccnl-body">
+                <div class="ccnl-pill">📋 Progettazione e documentazione</div>
+                <p>L'educatore non improvvisa. Il contratto prevede attività di <strong>progettazione educativa, documentazione, aggiornamento professionale</strong> e partecipazione alle riunioni collegiali. C'è un lavoro invisibile — di preparazione e riflessione — dietro ogni giornata in convitto.</p>
+                <div class="ccnl-pill" style="margin-top:.9rem">👨‍👩‍👧 Rapporto con le famiglie</div>
+                <p>Le azioni funzionali includono i <strong>colloqui con le famiglie</strong> e il raccordo con i docenti. L'educatore è il punto di contatto tra il ragazzo e il mondo degli adulti che si prendono cura di lui — dentro e fuori dal convitto.</p>
+                <div class="ccnl-quote">
+                  "Le azioni funzionali all'attività educativa comprendono tutte le attività, anche a carattere collegiale, di programmazione, progettazione, ricerca, valutazione e documentazione."
+                  <cite>— CCNL art. 129</cite>
+                </div>
+              </div>
+            </details>
+
+            <!-- Chiudi -->
+            <div style="text-align:right;margin-top:.75rem">
+              <button onclick="toggleCCNL()"
+                style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.35);background:none;border:none;cursor:pointer;transition:color .2s"
+                onmouseover="this.style.color='var(--oro2)'" onmouseout="this.style.color='rgba(245,240,232,.35)'">
+                Chiudi ✕
+              </button>
+            </div>
+
+          </div><!-- fine ccnl-panel -->
+        </div>
+
+        <!-- Barre competenze -->
+        <div class="rv d1">
+          <p style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:1.5rem">Le competenze definite dal CCNL</p>
+          <div class="skill-list" id="skills-list">
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Competenze psicopedagogiche</span>
+                <span class="skill-pct">Cuore del profilo</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Competenze metodologiche</span>
+                <span class="skill-pct">Studio e ricerca</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Competenze organizzativo-relazionali</span>
+                <span class="skill-pct">Vita comune</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="96"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Orientamento e crescita personale</span>
+                <span class="skill-pct">Lungo periodo</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div>
+            </div>
+          </div>
+          <p style="font-size:.72rem;color:rgba(245,240,232,.3);margin-top:1rem;font-style:italic">
+            Fonte: CCNL Istruzione e Ricerca, art. 127 — "competenze di tipo psicopedagogico, metodologico ed organizzativo-relazionale, tra loro correlate ed integrate"
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ COSA FA ═══════════ -->
+  <section class="edu-cosa">
+    <div class="w">
+      <p class="lbl">Il mandato quotidiano</p>
+      <h2>Cosa fa un educatore <em>ogni giorno</em></h2>
+      <p style="color:var(--txt2);max-width:560px;margin:.5rem 0 0;font-size:.9rem">Non una lista di compiti. Una vocazione articolata in gesti concreti — tutti documentati dal contratto collettivo nazionale.</p>
+
+      <div class="cosa-grid">
+
+        <div class="cosa-card rv">
+          <span class="cosa-icon">🌱</span>
+          <span class="cosa-label">Art. 128 CCNL</span>
+          <h3 class="cosa-title">Promuove la crescita umana e civile</h3>
+          <p class="cosa-body">Guida i ragazzi nei "processi di crescita umana, civile e culturale". Non insegna materie — insegna a diventare persone. Il suo lavoro si misura in anni, non in ore.</p>
+          <span class="cosa-fonte">CCNL art. 128 — Attività educativa</span>
+        </div>
+
+        <div class="cosa-card rv d1">
+          <span class="cosa-icon">🤝</span>
+          <span class="cosa-label">Art. 128 CCNL</span>
+          <h3 class="cosa-title">Assiste nella vita comune</h3>
+          <p class="cosa-body">Accompagna i convittori "nei vari momenti della vita comune nel convitto" — dalla mensa alla serata, dalla lite tra compagni alla telefonata difficile ai genitori.</p>
+          <span class="cosa-fonte">CCNL art. 128 — Vita comune</span>
+        </div>
+
+        <div class="cosa-card rv d2">
+          <span class="cosa-icon">📚</span>
+          <span class="cosa-label">Art. 128 CCNL</span>
+          <h3 class="cosa-title">Organizza lo studio</h3>
+          <p class="cosa-body">Gestisce lo studio guidato pomeridiano, monitora il profitto via Registro Elettronico, interviene prima che i problemi diventino voti. È il primo alleato dei genitori a scuola.</p>
+          <span class="cosa-fonte">CCNL art. 128 — Organizzazione studi</span>
+        </div>
+
+        <div class="cosa-card rv d3">
+          <span class="cosa-icon">🎭</span>
+          <span class="cosa-label">Art. 128 CCNL</span>
+          <h3 class="cosa-title">Anima il tempo libero</h3>
+          <p class="cosa-body">Propone e coordina "iniziative culturali, sportive e ricreative". Il laboratorio musicale, i tornei, i cineforum serali non nascono dal nulla — nascono dalla cura di qualcuno.</p>
+          <span class="cosa-fonte">CCNL art. 128 — Tempo libero</span>
+        </div>
+
+        <div class="cosa-card rv">
+          <span class="cosa-icon">🔗</span>
+          <span class="cosa-label">Art. 127 CCNL</span>
+          <h3 class="cosa-title">Dialoga con i docenti</h3>
+          <p class="cosa-body">Lavora "in un quadro coordinato di rapporti e di intese con i docenti". Sa cosa succede in aula. Sa cosa succede in camera. È l'unico adulto a vedere entrambe le facce di ogni ragazzo.</p>
+          <span class="cosa-fonte">CCNL art. 127 — Rapporto con i docenti</span>
+        </div>
+
+        <div class="cosa-card rv d1">
+          <span class="cosa-icon">🧭</span>
+          <span class="cosa-label">Art. 128 CCNL</span>
+          <h3 class="cosa-title">Orienta la persona</h3>
+          <p class="cosa-body">Cura "gli aspetti psicopedagogici e di orientamento". Aiuta ogni ragazzo a capire chi è, cosa vuole, dove va — non con la psicologia, ma con la presenza quotidiana e la fiducia.</p>
+          <span class="cosa-fonte">CCNL art. 128 — Orientamento</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ LA DOMANDA DEL GENITORE ═══════════ -->
+  <section class="edu-genitore">
+    <div class="w">
+      <span class="hero-eyebrow" style="display:block;text-align:center;margin-bottom:1.5rem">La prospettiva del genitore</span>
+      <p class="geo-intro">
+        <strong>"Mio figlio passerà cinque anni</strong> in questo posto.<br>
+        Mangerà, dormirà, riderà e piangerà qui.<br>
+        Voglio sapere con chi."
+      </p>
+
+      <div class="geo-pillole">
+        <span class="geo-pill">Come si chiama?</span>
+        <span class="geo-pill">Cosa ha studiato?</span>
+        <span class="geo-pill">Quanti anni di esperienza?</span>
+        <span class="geo-pill">Come gestisce un conflitto?</span>
+        <span class="geo-pill">Posso parlargli direttamente?</span>
+        <span class="geo-pill">Com'è con i ragazzi timidi?</span>
+        <span class="geo-pill">Cosa lo ha spinto a fare questo lavoro?</span>
+      </div>
+
+      <!-- RISPOSTA COMUNE — elegante e forbita -->
+      <div style="max-width:680px;margin:2.5rem auto 0;background:rgba(245,240,232,.05);border:1px solid rgba(184,146,42,.2);border-radius:14px;padding:2rem 2.25rem;text-align:left">
+        <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:1.25rem;text-align:center">— Tutte domande legittime. Meritano risposte vere —</p>
+
+        <p style="font-family:var(--fd);font-size:1.25rem;font-style:italic;color:rgba(245,240,232,.85);line-height:1.7;margin-bottom:1.5rem;text-align:center;max-width:640px;margin-left:auto;margin-right:auto">
+          "Un educatore non si sceglie come si sceglie un fornitore.<br>
+          Si conosce. Si incontra. Si impara a fidarsi."
+        </p>
+
+        <p style="font-size:.88rem;color:rgba(245,240,232,.6);line-height:1.85;margin-bottom:1.5rem;max-width:640px;margin-left:auto;margin-right:auto;text-align:center">
+          I nostri educatori vengono da percorsi formativi diversi — chi dalle scienze umane, chi dalla letteratura, chi dalle discipline tecnico-scientifiche o pedagogiche. La varietà delle formazioni è una ricchezza: produce sguardi diversi sulle stesse situazioni, approcci complementari, una comunità educante davvero plurale.
+        </p>
+
+        <div style="display:grid;gap:.75rem;margin-bottom:1.5rem">
+          <div style="padding:1rem 1.1rem;background:rgba(255,255,255,.04);border:1px solid rgba(184,146,42,.12);border-radius:10px">
+            <span style="font-size:1.5rem;display:block;margin-bottom:.5rem">🏛️</span>
+            <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Selezionati per concorso pubblico</p>
+            <p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.75;margin:0">Ogni educatore ha superato un concorso nazionale che ha valutato con rigore competenze psicopedagogiche, relazionali e organizzative. Non è chi si presenta — è chi viene scelto dopo una selezione seria. È la garanzia che la Repubblica offre alle famiglie che affidano i propri figli a una struttura pubblica.</p>
+          </div>
+          <div style="padding:1rem 1.1rem;background:rgba(255,255,255,.04);border:1px solid rgba(184,146,42,.12);border-radius:10px">
+            <span style="font-size:1.5rem;display:block;margin-bottom:.5rem">⏳</span>
+            <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Una carriera trentennale — non anni, stagioni</p>
+            <p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.75;margin:0">Trent'anni di esperienze accumulate nella prossimità quotidiana con i ragazzi. Trent'anni di conflitti mediati, di crisi notturne gestite, di fiducie guadagnate goccia a goccia. Questo non si impara sui libri e non si acquista online. Si costruisce, lentamente, rimanendo.</p>
+          </div>
+          <div style="padding:1rem 1.1rem;background:rgba(255,255,255,.04);border:1px solid rgba(184,146,42,.12);border-radius:10px">
+            <span style="font-size:1.5rem;display:block;margin-bottom:.5rem">🤝</span>
+            <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Sempre disponibili — senza appuntamento obbligatorio</p>
+            <p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.75;margin:0">Parlare con i genitori non è un onere burocratico — è parte del mandato educativo. Ogni educatore è sempre disponibile ad ascoltare, aggiornare, confrontarsi: formalmente in sede di colloquio, informalmente in qualsiasi momento ce ne sia bisogno. Nessun genitore viene mai rimandato indietro.</p>
+          </div>
+          <div style="padding:1rem 1.1rem;background:rgba(255,255,255,.04);border:1px solid rgba(184,146,42,.12);border-radius:10px">
+            <span style="font-size:1.5rem;display:block;margin-bottom:.5rem">❤️</span>
+            <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Una spiccata propensione al ruolo — e ai ragazzi</p>
+            <p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.75;margin:0">Nessuno resta trent'anni in questo ruolo per inerzia. Chi lavora con i ragazzi nei momenti più delicati della loro vita — nelle serate di nostalgia, nelle liti tra compagni, nelle piccole vittorie di ogni giorno — lo fa perché ci crede. Perché sa che quello che fa conta. Perché i ragazzi lo sentono, e rispondono.</p>
+          </div>
+        </div>
+
+        <p style="font-family:var(--fd);font-size:1.05rem;font-style:italic;color:rgba(245,240,232,.35);text-align:center;line-height:1.65;margin:0">
+          I nomi, i volti e la storia specifica di ciascuno<br>
+          <span style="color:rgba(245,240,232,.5)">li trovate nelle schede qui sotto.</span>
+        </p>
+      </div>
+
+      <div style="text-align:center;margin-top:2rem">
+        <a href="contatti.html" class="btn-gold">Richiedi un incontro con il team educativo →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SCHEDE EDUCATORI ═══════════ -->
+  <section class="edu-team" id="team">
+    <div class="w">
+      <p class="lbl">Chi troverete</p>
+      <h2>Il nostro <em>team educativo</em></h2>
+      <p style="color:var(--txt2);max-width:560px;margin:.5rem 0 0;font-size:.9rem;line-height:1.75">
+        Ogni scheda sarà completa di foto, breve presentazione in video e curriculum sintetico. <em style="color:var(--oro)">Le schede complete arriveranno non appena ogni educatore avrà fornito i materiali.</em>
+      </p>
+
+      <div class="team-grid">
+
+        <!-- Michele Gaggiano — compilato -->
+        <div class="team-card rv">
+          <div class="tc-photo">
+            <div class="tc-photo-placeholder">
+              <span class="tc-placeholder-icon">🎸</span>
+              <p class="tc-placeholder-text">Foto da inserire</p>
+            </div>
+            <button class="tc-video-btn" aria-label="Video di presentazione" title="Video di presentazione — da aggiungere">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="tc-badge">Educatore</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name">Michele Gaggiano</h3>
+            <p class="tc-role">Educatore</p>
+            <p class="tc-anni">⏱ Oltre 20 anni al Convitto Costaggini</p>
+            <p class="tc-bio">Chitarrista classico, pop ed etno-popolare. Ex direttore di cori polifonici. Ha cofondato il Laboratorio Musicale del Convitto insieme a Dino Barba.</p>
+            <div id="mg-bio-full" style="display:none">
+              <p class="tc-bio" style="margin-top:.5rem">Ha portato il Laboratorio Musicale a diventare uno dei punti di forza dell'offerta extracurriculare del Convitto, con oltre vent'anni di attività continuativa.</p>
+              <p class="tc-bio" style="margin-top:.5rem">Esperto programmatore informatico: ha ideato e sviluppato il <strong>sito web istituzionale del Convitto</strong> — quello che state visitando — e l'<strong>app gestionale interna</strong> di cui si serve il Personale Educativo per tutte le attribuzioni burocratico-amministrative dell'attività convittuale.</p>
+            </div>
+            <button onclick="document.getElementById('mg-bio-full').style.display=document.getElementById('mg-bio-full').style.display==='none'?'block':'none';this.textContent=this.textContent==='Leggi tutto →'?'Riduci ↑':'Leggi tutto →'"
+              style="font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bosco2);background:none;border:none;border-bottom:1px solid rgba(44,62,45,.25);padding:.1rem 0;cursor:pointer;margin-top:.5rem">
+              Leggi tutto →
+            </button>
+            <div class="tc-tags">
+              <span class="tc-tag">Chitarra classica</span>
+              <span class="tc-tag">Coro polifonico</span>
+              <span class="tc-tag">Musica pop/etno</span>
+              <span class="tc-tag">Programmazione web</span>
+              <span class="tc-tag">App gestionale</span>
+              <span class="tc-tag">20+ anni esperienza</span>
+            </div>
+            <a href="laboratorio-musicale.html" class="tc-contatta">
+              → Scopri il Laboratorio Musicale
+            </a>
+            <div class="tc-richiesta">📸 Foto e video di presentazione in attesa di autorizzazione</div>
+          </div>
+        </div>
+
+        <!-- Educatrice — segnaposto -->
+        <div class="team-card rv d1">
+          <div class="tc-photo">
+            <div class="tc-photo-placeholder">
+              <span class="tc-placeholder-icon">👩‍🏫</span>
+              <p class="tc-placeholder-text">Foto da inserire</p>
+            </div>
+            <button class="tc-video-btn" aria-label="Video di presentazione">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="tc-badge">Educatrice</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name tc-placeholder" style="color:var(--txt2)">Educatrice</h3>
+            <p class="tc-role">Referente convittrici · Piano femminile</p>
+            <p class="tc-anni" style="font-style:italic;color:rgba(44,62,45,.4)">Anni di servizio da inserire</p>
+            <p class="tc-bio" style="font-style:italic;color:rgba(44,62,45,.45)">Biografia e curriculum in arrivo.</p>
+            <div class="tc-richiesta">📸 Scheda in attesa di compilazione dall'educatrice</div>
+          </div>
+        </div>
+
+        <!-- Educatore — segnaposto -->
+        <div class="team-card rv d2">
+          <div class="tc-photo">
+            <div class="tc-photo-placeholder">
+              <span class="tc-placeholder-icon">🌙</span>
+              <p class="tc-placeholder-text">Foto da inserire</p>
+            </div>
+            <span class="tc-badge">Educatore</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name" style="color:var(--txt2)">Educatore</h3>
+            <p class="tc-role">Vigilanza e assistenza notturna</p>
+            <p class="tc-bio" style="font-style:italic;color:rgba(44,62,45,.45)">Scheda in arrivo.</p>
+            <div class="tc-richiesta">📸 Scheda in attesa di compilazione</div>
+          </div>
+        </div>
+
+        <!-- Card "Vuoi entrare nel team?" -->
+        <div class="team-card rv d3" style="border:2px dashed var(--av3);background:var(--av2)">
+          <div class="tc-photo" style="background:linear-gradient(135deg,var(--av2),var(--av3))">
+            <div class="tc-photo-placeholder">
+              <span class="tc-placeholder-icon" style="opacity:.4">➕</span>
+              <p class="tc-placeholder-text" style="color:rgba(44,62,45,.35)">Altre schede in arrivo</p>
+            </div>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name" style="color:var(--bosco2)">Il team al completo</h3>
+            <p class="tc-role" style="color:var(--txt2)">Schede in compilazione</p>
+            <p class="tc-bio" style="color:var(--txt2)">Le schede complete di tutti gli educatori saranno disponibili non appena avremo raccolto foto, biografie e video di presentazione da ciascuno di loro.</p>
+            <a href="contatti.html" class="tc-contatta">→ Richiedi informazioni sul team</a>
+          </div>
+        </div>
+
+        <!-- Educatore — segnaposto -->
+        <div class="team-card rv">
+          <div class="tc-photo">
+            <div class="tc-photo-placeholder">
+              <span class="tc-placeholder-icon">📚</span>
+              <p class="tc-placeholder-text">Foto da inserire</p>
+            </div>
+            <span class="tc-badge">Educatore</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name" style="color:var(--txt2)">Educatore</h3>
+            <p class="tc-role">Educatore</p>
+            <p class="tc-anni" style="font-style:italic;color:rgba(44,62,45,.4)">Anni di servizio da inserire</p>
+            <p class="tc-bio" style="font-style:italic;color:rgba(44,62,45,.45)">Scheda in attesa di compilazione.</p>
+            <div class="tc-richiesta">📸 Scheda in attesa di compilazione dall'educatore</div>
+          </div>
+        </div>
+
+        <!-- Educatrice pomeridiana — segnaposto -->
+        <div class="team-card rv d1">
+          <div class="tc-photo">
+            <div class="tc-photo-placeholder">
+              <span class="tc-placeholder-icon">🌸</span>
+              <p class="tc-placeholder-text">Foto da inserire</p>
+            </div>
+            <span class="tc-badge">Educatrice</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name" style="color:var(--txt2)">Educatrice pomeridiana</h3>
+            <p class="tc-role">Educatrice</p>
+            <p class="tc-anni" style="font-style:italic;color:rgba(44,62,45,.4)">Anni di servizio da inserire</p>
+            <p class="tc-bio" style="font-style:italic;color:rgba(44,62,45,.45)">Scheda in attesa di compilazione.</p>
+            <div class="tc-richiesta">📸 Scheda in attesa di compilazione dall'educatrice</div>
+          </div>
+        </div>
+
+        <!-- Educatore — segnaposto -->
+        <div class="team-card rv d2">
+          <div class="tc-photo">
+            <div class="tc-photo-placeholder">
+              <span class="tc-placeholder-icon">🌆</span>
+              <p class="tc-placeholder-text">Foto da inserire</p>
+            </div>
+            <span class="tc-badge">Educatore</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name" style="color:var(--txt2)">Educatore</h3>
+            <p class="tc-role">Educatore</p>
+            <p class="tc-anni" style="font-style:italic;color:rgba(44,62,45,.4)">Anni di servizio da inserire</p>
+            <p class="tc-bio" style="font-style:italic;color:rgba(44,62,45,.45)">Scheda in attesa di compilazione.</p>
+            <div class="tc-richiesta">📸 Scheda in attesa di compilazione</div>
+          </div>
+        </div>
+
+        <!-- Educatrice — segnaposto -->
+        <div class="team-card rv d3">
+          <div class="tc-photo">
+            <div class="tc-photo-placeholder">
+              <span class="tc-placeholder-icon">✨</span>
+              <p class="tc-placeholder-text">Foto da inserire</p>
+            </div>
+            <span class="tc-badge">Educatrice</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name" style="color:var(--txt2)">Educatrice</h3>
+            <p class="tc-role">Educatrice</p>
+            <p class="tc-anni" style="font-style:italic;color:rgba(44,62,45,.4)">Anni di servizio da inserire</p>
+            <p class="tc-bio" style="font-style:italic;color:rgba(44,62,45,.45)">Scheda in attesa di compilazione.</p>
+            <div class="tc-richiesta">📸 Scheda in attesa di compilazione dall'educatrice</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CTA FINALE ═══════════ -->
+  <section class="edu-cta">
+    <div class="w">
+      <div style="width:3rem;height:2px;background:linear-gradient(90deg,transparent,var(--oro2),transparent);margin:0 auto 2.5rem"></div>
+      <h2>Vuoi <em>incontrarli</em>?</h2>
+      <p>Non c'è documento che valga uno sguardo. Venite a trovarci — un pomeriggio, una mattina. Vi presentiamo il team, vi mostriamo gli spazi, rispondiamo a tutte le vostre domande.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
+        <a href="openday.html" class="btn-gold">🎯 Open Day Digitale →</a>
+        <a href="contatti.html" class="btn-outline" style="color:rgba(245,240,232,.7);border-color:rgba(245,240,232,.3)">Prenota una visita →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+// Toggle pannello CCNL
+function toggleCCNL() {
+  const panel  = document.getElementById('ccnl-panel');
+  const arrow  = document.getElementById('ccnl-btn-arrow');
+  const label  = document.getElementById('ccnl-btn-label');
+  const isOpen = panel.style.display !== 'none';
+
+  if (isOpen) {
+    panel.style.display = 'none';
+    arrow.style.transform = '';
+    label.textContent = 'Leggi il CCNL Art. 127–129';
+  } else {
+    panel.style.display = 'block';
+    arrow.style.transform = 'rotate(180deg)';
+    label.textContent = 'Chiudi il CCNL';
+    // Scroll fluido al pannello
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+  }
+}
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.width + '%';
+    });
+    barObs.unobserve(entry.target);
+  });
+}, { threshold: 0.3 });
+
+const skillsSection = document.getElementById('skills-list');
+if (skillsSection) barObs.observe(skillsSection);
+</script>
+</body>
+</html>

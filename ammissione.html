@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Procedura di ammissione al Convitto Costaggini di Rieti: iscrizioni, tariffe, moduli e FAQ." />
+  <meta property="og:title" content="Ammissione — Convitto "Costaggini" Rieti"/>
+  <meta property="og:description" content="Come iscriversi al Convitto Costaggini di Rieti: procedura, documenti, tariffe e FAQ per le famiglie."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Convitto Costaggini — Rieti"/>
+  <meta property="og:image" content="https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4374-scaled.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="theme-color" content="#2C3E2D" />
+  <title>Ammissione | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .tl { position: relative; margin-top: 1.5rem; padding-left: 1.4rem; }
+    .tl::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg,var(--oro),rgba(184,146,42,.1)); }
+    .ti { position: relative; padding: 0 0 2rem 1.75rem; }
+    .ti:last-child { padding-bottom: 0; }
+    .td { position: absolute; left: -.95rem; top: .1rem; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: linear-gradient(135deg,var(--oro),var(--oro2)); display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 700; color: var(--bosco); }
+    .tp { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--oro); margin-bottom: .18rem; }
+    .tt { font-family: var(--fd); font-size: 1.3rem; font-weight: 400; color: var(--bosco); margin-bottom: .3rem; }
+    .td-desc { font-size: .85rem; color: var(--txt2); line-height: 1.7; margin-bottom: .5rem; }
+    .ti ul { list-style: none; }
+    .ti li { font-size: .83rem; color: var(--txt2); padding: .3rem 0; border-bottom: 1px solid var(--av3); display: flex; gap: .5rem; }
+    .ti li:last-child { border-bottom: none; }
+    .ti li::before { content: '→'; color: var(--oro); flex-shrink: 0; }
+
+    .tariffe-grid { display: grid; gap: 1.25rem; margin-top: 1.75rem; }
+    .tcard { background: var(--bco); border: 1px solid var(--av3); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; }
+    .tcard.featured { border-color: var(--oro2); box-shadow: 0 0 0 2px rgba(212,170,74,.25); }
+    .tcard.featured::before { content: 'Più scelto'; position: absolute; top: 1rem; right: -2rem; background: var(--oro2); color: var(--bosco); font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .2rem 2.5rem; transform: rotate(45deg); transform-origin: center; }
+    .tcard-tipo { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--oro); margin-bottom: .4rem; }
+    .tcard h3 { font-size: 1.2rem; margin-bottom: .75rem; }
+    .tcard-price { font-family: var(--fd); font-size: 2.5rem; font-weight: 300; color: var(--bosco); line-height: 1; margin-bottom: .25rem; }
+    .tcard-price span { font-size: .85rem; font-family: var(--fu); color: var(--txt2); font-weight: 400; }
+    .tcard ul { list-style: none; margin-top: 1rem; }
+    .tcard li { font-size: .82rem; color: var(--txt2); padding: .35rem 0; border-bottom: 1px solid var(--av3); display: flex; gap: .5rem; align-items: flex-start; }
+    .tcard li:last-child { border-bottom: none; }
+    .tcard li::before { content: '✓'; color: var(--oro); font-weight: 700; flex-shrink: 0; }
+    .nota-isee { background: var(--av); border-left: 3px solid var(--oro2); border-radius: 0 4px 4px 0; padding: 1rem 1.25rem; margin-top: 1.25rem; font-size: .83rem; color: var(--txt2); }
+    @media(min-width:640px){ .tariffe-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:900px){ .tariffe-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .faq-list { margin-top: 1.5rem; }
+    .faq-item { border-bottom: 1px solid var(--av3); }
+    .faq-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; background: none; border: none; cursor: pointer; font-family: var(--fu); font-size: .9rem; font-weight: 600; color: var(--bosco); text-align: left; gap: 1rem; }
+    .faq-btn svg { width: 18px; height: 18px; fill: var(--oro); flex-shrink: 0; transition: transform .3s; }
+    .faq-btn[aria-expanded="true"] svg { transform: rotate(45deg); }
+    .faq-body { display: none; padding: 0 0 1rem; font-size: .85rem; color: var(--txt2); line-height: 1.75; }
+    .faq-body.open { display: block; }
+
+    .moduli-grid { display: grid; gap: .6rem; margin-top: 1.5rem; }
+    @media(min-width:640px){ .moduli-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body data-page="ammissione">
+<main id="main">
+
+  <div class="page-hero">
+    <div class="w">
+      <nav class="breadcrumb" aria-label="Percorso"><a href="index.html">Home</a><span>›</span><span aria-current="page">Ammissione</span></nav>
+      <div class="gold-bar"></div>
+      <h1>Procedura di <em>Ammissione</em></h1>
+      <p class="sub">Tutto quello che serve sapere per iscrivere il proprio figlio al Convitto "Costaggini" di Rieti: fasi, documenti, tariffe e domande frequenti.</p>
+    </div>
+  </div>
+
+  <!-- ── INFOGRAFICA 4 PASSI ── -->
+  <section style="background:linear-gradient(135deg,var(--bosco),#1a2e1b);padding:4rem 1.25rem">
+    <div class="w" style="text-align:center">
+      <p class="lbl" style="color:var(--oro2)">In sintesi</p>
+      <h2 style="color:var(--av)">4 passi per <em style="color:var(--oro3)">entrare al Convitto</em></h2>
+      <p style="color:rgba(245,240,232,.6);max-width:500px;margin:.5rem auto 2.5rem;font-size:.9rem">Il processo è semplice. Ecco tutto quello che deve fare una famiglia.</p>
+
+      <div id="passi-grid" style="display:grid;grid-template-columns:1fr;gap:1rem;max-width:700px;margin:0 auto"><style>@media(min-width:480px){#passi-grid{grid-template-columns:repeat(2,1fr)}}</style>
+
+        <div class="rv" style="background:rgba(245,240,232,.06);border:1px solid rgba(184,146,42,.2);border-radius:10px;padding:1.75rem 1.25rem;position:relative">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--oro);display:flex;align-items:center;justify-content:center;margin:0 auto .9rem;font-family:var(--fu);font-size:.8rem;font-weight:800;color:var(--bosco)">1</div>
+          <div style="font-size:2rem;margin-bottom:.5rem">📝</div>
+          <h3 style="font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);margin-bottom:.4rem">Compila</h3>
+          <p style="font-size:.8rem;color:rgba(245,240,232,.65);line-height:1.6">Iscrizione online sul portale MIUR + modulo di domanda al Convitto entro il <strong style="color:var(--oro2)">7 luglio</strong></p>
+        </div>
+
+        <div class="rv d1" style="background:rgba(245,240,232,.06);border:1px solid rgba(184,146,42,.2);border-radius:10px;padding:1.75rem 1.25rem;position:relative">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--oro);display:flex;align-items:center;justify-content:center;margin:0 auto .9rem;font-family:var(--fu);font-size:.8rem;font-weight:800;color:var(--bosco)">2</div>
+          <div style="font-size:2rem;margin-bottom:.5rem">📄</div>
+          <h3 style="font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);margin-bottom:.4rem">Invia</h3>
+          <p style="font-size:.8rem;color:rgba(245,240,232,.65);line-height:1.6">Consegna la documentazione in segreteria e versa la quota di iscrizione secondo le modalità indicate dalla segreteria.</p>
+        </div>
+
+        <div class="rv d2" style="background:rgba(245,240,232,.06);border:1px solid rgba(184,146,42,.2);border-radius:10px;padding:1.75rem 1.25rem;position:relative">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--oro);display:flex;align-items:center;justify-content:center;margin:0 auto .9rem;font-family:var(--fu);font-size:.8rem;font-weight:800;color:var(--bosco)">3</div>
+          <div style="font-size:2rem;margin-bottom:.5rem">🤝</div>
+          <h3 style="font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);margin-bottom:.4rem">Colloquio</h3>
+          <p style="font-size:.8rem;color:rgba(245,240,232,.65);line-height:1.6">Incontro con il Dirigente Scolastico e gli educatori per presentare il regolamento e firmare il Patto Educativo</p>
+        </div>
+
+        <div class="rv d3" style="background:rgba(245,240,232,.06);border:1px solid rgba(184,146,42,.2);border-radius:10px;padding:1.75rem 1.25rem;position:relative">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--oro);display:flex;align-items:center;justify-content:center;margin:0 auto .9rem;font-family:var(--fu);font-size:.8rem;font-weight:800;color:var(--bosco)">4</div>
+          <div style="font-size:2rem;margin-bottom:.5rem">🏠</div>
+          <h3 style="font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);margin-bottom:.4rem">Benvenuto</h3>
+          <p style="font-size:.8rem;color:rgba(245,240,232,.65);line-height:1.6">A settembre: arrivo in Convitto, assegnazione camera, accoglienza. Da qui inizia la nuova vita al Costaggini.</p>
+        </div>
+
+      </div>
+
+      <div style="margin-top:2rem">
+        <a href="#moduli" class="btn-gold">Scarica il modulo di domanda →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DOMANDE DEI GENITORI ── -->
+  <section id="domande-genitori" style="background:var(--av2);padding:4rem 1.25rem">
+    <div class="w">
+      <p class="lbl">Le vere domande</p>
+      <h2>Cosa chiedono <em>i genitori</em></h2>
+      <p style="color:var(--txt2);max-width:560px;margin:.5rem 0 2rem;font-size:.9rem">Non le FAQ tecniche — le domande del cuore. Quelle che ogni genitore si pone prima di mandare il figlio a vivere lontano da casa.</p>
+
+      <div style="display:grid;gap:.75rem">
+
+        <details class="dg-item rv" open>
+          <summary class="dg-q">Mio figlio può chiamarmi quando vuole?</summary>
+          <p class="dg-a">Sì, in qualsiasi momento. I ragazzi tengono il cellulare con sé durante la giornata. L'unico vincolo è spegnerlo in sala mensa, durante lo studio guidato e durante le ore di riposo notturno. Non ci sono orari fissi per le chiamate ai genitori: il Convitto rispetta e incoraggia il legame familiare.</p>
+        </details>
+
+        <details class="dg-item rv d1">
+          <summary class="dg-q">Posso venire a trovarlo durante la settimana?</summary>
+          <p class="dg-a">Sì. I genitori (o persona maggiorenne delegata per iscritto) possono venire al Convitto durante la settimana. L'uscita viene autorizzata dall'educatore in servizio, che annota tutto sul registro. Il rientro deve avvenire entro le 22:00. Per uscite brevi o straordinarie basta una richiesta scritta o via email con copia del documento d'identità.</p>
+        </details>
+
+        <details class="dg-item rv d2">
+          <summary class="dg-q">Cosa succede se litiga con il compagno di camera?</summary>
+          <p class="dg-a">L'educatore di riferimento interviene subito per mediare. Se il problema persiste, il Collaboratore del Dirigente valuta uno spostamento di camera — tenendo conto dell'età, della classe e dei rapporti tra gli studenti. La convivenza è parte del percorso educativo: imparare a gestire i conflitti è uno degli obiettivi espliciti del Convitto.</p>
+        </details>
+
+        <details class="dg-item rv d3">
+          <summary class="dg-q">Se si ammala, chi lo assiste?</summary>
+          <p class="dg-a">L'infermiera è presente ogni giorno scolastico. Per malattie lievi il ragazzo resta in Convitto, assistito e sorvegliato. I genitori vengono sempre avvisati. Per malattie più serie il Convitto dispone il rientro a casa nella stessa giornata in cui viene data la comunicazione. In emergenza, l'infermiera accompagna lo studente al presidio ospedaliero.</p>
+        </details>
+
+        <details class="dg-item rv">
+          <summary class="dg-q">Come sapete se va bene a scuola?</summary>
+          <p class="dg-a">Gli educatori hanno accesso al Registro Elettronico (con consenso della famiglia) e partecipano periodicamente ai Consigli di Classe. Se le cose non vanno, la famiglia viene contattata direttamente — senza aspettare il pagellino. Il Convitto fa parte della comunità educante insieme ai docenti: lo studio pomeridiano guidato è pensato proprio per questo.</p>
+        </details>
+
+        <details class="dg-item rv d1">
+          <summary class="dg-q">Può tornare a casa nel weekend?</summary>
+          <p class="dg-a">Sì. Il Convitto funziona da domenica sera al venerdì mattina. Il fine settimana i ragazzi tornano a casa. Chi lo desidera può rientrare la domenica sera: sono previste corse con i mezzi del Convitto dai punti di ritrovo indicati ad inizio anno scolastico. Chi non rientra deve comunicarlo prima delle 22:00 di domenica.</p>
+        </details>
+
+        <details class="dg-item rv d2">
+          <summary class="dg-q">È sicuro? Chi sorveglia di notte?</summary>
+          <p class="dg-a">Il Convitto è sorvegliato 24 ore su 24. Di notte sono presenti educatori notturni sui piani e custodi che presidiano gli accessi. Il cancello si chiude alle 22:30 e riapre alle 6:00. Le porte di emergenza sono verificate ogni sera. In 54 anni di attività, la sicurezza degli studenti è sempre stata la priorità assoluta.</p>
+        </details>
+
+        <details class="dg-item rv d3">
+          <summary class="dg-q">Quanto costa davvero, tutto compreso?</summary>
+          <p class="dg-a">La retta include vitto completo (4 pasti al giorno), alloggio, studio guidato, attività extrascolastiche e trasporto Convitto–scuola. L'importo esatto viene deliberato ogni anno dal Consiglio d'Istituto. Sono previste riduzioni per fasce ISEE. Contatta la segreteria per il preventivo aggiornato: <a href="mailto:rirh010007@istruzione.it" style="color:var(--bosco2)">rirh010007@istruzione.it</a>.</p>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .dg-item { background:var(--av); border:1px solid var(--av3); border-radius:8px; overflow:hidden; transition:box-shadow .2s; }
+    .dg-item:hover { box-shadow:0 4px 16px rgba(0,0,0,.08); }
+    .dg-q { font-family:var(--fu); font-size:.85rem; font-weight:700; letter-spacing:.04em; color:var(--bosco); padding:1.1rem 1.4rem; cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .dg-q::marker, .dg-q::-webkit-details-marker { display:none; }
+    .dg-q::after { content:'＋'; font-size:1.1rem; color:var(--oro); flex-shrink:0; transition:transform .3s; }
+    details[open] .dg-q::after { transform:rotate(45deg); }
+    details[open] .dg-q { color:var(--bosco); border-bottom:1px solid var(--av3); }
+    .dg-a { font-size:.86rem; color:var(--txt2); line-height:1.8; padding:1rem 1.4rem 1.2rem; margin:0; }
+  </style>
+
+  <!-- PROCEDURA -->
+  <section id="procedura" style="background:var(--bco)">
+    <div class="w" style="display:grid;gap:4rem" id="proc-grid">
+      <div>
+        <p class="lbl">Come iscriversi</p>
+        <h2>Le fasi dell'<em>iscrizione</em></h2>
+        <p class="lead">L'iscrizione al Convitto avviene tramite procedura online sul portale del Ministero dell'Istruzione e del Merito, integrata da documentazione cartacea da consegnare in segreteria.</p>
+        <a href="contatti.html" class="btn-gold">Richiedi informazioni →</a>
+      </div>
+      <nav aria-label="Fasi di ammissione">
+        <div class="tl">
+          <div class="ti rv"><div class="td" aria-hidden="true">1</div><p class="tp">Settembre – Dicembre</p><h3 class="tt">Pre-iscrizione online</h3><p class="td-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><ul><li>Lorem ipsum</li><li>Lorem ipsum</li><li>Lorem ipsum</li></ul></div>
+          <div class="ti rv d1"><div class="td" aria-hidden="true">2</div><p class="tp">Gennaio – Febbraio</p><h3 class="tt">Documentazione integrativa</h3><p class="td-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><ul><li>Lorem ipsum</li><li>Lorem ipsum</li><li>Lorem ipsum</li><li>Lorem ipsum</li></ul></div>
+          <div class="ti rv d2"><div class="td" aria-hidden="true">3</div><p class="tp">Marzo – Aprile</p><h3 class="tt">Colloquio di orientamento</h3><p class="td-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+          <div class="ti rv d3"><div class="td" aria-hidden="true">4</div><p class="tp">Maggio – Giugno</p><h3 class="tt">Conferma e pagamento</h3><p class="td-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><ul><li>Lorem ipsum</li><li>Lorem ipsum</li><li>Lorem ipsum</li></ul></div>
+          <div class="ti rv"><div class="td" aria-hidden="true">5</div><p class="tp">Settembre</p><h3 class="tt">Ingresso al Convitto</h3><p class="td-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+        </div>
+      </nav>
+    </div>
+  </section>
+  <style>#proc-grid { grid-template-columns: 1fr; } @media(min-width:900px){ #proc-grid { grid-template-columns: 1fr 1.2fr; align-items: start; } }</style>
+
+  <!-- TARIFFE -->
+  <section id="tariffe" style="background:var(--av)">
+    <div class="w">
+      <p class="lbl">Tariffe A.S. 2025/26</p>
+      <h2>Rette e <em>contributi</em></h2>
+      <p class="lead">Le tariffe sono deliberate annualmente dal Consiglio d'Istituto e tengono conto della situazione economica della famiglia. Le rette vengono aggiornate ad ogni anno scolastico. Per il preventivo aggiornato contattare la segreteria.</p>
+      <!-- Rette reali A.S. 2025/26 -->
+      <div style="background:linear-gradient(135deg,var(--bosco),#1a3a1b);border-radius:12px;padding:2.5rem;border:1px solid rgba(184,146,42,.2);margin-top:1.5rem">
+
+        <!-- Griglia include + rate -->
+        <div id="rette-grid" style="display:grid;grid-template-columns:1fr;gap:1.25rem;margin-bottom:1.75rem"><style>@media(min-width:560px){#rette-grid{grid-template-columns:1fr 1fr}}</style>
+
+          <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:1.4rem;border:1px solid rgba(184,146,42,.15)">
+            <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">Cosa include la retta</p>
+            <ul style="font-size:.83rem;color:rgba(245,240,232,.75);line-height:2;list-style:none;padding:0;margin:0">
+              <li>🍽️ Vitto completo — 4 pasti al giorno</li>
+              <li>🛏️ Alloggio in camera</li>
+              <li>📚 Studio guidato (15:30–17:15)</li>
+              <li>🎵 Laboratorio Musicale</li>
+              <li>🚌 Trasporto Convitto–scuola</li>
+              <li>🏃 Attività extrascolastiche</li>
+            </ul>
+          </div>
+
+          <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:1.4rem;border:1px solid rgba(184,146,42,.15)">
+            <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">Piano di versamento A.S. 2025/26</p>
+            <div style="font-size:.82rem;color:rgba(245,240,232,.75)">
+              <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.08)">
+                <span>Iscrizione <small style="opacity:.6">(entro 30 lug. 2025)</small></span><strong style="color:var(--oro2)">€ 450</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.08)">
+                <span>1ª rata <small style="opacity:.6">(entro 1 set. 2025)</small></span><strong style="color:var(--oro2)">€ 350</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.08)">
+                <span>2ª rata <small style="opacity:.6">(entro 30 nov. 2025)</small></span><strong style="color:var(--oro2)">€ 400</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.08)">
+                <span>3ª rata <small style="opacity:.6">(entro 28 feb. 2026)</small></span><strong style="color:var(--oro2)">€ 400</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:.5rem 0;margin-top:.25rem">
+                <span style="font-weight:700;color:#fff">Totale annuo</span><strong style="color:var(--oro3);font-family:var(--fd);font-size:1.15rem">€ 1.600</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA domanda -->
+        <div style="background:rgba(184,146,42,.12);border:1px solid rgba(184,146,42,.3);border-radius:8px;padding:1.25rem;display:flex;flex-direction:column;align-items:center;gap:.85rem;text-align:center">
+          <div>
+            <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);margin-bottom:.3rem">Pronto a iscriverti?</p>
+            <p style="font-size:.85rem;color:rgba(245,240,232,.7);margin:0">Compila la domanda online in pochi minuti e inviala direttamente alla segreteria.</p>
+          </div>
+          <a href="domanda-ammissione.html"
+             style="display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.7rem 1.4rem;background:linear-gradient(135deg,var(--oro),#d4aa4a);color:var(--bosco);border-radius:8px;text-decoration:none;max-width:100%;box-sizing:border-box">
+            📋 Compila la domanda →
+          </a>
+        </div>
+
+        <p style="font-family:var(--fu);font-size:.62rem;color:rgba(245,240,232,.3);margin-top:1rem;line-height:1.6">
+          Tariffe deliberate dal Consiglio d'Istituto per l'A.S. 2025/26. La quota di iscrizione (€ 450) non è rimborsabile.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODULI -->
+  <section id="moduli" style="background:var(--bco)">
+    <div class="w">
+      <p class="lbl">Modulistica</p>
+      <h2>Moduli e <em>documenti</em></h2>
+      <p class="lead">Scarica qui i moduli necessari per la procedura di iscrizione. Per i documenti non disponibili online, contatta la segreteria.</p>
+      <div class="moduli-grid">
+        <a class="drow rv" href="domanda-ammissione.html"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Domanda di ammissione al Convitto</h4><span>Compila online e invia — oppure scarica il PDF</span></div><span class="darr">›</span></a>
+        <a class="drow rv" href="regolamento-guida.html"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Regolamento di Convitto</h4><span>PDF — Versione aggiornata 30 gennaio 2025 (35 articoli)</span></div><span class="darr">›</span></a>
+        <a class="drow rv d1" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Patto Educativo di Convivenza</h4><span>PDF — Firma obbligatoria</span></div><span class="darr">›</span></a>
+        <a class="drow rv d2" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Dichiarazione allergie/intolleranze</h4><span>PDF compilabile</span></div><span class="darr">›</span></a>
+        <a class="drow rv" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Autorizzazione uscite autonome</h4><span>PDF compilabile</span></div><span class="darr">›</span></a>
+        <a class="drow rv d1" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Lista corredo obbligatorio</h4><span>PDF — A.S. 2025/26</span></div><span class="darr">›</span></a>
+        <a class="drow rv d2" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Richiesta certificato di frequenza</h4><span>PDF compilabile</span></div><span class="darr">›</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="background:var(--av2)">
+    <div class="w">
+      <p class="lbl">Domande frequenti</p>
+      <h2>Le risposte alle domande <em>più comuni</em></h2>
+      <div class="faq-list" role="list">
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Chi può iscriversi al Convitto?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Possono presentare domanda di ammissione tutti gli studenti iscritti all'IPSSEOA "R. A. Costaggini" di Rieti. Il Consiglio d'Istituto può ammettere, su richiesta, anche studenti frequentanti altri istituti della città, fermo restando che la precedenza spetta sempre agli alunni del Costaggini.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Entro quando va presentata la domanda di ammissione?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>La domanda si presenta contestualmente all'iscrizione scolastica, nei termini previsti dalla normativa vigente sulle iscrizioni alle secondarie di secondo grado. L'iscrizione online va poi perfezionata presso la segreteria dell'istituto. Entro il 7 luglio devono pervenire la documentazione richiesta e il pagamento della quota di iscrizione deliberata dal Consiglio d'Istituto. Domande tardive vengono prese in considerazione solo se vi sono posti disponibili.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Quando è aperto il Convitto durante l'anno?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Il Convitto è aperto dal primo giorno di lezioni fino al termine delle stesse, incluso il periodo degli esami. Funziona da domenica sera (arrivo dalle ore 20:00) al venerdì mattina. Resta chiuso nei giorni festivi previsti dal calendario scolastico regionale (1 novembre, 4 dicembre, 8 dicembre, 6 gennaio, 25 aprile, 1 maggio, 2 giugno) e in caso di ordinanze di chiusura del Sindaco. È possibile richiedere il rientro domenicale: sono previste corse con i mezzi del Convitto dai punti di ritrovo indicati ad inizio anno.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Come sono organizzate le camere?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Le camere sono assegnate dall'educatore responsabile tenendo conto, per quanto possibile, della classe frequentata, dell'età e dei rapporti tra gli studenti. Il Convitto è strutturato su cinque piani: tre riservati ai convittori maschi e due alle convittrici. Il Convitto fornisce letto, materasso, cuscino (salvo allergie), poggia-oggetti e armadietto. Al momento dell'assegnazione viene redatto un verbale di consegna firmato dai genitori. È fatto assoluto divieto agli studenti maschi di recarsi nei piani femminili e viceversa.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Cosa deve portare lo studente al momento dell'ingresso?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Ogni convittore deve essere munito di: coperte e/o piumino, un completo da letto (lenzuola, federa, copertina), due asciugamani, un pigiama, un paio di ciabatte o pantofole, un sacchetto per la biancheria sporca, appendiabiti e tutto il necessario per la cura personale. È sconsigliato portare indumenti di pregio, preziosi o apparecchi elettronici (TV, console, smartphone di valore) dei quali il Convitto non garantisce custodia. Sono necessari anche il certificato medico di idoneità alla vita convittuale e la tessera sanitaria.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Com'è organizzata la giornata in Convitto?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>La giornata tipo prevede: sveglia alle 6:30, colazione 7:00–7:35, trasferimento a scuola 7:40–8:00, pranzo alle 14:00, tempo libero 15:00–15:30, studio guidato 15:30–17:15, merenda alle 17:15, libera uscita e/o attività convittuali 17:30–19:15, cena alle 19:15, tempo libero e attività serali 20:30–22:00, riposo notturno dalle 22:30. Gli orari sono flessibili in relazione all'orario scolastico.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Gli studenti possono uscire liberamente durante la settimana?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Sì, è prevista una libera uscita quotidiana (17:30–19:15) previa autorizzazione scritta dei genitori da sottoscrivere all'inizio dell'anno. I maggiorenni hanno maggiore autonomia nella gestione del tempo. Per i minorenni i genitori possono autorizzare l'utilizzo della pista ciclopedonale adiacente al Convitto. Le uscite straordinarie infrasettimanali (richiesta in famiglia, visita medica, ecc.) richiedono richiesta scritta o via email da parte dei genitori con copia del documento d'identità. Il rientro serale deve avvenire entro le ore 22:00.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Lo studio è obbligatorio?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Sì. Lo studio pomeridiano guidato (15:30–17:15) è obbligatorio per tutti i convittori e semiconvittori. Deve svolgersi in silenzio, con la massima diligenza e nel rispetto reciproco. Gli educatori si distribuiscono tra i vari piani per garantire il giusto clima e offrire supporto dove necessario. Disturbare lo studio può comportare l'applicazione di un provvedimento disciplinare e la limitazione delle attività ricreative.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Come vengono gestiti i rapporti con le famiglie?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Un team di educatori è specificamente incaricato di seguire un gruppo di convittori e mantenere i rapporti con le rispettive famiglie e con i coordinatori di classe. Le famiglie possono consentire agli educatori di accedere al Registro Elettronico per monitorare la situazione scolastica. Sono previsti incontri periodici scuola-famiglia e i genitori possono richiedere in qualsiasi momento un appuntamento con il Dirigente Scolastico o gli educatori referenti del proprio figlio.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Cosa succede se lo studente si ammala?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Per malattie lievi e di breve durata l'assistenza è garantita nel Convitto dall'infermiera e dal medico convenzionato, con contestuale avviso alla famiglia. Negli altri casi si dispone il rientro in famiglia nella stessa giornata in cui viene data la comunicazione. In caso di emergenza l'infermiera accompagna lo studente al presidio ospedaliero. Tutti i medicinali devono essere custoditi in infermeria; è vietato tenere farmaci nei propri armadietti. Per malattie superiori a cinque giorni il rientro in Convitto avviene secondo le norme vigenti.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Esistono sanzioni disciplinari? Quali?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Il Regolamento prevede quattro livelli di sanzione: avvertimento verbale per mancanze lievi (es. ritardo alla sveglia, disordine in camera); avvertimento scritto con comunicazione alla famiglia e possibile limitazione della libera uscita per mancanze lievi reiterate; sospensione dal Convitto (fino a 5 giorni su proposta del Consiglio di Disciplina) per mancanze gravi (fumo, mancanza di rispetto, danni alla struttura, uso di alcolici); espulsione deliberata dal Consiglio d'Istituto per mancanze gravissime (violenza, furto, spaccio, atti vandalici). I provvedimenti possono essere convertiti in attività utili alla comunità. Lo studente ha sempre diritto ad essere ascoltato prima dell'irrogazione di qualsiasi sanzione.</p></div></div>
+
+        <div class="faq-item rv"><button class="faq-btn" aria-expanded="false"><span>Cos'è il Semiconvitto? A chi è rivolto?</span><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-body"><p>Il Semiconvitto è un servizio rivolto agli studenti dell'IPSSEOA "Costaggini" che non alloggiano in Convitto. Il semiconvittore consuma il pranzo in mensa e partecipa allo studio pomeridiano guidato. La retta, stabilita annualmente dal Consiglio d'Istituto, dà diritto al vitto (pranzo) e all'assistenza educativa per il tempo di permanenza. La domanda di ammissione va presentata al Dirigente Scolastico entro i termini del bando annuale. I semiconvittori sono soggetti allo stesso regolamento dei convittori per il tempo in cui si trovano nella struttura.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--bosco);padding:3rem 1rem;text-align:center">
+    <div class="w">
+      <h2 style="color:var(--av);margin-bottom:.75rem">Pronto a fare il primo <em style="color:var(--oro3)">passo</em>?</h2>
+      <p style="color:rgba(245,240,232,.7);max-width:500px;margin:0 auto 1.75rem">Contattaci per un colloquio informativo gratuito o per prenotare una visita al Convitto.</p>
+      <a href="contatti.html" class="btn-gold">Contattaci ora →</a>
+    </div>
+  </section>
+
+</main>
+<script src="shared.js?v=2"></script>
+<script>
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body = btn.nextElementSibling;
+      const open = body.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    });
+  });
+</script>
+</body>
+</html>
