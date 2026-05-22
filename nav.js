@@ -42,7 +42,12 @@
           <li><a href="laboratorio-musicale.html" data-page="laboratorio-musicale">♪ Laboratorio Musicale</a></li>
           <li><a href="anno.html" data-page="anno">📅 L'Anno al Convitto</a></li>
           <li><a href="alumni.html" data-page="alumni">Alumni &amp; Comunità</a></li>
+          <li><a href="iscriviti-alumni.html" data-page="iscriviti-alumni">✦ Unisciti agli Alumni</a></li>
+          <li><a href="ricordi.html" data-page="ricordi">🕯️ Muro dei Ricordi</a></li>
+          <li><a href="lettera.html" data-page="lettera">💌 Lettera a un Futuro Convittore</a></li>
           <li><a href="mondo.html" data-page="mondo">🌍 Il Costaggini nel Mondo</a></li>
+          <li><a href="vinile.html" data-page="vinile">🎵 Il Vinile del Convitto</a></li>
+          <li><a href="solidarieta.html" data-page="solidarieta">🎵 "La Solidarietà"</a></li>
         </ul>
       </div>
 
@@ -74,9 +79,6 @@
           <li><a href="avvisi.html" data-page="avvisi">Avvisi &amp; circolari</a></li>
           <li><a href="calendario.html" data-page="calendario">Calendario eventi</a></li>
           <li><a href="natale2024.html" data-page="natale2024">🎄 Natale 2024</a></li>
-          <li><a href="ricordi.html" data-page="ricordi">🕯️ Muro dei Ricordi</a></li>
-          <li><a href="vinile.html" data-page="vinile">🎵 Il Vinile del Convitto</a></li>
-          <li><a href="solidarieta.html" data-page="solidarieta">🎵 "La Solidarietà"</a></li>
         </ul>
       </div>
 
@@ -87,6 +89,12 @@
         </button>
         <ul class="dd-menu" role="menu">
           <li><a href="scopri-talento.html" data-page="scopri-talento">✨ Scopri il tuo Talento</a></li>
+          <li><a href="quiz-competenze.html" data-page="quiz-competenze">🍳 Sai già cucinare?</a></li>
+          <li><a href="quiz-percorso.html" data-page="quiz-percorso">🗺️ Scegli il tuo percorso</a></li>
+          <li><a href="quiz-piatti.html" data-page="quiz-piatti">🧑‍🍳 Riconosci il piatto</a></li>
+          <li><a href="quiz-accoglienza.html" data-page="quiz-accoglienza">🏨 Sei pronto per l'accoglienza?</a></li>
+          <li><a href="quiz-settimana.html" data-page="quiz-settimana">📅 La tua settimana tipo</a></li>
+          <li><a href="quiz-cruciverba.html" data-page="quiz-cruciverba">📝 Cruciverba del Costaggini</a></li>
           <li><a href="ptof-guida.html" data-page="ptof-guida">Il PTOF spiegato</a></li>
           <li><a href="regolamento.html" data-page="regolamento">Regolamento di Convitto</a></li>
           <li><a href="trasparenza.html" data-page="trasparenza">Amministrazione Trasparente</a></li>
@@ -121,7 +129,12 @@
         <li><a href="laboratorio-musicale.html">♪ Laboratorio Musicale</a></li>
         <li><a href="anno.html">📅 L'Anno al Convitto</a></li>
         <li><a href="alumni.html">Alumni &amp; Comunità</a></li>
+        <li><a href="iscriviti-alumni.html">✦ Unisciti agli Alumni</a></li>
+        <li><a href="ricordi.html">🕯️ Muro dei Ricordi</a></li>
+        <li><a href="lettera.html">💌 Lettera a un Futuro Convittore</a></li>
         <li><a href="mondo.html">🌍 Il Costaggini nel Mondo</a></li>
+        <li><a href="vinile.html">🎵 Il Vinile del Convitto</a></li>
+        <li><a href="solidarieta.html">🎵 "La Solidarietà"</a></li>
       </ul>
     </li>
 
@@ -147,9 +160,6 @@
         <li><a href="avvisi.html">Avvisi &amp; circolari</a></li>
         <li><a href="calendario.html">Calendario eventi</a></li>
         <li><a href="natale2024.html">🎄 Natale 2024</a></li>
-        <li><a href="ricordi.html">🕯️ Muro dei Ricordi</a></li>
-        <li><a href="vinile.html">🎵 Il Vinile del Convitto</a></li>
-        <li><a href="solidarieta.html">🎵 "La Solidarietà"</a></li>
       </ul>
     </li>
 
@@ -157,6 +167,12 @@
       <button class="drw-acc" aria-expanded="false">Didattica <svg viewBox="0 0 24 24" class="drw-arrow"><path d="M7 10l5 5 5-5z"/></svg></button>
       <ul class="drw-sub">
         <li><a href="scopri-talento.html">✨ Scopri il tuo Talento</a></li>
+        <li><a href="quiz-competenze.html">🍳 Sai già cucinare?</a></li>
+        <li><a href="quiz-percorso.html">🗺️ Scegli il tuo percorso</a></li>
+        <li><a href="quiz-piatti.html">🧑‍🍳 Riconosci il piatto</a></li>
+        <li><a href="quiz-accoglienza.html">🏨 Sei pronto per l'accoglienza?</a></li>
+        <li><a href="quiz-settimana.html">📅 La tua settimana tipo</a></li>
+        <li><a href="quiz-cruciverba.html">📝 Cruciverba del Costaggini</a></li>
         <li><a href="ptof-guida.html">Il PTOF spiegato</a></li>
         <li><a href="regolamento.html">Regolamento di Convitto</a></li>
         <li><a href="trasparenza.html">Amministrazione Trasparente</a></li>
