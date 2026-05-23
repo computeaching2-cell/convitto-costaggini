@@ -260,6 +260,10 @@ function onInput(e){
 function advance(el){
   if(!cur) return;
   const [r,c]=el.dataset.k.split(',').map(Number);
+  // Calcola posizione corrente nella parola
+  const pos = cur.d==='D' ? r-cur.r : c-cur.c;
+  // Non avanzare oltre l'ultima lettera della parola
+  if(pos >= cur.w.length-1) return;
   const nr=r+(cur.d==='D'?1:0), nc=c+(cur.d==='A'?1:0);
   inp(`${nr},${nc}`)?.focus();
 }
