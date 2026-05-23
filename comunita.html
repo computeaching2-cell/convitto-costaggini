@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="La comunità del Convitto Costaggini — Alumni, Muro dei Ricordi, Lab Musicale, Vinile, Solidarietà e molto altro."/>
+  <title>La Nostra Comunità | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .hub-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.25rem; margin-top:2rem; }
+    @media(max-width:480px){ .hub-grid { grid-template-columns:1fr; } }
+    .hub-card { display:flex; flex-direction:column; background:var(--av2); border:1px solid var(--av3); border-radius:12px; padding:1.5rem; text-decoration:none; transition:transform .2s,box-shadow .2s; }
+    .hub-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,.1); }
+    .hub-card-icon { font-size:2rem; margin-bottom:.75rem; }
+    .hub-card-tag { font-family:var(--fu); font-size:.55rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--oro); margin-bottom:.3rem; }
+    .hub-card-title { font-family:var(--fd); font-size:1.2rem; font-weight:300; color:var(--bosco); margin-bottom:.4rem; line-height:1.3; }
+    .hub-card-title em { font-style:italic; color:var(--bosco2); }
+    .hub-card-desc { font-family:var(--fu); font-size:.78rem; color:var(--txt2); line-height:1.65; flex:1; }
+    .hub-card-cta { font-family:var(--fu); font-size:.62rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--oro); margin-top:1rem; }
+    .hub-card.dark { background:var(--bosco); border-color:rgba(184,146,42,.15); }
+    .hub-card.dark .hub-card-title { color:#fff; }
+    .hub-card.dark .hub-card-desc { color:rgba(245,240,232,.55); }
+    .hub-card.dark .hub-card-tag { color:var(--oro2); }
+    .hub-sep { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:var(--oro); margin:2.5rem 0 .5rem; padding-bottom:.5rem; border-bottom:1px solid var(--av3); }
+  </style>
+</head>
+<body data-page="comunita">
+<main id="main">
+  <div class="page-hero">
+    <div class="w">
+      <nav class="breadcrumb"><a href="index.html">Home</a><span>›</span><span aria-current="page">La Nostra Comunità</span></nav>
+      <div class="gold-bar"></div>
+      <h1>La nostra <em>Comunità</em></h1>
+      <p class="sub">Alumni sparsi nel mondo, ricordi che restano, musica che unisce. Tutto quello che rende il Convitto Costaggini qualcosa di più di una scuola.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="w">
+      <p class="hub-sep">— Alumni & memoria</p>
+      <div class="hub-grid">
+        <a href="alumni.html" class="hub-card rv">
+          <div class="hub-card-icon">🎓</div>
+          <p class="hub-card-tag">Community</p>
+          <h2 class="hub-card-title">Alumni &amp; <em>Comunità</em></h2>
+          <p class="hub-card-desc">Le storie di chi è passato dal Convitto e oggi lavora in tutto il mondo. Una community che cresce ogni anno.</p>
+          <span class="hub-card-cta">Scopri la community →</span>
+        </a>
+        <a href="iscriviti-alumni.html" class="hub-card rv d1">
+          <div class="hub-card-icon">✦</div>
+          <p class="hub-card-tag">Iscriviti</p>
+          <h2 class="hub-card-title">Unisciti agli <em>Alumni</em></h2>
+          <p class="hub-card-desc">Sei un ex convittore? Aggiungi la tua scheda alla community e rimani in contatto con chi ha condiviso gli stessi anni.</p>
+          <span class="hub-card-cta">Aggiungi la tua scheda →</span>
+        </a>
+        <a href="ricordi.html" class="hub-card rv d2">
+          <div class="hub-card-icon">🕯️</div>
+          <p class="hub-card-tag">Memoria</p>
+          <h2 class="hub-card-title">Il Muro dei <em>Ricordi</em></h2>
+          <p class="hub-card-desc">Un momento, un odore, una frase sentita nel corridoio. Il muro dove chi è passato lascia un segno.</p>
+          <span class="hub-card-cta">Lascia un ricordo →</span>
+        </a>
+        <a href="lettera.html" class="hub-card rv d3">
+          <div class="hub-card-icon">💌</div>
+          <p class="hub-card-tag">Lettere</p>
+          <h2 class="hub-card-title">Lettere a un Futuro <em>Convittore</em></h2>
+          <p class="hub-card-desc">Chi è già passato scrive a chi sta per arrivare. Lettere vere, non dépliant.</p>
+          <span class="hub-card-cta">Leggi le lettere →</span>
+        </a>
+        <a href="mondo.html" class="hub-card rv d4">
+          <div class="hub-card-icon">🌍</div>
+          <p class="hub-card-tag">Mappa interattiva</p>
+          <h2 class="hub-card-title">Il Costaggini nel <em>Mondo</em></h2>
+          <p class="hub-card-desc">Dal Terminillo al mondo intero. Il mappamondo degli alumni — aggiungi anche tu il tuo segnaposto.</p>
+          <span class="hub-card-cta">Esplora la mappa →</span>
+        </a>
+      </div>
+
+      <p class="hub-sep">— Musica & vita convittuale</p>
+      <div class="hub-grid">
+        <a href="laboratorio-musicale.html" class="hub-card dark rv">
+          <div class="hub-card-icon">🎵</div>
+          <p class="hub-card-tag">Laboratorio</p>
+          <h2 class="hub-card-title">Il Laboratorio <em>Musicale</em></h2>
+          <p class="hub-card-desc">Chitarre, tastiere, percussioni e voci. Fondato da Michele Gaggiano e Dino Barba — un luogo dove il talento emerge.</p>
+          <span class="hub-card-cta">Scopri il laboratorio →</span>
+        </a>
+        <a href="vinile.html" class="hub-card dark rv d1">
+          <div class="hub-card-icon">🎶</div>
+          <p class="hub-card-tag">Il Vinile</p>
+          <h2 class="hub-card-title">Il Vinile del <em>Convitto</em></h2>
+          <p class="hub-card-desc">Le registrazioni originali del Laboratorio Musicale. Ascolta quello che i ragazzi hanno creato.</p>
+          <span class="hub-card-cta">Ascolta →</span>
+        </a>
+        <a href="solidarieta.html" class="hub-card dark rv d2">
+          <div class="hub-card-icon">❤️</div>
+          <p class="hub-card-tag">2019</p>
+          <h2 class="hub-card-title">"La <em>Solidarietà</em>"</h2>
+          <p class="hub-card-desc">Il brano del 2019 — una delle produzioni più belle del Laboratorio Musicale. Da ascoltare.</p>
+          <span class="hub-card-cta">Guarda il video →</span>
+        </a>
+        <a href="anno.html" class="hub-card dark rv d3">
+          <div class="hub-card-icon">📅</div>
+          <p class="hub-card-tag">Calendario</p>
+          <h2 class="hub-card-title">L'Anno al <em>Convitto</em></h2>
+          <p class="hub-card-desc">Settembre, Natale, Pasqua, fine anno — il ritmo delle stagioni visto dall'interno del Convitto.</p>
+          <span class="hub-card-cta">Scopri l'anno →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="nav.js"></script>
+</body>
+</html>

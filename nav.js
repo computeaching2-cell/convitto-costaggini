@@ -40,14 +40,7 @@
           <li><a href="educatori.html" data-page="educatori">Gli Educatori</a></li>
           <li><a href="giornata-tipo.html" data-page="giornata-tipo">Una giornata tipo</a></li>
           <li><a href="laboratorio-musicale.html" data-page="laboratorio-musicale">♪ Laboratorio Musicale</a></li>
-          <li><a href="anno.html" data-page="anno">📅 L'Anno al Convitto</a></li>
-          <li><a href="alumni.html" data-page="alumni">Alumni &amp; Comunità</a></li>
-          <li><a href="iscriviti-alumni.html" data-page="iscriviti-alumni">✦ Unisciti agli Alumni</a></li>
-          <li><a href="ricordi.html" data-page="ricordi">🕯️ Muro dei Ricordi</a></li>
-          <li><a href="lettera.html" data-page="lettera">💌 Lettera a un Futuro Convittore</a></li>
-          <li><a href="mondo.html" data-page="mondo">🌍 Il Costaggini nel Mondo</a></li>
-          <li><a href="vinile.html" data-page="vinile">🎵 Il Vinile del Convitto</a></li>
-          <li><a href="solidarieta.html" data-page="solidarieta">🎵 "La Solidarietà"</a></li>
+          <li><a href="comunita.html" data-page="comunita">🌟 La nostra Comunità</a></li>
         </ul>
       </div>
 
@@ -58,14 +51,9 @@
         </button>
         <ul class="dd-menu" role="menu">
           <li><a href="servizi.html" data-page="servizi">Servizi &amp; spazi</a></li>
-          <li><a href="tour-virtuale.html" data-page="tour-virtuale">🏛️ Tour Virtuale 360°</a></li>
           <li><a href="semiconvitto.html" data-page="semiconvitto">🌅 Semiconvitto</a></li>
-          <li><a href="ammissione.html#tariffe">Tariffe &amp; rette</a></li>
           <li><a href="ammissione.html" data-page="ammissione">Come iscriversi</a></li>
-          <li><a href="domanda-ammissione.html">📋 Domanda online</a></li>
-          <li><a href="openday.html" data-page="openday">🗓 Open Day</a></li>
-          <li><a href="fa-per-me.html" data-page="fa-per-me">🎯 Il Convitto fa per me?</a></li>
-          <li><a href="ammissione.html#faq">FAQ</a></li>
+          <li><a href="orientamento.html" data-page="orientamento">🗓 Orientamento &amp; Open Day</a></li>
           <li><a href="contatti.html" data-page="contatti">Contattaci</a></li>
         </ul>
       </div>
@@ -89,19 +77,11 @@
           Didattica <svg viewBox="0 0 24 24" class="dd-arrow"><path d="M7 10l5 5 5-5z"/></svg>
         </button>
         <ul class="dd-menu" role="menu">
-          <li><a href="scopri-talento.html" data-page="scopri-talento">✨ Scopri il tuo Talento</a></li>
-          <li><a href="quiz-competenze.html" data-page="quiz-competenze">🍳 Sai già cucinare?</a></li>
-          <li><a href="quiz-percorso.html" data-page="quiz-percorso">🗺️ Scegli il tuo percorso</a></li>
-          <li><a href="quiz-piatti.html" data-page="quiz-piatti">🧑‍🍳 Riconosci il piatto</a></li>
-          <li><a href="quiz-accoglienza.html" data-page="quiz-accoglienza">🏨 Sei pronto per l'accoglienza?</a></li>
-          <li><a href="quiz-settimana.html" data-page="quiz-settimana">📅 La tua settimana tipo</a></li>
-          <li><a href="quiz-cruciverba.html" data-page="quiz-cruciverba">📝 Cruciverba del Costaggini</a></li>
+          <li><a href="giochi-orientamento.html" data-page="giochi-orientamento">🎮 Giochi &amp; Orientamento</a></li>
           <li><a href="ptof-guida.html" data-page="ptof-guida">Il PTOF spiegato</a></li>
           <li><a href="regolamento.html" data-page="regolamento">Regolamento di Convitto</a></li>
           <li><a href="trasparenza.html" data-page="trasparenza">Amministrazione Trasparente</a></li>
           <li><a href="organizzazione.html" data-page="organizzazione">Organizzazione</a></li>
-          <li><a href="privacy.html">Privacy &amp; GDPR</a></li>
-          <li><a href="area-riservata.html">Area riservata</a></li>
         </ul>
       </div>
 
@@ -128,14 +108,7 @@
         <li><a href="educatori.html">Gli Educatori</a></li>
         <li><a href="giornata-tipo.html">Una giornata tipo</a></li>
         <li><a href="laboratorio-musicale.html">♪ Laboratorio Musicale</a></li>
-        <li><a href="anno.html">📅 L'Anno al Convitto</a></li>
-        <li><a href="alumni.html">Alumni &amp; Comunità</a></li>
-        <li><a href="iscriviti-alumni.html">✦ Unisciti agli Alumni</a></li>
-        <li><a href="ricordi.html">🕯️ Muro dei Ricordi</a></li>
-        <li><a href="lettera.html">💌 Lettera a un Futuro Convittore</a></li>
-        <li><a href="mondo.html">🌍 Il Costaggini nel Mondo</a></li>
-        <li><a href="vinile.html">🎵 Il Vinile del Convitto</a></li>
-        <li><a href="solidarieta.html">🎵 "La Solidarietà"</a></li>
+        <li><a href="comunita.html">🌟 La nostra Comunità</a></li>
       </ul>
     </li>
 
@@ -143,14 +116,9 @@
       <button class="drw-acc" aria-expanded="false">Servizi <svg viewBox="0 0 24 24" class="drw-arrow"><path d="M7 10l5 5 5-5z"/></svg></button>
       <ul class="drw-sub">
         <li><a href="servizi.html">Servizi &amp; spazi</a></li>
-        <li><a href="tour-virtuale.html">🏛️ Tour Virtuale 360°</a></li>
         <li><a href="semiconvitto.html">🌅 Semiconvitto</a></li>
-        <li><a href="ammissione.html#tariffe">Tariffe &amp; rette</a></li>
         <li><a href="ammissione.html">Come iscriversi</a></li>
-        <li><a href="domanda-ammissione.html">📋 Domanda online</a></li>
-        <li><a href="openday.html">🗓 Open Day</a></li>
-        <li><a href="fa-per-me.html">🎯 Il Convitto fa per me?</a></li>
-        <li><a href="ammissione.html#faq">FAQ</a></li>
+        <li><a href="orientamento.html">🗓 Orientamento &amp; Open Day</a></li>
         <li><a href="contatti.html">Contattaci</a></li>
       </ul>
     </li>
@@ -168,19 +136,11 @@
     <li class="drw-group">
       <button class="drw-acc" aria-expanded="false">Didattica <svg viewBox="0 0 24 24" class="drw-arrow"><path d="M7 10l5 5 5-5z"/></svg></button>
       <ul class="drw-sub">
-        <li><a href="scopri-talento.html">✨ Scopri il tuo Talento</a></li>
-        <li><a href="quiz-competenze.html">🍳 Sai già cucinare?</a></li>
-        <li><a href="quiz-percorso.html">🗺️ Scegli il tuo percorso</a></li>
-        <li><a href="quiz-piatti.html">🧑‍🍳 Riconosci il piatto</a></li>
-        <li><a href="quiz-accoglienza.html">🏨 Sei pronto per l'accoglienza?</a></li>
-        <li><a href="quiz-settimana.html">📅 La tua settimana tipo</a></li>
-        <li><a href="quiz-cruciverba.html">📝 Cruciverba del Costaggini</a></li>
+        <li><a href="giochi-orientamento.html">🎮 Giochi &amp; Orientamento</a></li>
         <li><a href="ptof-guida.html">Il PTOF spiegato</a></li>
         <li><a href="regolamento.html">Regolamento di Convitto</a></li>
         <li><a href="trasparenza.html">Amministrazione Trasparente</a></li>
         <li><a href="organizzazione.html">Organizzazione</a></li>
-        <li><a href="privacy.html">Privacy &amp; GDPR</a></li>
-        <li><a href="area-riservata.html">Area riservata</a></li>
       </ul>
     </li>
 

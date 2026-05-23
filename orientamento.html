@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Orientamento al Convitto Costaggini — Open Day, Tour Virtuale 360°, Il Convitto fa per me?, FAQ e prenotazione visita."/>
+  <title>Orientamento | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .hub-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.25rem; margin-top:2rem; }
+    @media(max-width:480px){ .hub-grid { grid-template-columns:1fr; } }
+    .hub-card { display:flex; flex-direction:column; border-radius:12px; padding:1.5rem; text-decoration:none; transition:transform .2s,box-shadow .2s; }
+    .hub-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,.15); }
+    .hub-card-icon { font-size:2rem; margin-bottom:.75rem; }
+    .hub-card-tag { font-family:var(--fu); font-size:.55rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.3rem; }
+    .hub-card-title { font-family:var(--fd); font-size:1.2rem; font-weight:300; margin-bottom:.4rem; line-height:1.3; }
+    .hub-card-title em { font-style:italic; }
+    .hub-card-desc { font-family:var(--fu); font-size:.78rem; line-height:1.65; flex:1; }
+    .hub-card-cta { font-family:var(--fu); font-size:.62rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; margin-top:1rem; }
+    .hub-card.light { background:var(--av2); border:1px solid var(--av3); }
+    .hub-card.light .hub-card-tag { color:var(--oro); }
+    .hub-card.light .hub-card-title { color:var(--bosco); }
+    .hub-card.light .hub-card-desc { color:var(--txt2); }
+    .hub-card.light .hub-card-cta { color:var(--oro); }
+    .hub-card.dark { background:var(--bosco); border:1px solid rgba(184,146,42,.15); }
+    .hub-card.dark .hub-card-tag { color:var(--oro2); }
+    .hub-card.dark .hub-card-title { color:#fff; }
+    .hub-card.dark .hub-card-desc { color:rgba(245,240,232,.55); }
+    .hub-card.dark .hub-card-cta { color:var(--oro2); }
+    /* Card grande in evidenza */
+    .hub-featured {
+      background:linear-gradient(135deg,var(--bosco),#1a3a1b);
+      border:1px solid rgba(184,146,42,.2); border-radius:14px;
+      padding:2rem; margin-bottom:1.25rem;
+      display:grid; grid-template-columns:1fr auto; gap:1.5rem; align-items:center;
+    }
+    @media(max-width:560px){ .hub-featured { grid-template-columns:1fr; } }
+    .hub-featured h2 { font-family:var(--fd); font-size:1.6rem; font-weight:300; color:#fff; margin-bottom:.4rem; }
+    .hub-featured h2 em { font-style:italic; color:var(--oro3); }
+    .hub-featured p { font-family:var(--fu); font-size:.82rem; color:rgba(245,240,232,.6); line-height:1.7; margin-bottom:1rem; }
+    .hub-sep { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:var(--oro); margin:2.5rem 0 .5rem; padding-bottom:.5rem; border-bottom:1px solid var(--av3); }
+  </style>
+</head>
+<body data-page="orientamento">
+<main id="main">
+  <div class="page-hero">
+    <div class="w">
+      <nav class="breadcrumb"><a href="index.html">Home</a><span>›</span><a href="servizi.html">Servizi</a><span>›</span><span aria-current="page">Orientamento</span></nav>
+      <div class="gold-bar"></div>
+      <h1>Orientamento al <em>Convitto</em></h1>
+      <p class="sub">Tutto quello che serve per capire se il Convitto Costaggini fa per te — prima di fare qualsiasi scelta.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="w">
+
+      <!-- Card in evidenza: Tour + Open Day -->
+      <div class="hub-featured rv">
+        <div>
+          <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:.4rem">Il punto di partenza</p>
+          <h2>Open Day &amp; <em>Tour Virtuale</em></h2>
+          <p>Visita gli ambienti a 360° dal tuo telefono, poi prenota una visita reale. Il modo migliore per capire se il Convitto fa per te.</p>
+          <div style="display:flex;gap:.65rem;flex-wrap:wrap">
+            <a href="tour-virtuale.html" class="btn-gold" style="font-size:.68rem">🏛️ Tour 360° →</a>
+            <a href="openday.html" style="display:inline-flex;align-items:center;font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;border:1.5px solid rgba(184,146,42,.4);color:var(--oro2);border-radius:8px;text-decoration:none">🗓 Open Day →</a>
+          </div>
+        </div>
+        <div style="font-size:5rem;text-align:center;opacity:.7">🏛️</div>
+      </div>
+
+      <p class="hub-sep">— Strumenti di orientamento</p>
+      <div class="hub-grid">
+        <a href="fa-per-me.html" class="hub-card light rv">
+          <div class="hub-card-icon">🎯</div>
+          <p class="hub-card-tag">Test rapido</p>
+          <h2 class="hub-card-title">Il Convitto fa <em>per me?</em></h2>
+          <p class="hub-card-desc">Poche domande per capire se lo stile di vita del Convitto si adatta alla tua personalità e alle tue esigenze.</p>
+          <span class="hub-card-cta">Fai il test →</span>
+        </a>
+        <a href="scopri-talento.html" class="hub-card light rv d1">
+          <div class="hub-card-icon">✨</div>
+          <p class="hub-card-tag">Quiz interattivi</p>
+          <h2 class="hub-card-title">Scopri il tuo <em>Talento</em></h2>
+          <p class="hub-card-desc">Sei più cuoco, cameriere, pasticcere o addetto all'accoglienza? Sei quiz per scoprirlo in modo divertente.</p>
+          <span class="hub-card-cta">Inizia i quiz →</span>
+        </a>
+        <a href="giornata-tipo.html" class="hub-card light rv d2">
+          <div class="hub-card-icon">⏰</div>
+          <p class="hub-card-tag">Una giornata tipo</p>
+          <h2 class="hub-card-title">Come si vive <em>qui dentro</em></h2>
+          <p class="hub-card-desc">Sveglia, scuola, pranzo, studio guidato, attività, cena, luci spente. Ora per ora, senza abbellimenti.</p>
+          <span class="hub-card-cta">Scopri la giornata →</span>
+        </a>
+        <a href="ammissione.html#faq" class="hub-card light rv d3">
+          <div class="hub-card-icon">❓</div>
+          <p class="hub-card-tag">Domande frequenti</p>
+          <h2 class="hub-card-title">Hai <em>dubbi?</em></h2>
+          <p class="hub-card-desc">Le domande che fanno tutti i genitori e tutti i ragazzi — con risposte dirette, senza giri di parole.</p>
+          <span class="hub-card-cta">Leggi le FAQ →</span>
+        </a>
+      </div>
+
+      <p class="hub-sep">— Fare il passo</p>
+      <div class="hub-grid">
+        <a href="ammissione.html" class="hub-card dark rv">
+          <div class="hub-card-icon">📋</div>
+          <p class="hub-card-tag">Iscrizione</p>
+          <h2 class="hub-card-title">Come <em>iscriversi</em></h2>
+          <p class="hub-card-desc">Procedura di ammissione, tariffe, rette e tutto quello che serve sapere prima di inviare la domanda.</p>
+          <span class="hub-card-cta">Scopri come →</span>
+        </a>
+        <a href="domanda-ammissione.html" class="hub-card dark rv d1">
+          <div class="hub-card-icon">✉️</div>
+          <p class="hub-card-tag">Modulo online</p>
+          <h2 class="hub-card-title">Domanda di <em>ammissione</em></h2>
+          <p class="hub-card-desc">Compila e invia la domanda direttamente online. Arriva in segreteria in tempo reale.</p>
+          <span class="hub-card-cta">Compila la domanda →</span>
+        </a>
+        <a href="contatti.html" class="hub-card dark rv d2">
+          <div class="hub-card-icon">📞</div>
+          <p class="hub-card-tag">Contatti</p>
+          <h2 class="hub-card-title">Parlaci <em>direttamente</em></h2>
+          <p class="hub-card-desc">Telefono, email, mappa. Se hai una domanda specifica, siamo qui.</p>
+          <span class="hub-card-cta">Contattaci →</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+</main>
+<script src="nav.js"></script>
+</body>
+</html>
