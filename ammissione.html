@@ -268,23 +268,183 @@
     </div>
   </section>
 
-  <!-- MODULI -->
+  <!-- MODULI INTERATTIVI -->
   <section id="moduli" style="background:var(--bco)">
     <div class="w">
       <p class="lbl">Modulistica</p>
       <h2>Moduli e <em>documenti</em></h2>
-      <p class="lead">Scarica qui i moduli necessari per la procedura di iscrizione. Per i documenti non disponibili online, contatta la segreteria.</p>
+      <p class="lead">Compila online, stampa e consegna. Nessun PDF da scaricare — tutto direttamente dalla pagina.</p>
       <div class="moduli-grid">
-        <a class="drow rv" href="domanda-ammissione.html"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Domanda di ammissione al Convitto</h4><span>Compila online e invia — oppure scarica il PDF</span></div><span class="darr">›</span></a>
-        <a class="drow rv" href="regolamento-guida.html"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Regolamento di Convitto</h4><span>PDF — Versione aggiornata 30 gennaio 2025 (35 articoli)</span></div><span class="darr">›</span></a>
-        <a class="drow rv d1" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Patto Educativo di Convivenza</h4><span>PDF — Firma obbligatoria</span></div><span class="darr">›</span></a>
-        <a class="drow rv d2" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Dichiarazione allergie/intolleranze</h4><span>PDF compilabile</span></div><span class="darr">›</span></a>
-        <a class="drow rv" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Autorizzazione uscite autonome</h4><span>PDF compilabile</span></div><span class="darr">›</span></a>
-        <a class="drow rv d1" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Lista corredo obbligatorio</h4><span>PDF — A.S. 2025/26</span></div><span class="darr">›</span></a>
-        <a class="drow rv d2" href="#"><div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div><div class="dinf"><h4>Richiesta certificato di frequenza</h4><span>PDF compilabile</span></div><span class="darr">›</span></a>
+
+        <!-- 1. DOMANDA AMMISSIONE -->
+        <a class="drow rv" href="domanda-ammissione.html">
+          <div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div>
+          <div class="dinf"><h4>Domanda di ammissione al Convitto</h4><span>Compila online e invia alla segreteria</span></div>
+          <span class="darr">›</span>
+        </a>
+
+        <!-- 2. REGOLAMENTO -->
+        <a class="drow rv" href="regolamento.html">
+          <div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div>
+          <div class="dinf"><h4>Regolamento di Convitto</h4><span>35 articoli — versione aggiornata 30 gennaio 2025</span></div>
+          <span class="darr">›</span>
+        </a>
+
+        <!-- 3. ALLERGIE — accordion -->
+        <div class="drow rv" style="cursor:pointer;flex-direction:column;align-items:stretch;padding:0" id="acc-allergie-wrap">
+          <button class="drow" style="width:100%;border:none;background:none;cursor:pointer;padding:1rem 1.4rem;text-align:left" onclick="toggleAcc('allergie')" aria-expanded="false" aria-controls="acc-allergie">
+            <div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div>
+            <div class="dinf"><h4>Dichiarazione allergie e intolleranze</h4><span>Clicca per compilare — con possibilità di allegare certificato medico</span></div>
+            <span class="darr" id="acc-allergie-arrow">›</span>
+          </button>
+          <div id="acc-allergie" style="display:none;padding:1.5rem;border-top:1px solid var(--av3);background:var(--av)">
+            <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.7">Compila la dichiarazione per informare il personale del Convitto di eventuali allergie o intolleranze alimentari del convittore. Il documento va stampato e consegnato in segreteria insieme alla documentazione di ammissione.</p>
+            <div style="display:grid;gap:.85rem" id="form-allergie">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Cognome e nome del convittore *</label><input type="text" id="all-nome" placeholder="es. Rossi Luca" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Classe</label><input type="text" id="all-classe" placeholder="es. 1ª A" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+              </div>
+              <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Tipo di allergia / intolleranza *</label><textarea id="all-tipo" rows="3" placeholder="Descrivere dettagliatamente: tipo di allergene, alimenti da evitare, reazioni note..." style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box;resize:vertical"></textarea></div>
+              <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Indicazioni dietetiche specifiche</label><textarea id="all-dieta" rows="2" placeholder="Alimenti consentiti, sostituti, modalità di preparazione, ecc." style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box;resize:vertical"></textarea></div>
+              <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Farmaci di emergenza prescritti (es. EpiPen)</label><input type="text" id="all-farmaci" placeholder="Nome del farmaco e modalità di somministrazione" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+              <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:6px;padding:.85rem 1rem">
+                <p style="font-family:var(--fu);font-size:.72rem;color:#856404;line-height:1.65;margin:0">⚠️ <strong>Allegare obbligatoriamente</strong> il certificato medico del medico curante attestante la diagnosi. Il documento deve essere aggiornato all'anno scolastico in corso.</p>
+              </div>
+              <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Nome e cognome del genitore dichiarante *</label><input type="text" id="all-genitore" placeholder="es. Mario Rossi" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+              <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+                <button onclick="stampaAllergie()" style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:8px;cursor:pointer">🖨️ Stampa dichiarazione</button>
+                <button onclick="document.getElementById('form-allergie').reset?.() || resetAllergie()" style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:transparent;color:var(--bosco2);border:1.5px solid var(--av3);border-radius:8px;cursor:pointer">↺ Azzera</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. CORREDO — modale -->
+        <div class="drow rv" style="cursor:pointer" onclick="document.getElementById('modal-corredo').style.display='flex'">
+          <div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.54 15.46 0 12 0S6 2.54 6 4.64c0 .48.11.92.18 1.36H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+          <div class="dinf"><h4>Lista corredo obbligatorio</h4><span>Clicca per vedere la lista completa — con opzione di stampa</span></div>
+          <span class="darr">›</span>
+        </div>
+
+        <!-- 5. USCITE AUTONOME — accordion -->
+        <div class="drow rv d1" style="cursor:pointer;flex-direction:column;align-items:stretch;padding:0">
+          <button class="drow" style="width:100%;border:none;background:none;cursor:pointer;padding:1rem 1.4rem;text-align:left" onclick="toggleAcc('uscite')" aria-expanded="false" aria-controls="acc-uscite">
+            <div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div>
+            <div class="dinf"><h4>Autorizzazione uscite autonome</h4><span>Clicca per compilare e stampare — da consegnare all'inizio dell'anno</span></div>
+            <span class="darr" id="acc-uscite-arrow">›</span>
+          </button>
+          <div id="acc-uscite" style="display:none;padding:1.5rem;border-top:1px solid var(--av3);background:var(--av)">
+            <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.7">Autorizzazione per la libera uscita autonoma durante la fascia pomeridiana (17:30–19:15). Obbligatoria per i convittori minorenni. I maggiorenni firmano autonomamente.</p>
+            <div style="display:grid;gap:.85rem">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Cognome e nome del convittore *</label><input type="text" id="usc-nome" placeholder="es. Rossi Luca" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Data di nascita</label><input type="date" id="usc-nascita" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Classe frequentata *</label><select id="usc-classe" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"><option value="">— seleziona —</option><option>1ª</option><option>2ª</option><option>3ª</option><option>4ª</option><option>5ª</option></select></div>
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Nome e cognome genitore *</label><input type="text" id="usc-genitore" placeholder="es. Mario Rossi" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+              </div>
+              <div style="background:var(--av2);border:1px solid var(--av3);border-radius:8px;padding:1rem">
+                <p style="font-family:var(--fu);font-size:.72rem;color:var(--bosco2);margin-bottom:.5rem;font-weight:700">Il/la sottoscritto/a, in qualità di genitore/tutore legale, autorizza il proprio figlio/a ad uscire autonomamente dal Convitto durante la fascia di libera uscita pomeridiana (17:30–19:15), impegnandosi a:</p>
+                <ul style="font-family:var(--fu);font-size:.72rem;color:var(--txt2);line-height:1.75;padding-left:1.25rem">
+                  <li>garantire che il convittore rientri entro l'orario stabilito</li>
+                  <li>assumersi la piena responsabilità civile per il periodo di assenza dalla struttura</li>
+                  <li>comunicare tempestivamente qualsiasi variazione di contatto reperibile</li>
+                </ul>
+              </div>
+              <div>
+                <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Zona/percorso abituale dell'uscita (facoltativo)</label>
+                <input type="text" id="usc-zona" placeholder="es. pista ciclopedonale, centro città, biblioteca..." style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/>
+              </div>
+              <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Recapito cellulare del genitore *</label><input type="tel" id="usc-tel" placeholder="es. 340 1234567" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+              <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+                <button onclick="stampaUscite()" style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:8px;cursor:pointer">🖨️ Stampa autorizzazione</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. CERTIFICATO FREQUENZA — accordion -->
+        <div class="drow rv d2" style="cursor:pointer;flex-direction:column;align-items:stretch;padding:0">
+          <button class="drow" style="width:100%;border:none;background:none;cursor:pointer;padding:1rem 1.4rem;text-align:left" onclick="toggleAcc('cert')" aria-expanded="false" aria-controls="acc-cert">
+            <div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+            <div class="dinf"><h4>Richiesta certificato di frequenza</h4><span>Compila online, stampa e consegna in segreteria</span></div>
+            <span class="darr" id="acc-cert-arrow">›</span>
+          </button>
+          <div id="acc-cert" style="display:none;padding:1.5rem;border-top:1px solid var(--av3);background:var(--av)">
+            <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.7">Richiesta formale di certificato attestante la frequenza al Convitto annesso all'IPSSEOA "Costaggini". Il certificato viene rilasciato dalla segreteria entro 5 giorni lavorativi dalla richiesta.</p>
+            <div style="display:grid;gap:.85rem">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Cognome e nome del convittore *</label><input type="text" id="cert-nome" placeholder="es. Rossi Luca" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Classe</label><select id="cert-classe" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"><option value="">— seleziona —</option><option>1ª</option><option>2ª</option><option>3ª</option><option>4ª</option><option>5ª</option></select></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Anno scolastico *</label><input type="text" id="cert-as" placeholder="es. 2025/2026" value="2025/2026" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+                <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Numero di copie richieste</label><select id="cert-copie" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"><option>1</option><option>2</option><option>3</option></select></div>
+              </div>
+              <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Finalità del certificato</label><select id="cert-uso" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"><option value="">— seleziona —</option><option>Uso scolastico</option><option>Uso INPS / sussidi</option><option>Uso assicurativo</option><option>Uso sportivo</option><option>Uso privato</option><option>Altro</option></select></div>
+              <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Nome e cognome richiedente (genitore o maggiorenne) *</label><input type="text" id="cert-richiedente" placeholder="es. Mario Rossi" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+              <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Email per la conferma</label><input type="email" id="cert-email" placeholder="es. mario.rossi@email.it" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
+              <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+                <button onclick="stampaCert()" style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:8px;cursor:pointer">🖨️ Stampa richiesta</button>
+                <a href="mailto:rirh010007@istruzione.it?subject=Richiesta certificato di frequenza Convitto" style="display:inline-flex;align-items:center;font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:transparent;color:var(--bosco2);border:1.5px solid var(--av3);border-radius:8px;text-decoration:none">📧 Invia per email</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
+
+  <!-- MODALE CORREDO -->
+  <div id="modal-corredo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;padding:1rem" onclick="if(event.target===this)this.style.display='none'">
+    <div style="background:#fff;border-radius:14px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;position:relative">
+      <div style="background:var(--bosco);padding:1.25rem 1.5rem;border-radius:14px 14px 0 0;display:flex;justify-content:space-between;align-items:center">
+        <h3 style="font-family:var(--fd);font-size:1.3rem;font-weight:300;color:#fff;margin:0">Lista corredo <em style="font-style:italic;color:var(--oro3)">obbligatorio</em></h3>
+        <button onclick="document.getElementById('modal-corredo').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;line-height:1;padding:0">✕</button>
+      </div>
+      <div style="padding:1.5rem" id="corredo-content">
+        <p style="font-family:var(--fu);font-size:.72rem;color:#666;margin-bottom:1.25rem;line-height:1.7">Da portare al momento dell'ingresso in Convitto — art. 20 del Regolamento di Convitto (versione 30/01/2025).</p>
+
+        <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">🛏️ Biancheria e letto</p>
+        <ul style="font-size:.85rem;color:#374151;line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
+          <li>Coperte e/o piumino</li>
+          <li>N. 1 completo da letto per una piazza (lenzuola, federa, copertina)</li>
+          <li>N. 2 asciugamani</li>
+        </ul>
+
+        <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">👔 Abbigliamento e igiene</p>
+        <ul style="font-size:.85rem;color:#374151;line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
+          <li>N. 1 pigiama</li>
+          <li>N. 1 paio di ciabatte o pantofole</li>
+          <li>Indumenti personali adeguati in numero sufficiente</li>
+          <li>Necessario per la cura e l'igiene personale</li>
+        </ul>
+
+        <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">🗂️ Accessori</p>
+        <ul style="font-size:.85rem;color:#374151;line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
+          <li>N. 1 sacchetto per la biancheria sporca</li>
+          <li>Numero adeguato di appendiabiti</li>
+          <li>Materiale scolastico necessario</li>
+        </ul>
+
+        <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">📋 Documenti obbligatori</p>
+        <ul style="font-size:.85rem;color:#374151;line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
+          <li>Certificato medico di idoneità alla vita convittuale</li>
+          <li>Tessera sanitaria</li>
+          <li>Documento d'identità in corso di validità</li>
+          <li>Eventuale certificazione di allergie/intolleranze del medico curante</li>
+        </ul>
+
+        <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:.85rem 1rem;margin-bottom:1.25rem">
+          <p style="font-size:.78rem;color:#856404;line-height:1.65;margin:0">⚠️ <strong>Sconsigliato</strong> portare indumenti di particolare pregio, preziosi, TV, console, smartphone di valore o altri apparecchi elettronici. Il Convitto non garantisce la custodia di tali oggetti (art. 20, comma 14 del Regolamento).</p>
+        </div>
+
+        <button onclick="window.print()" style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:8px;cursor:pointer;width:100%">🖨️ Stampa la lista</button>
+      </div>
+    </div>
+  </div>
 
   <!-- FAQ -->
   <section id="faq" style="background:var(--av2)">
@@ -330,6 +490,192 @@
 
 </main>
 <script src="nav.js"></script>
+<script>
+// ── ACCORDION ──────────────────────────────────────
+function toggleAcc(id) {
+  const panel = document.getElementById('acc-' + id);
+  const arrow = document.getElementById('acc-' + id + '-arrow');
+  const btn = panel.previousElementSibling;
+  const open = panel.style.display === 'block';
+  panel.style.display = open ? 'none' : 'block';
+  if (arrow) arrow.textContent = open ? '›' : '↓';
+  if (btn) btn.setAttribute('aria-expanded', !open);
+}
+
+// ── STAMPA ALLERGIE ────────────────────────────────
+function stampaAllergie() {
+  const nome = document.getElementById('all-nome').value || '________________________';
+  const classe = document.getElementById('all-classe').value || '______';
+  const tipo = document.getElementById('all-tipo').value || '________________________';
+  const dieta = document.getElementById('all-dieta').value || '—';
+  const farmaci = document.getElementById('all-farmaci').value || '—';
+  const genitore = document.getElementById('all-genitore').value || '________________________';
+  const oggi = new Date().toLocaleDateString('it-IT');
+
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"/>
+  <title>Dichiarazione allergie — ${nome}</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12pt; max-width: 700px; margin: 40px auto; color: #1a1a1a; }
+    h1 { font-size: 16pt; margin-bottom: 4px; }
+    .ente { font-size: 10pt; color: #555; margin-bottom: 24px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    td { padding: 8px 12px; border: 1px solid #ccc; vertical-align: top; }
+    td:first-child { font-weight: bold; width: 35%; background: #f5f5f5; }
+    .nota { background: #fff8e1; border: 1px solid #ffc107; padding: 10px 14px; border-radius: 4px; font-size: 10pt; margin: 16px 0; }
+    .firma { margin-top: 40px; display: flex; justify-content: space-between; }
+    .firma div { text-align: center; }
+    .firma .line { border-bottom: 1px solid #333; width: 200px; margin: 32px auto 4px; }
+    @media print { body { margin: 20px; } }
+  </style></head><body>
+  <div class="ente">IPSSEOA "R. A. Costaggini" — Rieti · Convitto annesso · C.F. 80008130579</div>
+  <h1>Dichiarazione di allergie e intolleranze alimentari</h1>
+  <p style="font-size:10pt;color:#555">A.S. 2025/2026 — Da allegare alla documentazione di ammissione al Convitto</p>
+  <table>
+    <tr><td>Cognome e nome del convittore</td><td>${nome}</td></tr>
+    <tr><td>Classe frequentata</td><td>${classe}</td></tr>
+    <tr><td>Tipo di allergia / intolleranza</td><td>${tipo}</td></tr>
+    <tr><td>Indicazioni dietetiche</td><td>${dieta}</td></tr>
+    <tr><td>Farmaci di emergenza prescritti</td><td>${farmaci}</td></tr>
+  </table>
+  <div class="nota">⚠️ <strong>Nota:</strong> Allegare obbligatoriamente il certificato medico del medico curante attestante la diagnosi, aggiornato all'anno scolastico in corso. In assenza di certificazione medica la dichiarazione non potrà essere presa in carico dalla cucina del Convitto.</div>
+  <p style="font-size:10pt">Il/la sottoscritto/a <strong>${genitore}</strong>, in qualità di genitore/tutore legale del/la convittore/rice sopra indicato/a, dichiara sotto la propria responsabilità la veridicità delle informazioni fornite e autorizza il personale del Convitto a tenerne conto nella gestione dei pasti e nelle emergenze sanitarie.</p>
+  <div class="firma">
+    <div><div class="line"></div><p style="font-size:10pt">Luogo e data<br>${oggi}</p></div>
+    <div><div class="line"></div><p style="font-size:10pt">Firma del genitore/tutore</p></div>
+  </div>
+  <script>window.onload=()=>window.print()<\/script>
+  </body></html>`);
+  w.document.close();
+}
+
+// ── STAMPA USCITE ──────────────────────────────────
+function stampaUscite() {
+  const nome = document.getElementById('usc-nome').value || '________________________';
+  const nascita = document.getElementById('usc-nascita').value ? new Date(document.getElementById('usc-nascita').value).toLocaleDateString('it-IT') : '________________________';
+  const classe = document.getElementById('usc-classe').value || '______';
+  const genitore = document.getElementById('usc-genitore').value || '________________________';
+  const tel = document.getElementById('usc-tel').value || '________________________';
+  const zona = document.getElementById('usc-zona').value || '—';
+  const oggi = new Date().toLocaleDateString('it-IT');
+
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"/>
+  <title>Autorizzazione uscite — ${nome}</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12pt; max-width: 700px; margin: 40px auto; color: #1a1a1a; line-height: 1.6; }
+    h1 { font-size: 16pt; margin-bottom: 4px; }
+    .ente { font-size: 10pt; color: #555; margin-bottom: 24px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    td { padding: 8px 12px; border: 1px solid #ccc; }
+    td:first-child { font-weight: bold; width: 40%; background: #f5f5f5; }
+    .firma { margin-top: 48px; display: flex; justify-content: space-between; }
+    .firma div { text-align: center; }
+    .firma .line { border-bottom: 1px solid #333; width: 200px; margin: 32px auto 4px; }
+    @media print { body { margin: 20px; } }
+  </style></head><body>
+  <div class="ente">IPSSEOA "R. A. Costaggini" — Rieti · Convitto annesso · C.F. 80008130579</div>
+  <h1>Autorizzazione uscite autonome</h1>
+  <p style="font-size:10pt;color:#555">A.S. 2025/2026 — Fascia di libera uscita pomeridiana (17:30–19:15) — art. 25 del Regolamento di Convitto</p>
+  <table>
+    <tr><td>Cognome e nome del convittore</td><td>${nome}</td></tr>
+    <tr><td>Data di nascita</td><td>${nascita}</td></tr>
+    <tr><td>Classe frequentata</td><td>${classe}</td></tr>
+    <tr><td>Zona/percorso abituale</td><td>${zona}</td></tr>
+    <tr><td>Genitore/tutore</td><td>${genitore}</td></tr>
+    <tr><td>Recapito cellulare</td><td>${tel}</td></tr>
+  </table>
+  <p>Il/la sottoscritto/a <strong>${genitore}</strong>, in qualità di genitore/tutore legale del/la convittore/rice <strong>${nome}</strong>,</p>
+  <p><strong>AUTORIZZA</strong> il/la proprio/a figlio/a ad uscire autonomamente dal Convitto durante la fascia di libera uscita pomeridiana (17:30–19:15) nei giorni scolastici, impegnandosi a:</p>
+  <ul>
+    <li>garantire che il/la convittore/rice rientri entro l'orario stabilito delle ore 19:15;</li>
+    <li>assumersi la piena responsabilità civile per il periodo di assenza dalla struttura;</li>
+    <li>comunicare tempestivamente al personale educativo qualsiasi variazione del recapito di reperibilità;</li>
+    <li>informare il Convitto in anticipo di eventuali impedimenti alla libera uscita.</li>
+  </ul>
+  <p>La presente autorizzazione è valida per l'intero anno scolastico 2025/2026 e può essere revocata in qualsiasi momento con comunicazione scritta alla Direzione del Convitto.</p>
+  <div class="firma">
+    <div><div class="line"></div><p style="font-size:10pt">Luogo e data<br>${oggi}</p></div>
+    <div><div class="line"></div><p style="font-size:10pt">Firma del genitore/tutore</p></div>
+  </div>
+  <script>window.onload=()=>window.print()<\/script>
+  </body></html>`);
+  w.document.close();
+}
+
+// ── STAMPA CERTIFICATO ─────────────────────────────
+function stampaCert() {
+  const nome = document.getElementById('cert-nome').value || '________________________';
+  const classe = document.getElementById('cert-classe').value || '______';
+  const as = document.getElementById('cert-as').value || '2025/2026';
+  const copie = document.getElementById('cert-copie').value || '1';
+  const uso = document.getElementById('cert-uso').value || '________________________';
+  const richiedente = document.getElementById('cert-richiedente').value || '________________________';
+  const oggi = new Date().toLocaleDateString('it-IT');
+
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"/>
+  <title>Richiesta certificato — ${nome}</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12pt; max-width: 700px; margin: 40px auto; color: #1a1a1a; line-height: 1.7; }
+    h1 { font-size: 16pt; margin-bottom: 4px; }
+    .ente { font-size: 10pt; color: #555; margin-bottom: 24px; }
+    .dest { margin: 24px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    td { padding: 8px 12px; border: 1px solid #ccc; }
+    td:first-child { font-weight: bold; width: 40%; background: #f5f5f5; }
+    .firma { margin-top: 48px; display: flex; justify-content: space-between; }
+    .firma div { text-align: center; }
+    .firma .line { border-bottom: 1px solid #333; width: 200px; margin: 32px auto 4px; }
+    @media print { body { margin: 20px; } }
+  </style></head><body>
+  <div class="ente">Rieti, ${oggi}</div>
+  <div class="dest">
+    <strong>Al Dirigente Scolastico</strong><br>
+    IPSSEOA "R. A. Costaggini"<br>
+    Via dei Salici, 62 — 02100 Rieti<br>
+    <em>e p.c. alla Segreteria del Convitto</em>
+  </div>
+  <h1>Richiesta di certificato di frequenza al Convitto</h1>
+  <p>Il/la sottoscritto/a <strong>${richiedente}</strong>, in qualità di genitore/tutore legale (o di convittore/rice maggiorenne),</p>
+  <p><strong>CHIEDE</strong> il rilascio di n. <strong>${copie}</strong> certificato/i attestante/i la frequenza al Convitto annesso all'IPSSEOA "R. A. Costaggini" di Rieti da parte del/la convittore/rice:</p>
+  <table>
+    <tr><td>Cognome e nome</td><td>${nome}</td></tr>
+    <tr><td>Classe frequentata</td><td>${classe}</td></tr>
+    <tr><td>Anno scolastico</td><td>${as}</td></tr>
+    <tr><td>Finalità del certificato</td><td>${uso}</td></tr>
+    <tr><td>Numero di copie richieste</td><td>${copie}</td></tr>
+  </table>
+  <p>Il certificato è richiesto per uso: <strong>${uso}</strong>.</p>
+  <p>Si allega copia del documento d'identità del richiedente.</p>
+  <p>In attesa di cortese riscontro, si porgono distinti saluti.</p>
+  <div class="firma">
+    <div><div class="line"></div><p style="font-size:10pt">Luogo e data<br>${oggi}</p></div>
+    <div><div class="line"></div><p style="font-size:10pt">Firma del richiedente</p></div>
+  </div>
+  <script>window.onload=()=>window.print()<\/script>
+  </body></html>`);
+  w.document.close();
+}
+
+function resetAllergie() {
+  ['all-nome','all-classe','all-tipo','all-dieta','all-farmaci','all-genitore'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
+
+// FAQ accordion esistente
+document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const body = btn.nextElementSibling;
+    const open = body.classList.contains('open');
+    document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.faq-btn').forEach(b => b.setAttribute('aria-expanded','false'));
+    if (!open) { body.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+  });
+});
+</script>
 <script>
   document.querySelectorAll('.faq-btn').forEach(btn => {
     btn.addEventListener('click', () => {
