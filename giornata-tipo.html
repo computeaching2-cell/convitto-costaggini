@@ -67,40 +67,51 @@
       position:relative;
     }
     @media(max-width:699px){
-      /* Linea verticale centrata a sinistra */
-      .timeline::before { left:20px; }
+      .timeline::before { left:18px; top:0; }
 
-      /* Ogni item: icona + card in verticale */
+      /* Ogni item diventa una riga flessibile: icona | card */
       .tl-item {
-        grid-template-columns: 40px 1fr;
-        gap: 0 .85rem;
+        display: flex !important;
+        flex-direction: row !important;
+        grid-template-columns: unset !important;
+        align-items: flex-start;
+        gap: .75rem;
         margin-bottom: 1.5rem;
       }
-      .tl-item .tl-right { display:none; }
-      .tl-item.tl-flip .tl-left { display:none; }
-      .tl-item.tl-flip .tl-right { display:block; grid-column:2; }
 
-      /* Nodo più piccolo */
-      .tl-node { width:40px; height:40px; }
-      .tl-icon { font-size:1.1rem; }
-      .tl-time-badge { font-size:.42rem; }
+      /* Nascondi sempre tl-empty */
+      .tl-empty { display: none !important; }
 
-      /* Card a larghezza piena, padding generoso */
-      .tl-card {
-        padding: 1rem 1.1rem;
-        width: 100%;
-        box-sizing: border-box;
-        min-width: 0;
+      /* Su flip, nascondi left e mostra right */
+      .tl-item .tl-right { display: none !important; }
+      .tl-item.tl-flip .tl-left { display: none !important; }
+      .tl-item.tl-flip .tl-right { display: block !important; flex: 1; min-width: 0; }
+
+      /* Nodo piccolo e fisso */
+      .tl-node {
+        width: 38px !important; height: 38px !important;
+        flex-shrink: 0;
       }
-      .tl-title { font-size:1rem; }
-      .tl-body { font-size:.82rem; line-height:1.75; }
-      .tl-time { font-size:.58rem; }
+      .tl-icon { font-size: 1rem; }
+      .tl-time-badge { font-size: .4rem; }
 
-      /* Rimuovi padding laterale dalla sezione */
+      /* Card occupa tutto lo spazio rimanente */
+      .tl-card {
+        flex: 1;
+        min-width: 0;
+        padding: .9rem 1rem;
+        box-sizing: border-box;
+      }
+      .tl-title { font-size: 1rem; }
+      .tl-body { font-size: .82rem; line-height: 1.75; }
+      .tl-time { font-size: .56rem; }
+
+      /* Left viene mostrato normalmente */
+      .tl-item .tl-left { display: block !important; flex: 1; min-width: 0; }
+
+      /* Sezione con padding ridotto */
       .gj-timeline { padding-left: 0 !important; padding-right: 0 !important; }
-      .gj-timeline .w { padding-left: .85rem; padding-right: .85rem; }
-      .timeline { padding: 0; }
-      .timeline-wrap { padding: 0; }
+      .gj-timeline .w { padding-left: .75rem !important; padding-right: .75rem !important; }
     }
 
     .tl-node {
