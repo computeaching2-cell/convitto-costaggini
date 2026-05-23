@@ -442,36 +442,38 @@
 
 
   <!-- TEASER OPEN DAY + MONDO -->
-  <section style="background:var(--av);padding:4rem 1.25rem">
+  <section style="background:var(--av);padding:3rem 1.25rem">
     <div class="w">
       <p class="lbl">Scopri di più</p>
       <h2>Due esperienze <em>uniche</em></h2>
-      <div style="display:grid;gap:1.25rem;grid-template-columns:1fr;margin-top:1.5rem">
+      <div style="display:grid;gap:1rem;grid-template-columns:1fr;margin-top:1.5rem" id="esp-grid">
+        <style>@media(min-width:640px){#esp-grid{grid-template-columns:1fr 1fr}}</style>
 
-        <a href="openday.html" style="class="esp-card" style="display:grid;grid-template-columns:1fr;border-radius:10px;overflow:hidden;border:1px solid var(--av3);text-decoration:none;transition:transform .2s,box-shadow .2s"
-           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(0,0,0,.12)'"
-           onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <div style="background:linear-gradient(135deg,var(--bosco),#1a3a1b);display:flex;flex-direction:column;justify-content:center;padding:2rem 1.75rem">
-            <span class="badge-new">Nuovo</span>
-            <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin:.5rem 0 .4rem">Open Day Digitale</p>
-            <h3 style="font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--av);line-height:1.2;margin-bottom:.5rem">Scopri il Convitto<br><em style="font-style:italic;color:var(--oro3)">in ogni dettaglio</em></h3>
-            <p style="font-size:.8rem;color:rgba(245,240,232,.6);line-height:1.6">Tour degli spazi, FAQ interattiva, educatori, prenotazione visita — tutto qui.</p>
-            <span style="font-family:var(--fu);font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oro2);margin-top:1rem">Esplora →</span>
+        <!-- Open Day + Tour — card unificata -->
+        <div style="border-radius:10px;overflow:hidden;border:1px solid var(--av3);background:linear-gradient(135deg,var(--bosco),#1a3a1b)">
+          <div style="padding:1.5rem 1.5rem 0">
+            <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Orientamento</p>
+            <h3 style="font-family:var(--fd);font-size:1.35rem;font-weight:300;color:#fff;line-height:1.25;margin-bottom:.4rem">Open Day &amp; <em style="font-style:italic;color:var(--oro3)">Tour Virtuale</em></h3>
+            <p style="font-size:.78rem;color:rgba(245,240,232,.55);line-height:1.65;margin-bottom:1rem">Visita gli spazi a 360°, incontra gli educatori e prenota la tua visita guidata — tutto online, tutto qui.</p>
           </div>
-          <div style="background:url('https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4257-640x480.jpg') center/cover no-repeat;min-height:180px"></div>
-        </a>
+          <div style="display:flex;gap:.6rem;padding:0 1.5rem 1.5rem;flex-wrap:wrap">
+            <a href="tour-virtuale.html" style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1rem;background:linear-gradient(135deg,var(--oro),#d4aa4a);color:var(--bosco);border-radius:6px;text-decoration:none">🏛️ Tour 360°</a>
+            <a href="openday.html" style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1rem;background:rgba(255,255,255,.08);color:var(--oro2);border:1px solid rgba(184,146,42,.3);border-radius:6px;text-decoration:none">🗓 Open Day →</a>
+          </div>
+          <div style="background:url('https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4257-640x480.jpg') center/cover no-repeat;height:140px"></div>
+        </div>
 
-        <a href="mondo.html" style="class="esp-card" style="display:grid;grid-template-columns:1fr;border-radius:10px;overflow:hidden;border:1px solid var(--av3);text-decoration:none;transition:transform .2s,box-shadow .2s"
-           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(0,0,0,.12)'"
+        <!-- Alumni nel mondo -->
+        <a href="mondo.html" style="display:grid;grid-template-rows:1fr auto;border-radius:10px;overflow:hidden;border:1px solid var(--av3);text-decoration:none;transition:transform .2s,box-shadow .2s;background:linear-gradient(135deg,#060d18,#0d1f2d)"
+           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(0,0,0,.2)'"
            onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <div style="background:linear-gradient(135deg,#060d18,#0d1f2d);display:flex;flex-direction:column;justify-content:center;padding:2rem 1.75rem">
-            <span class="badge-new">Interattivo</span>
-            <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin:.5rem 0 .4rem">Il Costaggini nel Mondo</p>
-            <h3 style="font-family:var(--fd);font-size:1.5rem;font-weight:300;color:#fff;line-height:1.2;margin-bottom:.5rem"><em>Alumni</em> in<br><em style="font-style:italic;color:var(--oro3)">tutto il mondo</em></h3>
-            <p style="font-size:.8rem;color:rgba(255,255,255,.5);line-height:1.6">Il mappamondo degli alumni e visitatori. Aggiungi anche tu il tuo segnaposto.</p>
-            <span style="font-family:var(--fu);font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oro2);margin-top:1rem">Esplora la mappa →</span>
+          <div style="display:flex;align-items:center;justify-content:center;font-size:5rem;padding:1.5rem 1rem">🌍</div>
+          <div style="padding:0 1.5rem 1.5rem">
+            <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:.3rem">Il Costaggini nel Mondo</p>
+            <h3 style="font-family:var(--fd);font-size:1.35rem;font-weight:300;color:#fff;line-height:1.25;margin-bottom:.35rem"><em>Alumni</em> in tutto il mondo</h3>
+            <p style="font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.65;margin-bottom:.75rem">Il mappamondo degli alumni. Aggiungi anche tu il tuo segnaposto.</p>
+            <span style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--oro2)">Esplora la mappa →</span>
           </div>
-          <div style="background:linear-gradient(135deg,#060d18,#0d1f2d);display:flex;align-items:center;justify-content:center;font-size:6rem;min-height:180px">🌍</div>
         </a>
 
       </div>
