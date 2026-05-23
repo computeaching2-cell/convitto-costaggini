@@ -64,14 +64,40 @@
       position:relative;
     }
     @media(max-width:699px){
-      .tl-item { grid-template-columns:44px 1fr; gap:0 .75rem; margin-bottom:1.75rem; }
+      /* Linea verticale centrata a sinistra */
+      .timeline::before { left:20px; }
+
+      /* Ogni item: icona + card in verticale */
+      .tl-item {
+        grid-template-columns: 40px 1fr;
+        gap: 0 .85rem;
+        margin-bottom: 1.5rem;
+      }
       .tl-item .tl-right { display:none; }
       .tl-item.tl-flip .tl-left { display:none; }
       .tl-item.tl-flip .tl-right { display:block; grid-column:2; }
-      .tl-card { padding:.85rem 1rem; width:100%; box-sizing:border-box; }
-      .timeline-wrap { padding-left:0; padding-right:0; }
-      .tl-node { width:44px; height:44px; }
-      .timeline { padding:0 .25rem; }
+
+      /* Nodo più piccolo */
+      .tl-node { width:40px; height:40px; }
+      .tl-icon { font-size:1.1rem; }
+      .tl-time-badge { font-size:.42rem; }
+
+      /* Card a larghezza piena, padding generoso */
+      .tl-card {
+        padding: 1rem 1.1rem;
+        width: 100%;
+        box-sizing: border-box;
+        min-width: 0;
+      }
+      .tl-title { font-size:1rem; }
+      .tl-body { font-size:.82rem; line-height:1.75; }
+      .tl-time { font-size:.58rem; }
+
+      /* Rimuovi padding laterale dalla sezione */
+      .gj-timeline { padding-left: 0 !important; padding-right: 0 !important; }
+      .gj-timeline .w { padding-left: .85rem; padding-right: .85rem; }
+      .timeline { padding: 0; }
+      .timeline-wrap { padding: 0; }
     }
 
     .tl-node {
