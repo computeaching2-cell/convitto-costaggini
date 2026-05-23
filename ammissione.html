@@ -319,11 +319,52 @@
           </div>
         </div>
 
-        <!-- 4. CORREDO — modale -->
-        <div class="drow rv" style="cursor:pointer" onclick="document.getElementById('modal-corredo').style.display='flex'">
-          <div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.54 15.46 0 12 0S6 2.54 6 4.64c0 .48.11.92.18 1.36H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
-          <div class="dinf"><h4>Lista corredo obbligatorio</h4><span>Clicca per vedere la lista completa — con opzione di stampa</span></div>
-          <span class="darr">›</span>
+        <!-- 4. CORREDO — accordion -->
+        <div class="drow rv d3" style="cursor:pointer;flex-direction:column;align-items:stretch;padding:0">
+          <button class="drow" style="width:100%;border:none;background:none;cursor:pointer;padding:1rem 1.4rem;text-align:left" onclick="toggleAcc('corredo')" aria-expanded="false" aria-controls="acc-corredo">
+            <div class="dico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.54 15.46 0 12 0S6 2.54 6 4.64c0 .48.11.92.18 1.36H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+            <div class="dinf"><h4>Lista corredo obbligatorio</h4><span>Clicca per vedere la lista completa — con opzione di stampa</span></div>
+            <span class="darr" id="acc-corredo-arrow">›</span>
+          </button>
+          <div id="acc-corredo" style="display:none;padding:1.5rem;border-top:1px solid var(--av3);background:var(--av)">
+            <p style="font-family:var(--fu);font-size:.72rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.7">Da portare al momento dell'ingresso in Convitto — art. 20 del Regolamento di Convitto (versione 30/01/2025).</p>
+
+            <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">🛏️ Biancheria e letto</p>
+            <ul style="font-size:.85rem;color:var(--txt2);line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
+              <li>Coperte e/o piumino</li>
+              <li>N. 1 completo da letto per una piazza (lenzuola, federa, copertina)</li>
+              <li>N. 2 asciugamani</li>
+            </ul>
+
+            <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">👔 Abbigliamento e igiene</p>
+            <ul style="font-size:.85rem;color:var(--txt2);line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
+              <li>N. 1 pigiama</li>
+              <li>N. 1 paio di ciabatte o pantofole</li>
+              <li>Indumenti personali adeguati in numero sufficiente</li>
+              <li>Necessario per la cura e l'igiene personale</li>
+            </ul>
+
+            <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">🗂️ Accessori</p>
+            <ul style="font-size:.85rem;color:var(--txt2);line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
+              <li>N. 1 sacchetto per la biancheria sporca</li>
+              <li>Numero adeguato di appendiabiti</li>
+              <li>Materiale scolastico necessario</li>
+            </ul>
+
+            <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">📋 Documenti obbligatori</p>
+            <ul style="font-size:.85rem;color:var(--txt2);line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
+              <li>Certificato medico di idoneità alla vita convittuale</li>
+              <li>Tessera sanitaria</li>
+              <li>Documento d'identità in corso di validità</li>
+              <li>Eventuale certificazione di allergie/intolleranze del medico curante</li>
+            </ul>
+
+            <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:.85rem 1rem;margin-bottom:1.25rem">
+              <p style="font-size:.78rem;color:#856404;line-height:1.65;margin:0">⚠️ <strong>Sconsigliato</strong> portare indumenti di particolare pregio, preziosi, TV, console, smartphone di valore o altri apparecchi elettronici. Il Convitto non garantisce la custodia di tali oggetti (art. 20, comma 14 del Regolamento).</p>
+            </div>
+
+            <button onclick="stampaCorredo()" style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:8px;cursor:pointer">🖨️ Stampa la lista</button>
+          </div>
         </div>
 
         <!-- 5. USCITE AUTONOME — accordion -->
@@ -397,55 +438,6 @@
     </div>
   </section>
 
-  <!-- MODALE CORREDO -->
-  <div id="modal-corredo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;padding:1rem" onclick="if(event.target===this)this.style.display='none'">
-    <div style="background:#fff;border-radius:14px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;position:relative">
-      <div style="background:var(--bosco);padding:1.25rem 1.5rem;border-radius:14px 14px 0 0;display:flex;justify-content:space-between;align-items:center">
-        <h3 style="font-family:var(--fd);font-size:1.3rem;font-weight:300;color:#fff;margin:0">Lista corredo <em style="font-style:italic;color:var(--oro3)">obbligatorio</em></h3>
-        <button onclick="document.getElementById('modal-corredo').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;line-height:1;padding:0">✕</button>
-      </div>
-      <div style="padding:1.5rem" id="corredo-content">
-        <p style="font-family:var(--fu);font-size:.72rem;color:#666;margin-bottom:1.25rem;line-height:1.7">Da portare al momento dell'ingresso in Convitto — art. 20 del Regolamento di Convitto (versione 30/01/2025).</p>
-
-        <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">🛏️ Biancheria e letto</p>
-        <ul style="font-size:.85rem;color:#374151;line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
-          <li>Coperte e/o piumino</li>
-          <li>N. 1 completo da letto per una piazza (lenzuola, federa, copertina)</li>
-          <li>N. 2 asciugamani</li>
-        </ul>
-
-        <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">👔 Abbigliamento e igiene</p>
-        <ul style="font-size:.85rem;color:#374151;line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
-          <li>N. 1 pigiama</li>
-          <li>N. 1 paio di ciabatte o pantofole</li>
-          <li>Indumenti personali adeguati in numero sufficiente</li>
-          <li>Necessario per la cura e l'igiene personale</li>
-        </ul>
-
-        <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">🗂️ Accessori</p>
-        <ul style="font-size:.85rem;color:#374151;line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
-          <li>N. 1 sacchetto per la biancheria sporca</li>
-          <li>Numero adeguato di appendiabiti</li>
-          <li>Materiale scolastico necessario</li>
-        </ul>
-
-        <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bosco);margin-bottom:.5rem">📋 Documenti obbligatori</p>
-        <ul style="font-size:.85rem;color:#374151;line-height:2;padding-left:1.25rem;margin-bottom:1.25rem">
-          <li>Certificato medico di idoneità alla vita convittuale</li>
-          <li>Tessera sanitaria</li>
-          <li>Documento d'identità in corso di validità</li>
-          <li>Eventuale certificazione di allergie/intolleranze del medico curante</li>
-        </ul>
-
-        <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:.85rem 1rem;margin-bottom:1.25rem">
-          <p style="font-size:.78rem;color:#856404;line-height:1.65;margin:0">⚠️ <strong>Sconsigliato</strong> portare indumenti di particolare pregio, preziosi, TV, console, smartphone di valore o altri apparecchi elettronici. Il Convitto non garantisce la custodia di tali oggetti (art. 20, comma 14 del Regolamento).</p>
-        </div>
-
-        <button onclick="window.print()" style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:8px;cursor:pointer;width:100%">🖨️ Stampa la lista</button>
-      </div>
-    </div>
-  </div>
-
   <!-- FAQ -->
   <section id="faq" style="background:var(--av2)">
     <div class="w">
@@ -500,6 +492,39 @@ function toggleAcc(id) {
   panel.style.display = open ? 'none' : 'block';
   if (arrow) arrow.textContent = open ? '›' : '↓';
   if (btn) btn.setAttribute('aria-expanded', !open);
+}
+
+function stampaCorredo() {
+  const oggi = new Date().toLocaleDateString('it-IT');
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"/>
+  <title>Lista corredo obbligatorio — Convitto Costaggini</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12pt; max-width: 680px; margin: 40px auto; color: #1a1a1a; line-height: 1.6; }
+    h1 { font-size: 16pt; margin-bottom: 4px; }
+    .ente { font-size: 10pt; color: #555; margin-bottom: 24px; }
+    .sezione { font-size: 10pt; font-weight: bold; text-transform: uppercase; letter-spacing: .08em; color: #2C3E2D; margin: 16px 0 6px; }
+    ul { padding-left: 20px; margin: 0 0 12px; }
+    li { margin-bottom: 4px; }
+    .nota { background: #fff8e1; border: 1px solid #ffc107; padding: 10px 14px; border-radius: 4px; font-size: 10pt; margin: 16px 0; }
+    @media print { body { margin: 20px; } }
+  </style></head><body>
+  <div class="ente">IPSSEOA "R. A. Costaggini" — Rieti · Convitto annesso · C.F. 80008130579</div>
+  <h1>Lista corredo obbligatorio</h1>
+  <p style="font-size:10pt;color:#555">Art. 20 del Regolamento di Convitto — versione 30/01/2025 — A.S. 2025/2026</p>
+  <div class="sezione">🛏️ Biancheria e letto</div>
+  <ul><li>Coperte e/o piumino</li><li>N. 1 completo da letto per una piazza (lenzuola, federa, copertina)</li><li>N. 2 asciugamani</li></ul>
+  <div class="sezione">👔 Abbigliamento e igiene</div>
+  <ul><li>N. 1 pigiama</li><li>N. 1 paio di ciabatte o pantofole</li><li>Indumenti personali adeguati in numero sufficiente</li><li>Necessario per la cura e l'igiene personale</li></ul>
+  <div class="sezione">🗂️ Accessori</div>
+  <ul><li>N. 1 sacchetto per la biancheria sporca</li><li>Numero adeguato di appendiabiti</li><li>Materiale scolastico necessario</li></ul>
+  <div class="sezione">📋 Documenti obbligatori</div>
+  <ul><li>Certificato medico di idoneità alla vita convittuale</li><li>Tessera sanitaria</li><li>Documento d'identità in corso di validità</li><li>Eventuale certificazione di allergie/intolleranze del medico curante</li></ul>
+  <div class="nota">⚠️ <strong>Sconsigliato</strong> portare indumenti di particolare pregio, preziosi, TV, console, smartphone di valore o altri apparecchi elettronici. Il Convitto non garantisce la custodia di tali oggetti (art. 20, comma 14 del Regolamento).</div>
+  <p style="font-size:10pt;color:#666">Stampato il ${oggi} — conservare per il giorno dell'ingresso.</p>
+  <script>window.onload=()=>window.print()<\/script>
+  </body></html>`);
+  w.document.close();
 }
 
 // ── STAMPA ALLERGIE ────────────────────────────────
