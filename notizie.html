@@ -81,16 +81,18 @@
       .saggio-inner {
         flex-direction: row;
         align-items: stretch;
-        min-height: 480px;
       }
       .saggio-poster {
-        width: 38%;
-        max-width: 340px;
-        padding: 1.75rem 1.25rem;
+        width: 36%;
+        max-width: 320px;
+        padding: 1.5rem 1.25rem;
+        box-sizing: border-box;
       }
       .saggio-poster img {
-        max-height: 520px;
+        /* lascia che l'immagine mostri tutta la sua altezza */
+        max-height: none;
         width: 100%;
+        height: auto;
         object-fit: contain;
       }
       .saggio-body {
