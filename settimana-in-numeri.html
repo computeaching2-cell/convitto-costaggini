@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Una settimana al Convitto Costaggini in numeri — 7 giorni, 21 pasti, studio guidato, attività e molto altro."/>
+  <title>Una Settimana in Numeri | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background: #0a0f0a; }
+    .sn-hero { background: linear-gradient(160deg,#0a0f0a,var(--bosco)); padding:3.5rem 1.25rem 2.5rem; text-align:center; position:relative; overflow:hidden; }
+    .sn-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(184,146,42,.1),transparent); pointer-events:none; }
+
+    /* Griglia numeri principali */
+    .sn-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:1rem; padding:2.5rem 1.25rem; max-width:860px; margin:0 auto; }
+    @media(max-width:400px){ .sn-grid { grid-template-columns:1fr 1fr; } }
+    .sn-card { background:#141e14; border:1px solid rgba(184,146,42,.15); border-radius:12px; padding:1.5rem 1rem; text-align:center; transition:transform .2s; }
+    .sn-card:hover { transform:translateY(-3px); }
+    .sn-icon { font-size:2rem; display:block; margin-bottom:.5rem; }
+    .sn-num { font-family:var(--fd); font-size:3rem; font-weight:300; color:var(--oro3); line-height:1; margin-bottom:.25rem; }
+    .sn-unit { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,240,232,.35); margin-bottom:.4rem; }
+    .sn-label { font-family:var(--fu); font-size:.72rem; color:rgba(245,240,232,.6); line-height:1.5; }
+
+    /* Timeline settimanale */
+    .sn-timeline { max-width:700px; margin:0 auto; padding:0 1.25rem 3rem; }
+    .sn-day { margin-bottom:1.5rem; }
+    .sn-day-name { font-family:var(--fu); font-size:.65rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--oro2); margin-bottom:.6rem; }
+    .sn-slots { display:flex; flex-direction:column; gap:.35rem; }
+    .sn-slot { display:flex; align-items:center; gap:.75rem; border-radius:6px; padding:.5rem .85rem; }
+    .sn-slot.fisso { background:rgba(44,62,45,.3); }
+    .sn-slot.studio { background:rgba(184,146,42,.1); }
+    .sn-slot.libero { background:rgba(255,255,255,.04); border:1px dashed rgba(255,255,255,.08); }
+    .sn-slot.notte { background:rgba(15,15,30,.5); }
+    .sn-time { font-family:var(--fu); font-size:.6rem; font-weight:800; color:rgba(245,240,232,.4); min-width:52px; flex-shrink:0; }
+    .sn-act { font-family:var(--fu); font-size:.78rem; color:rgba(245,240,232,.75); }
+    .sn-act em { color:var(--oro2); font-style:normal; }
+  </style>
+</head>
+<body data-page="settimana-in-numeri">
+<main id="main">
+
+  <div class="sn-hero">
+    <div class="w" style="position:relative;z-index:1">
+      <nav class="breadcrumb" style="justify-content:center;margin-bottom:1.25rem">
+        <a href="index.html" style="color:rgba(245,240,232,.35)">Home</a><span style="color:rgba(245,240,232,.15)">›</span>
+        <a href="il-convitto.html" style="color:rgba(245,240,232,.35)">Il Convitto</a><span style="color:rgba(245,240,232,.15)">›</span>
+        <span style="color:var(--oro2)">Una Settimana in Numeri</span>
+      </nav>
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">Infografica</p>
+      <h1 style="font-family:var(--fd);font-size:clamp(1.8rem,6vw,3.2rem);font-weight:300;color:#fff;margin-bottom:.5rem">Una settimana <em style="font-style:italic;color:var(--oro3)">in numeri</em></h1>
+      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:480px;margin:0 auto">7 giorni al Convitto Costaggini — quello che succede ogni settimana, in cifre.</p>
+    </div>
+  </div>
+
+  <!-- Numeri principali -->
+  <div class="sn-grid">
+    <div class="sn-card rv">
+      <span class="sn-icon">📅</span>
+      <div class="sn-num">7</div>
+      <div class="sn-unit">giorni</div>
+      <div class="sn-label">di vita condivisa ogni settimana</div>
+    </div>
+    <div class="sn-card rv d1">
+      <span class="sn-icon">🍽️</span>
+      <div class="sn-num">21</div>
+      <div class="sn-unit">pasti</div>
+      <div class="sn-label">colazione, pranzo e cena ogni giorno</div>
+    </div>
+    <div class="sn-card rv d2">
+      <span class="sn-icon">📚</span>
+      <div class="sn-num">8h</div>
+      <div class="sn-unit">e 45 min</div>
+      <div class="sn-label">di studio guidato settimanale</div>
+    </div>
+    <div class="sn-card rv d3">
+      <span class="sn-icon">🎓</span>
+      <div class="sn-num">32h</div>
+      <div class="sn-unit">di scuola</div>
+      <div class="sn-label">lezioni mattutine dal lunedì al sabato</div>
+    </div>
+    <div class="sn-card rv">
+      <span class="sn-icon">🌙</span>
+      <div class="sn-num">7</div>
+      <div class="sn-unit">notti</div>
+      <div class="sn-label">in camera propria, sicura e silenziosa</div>
+    </div>
+    <div class="sn-card rv d1">
+      <span class="sn-icon">🎵</span>
+      <div class="sn-num">2h</div>
+      <div class="sn-unit">Lab. Musicale</div>
+      <div class="sn-label">il giovedì pomeriggio</div>
+    </div>
+    <div class="sn-card rv d2">
+      <span class="sn-icon">⚽</span>
+      <div class="sn-num">3h</div>
+      <div class="sn-unit">sport</div>
+      <div class="sn-label">attività sportive settimanali</div>
+    </div>
+    <div class="sn-card rv d3">
+      <span class="sn-icon">📞</span>
+      <div class="sn-num">∞</div>
+      <div class="sn-unit">chiamate</div>
+      <div class="sn-label">con la famiglia, quando si vuole</div>
+    </div>
+  </div>
+
+  <!-- Timeline settimanale -->
+  <section style="background:#0a0f0a;padding:1rem 0 2rem">
+    <div style="max-width:700px;margin:0 auto;padding:0 1.25rem">
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem;text-align:center">Agenda tipo</p>
+      <h2 style="font-family:var(--fd);font-size:1.6rem;font-weight:300;color:#fff;margin-bottom:1.5rem;text-align:center">Dal lunedì al <em style="font-style:italic;color:var(--oro3)">venerdì</em></h2>
+
+      <div class="sn-timeline">
+        <div style="display:flex;flex-direction:column;gap:.35rem">
+          <div class="sn-slot notte"><span class="sn-time">06:30</span><span class="sn-act">🌅 Sveglia — <em>l'educatore percorre i piani</em></span></div>
+          <div class="sn-slot fisso"><span class="sn-time">07:00–07:30</span><span class="sn-act">☕ Colazione insieme</span></div>
+          <div class="sn-slot fisso"><span class="sn-time">08:00–13:30</span><span class="sn-act">📚 Scuola</span></div>
+          <div class="sn-slot fisso"><span class="sn-time">13:30–14:30</span><span class="sn-act">🍽️ Pranzo — <em>sempre con un educatore presente</em></span></div>
+          <div class="sn-slot libero"><span class="sn-time">14:30–15:30</span><span class="sn-act">💤 Pausa libera</span></div>
+          <div class="sn-slot studio"><span class="sn-time">15:30–17:15</span><span class="sn-act">📖 Studio guidato — <em>educatori disponibili per ogni materia</em></span></div>
+          <div class="sn-slot libero"><span class="sn-time">17:15–19:15</span><span class="sn-act">🎵 Tempo libero — sport, Lab. Musicale, uscite</span></div>
+          <div class="sn-slot fisso"><span class="sn-time">19:15–20:00</span><span class="sn-act">🌙 Cena</span></div>
+          <div class="sn-slot libero"><span class="sn-time">20:00–22:30</span><span class="sn-act">📱 Serata — <em>telefonate, lettura, socialità</em></span></div>
+          <div class="sn-slot notte"><span class="sn-time">22:30</span><span class="sn-act">🌙 Luci spente</span></div>
+        </div>
+      </div>
+
+      <div style="background:#141e14;border:1px solid rgba(184,146,42,.15);border-radius:10px;padding:1.25rem;margin-top:1.5rem;text-align:center">
+        <p style="font-family:var(--fd);font-size:1.1rem;font-style:italic;color:rgba(245,240,232,.6);margin:0">Non è una caserma — è una struttura dentro la quale si impara ad essere liberi.</p>
+      </div>
+
+      <div style="text-align:center;margin-top:1.5rem;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+        <a href="giornata-tipo.html" class="btn-gold">Leggi la giornata tipo dettagliata →</a>
+        <a href="orientamento.html" style="display:inline-flex;align-items:center;font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;border:1.5px solid rgba(184,146,42,.3);color:var(--oro2);border-radius:8px;text-decoration:none">Come iscriversi →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="nav.js"></script>
+</body>
+</html>

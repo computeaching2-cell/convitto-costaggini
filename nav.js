@@ -233,7 +233,8 @@
       <p><a href="trasparenza.html#accessibilita">Dichiarazione di Accessibilità</a> · <a href="privacy.html">Privacy</a> · <a href="cookie-policy.html">Cookie Policy</a> · <a href="trasparenza.html">Amm. Trasparente</a></p>
     </div>
   </div>
-</footer>`;
+</footer>
+<script src="chatbot.js"></script>`;
 
   /* ── Inserimento nel DOM ── */
   document.body.insertAdjacentHTML('afterbegin', headerHTML);

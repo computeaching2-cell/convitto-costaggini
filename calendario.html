@@ -102,6 +102,13 @@
         <button class="cal-filter" data-cat="uscita">Uscite</button>
       </div>
 
+      <!-- Export iCal -->
+      <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+        <button onclick="esportaICal()" style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1rem;background:var(--av2);border:1.5px solid var(--av3);color:var(--bosco2);border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:.4rem">
+          📅 Aggiungi al tuo calendario
+        </button>
+      </div>
+
       <!-- ── SETTEMBRE 2025 ── -->
       <div class="month-header">Settembre 2025</div>
       <div class="ev-list">
@@ -277,6 +284,44 @@ document.querySelectorAll('.cal-filter').forEach(btn => {
     });
   });
 });
+
+// ── EXPORT iCAL ──────────────────────────────────────────────
+const EVENTI_ICAL = [
+  { titolo:'Accoglienza nuovi convittori', data:'20250915', ora:'0900', luogo:'Convitto Costaggini, Via Salaria s.n.c., Rieti' },
+  { titolo:'Open Day Costaggini — Novembre', data:'20251130', ora:'1000', luogo:'IPSSEOA Costaggini, Via Salaria s.n.c., Rieti' },
+  { titolo:'Festa di Natale del Convitto', data:'20251219', ora:'1830', luogo:'Convitto Costaggini, Rieti' },
+  { titolo:'Open Day Costaggini — Gennaio', data:'20260125', ora:'1000', luogo:'IPSSEOA Costaggini, Via Salaria s.n.c., Rieti' },
+  { titolo:'Concerto-Saggio Fine Anno — Laboratorio Musicale', data:'20260527', ora:'1830', luogo:'Convitto Costaggini, Rieti' },
+  { titolo:'Fine anno scolastico 2025/26', data:'20260615', ora:'0900', luogo:'IPSSEOA Costaggini, Rieti' },
+];
+
+function esportaICal() {
+  const uid = () => Math.random().toString(36).substr(2,9).toUpperCase();
+  const now = new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+  let cal = [
+    'BEGIN:VCALENDAR','VERSION:2.0',
+    'PRODID:-//Convitto Costaggini Rieti//IT',
+    'CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'X-WR-CALNAME:Convitto Costaggini — Eventi A.S. 2025/26',
+    'X-WR-TIMEZONE:Europe/Rome',
+  ];
+  EVENTI_ICAL.forEach(ev => {
+    cal.push(
+      'BEGIN:VEVENT',
+      `UID:${uid()}@convittocostaggini.rieti`,
+      `DTSTAMP:${now}`,
+      `DTSTART;TZID=Europe/Rome:${ev.data}T${ev.ora}00`,
+      `SUMMARY:${ev.titolo}`,
+      `LOCATION:${ev.luogo}`,
+      `DESCRIPTION:Evento del Convitto "Costaggini" di Rieti. Info: 0746 296862`,
+      'END:VEVENT'
+    );
+  });
+  cal.push('END:VCALENDAR');
+  const blob = new Blob([cal.join('\r\n')], { type:'text/calendar;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'convitto-costaggini.ics'; a.click();
+}
 </script>
 </body>
 </html>
