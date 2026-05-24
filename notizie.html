@@ -82,18 +82,12 @@
         flex-direction: row;
         align-items: stretch;
       }
-      .saggio-poster {
+      .saggio-card .saggio-poster {
         width: 36%;
         max-width: 320px;
         padding: 1.5rem 1.25rem;
         box-sizing: border-box;
-      }
-      .saggio-poster img {
-        /* lascia che l'immagine mostri tutta la sua altezza */
-        max-height: none;
-        width: 100%;
-        height: auto;
-        object-fit: contain;
+        border-radius: 6px 0 0 6px;
       }
       .saggio-body {
         flex: 1;
@@ -123,9 +117,15 @@
     .article-card.featured img { aspect-ratio: 21/9; }
     .article-card.featured .ac-body { padding: 1.5rem 1.75rem 2rem; }
     .article-card.featured h3 { font-size: 1.6rem; }
+    /* annulla le regole globali sull'immagine per la card del saggio */
+    .saggio-card { overflow: visible !important; }
+    .saggio-card .saggio-poster { overflow: hidden; border-radius: 8px 8px 0 0; }
+    .saggio-card .saggio-poster img { aspect-ratio: unset !important; object-fit: contain !important; width: 100% !important; height: auto !important; display: block; }
 
     @media(min-width:640px){ .news-grid { grid-template-columns: 1fr 1fr; } }
     @media(min-width:1024px){ .news-grid { grid-template-columns: repeat(3, 1fr); } .article-card.featured img { aspect-ratio: 32/9; } }
+    /* annulla anche il 32/9 per il saggio */
+    @media(min-width:1024px){ .saggio-card .saggio-poster img { aspect-ratio: unset !important; } }
 
     .comunicati-list { display: flex; flex-direction: column; gap: .55rem; }
     .com-row { display: flex; align-items: center; gap: .85rem; background: var(--bco); border: 1px solid var(--av3); border-radius: 4px; padding: .85rem 1rem; text-decoration: none; color: var(--txt); min-height: 56px; transition: background var(--ease); }
