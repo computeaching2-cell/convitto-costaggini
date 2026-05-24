@@ -107,7 +107,7 @@
     .skill-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .45rem; }
     .skill-name { font-family: var(--fu); font-size: .78rem; font-weight: 700; letter-spacing: .06em; color: var(--av); }
     .skill-pct  { font-family: var(--fd); font-size: .85rem; font-style: italic; color: var(--oro2); }
-    .skill-bar-bg { height: 3px; background: rgba(245,240,232,.1); border-radius: 3px; overflow: hidden; }
+    .skill-bar-bg { height: 3px; background: rgba(245,240,232,.22); border-radius: 3px; overflow: hidden; }
     .skill-bar-fill {
       height: 100%; background: linear-gradient(90deg, var(--oro), var(--oro2));
       border-radius: 3px; width: 0;
@@ -176,7 +176,7 @@
       background: rgba(245,240,232,.06); border: 1px solid rgba(184,146,42,.25);
       border-radius: 40px; padding: .65rem 1.25rem;
       font-family: var(--fu); font-size: .72rem; font-weight: 700;
-      letter-spacing: .07em; text-transform: uppercase; color: rgba(245,240,232,.75);
+      letter-spacing: .07em; text-transform: uppercase; color: rgba(245,240,232,.92);
       transition: all .2s;
     }
     .geo-pill:hover { background: rgba(184,146,42,.15); border-color: var(--oro2); color: #fff; }
@@ -208,7 +208,7 @@
     }
     .ccnl-title {
       font-family: var(--fu); font-size: .72rem; font-weight: 700;
-      letter-spacing: .04em; color: rgba(245,240,232,.8); flex: 1;
+      letter-spacing: .04em; color: rgba(245,240,232,.92); flex: 1;
       line-height: 1.4;
     }
     .ccnl-arrow {
@@ -223,10 +223,10 @@
       margin-top: 0;
     }
     .ccnl-body p {
-      font-size: .83rem; color: rgba(245,240,232,.65);
+      font-size: .83rem; color: rgba(245,240,232,.88);
       line-height: 1.8; margin-top: .5rem;
     }
-    .ccnl-body strong { color: rgba(245,240,232,.9); font-weight: 700; }
+    .ccnl-body strong { color: #fff; font-weight: 700; }
 
     .ccnl-pill {
       display: inline-block; margin-top: .9rem;
@@ -243,7 +243,7 @@
       background: rgba(184,146,42,.06);
       border-radius: 0 6px 6px 0;
       font-family: var(--fd); font-size: .88rem; font-style: italic;
-      color: rgba(245,240,232,.5); line-height: 1.65;
+      color: rgba(245,240,232,.82); line-height: 1.65;
     }
     .ccnl-quote cite {
       display: block; margin-top: .4rem;
@@ -280,7 +280,7 @@
     .tc-placeholder-icon { font-size: 4rem; opacity: .25; }
     .tc-placeholder-text {
       font-family: var(--fd); font-size: .85rem; font-style: italic;
-      color: rgba(245,240,232,.3); text-align: center; padding: 0 1rem;
+      color: rgba(245,240,232,.72); text-align: center; padding: 0 1rem;
     }
     /* Badge ruolo sovrapposto */
     .tc-badge {
@@ -332,7 +332,7 @@
     .edu-cta { background: var(--bosco); padding: 5rem 1.25rem; text-align: center; }
     .edu-cta h2 { font-family: var(--fd); font-size: clamp(1.8rem,5vw,3rem); font-weight: 300; color: var(--av); margin-bottom: 1rem; }
     .edu-cta h2 em { font-style: italic; color: var(--oro3); }
-    .edu-cta p { color: rgba(245,240,232,.6); max-width: 520px; margin: 0 auto 2rem; font-size: .92rem; line-height: 1.75; }
+    .edu-cta p { color: rgba(245,240,232,.88); max-width: 520px; margin: 0 auto 2rem; font-size: .92rem; line-height: 1.75; }
 
   @media(min-width:480px){.team-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:860px){.team-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}</style>
 </head>
@@ -344,10 +344,10 @@
     <div class="edu-hero-bg" aria-hidden="true"></div>
     <div class="edu-hero-content w">
       <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:1.5rem">
-        <a href="index.html" style="color:rgba(245,240,232,.45)">Home</a>
-        <span style="color:rgba(245,240,232,.2)">›</span>
-        <a href="il-convitto.html" style="color:rgba(245,240,232,.45)">Il Convitto</a>
-        <span style="color:rgba(245,240,232,.2)">›</span>
+        <a href="index.html" style="color:rgba(245,240,232,.88)">Home</a>
+        <span style="color:rgba(245,240,232,.6)">›</span>
+        <a href="il-convitto.html" style="color:rgba(245,240,232,.88)">Il Convitto</a>
+        <span style="color:rgba(245,240,232,.6)">›</span>
         <span aria-current="page" style="color:var(--oro2)">Gli Educatori</span>
       </nav>
       <span class="hero-eyebrow">— Il cuore del Convitto "Costaggini"</span>
@@ -357,7 +357,7 @@
               aria-label="Scorri alla sezione successiva"
               style="background:none;border:none;cursor:pointer;padding:.5rem 0">
         <span>Scorri per conoscerli</span>
-        <svg class="scroll-arrow" viewBox="0 0 24 24" width="16" height="16" style="fill:rgba(245,240,232,.35)"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        <svg class="scroll-arrow" viewBox="0 0 24 24" width="16" height="16" style="fill:rgba(245,240,232,.6)"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
       </button>
     </div>
   </section>
@@ -380,7 +380,7 @@
         <div class="rv">
           <p class="lbl">Cosa dice la legge</p>
           <h2>Il profilo <em>contrattuale</em></h2>
-          <p style="color:rgba(245,240,232,.6);max-width:620px;margin:.75rem 0 1.5rem;font-size:.9rem;line-height:1.8">
+          <p style="color:rgba(245,240,232,.88);max-width:620px;margin:.75rem 0 1.5rem;font-size:.9rem;line-height:1.8">
             L'educatore di convitto è una figura definita e tutelata dal <strong style="color:var(--oro2)">CCNL Istruzione e Ricerca</strong> (artt. 127–129). Non è personale ausiliario. È personale educativo — alla pari, per status professionale e funzione formativa, con il personale docente.
           </p>
           <button onclick="toggleCCNL()" id="ccnl-btn"
@@ -397,7 +397,7 @@
             <!-- Intro -->
             <div style="background:rgba(245,240,232,.04);border:1px solid rgba(184,146,42,.15);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1rem">
               <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">CCNL Istruzione e Ricerca — Personale educativo</p>
-              <p style="font-size:.82rem;color:rgba(245,240,232,.55);line-height:1.7">Il contratto collettivo nazionale dedica tre articoli specifici alla figura dell'educatore di convitto. Non sono norme astratte — descrivono esattamente chi è la persona a cui affiderete vostro figlio. Scorrete: ogni sezione è breve e leggibile.</p>
+              <p style="font-size:.82rem;color:rgba(245,240,232,.85);line-height:1.7">Il contratto collettivo nazionale dedica tre articoli specifici alla figura dell'educatore di convitto. Non sono norme astratte — descrivono esattamente chi è la persona a cui affiderete vostro figlio. Scorrete: ogni sezione è breve e leggibile.</p>
             </div>
 
             <!-- Art. 127 -->
@@ -465,7 +465,7 @@
             <div style="text-align:right;margin-top:.75rem">
               <button onclick="toggleCCNL()"
                 style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.35);background:none;border:none;cursor:pointer;transition:color .2s"
-                onmouseover="this.style.color='var(--oro2)'" onmouseout="this.style.color='rgba(245,240,232,.35)'">
+                onmouseover="this.style.color='var(--oro2)'" onmouseout="this.style.color='rgba(245,240,232,.78)'">
                 Chiudi ✕
               </button>
             </div>
@@ -506,7 +506,7 @@
               <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div>
             </div>
           </div>
-          <p style="font-size:.72rem;color:rgba(245,240,232,.3);margin-top:1rem;font-style:italic">
+          <p style="font-size:.72rem;color:rgba(245,240,232,.72);margin-top:1rem;font-style:italic">
             Fonte: CCNL Istruzione e Ricerca, art. 127 — "competenze di tipo psicopedagogico, metodologico ed organizzativo-relazionale, tra loro correlate ed integrate"
           </p>
         </div>
@@ -600,12 +600,12 @@
       <div style="max-width:680px;margin:2.5rem auto 0;background:rgba(245,240,232,.05);border:1px solid rgba(184,146,42,.2);border-radius:14px;padding:2rem 2.25rem;text-align:left">
         <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:1.25rem;text-align:center">— Tutte domande legittime. Meritano risposte vere —</p>
 
-        <p style="font-family:var(--fd);font-size:1.25rem;font-style:italic;color:rgba(245,240,232,.85);line-height:1.7;margin-bottom:1.5rem;text-align:center;max-width:640px;margin-left:auto;margin-right:auto">
+        <p style="font-family:var(--fd);font-size:1.25rem;font-style:italic;color:rgba(245,240,232,.95);line-height:1.7;margin-bottom:1.5rem;text-align:center;max-width:640px;margin-left:auto;margin-right:auto">
           "Un educatore non si sceglie come si sceglie un fornitore.<br>
           Si conosce. Si incontra. Si impara a fidarsi."
         </p>
 
-        <p style="font-size:.88rem;color:rgba(245,240,232,.6);line-height:1.85;margin-bottom:1.5rem;max-width:640px;margin-left:auto;margin-right:auto;text-align:center">
+        <p style="font-size:.88rem;color:rgba(245,240,232,.88);line-height:1.85;margin-bottom:1.5rem;max-width:640px;margin-left:auto;margin-right:auto;text-align:center">
           I nostri educatori vengono da percorsi formativi diversi — chi dalle scienze umane, chi dalla letteratura, chi dalle discipline tecnico-scientifiche o pedagogiche. La varietà delle formazioni è una ricchezza: produce sguardi diversi sulle stesse situazioni, approcci complementari, una comunità educante davvero plurale.
         </p>
 
@@ -613,28 +613,28 @@
           <div style="padding:1rem 1.1rem;background:rgba(255,255,255,.04);border:1px solid rgba(184,146,42,.12);border-radius:10px">
             <span style="font-size:1.5rem;display:block;margin-bottom:.5rem">🏛️</span>
             <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Selezionati per concorso pubblico</p>
-            <p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.75;margin:0">Ogni educatore ha superato un concorso nazionale che ha valutato con rigore competenze psicopedagogiche, relazionali e organizzative. Non è chi si presenta — è chi viene scelto dopo una selezione seria. È la garanzia che la Repubblica offre alle famiglie che affidano i propri figli a una struttura pubblica.</p>
+            <p style="font-size:.85rem;color:rgba(245,240,232,.88);line-height:1.75;margin:0">Ogni educatore ha superato un concorso nazionale che ha valutato con rigore competenze psicopedagogiche, relazionali e organizzative. Non è chi si presenta — è chi viene scelto dopo una selezione seria. È la garanzia che la Repubblica offre alle famiglie che affidano i propri figli a una struttura pubblica.</p>
           </div>
           <div style="padding:1rem 1.1rem;background:rgba(255,255,255,.04);border:1px solid rgba(184,146,42,.12);border-radius:10px">
             <span style="font-size:1.5rem;display:block;margin-bottom:.5rem">⏳</span>
             <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Una carriera trentennale — non anni, stagioni</p>
-            <p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.75;margin:0">Trent'anni di esperienze accumulate nella prossimità quotidiana con i ragazzi. Trent'anni di conflitti mediati, di crisi notturne gestite, di fiducie guadagnate goccia a goccia. Questo non si impara sui libri e non si acquista online. Si costruisce, lentamente, rimanendo.</p>
+            <p style="font-size:.85rem;color:rgba(245,240,232,.88);line-height:1.75;margin:0">Trent'anni di esperienze accumulate nella prossimità quotidiana con i ragazzi. Trent'anni di conflitti mediati, di crisi notturne gestite, di fiducie guadagnate goccia a goccia. Questo non si impara sui libri e non si acquista online. Si costruisce, lentamente, rimanendo.</p>
           </div>
           <div style="padding:1rem 1.1rem;background:rgba(255,255,255,.04);border:1px solid rgba(184,146,42,.12);border-radius:10px">
             <span style="font-size:1.5rem;display:block;margin-bottom:.5rem">🤝</span>
             <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Sempre disponibili — senza appuntamento obbligatorio</p>
-            <p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.75;margin:0">Parlare con i genitori non è un onere burocratico — è parte del mandato educativo. Ogni educatore è sempre disponibile ad ascoltare, aggiornare, confrontarsi: formalmente in sede di colloquio, informalmente in qualsiasi momento ce ne sia bisogno. Nessun genitore viene mai rimandato indietro.</p>
+            <p style="font-size:.85rem;color:rgba(245,240,232,.88);line-height:1.75;margin:0">Parlare con i genitori non è un onere burocratico — è parte del mandato educativo. Ogni educatore è sempre disponibile ad ascoltare, aggiornare, confrontarsi: formalmente in sede di colloquio, informalmente in qualsiasi momento ce ne sia bisogno. Nessun genitore viene mai rimandato indietro.</p>
           </div>
           <div style="padding:1rem 1.1rem;background:rgba(255,255,255,.04);border:1px solid rgba(184,146,42,.12);border-radius:10px">
             <span style="font-size:1.5rem;display:block;margin-bottom:.5rem">❤️</span>
             <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Una spiccata propensione al ruolo — e ai ragazzi</p>
-            <p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.75;margin:0">Nessuno resta trent'anni in questo ruolo per inerzia. Chi lavora con i ragazzi nei momenti più delicati della loro vita — nelle serate di nostalgia, nelle liti tra compagni, nelle piccole vittorie di ogni giorno — lo fa perché ci crede. Perché sa che quello che fa conta. Perché i ragazzi lo sentono, e rispondono.</p>
+            <p style="font-size:.85rem;color:rgba(245,240,232,.88);line-height:1.75;margin:0">Nessuno resta trent'anni in questo ruolo per inerzia. Chi lavora con i ragazzi nei momenti più delicati della loro vita — nelle serate di nostalgia, nelle liti tra compagni, nelle piccole vittorie di ogni giorno — lo fa perché ci crede. Perché sa che quello che fa conta. Perché i ragazzi lo sentono, e rispondono.</p>
           </div>
         </div>
 
-        <p style="font-family:var(--fd);font-size:1.05rem;font-style:italic;color:rgba(245,240,232,.35);text-align:center;line-height:1.65;margin:0">
+        <p style="font-family:var(--fd);font-size:1.05rem;font-style:italic;color:rgba(245,240,232,.78);text-align:center;line-height:1.65;margin:0">
           I nomi, i volti e la storia specifica di ciascuno<br>
-          <span style="color:rgba(245,240,232,.5)">li trovate nelle schede qui sotto.</span>
+          <span style="color:rgba(245,240,232,.82)">li trovate nelle schede qui sotto.</span>
         </p>
       </div>
 
@@ -833,7 +833,7 @@
       <p>Non c'è documento che valga uno sguardo. Venite a trovarci — un pomeriggio, una mattina. Vi presentiamo il team, vi mostriamo gli spazi, rispondiamo a tutte le vostre domande.</p>
       <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
         <a href="openday.html" class="btn-gold">🎯 Open Day Digitale →</a>
-        <a href="contatti.html" class="btn-outline" style="color:rgba(245,240,232,.7);border-color:rgba(245,240,232,.3)">Prenota una visita →</a>
+        <a href="contatti.html" class="btn-outline" style="color:rgba(245,240,232,.92);border-color:rgba(245,240,232,.6)">Prenota una visita →</a>
       </div>
     </div>
   </section>

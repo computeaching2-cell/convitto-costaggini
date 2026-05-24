@@ -55,7 +55,7 @@
     .countdown { display:flex; gap:1rem; margin:1.75rem 0; flex-wrap:wrap; }
     .cd-unit { background:rgba(12,20,13,.6); border:1px solid rgba(184,146,42,.3); border-radius:8px; padding:.75rem 1.1rem; text-align:center; min-width:72px; backdrop-filter:blur(8px); }
     .cd-num { font-family:var(--fd); font-size:2.2rem; font-weight:300; color:var(--oro3); display:block; line-height:1; }
-    .cd-lbl { font-family:var(--fu); font-size:.55rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,240,232,.4); margin-top:.2rem; display:block; }
+    .cd-lbl { font-family:var(--fu); font-size:.55rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,240,232,.82); margin-top:.2rem; display:block; }
 
     /* ── TOUR SPAZI ── */
     .tour-slide {
@@ -153,7 +153,7 @@
 
     /* ── PRENOTAZIONE ── */
     .od-form { background:var(--bosco); border-radius:12px; padding:2rem; border:1px solid rgba(184,146,42,.2); }
-    .of-label { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,240,232,.4); display:block; margin-bottom:.35rem; margin-top:.9rem; }
+    .of-label { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,240,232,.88); display:block; margin-bottom:.35rem; margin-top:.9rem; }
     .of-input { width:100%; padding:.7rem 1rem; background:rgba(255,255,255,.06); border:1.5px solid rgba(184,146,42,.25); border-radius:6px; color:#fff; font-family:var(--fu); font-size:16px; outline:none; box-sizing:border-box; transition:border-color .2s; }
     .of-input:focus { border-color:var(--oro2); }
 
@@ -168,7 +168,7 @@
     <div class="od-hero-glass">
       <div class="w">
         <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:1rem">
-          <a href="index.html" style="color:rgba(245,240,232,.5)">Home</a><span style="color:rgba(245,240,232,.25)">›</span>
+          <a href="index.html" style="color:rgba(245,240,232,.88)">Home</a><span style="color:rgba(245,240,232,.6)">›</span>
           <span aria-current="page" style="color:var(--oro2)">Open Day Digitale</span>
         </nav>
         <span style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);display:block;margin-bottom:.65rem">— Benvenuto al Convitto Costaggini</span>
@@ -182,7 +182,7 @@
         </p>
 
         <div class="countdown" id="countdown" aria-label="Conto alla rovescia al prossimo Open Day" style="margin-top:1.25rem"></div>
-        <p style="font-family:var(--fu);font-size:.65rem;color:rgba(245,240,232,.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem">Prossimo Open Day — Dicembre 2026 (data da confermare)</p>
+        <p style="font-family:var(--fu);font-size:.65rem;color:rgba(245,240,232,.82);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem">Prossimo Open Day — Dicembre 2026 (data da confermare)</p>
         <div style="display:flex;flex-wrap:wrap;gap:1rem">
           <a href="#tour" class="btn-gold" onclick="document.getElementById('tour').scrollIntoView({behavior:'smooth'});return false">🏛️ Tour degli spazi →</a>
           <a href="#prenota" class="btn-outline" style="color:rgba(245,240,232,.7);border-color:rgba(245,240,232,.3)" onclick="document.getElementById('prenota').scrollIntoView({behavior:'smooth'});return false">📅 Prenota una visita</a>
@@ -211,7 +211,7 @@
       </button>
     </div>
     <div class="w" style="padding-top:2rem;padding-bottom:.5rem">
-      <p style="font-family:var(--fu);font-size:.65rem;color:rgba(245,240,232,.3);letter-spacing:.1em;text-transform:uppercase">
+      <p style="font-family:var(--fu);font-size:.65rem;color:rgba(245,240,232,.7);letter-spacing:.1em;text-transform:uppercase">
         Usa le frecce o swipe per esplorare tutti gli ambienti
       </p>
     </div>
@@ -388,7 +388,7 @@
               </div>
               <div>
                 <label class="of-label">Numero di persone</label>
-                <select class="of-input" name="persone" id="vis-persone" style="margin-bottom:0;background:rgba(255,255,255,.08);color:var(--av)">
+                <select class="of-input" name="persone" id="vis-persone" style="margin-bottom:0;background:rgba(255,255,255,.08);color:#fff">
                   <option value="Solo genitore/i">Solo genitore/i</option>
                   <option value="Genitore/i + studente">Genitore/i + studente</option>
                   <option value="Gruppo familiare">Gruppo familiare</option>
@@ -418,7 +418,7 @@
               }
             }
           </style>
-          <p style="font-family:var(--fu);font-size:.6rem;color:rgba(245,240,232,.3);margin-top:.75rem;text-align:center">
+          <p style="font-family:var(--fu);font-size:.6rem;color:rgba(245,240,232,.72);margin-top:.75rem;text-align:center">
             Oppure scrivi direttamente a <a href="mailto:rirh010007@istruzione.it" style="color:var(--oro2)">rirh010007@istruzione.it</a>
           </p>
           </form>

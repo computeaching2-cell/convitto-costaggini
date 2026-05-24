@@ -92,8 +92,8 @@
   .art-item:active { background: var(--av2); }
   .art-item.active { background: var(--bosco); }
   .art-item.active .art-title { color: var(--av); }
-  .art-item.active .art-meta { color: rgba(245,240,232,.5); }
-  .art-item.active .art-preview { color: rgba(245,240,232,.45); }
+  .art-item.active .art-meta { color: rgba(245,240,232,.82); }
+  .art-item.active .art-preview { color: rgba(245,240,232,.75); }
   .art-item.active .art-badge {
     background: rgba(255,255,255,.12); color: var(--oro3); border-color: transparent;
   }
@@ -163,7 +163,7 @@
     display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
     margin-bottom: .6rem;
   }
-  .detail-date { font-family: var(--fu); font-size: .68rem; color: rgba(245,240,232,.5); }
+  .detail-date { font-family: var(--fu); font-size: .68rem; color: rgba(245,240,232,.85); }
   .detail-title {
     font-family: var(--fd);
     /* clamp garantisce leggibilità da 320px a desktop */
@@ -172,7 +172,21 @@
   }
   .detail-by {
     font-family: var(--fu); font-size: .7rem;
-    color: rgba(245,240,232,.4); margin-top: .5rem;
+    color: rgba(245,240,232,.8); margin-top: .5rem;
+  }
+
+  /* Locandina allegata */
+  .detail-locandina {
+    padding: 1.25rem 1rem .5rem;
+    text-align: center;
+    background: var(--av);
+    border-bottom: 1px solid var(--av3);
+  }
+  .detail-locandina img {
+    max-width: 100%; max-height: 540px;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(44,62,45,.18);
+    display: inline-block;
   }
 
   .detail-body { padding: 1rem; }
@@ -292,7 +306,7 @@
   .admin-tabs { display: flex; gap: .3rem; }
   .atab {
     background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
-    color: rgba(245,240,232,.65); font-family: var(--fu); font-size: .72rem;
+    color: rgba(245,240,232,.85); font-family: var(--fu); font-size: .72rem;
     font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
     padding: .42rem .9rem; border-radius: 40px; cursor: pointer;
     min-height: 38px; transition: var(--ease);
@@ -354,7 +368,7 @@
   .btn-ai:disabled { opacity: .5; cursor: not-allowed; }
   .btn-ai svg { width: 14px; height: 14px; fill: currentColor; }
   .ai-status {
-    font-size: .72rem; color: rgba(245,240,232,.5); margin-top: .4rem;
+    font-size: .72rem; color: rgba(245,240,232,.82); margin-top: .4rem;
     display: flex; align-items: center; gap: .35rem; min-height: 1rem;
   }
   .ai-spinner {
@@ -401,7 +415,7 @@
     font-size: .86rem; font-weight: 600; color: var(--av);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .mr-meta { font-size: .68rem; color: rgba(245,240,232,.4); margin-top: .15rem; }
+  .mr-meta { font-size: .68rem; color: rgba(245,240,232,.78); margin-top: .15rem; }
   .mr-actions { display: flex; gap: .35rem; flex-shrink: 0; }
   .btn-del, .btn-pin {
     border-radius: 4px; cursor: pointer;
@@ -413,14 +427,14 @@
   .btn-del { background: rgba(192,57,43,.22); color: #fca5a5; border-color: rgba(192,57,43,.3); }
   .btn-pin { background: rgba(184,146,42,.18); color: var(--oro3); border-color: rgba(184,146,42,.28); }
   .btn-pin.pinned-on { background: rgba(184,146,42,.42); }
-  .manage-empty { text-align: center; padding: 1.75rem; font-size: .85rem; color: rgba(245,240,232,.38); font-style: italic; }
+  .manage-empty { text-align: center; padding: 1.75rem; font-size: .85rem; color: rgba(245,240,232,.75); font-style: italic; }
 
   .admin-logout-bar {
     margin-top: 1.75rem; padding-top: 1.25rem;
     border-top: 1px solid rgba(255,255,255,.1);
     display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem;
   }
-  .admin-logout-bar p { font-size: .75rem; color: rgba(245,240,232,.35); }
+  .admin-logout-bar p { font-size: .75rem; color: rgba(245,240,232,.78); }
   .btn-logout {
     background: none; border: 1px solid rgba(255,255,255,.18);
     color: rgba(245,240,232,.55); border-radius: 40px; cursor: pointer;
@@ -764,6 +778,7 @@ function apri(id) {
         <h2 class="detail-title">${a.titolo}</h2>
         ${a.autore?`<p class="detail-by">A cura di: ${a.autore}</p>`:''}
       </div>
+      ${a.locandina ? `<div class="detail-locandina"><img src="${a.locandina}" alt="Locandina: ${a.titolo}" loading="lazy"></div>` : ''}
       <div class="detail-body">${testo}</div>
       <div class="detail-footer">
         <span class="detail-footer-note">Convitto "Costaggini" · Rieti</span>
