@@ -61,7 +61,7 @@ const KB=[
   {k:['quiz','gioco','talent','fa per me','percorso','orientamento','indirizzo'],r:'Prova i 6 quiz interattivi su <a href="scopri-talento.html">Scopri il tuo Talento →</a> per capire quale percorso fa per te.'},
   {k:['certificat','frequenza','documento','attestato'],r:'Compila e stampa la richiesta di certificato di frequenza su <a href="ammissione.html#moduli">Modulistica →</a>'},
   {k:['alumni','ex convittor','ex student','diplomati'],r:'La community degli <em>Alumni</em> è su <a href="comunita.html">La nostra Comunità →</a>. Aggiungi la tua scheda su <a href="iscriviti-alumni.html">Unisciti agli Alumni →</a>'},
-  {k:['ciao','salve','buongiorno','buonasera','aiuto','cosa puoi','cosa sai'],r:'Ciao! 👋 Sono l\'assistente virtuale del Convitto Costaggini di Rieti. Posso rispondere a domande su iscrizioni, orari, rette, servizi e vita convittuale. Cosa ti serve?'},
+  {k:['venerdì','sabato','domenica','weekend','chiude','chiuso','rientra','rientro','fine settimana','uscita','casa'],r:'Il Convitto chiude ogni venerdì alle 13:30. I convittori rientrano a casa per il fine settimana. Il sabato e la domenica il Convitto è chiuso. Il rientro è fissato alla domenica alle 20:00, previa specifica richiesta della famiglia.'},
 ];
 
 const SUGS=['Come ci si iscrive?','Quanto costa la retta?','Orari della giornata','C\'è il Wi-Fi?','Visita guidata'];
