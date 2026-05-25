@@ -569,4 +569,68 @@
     }
   })();
 
+  /* ── METEO RIETI — Open-Meteo, gratuito, no API key ── */
+  (function(){
+    const CSS=`#meteo-widget{position:fixed;bottom:1.5rem;left:1.25rem;z-index:8000;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.3);border-radius:12px;padding:.5rem .85rem;display:flex;align-items:center;gap:.6rem;box-shadow:0 4px 18px rgba(0,0,0,.28);min-width:110px;transition:transform .2s;cursor:default;}
+#meteo-widget:hover{transform:translateY(-2px);}
+.mw-icon{font-size:1.3rem;flex-shrink:0;line-height:1;}
+.mw-info{display:flex;flex-direction:column;gap:1px;}
+.mw-temp{font-family:'Source Sans 3',sans-serif;font-size:.88rem;font-weight:800;color:#fff;line-height:1;}
+.mw-desc{font-family:'Source Sans 3',sans-serif;font-size:.6rem;color:rgba(245,240,232,.5);text-transform:capitalize;}
+.mw-city{font-family:'Source Sans 3',sans-serif;font-size:.54rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(184,146,42,.65);}`;
+    const st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
+    const w=document.createElement('div');w.id='meteo-widget';w.setAttribute('aria-label','Meteo attuale a Rieti');
+    w.innerHTML='<div class="mw-icon">🌤️</div><div class="mw-info"><div class="mw-temp">—°C</div><div class="mw-desc">Rieti</div><div class="mw-city">meteo</div></div>';
+    document.body.appendChild(w);
+    const M={0:'☀️|Sereno',1:'🌤️|Poco nuvoloso',2:'⛅|Nuvoloso',3:'☁️|Coperto',45:'🌫️|Nebbia',48:'🌫️|Nebbia',51:'🌦️|Pioggerella',53:'🌦️|Pioggerella',55:'🌧️|Pioggia',61:'🌧️|Pioggia',63:'🌧️|Pioggia',65:'🌧️|Pioggia',71:'❄️|Neve',73:'❄️|Neve',75:'❄️|Neve',80:'🌦️|Rovesci',81:'🌧️|Rovesci',82:'⛈️|Rovesci',95:'⛈️|Temporale',96:'⛈️|Temporale',99:'⛈️|Temporale'};
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=42.404&longitude=12.857&current=temperature_2m,weathercode&timezone=Europe%2FRome')
+      .then(r=>r.json()).then(d=>{
+        const t=Math.round(d.current.temperature_2m);
+        const [ico,desc]=(M[d.current.weathercode]||'🌡️|—').split('|');
+        w.querySelector('.mw-icon').textContent=ico;
+        w.querySelector('.mw-temp').textContent=t+'°C';
+        w.querySelector('.mw-desc').textContent=desc;
+      }).catch(()=>{ w.querySelector('.mw-desc').textContent='non disp.'; });
+  })();
+
+  /* ── TRADUZIONE — Google Translate widget ── */
+  (function(){
+    const LANGS=[{code:'it',flag:'🇮🇹',name:'Italiano'},{code:'en',flag:'🇬🇧',name:'English'},{code:'es',flag:'🇪🇸',name:'Español'},{code:'ar',flag:'🇸🇦',name:'العربية'},{code:'ro',flag:'🇷🇴',name:'Română'}];
+    const CSS=`#tr-btn{position:fixed;top:68px;right:1rem;z-index:8500;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.3);border-radius:8px;padding:.38rem .7rem;display:flex;align-items:center;gap:.35rem;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);font-family:'Source Sans 3',sans-serif;font-size:.7rem;font-weight:700;color:rgba(245,240,232,.7);transition:all .2s;white-space:nowrap;}
+#tr-btn:hover{border-color:rgba(184,146,42,.6);color:#fff;}
+#tr-menu{position:fixed;top:102px;right:1rem;z-index:8499;background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.16);border:1px solid #e5e7eb;overflow:hidden;display:none;flex-direction:column;}
+#tr-menu.open{display:flex;}
+.tr-opt{display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;cursor:pointer;font-family:'Source Sans 3',sans-serif;font-size:.78rem;color:#374151;transition:background .15s;border-bottom:1px solid #f3f4f6;}
+.tr-opt:last-child{border-bottom:none;}.tr-opt:hover{background:#f3f4f6;}.tr-opt.act{background:rgba(44,62,45,.06);color:#2C3E2D;font-weight:700;}`;
+    const st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
+
+    const btn=document.createElement('button');btn.id='tr-btn';btn.setAttribute('aria-label','Cambia lingua');btn.innerHTML='🌐 IT';document.body.appendChild(btn);
+    const menu=document.createElement('div');menu.id='tr-menu';menu.setAttribute('role','menu');
+    LANGS.forEach(l=>{
+      const o=document.createElement('div');o.className='tr-opt'+(l.code==='it'?' act':'');o.setAttribute('role','menuitem');
+      o.innerHTML=`<span>${l.flag}</span><span>${l.name}</span>`;
+      o.onclick=()=>{selectLang(l);menu.classList.remove('open');};
+      menu.appendChild(o);
+    });
+    document.body.appendChild(menu);
+    btn.onclick=e=>{e.stopPropagation();menu.classList.toggle('open');};
+    document.addEventListener('click',()=>menu.classList.remove('open'));
+
+    function selectLang(l){
+      btn.innerHTML='🌐 '+l.code.toUpperCase();
+      menu.querySelectorAll('.tr-opt').forEach((o,i)=>o.classList.toggle('act',LANGS[i].code===l.code));
+      if(l.code==='it'){
+        document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.'+location.hostname;
+        location.reload();return;
+      }
+      if(!document.getElementById('gt-div')){const d=document.createElement('div');d.id='gt-div';d.style.cssText='position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none';document.body.appendChild(d);}
+      if(!document.getElementById('gt-sc')){
+        window.googleTranslateElementInit=function(){new google.translate.TranslateElement({pageLanguage:'it',includedLanguages:'en,es,ar,ro',autoDisplay:false},'gt-div');setTimeout(()=>applyLang(l.code),800);};
+        const sc=document.createElement('script');sc.id='gt-sc';sc.src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';document.body.appendChild(sc);
+      } else {setTimeout(()=>applyLang(l.code),300);}
+    }
+    function applyLang(code){const s=document.querySelector('.goog-te-combo');if(s){s.value=code;s.dispatchEvent(new Event('change'));}}
+  })();
+
 })();
