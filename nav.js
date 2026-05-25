@@ -242,7 +242,7 @@
   /* ── Caricamento chatbot ── */
   function loadChatbot() {
     const cbScript = document.createElement('script');
-    cbScript.src = 'chatbot.js';
+    cbScript.src = 'assistente.js';
     document.body.appendChild(cbScript);
   }
   if (document.readyState === 'loading') {
