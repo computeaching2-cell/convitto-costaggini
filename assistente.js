@@ -124,6 +124,9 @@ const KB=[
   // ── PROVENIENZA ──
   {k:['da dove vengono','provenienza','regioni','province','quanti studenti','nazional'],
    r:'I convittori vengono da tutta Italia. Vedi la mappa su <a href="provenienza.html">Da dove vengono →</a>'},
+  // ── DSA / BES ──
+  {k:['dsa','bes','bisogni educativi','disturbi apprendimento','dislessia','discalculia','disgrafia','handicap','inclus','sostegno','difficoltà apprendimento'],
+   r:'Il Convitto dispone di educatori con specifiche competenze in <strong>DSA</strong> (Disturbi Specifici dell\'Apprendimento) e <strong>BES</strong> (Bisogni Educativi Speciali). Il personale educativo è formato su metodologie didattiche inclusive, apprendimento cooperativo e strategie compensative. Per informazioni sulle misure di supporto disponibili: <a href="contatti.html">Contattaci →</a>'},
   // ── ALUMNI ──
   {k:['alumni','ex convittor','ex student','diplomati','community'],
    r:'Community degli <em>Alumni</em>: <a href="comunita.html">La nostra Comunità →</a><br>Se sei ex convittore: <a href="iscriviti-alumni.html">Unisciti →</a>'},
