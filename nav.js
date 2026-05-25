@@ -330,16 +330,16 @@
 
     const CSS = `
       #fab-wrap{position:fixed;bottom:1.5rem;right:1.25rem;z-index:8900;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
-      .fc{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:2px solid rgba(184,146,42,.35);box-shadow:0 4px 16px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;color:#fff;font-size:1.2rem;position:relative;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent;}
-      .fc:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(0,0,0,.4),0 0 0 2px rgba(184,146,42,.5);}
-      .fc svg{width:20px;height:20px;fill:#D4AA4A;flex-shrink:0;}
-      .fc[data-tip]:hover::after{content:attr(data-tip);position:absolute;right:54px;top:50%;transform:translateY(-50%);background:rgba(12,20,13,.9);color:#D4AA4A;font-family:'Source Sans 3',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .65rem;border-radius:5px;white-space:nowrap;border:1px solid rgba(184,146,42,.25);pointer-events:none;}
-      #fc-top{opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(6px);}
-      #fc-top.vis{opacity:1;pointer-events:auto;transform:translateY(0);}
+      .fab-c{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:2px solid rgba(184,146,42,.35);box-shadow:0 4px 16px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;color:#fff;font-size:1.2rem;position:relative;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent;}
+      .fab-c:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(0,0,0,.4),0 0 0 2px rgba(184,146,42,.5);}
+      .fab-c svg{width:20px;height:20px;fill:#D4AA4A;flex-shrink:0;}
+      .fab-c[data-tip]:hover::after{content:attr(data-tip);position:absolute;right:54px;top:50%;transform:translateY(-50%);background:rgba(12,20,13,.9);color:#D4AA4A;font-family:'Source Sans 3',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .65rem;border-radius:5px;white-space:nowrap;border:1px solid rgba(184,146,42,.25);pointer-events:none;}
+      #fab-top{opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(6px);}
+      #fab-top.vis{opacity:1;pointer-events:auto;transform:translateY(0);}
       @media(max-width:700px){
-        #fc-top,#fc-home{opacity:0;pointer-events:none;transform:scale(.6);transition:opacity .22s,transform .22s;}
-        #fab-wrap.exp #fc-top.vis,#fab-wrap.exp #fc-home{opacity:1;pointer-events:auto;transform:scale(1);}
-        .fc[data-tip]:hover::after{display:none;}
+        #fab-top,#fab-home{opacity:0;pointer-events:none;transform:scale(.6);transition:opacity .22s,transform .22s;}
+        #fab-wrap.exp #fab-top.vis,#fab-wrap.exp #fab-home{opacity:1;pointer-events:auto;transform:scale(1);}
+        .fab-c[data-tip]:hover::after{display:none;}
       }
     `;
     const st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
@@ -348,7 +348,7 @@
 
     // 1. Torna su
     const fTop = document.createElement('button');
-    fTop.id = 'fc-top'; fTop.className = 'fc';
+    fTop.id = 'fab-top'; fTop.className = 'fab-c';
     fTop.setAttribute('aria-label','Torna in cima'); fTop.setAttribute('data-tip','Torna su');
     fTop.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>';
     fTop.onclick = () => window.scrollTo({top:0,behavior:'smooth'});
@@ -358,7 +358,7 @@
     // 2. Home (solo pagine interne)
     if (!isHome) {
       const fHome = document.createElement('a');
-      fHome.id = 'fc-home'; fHome.className = 'fc';
+      fHome.id = 'fab-home'; fHome.className = 'fab-c';
       fHome.href = 'index.html';
       fHome.setAttribute('aria-label','Torna alla Home'); fHome.setAttribute('data-tip','Home');
       fHome.innerHTML = '<svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>';
@@ -370,7 +370,7 @@
       const el = document.getElementById('cc-fab');
       if (!el || el.parentElement === wrap) return false;
       el.style.cssText = '';
-      el.className = 'fc';
+      el.className = 'fab-c';
       el.setAttribute('data-tip','Assistente');
       wrap.appendChild(el);
       return true;
@@ -555,7 +555,12 @@
   /* ── TRADUZIONE — Google Translate widget ── */
   (function(){
     const LANGS=[{code:'it',flag:'🇮🇹',name:'Italiano'},{code:'en',flag:'🇬🇧',name:'English'},{code:'es',flag:'🇪🇸',name:'Español'},{code:'ar',flag:'🇸🇦',name:'العربية'},{code:'ro',flag:'🇷🇴',name:'Română'}];
-    const CSS=`#tr-btn{position:fixed;top:68px;right:1rem;z-index:8500;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.3);border-radius:8px;padding:.38rem .7rem;display:flex;align-items:center;gap:.35rem;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);font-family:'Source Sans 3',sans-serif;font-size:.7rem;font-weight:700;color:rgba(245,240,232,.7);transition:all .2s;white-space:nowrap;}
+    const CSS=`
+    /* Protegge footer e layout da Google Translate */
+    .goog-te-banner-frame,.skiptranslate{display:none!important;}
+    body{top:0!important;}
+    footer .ftop,.footer .fcols{transform:none!important;}
+    #tr-btn{position:fixed;top:68px;right:1rem;z-index:8500;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.3);border-radius:8px;padding:.38rem .7rem;display:flex;align-items:center;gap:.35rem;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);font-family:'Source Sans 3',sans-serif;font-size:.7rem;font-weight:700;color:rgba(245,240,232,.7);transition:all .2s;white-space:nowrap;}
 #tr-btn:hover{border-color:rgba(184,146,42,.6);color:#fff;}
 #tr-menu{position:fixed;top:102px;right:1rem;z-index:8499;background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.16);border:1px solid #e5e7eb;overflow:hidden;display:none;flex-direction:column;}
 #tr-menu.open{display:flex;}
