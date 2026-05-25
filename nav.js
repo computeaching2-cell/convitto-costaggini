@@ -365,18 +365,20 @@
       wrap.appendChild(fHome);
     }
 
-    // 3. Chatbot — adotta #cc-fab creato da assistente.js
-    let tries = 0;
-    const t = setInterval(() => {
+    // 3. Chatbot — adotta #cc-fab creato da assistente.js con MutationObserver
+    function adoptChat() {
       const el = document.getElementById('cc-fab');
-      if (el) {
-        clearInterval(t);
-        el.removeAttribute('style');
-        el.className = 'fc';
-        el.setAttribute('data-tip','Assistente');
-        wrap.appendChild(el);
-      } else if (++tries > 40) clearInterval(t);
-    }, 150);
+      if (!el || el.parentElement === wrap) return false;
+      el.style.cssText = '';
+      el.className = 'fc';
+      el.setAttribute('data-tip','Assistente');
+      wrap.appendChild(el);
+      return true;
+    }
+    if (!adoptChat()) {
+      const mo = new MutationObserver(() => { if (adoptChat()) mo.disconnect(); });
+      mo.observe(document.body, {childList:true, subtree:true});
+    }
 
     // Mobile: primo tap espande, secondo tap sul chat lo apre
     let colTimer;

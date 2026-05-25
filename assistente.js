@@ -3,11 +3,11 @@
 'use strict';
 
 const CSS=`
-#cc-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9000;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:2px solid rgba(184,146,42,.45);box-shadow:0 4px 20px rgba(0,0,0,.35);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;font-size:1.35rem;color:#fff;}
-#cc-fab:hover{transform:scale(1.08);}
+#cc-fab{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:2px solid rgba(184,146,42,.45);box-shadow:0 4px 20px rgba(0,0,0,.35);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;font-size:1.2rem;color:#fff;flex-shrink:0;}
+
 #cc-badge{position:absolute;top:-3px;right:-3px;width:14px;height:14px;border-radius:50%;background:#B8922A;border:2px solid #fff;display:none;}
 #cc-badge.show{display:block;}
-#cc-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:8999;width:min(370px,calc(100vw - 2rem));height:min(520px,calc(100vh - 7rem));background:#fff;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.22);display:flex;flex-direction:column;transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .25s;overflow:hidden;}
+#cc-panel{position:fixed;bottom:5rem;right:1.25rem;z-index:8999;width:min(370px,calc(100vw - 2rem));height:min(520px,calc(100vh - 7rem));background:#fff;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.22);display:flex;flex-direction:column;transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .25s;overflow:hidden;}
 #cc-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
 .cc-head{background:linear-gradient(135deg,#2C3E2D,#1a3a1b);padding:.8rem 1rem;display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
 .cc-avatar{width:34px;height:34px;border-radius:50%;background:rgba(184,146,42,.2);border:1.5px solid rgba(184,146,42,.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
