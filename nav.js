@@ -240,9 +240,16 @@
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 
   /* ── Caricamento chatbot ── */
-  const cbScript = document.createElement('script');
-  cbScript.src = 'chatbot.js';
-  document.body.appendChild(cbScript);
+  function loadChatbot() {
+    const cbScript = document.createElement('script');
+    cbScript.src = 'chatbot.js';
+    document.body.appendChild(cbScript);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadChatbot);
+  } else {
+    setTimeout(loadChatbot, 100);
+  }
 
   /* Inietta modale PEC */
   const pecModal = document.createElement('div');
