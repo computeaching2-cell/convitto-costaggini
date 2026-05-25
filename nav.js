@@ -277,23 +277,19 @@
   pecStyle.textContent = '@keyframes pecIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}';
   document.head.appendChild(pecStyle);
 
-  /* ── FAB Admin: iniettato DOPO il footer, sempre ultimo nel body ── */
-  /* Visibile solo sulla pagina avvisi */
+  /* ── FAB Admin: solo su avvisi, posizionato a SINISTRA ── */
   if (document.body.dataset.page === 'avvisi') {
     document.body.insertAdjacentHTML('beforeend', `
-      <div id="admin-fab-bar" style="
-        position:fixed; bottom:1.5rem; right:1.25rem; z-index:9000;
-      ">
+      <div id="admin-fab-bar" style="position:fixed;bottom:1.5rem;left:1.25rem;z-index:8800;">
         <button id="open-admin-btn" aria-label="Pannello amministratore" style="
-          display:flex; align-items:center; gap:.55rem;
+          display:flex;align-items:center;gap:.55rem;
           background:linear-gradient(135deg,#2C3E2D,#3D5C3E);
-          color:#F5F0E8; border:none; border-radius:50px; cursor:pointer;
-          font-family:'Source Sans 3',sans-serif; font-size:.78rem; font-weight:700;
-          letter-spacing:.06em; text-transform:uppercase;
-          padding:.75rem 1.2rem .75rem 1rem; min-height:48px;
-          box-shadow:0 4px 20px rgba(0,0,0,.4), 0 0 0 2px rgba(212,170,74,.35);
-          white-space:nowrap; -webkit-tap-highlight-color:transparent;
-        ">
+          color:#F5F0E8;border:none;border-radius:50px;cursor:pointer;
+          font-family:'Source Sans 3',sans-serif;font-size:.78rem;font-weight:700;
+          letter-spacing:.06em;text-transform:uppercase;
+          padding:.75rem 1.2rem .75rem 1rem;min-height:48px;
+          box-shadow:0 4px 20px rgba(0,0,0,.4),0 0 0 2px rgba(212,170,74,.35);
+          white-space:nowrap;-webkit-tap-highlight-color:transparent;">
           <svg viewBox="0 0 24 24" width="18" height="18" style="fill:#D4AA4A;flex-shrink:0" aria-hidden="true">
             <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
           </svg>
@@ -328,72 +324,69 @@
     window.location.href = 'admin.html';
   });
 
-  /* ── FAB SYSTEM — 3 cerchi uguali, a scomparsa su mobile ── */
+  /* ── FAB — 3 pulsanti circolari, a scomparsa su mobile ── */
   (function(){
-    const pg = document.body.dataset.page;
-    const isHome = !pg || pg === 'home';
+    const isHome = !document.body.dataset.page || document.body.dataset.page === 'home';
 
     const CSS = `
-    #fab-group{position:fixed;bottom:1.5rem;right:1.25rem;z-index:8900;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
-    .fab-btn{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:2px solid rgba(184,146,42,.35);box-shadow:0 4px 16px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;position:relative;transition:transform .2s,box-shadow .2s,opacity .25s,visibility .25s;-webkit-tap-highlight-color:transparent;}
-    .fab-btn:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(0,0,0,.4),0 0 0 2px rgba(184,146,42,.5);}
-    .fab-btn svg{width:20px;height:20px;fill:#D4AA4A;}
-    .fab-btn::before{content:attr(data-tip);position:absolute;right:54px;top:50%;transform:translateY(-50%);background:rgba(12,20,13,.9);color:#D4AA4A;font-family:'Source Sans 3',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .65rem;border-radius:5px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;border:1px solid rgba(184,146,42,.25);}
-    .fab-btn:hover::before{opacity:1;}
-    #fab-top{opacity:0;pointer-events:none;}
-    #fab-top.vis{opacity:1;pointer-events:auto;}
-    @media(max-width:700px){
-      .fab-btn::before{display:none;}
-      #fab-top,#fab-home{opacity:0;pointer-events:none;transform:scale(.7) translateY(8px);}
-      #fab-group.exp #fab-top.vis,#fab-group.exp #fab-home{opacity:1;pointer-events:auto;transform:scale(1) translateY(0);}
-    }
+      #fab-wrap{position:fixed;bottom:1.5rem;right:1.25rem;z-index:8900;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+      .fc{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:2px solid rgba(184,146,42,.35);box-shadow:0 4px 16px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;color:#fff;font-size:1.2rem;position:relative;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent;}
+      .fc:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(0,0,0,.4),0 0 0 2px rgba(184,146,42,.5);}
+      .fc svg{width:20px;height:20px;fill:#D4AA4A;flex-shrink:0;}
+      .fc[data-tip]:hover::after{content:attr(data-tip);position:absolute;right:54px;top:50%;transform:translateY(-50%);background:rgba(12,20,13,.9);color:#D4AA4A;font-family:'Source Sans 3',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .65rem;border-radius:5px;white-space:nowrap;border:1px solid rgba(184,146,42,.25);pointer-events:none;}
+      #fc-top{opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(6px);}
+      #fc-top.vis{opacity:1;pointer-events:auto;transform:translateY(0);}
+      @media(max-width:700px){
+        #fc-top,#fc-home{opacity:0;pointer-events:none;transform:scale(.6);transition:opacity .22s,transform .22s;}
+        #fab-wrap.exp #fc-top.vis,#fab-wrap.exp #fc-home{opacity:1;pointer-events:auto;transform:scale(1);}
+        .fc[data-tip]:hover::after{display:none;}
+      }
     `;
     const st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
 
-    const grp = document.createElement('div'); grp.id = 'fab-group'; document.body.appendChild(grp);
+    const wrap = document.createElement('div'); wrap.id = 'fab-wrap'; document.body.appendChild(wrap);
 
-    // TORNA SU
-    const fabTop = document.createElement('button');
-    fabTop.id = 'fab-top'; fabTop.className = 'fab-btn';
-    fabTop.setAttribute('aria-label','Torna in cima'); fabTop.setAttribute('data-tip','Torna su');
-    fabTop.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>';
-    fabTop.onclick = () => window.scrollTo({top:0,behavior:'smooth'});
-    grp.appendChild(fabTop);
-    window.addEventListener('scroll', () => fabTop.classList.toggle('vis', window.scrollY > 300), {passive:true});
+    // 1. Torna su
+    const fTop = document.createElement('button');
+    fTop.id = 'fc-top'; fTop.className = 'fc';
+    fTop.setAttribute('aria-label','Torna in cima'); fTop.setAttribute('data-tip','Torna su');
+    fTop.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>';
+    fTop.onclick = () => window.scrollTo({top:0,behavior:'smooth'});
+    wrap.appendChild(fTop);
+    window.addEventListener('scroll', () => fTop.classList.toggle('vis', window.scrollY > 300), {passive:true});
 
-    // HOME (solo pagine interne)
+    // 2. Home (solo pagine interne)
     if (!isHome) {
-      const fabHome = document.createElement('a');
-      fabHome.id = 'fab-home'; fabHome.className = 'fab-btn';
-      fabHome.href = 'index.html';
-      fabHome.setAttribute('aria-label','Torna alla Home'); fabHome.setAttribute('data-tip','Home');
-      fabHome.innerHTML = '<svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>';
-      grp.appendChild(fabHome);
+      const fHome = document.createElement('a');
+      fHome.id = 'fc-home'; fHome.className = 'fc';
+      fHome.href = 'index.html';
+      fHome.setAttribute('aria-label','Torna alla Home'); fHome.setAttribute('data-tip','Home');
+      fHome.innerHTML = '<svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>';
+      wrap.appendChild(fHome);
     }
 
-    // CHATBOT — assistente.js crea #cc-fab; lo adottiamo nel gruppo
+    // 3. Chatbot — adotta #cc-fab creato da assistente.js
     let tries = 0;
-    const waitChat = setInterval(() => {
-      const existing = document.getElementById('cc-fab');
-      if (existing) {
-        clearInterval(waitChat);
-        existing.removeAttribute('style');
-        existing.className = 'fab-btn';
-        existing.setAttribute('data-tip','Assistente');
-        grp.appendChild(existing);
-      } else if (++tries > 30) clearInterval(waitChat);
-    }, 200);
+    const t = setInterval(() => {
+      const el = document.getElementById('cc-fab');
+      if (el) {
+        clearInterval(t);
+        el.removeAttribute('style');
+        el.className = 'fc';
+        el.setAttribute('data-tip','Assistente');
+        wrap.appendChild(el);
+      } else if (++tries > 40) clearInterval(t);
+    }, 150);
 
-    // MOBILE: tap su chatbot espande/collassa il gruppo
-    let collapseTimer;
-    grp.addEventListener('click', e => {
+    // Mobile: primo tap espande, secondo tap sul chat lo apre
+    let colTimer;
+    wrap.addEventListener('click', e => {
       if (window.innerWidth > 700) return;
-      const isChatBtn = e.target.closest('#cc-fab');
-      if (!grp.classList.contains('exp')) {
-        grp.classList.add('exp');
-        clearTimeout(collapseTimer);
-        collapseTimer = setTimeout(() => grp.classList.remove('exp'), 4000);
-        if (isChatBtn) e.stopImmediatePropagation(); // impedisce apertura chat se si espande
+      if (!wrap.classList.contains('exp')) {
+        e.stopImmediatePropagation();
+        wrap.classList.add('exp');
+        clearTimeout(colTimer);
+        colTimer = setTimeout(() => wrap.classList.remove('exp'), 4000);
       }
     });
   })();
@@ -402,6 +395,7 @@
     if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
   }), { threshold: 0.08 });
   document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
 
 
   /* ── Progress bar di lettura ── */
