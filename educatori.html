@@ -684,7 +684,7 @@
                 <p style="font-family:var(--fu);font-size:.6rem;color:rgba(44,62,45,.5);font-style:italic">Ciascun diploma: annuale · 1500 ore · 60 CFU</p>
               </div>
             </div>
-            <button onclick="document.getElementById('mg-bio-full').style.display=document.getElementById('mg-bio-full').style.display==='none'?'block':'none';this.textContent=this.textContent==='Leggi tutto →'?'Riduci ↑':'Leggi tutto →'"
+            <button onclick="var el=document.getElementById('mg-bio-full');var open=el.style.display==='block';el.style.display=open?'none':'block';this.textContent=open?'Leggi tutto →':'Riduci ↑'"
               style="font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bosco2);background:none;border:none;border-bottom:1px solid rgba(44,62,45,.25);padding:.1rem 0;cursor:pointer;margin-top:.5rem">
               Leggi tutto →
             </button>
