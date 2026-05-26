@@ -3,11 +3,11 @@
 'use strict';
 
 const CSS=`
-#cc-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9000;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:2px solid rgba(184,146,42,.45);box-shadow:0 4px 20px rgba(0,0,0,.35);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;font-size:1.35rem;color:#fff;}
+#cc-fab{cursor:pointer;}
 #cc-fab:hover{transform:scale(1.08);}
 #cc-badge{position:absolute;top:-3px;right:-3px;width:14px;height:14px;border-radius:50%;background:#B8922A;border:2px solid #fff;display:none;}
 #cc-badge.show{display:block;}
-#cc-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:8999;width:min(370px,calc(100vw - 2rem));height:min(520px,calc(100vh - 7rem));background:#fff;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.22);display:flex;flex-direction:column;transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .25s;overflow:hidden;}
+#cc-panel{position:fixed;bottom:9rem;right:1.25rem;z-index:8999;width:min(370px,calc(100vw - 2rem));height:min(520px,calc(100vh - 7rem));background:#fff;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.22);display:flex;flex-direction:column;transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .25s;overflow:hidden;}
 #cc-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
 .cc-head{background:linear-gradient(135deg,#2C3E2D,#1a3a1b);padding:.8rem 1rem;display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
 .cc-avatar{width:34px;height:34px;border-radius:50%;background:rgba(184,146,42,.2);border:1.5px solid rgba(184,146,42,.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
@@ -147,10 +147,9 @@ function fallback(){return'Non ho trovato una risposta precisa. Puoi scriverci d
 
 function build(){
   const st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
-  const fab=document.createElement('button');
-  fab.id='cc-fab';fab.setAttribute('aria-label','Apri assistente virtuale');fab.setAttribute('aria-haspopup','dialog');
-  fab.innerHTML='🎓<span id="cc-badge" class="cc-badge" aria-hidden="true"></span>';
-  fab.onclick=ccToggle;document.body.appendChild(fab);
+  // #cc-fab è già creato da nav.js — lo usiamo direttamente
+  const fab = document.getElementById('cc-fab');
+  if (fab) { fab.onclick = ccToggle; }
   const panel=document.createElement('div');
   panel.id='cc-panel';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Assistente virtuale');panel.setAttribute('aria-modal','true');
   panel.innerHTML=`<div class="cc-head"><div class="cc-avatar">🎓</div><div class="cc-info"><div class="cc-name">Assistente del Convitto</div><div class="cc-sub">Sistema automatico locale · nessun dato trasmesso</div></div><button class="cc-x" onclick="document.getElementById('cc-panel').classList.remove('open')" aria-label="Chiudi">✕</button></div><div class="cc-notice" role="note">🤖 <strong>Sistema automatico.</strong> Nessun dato viene trasmesso a servizi esterni. Per assistenza diretta usa il <a href="contatti.html">modulo di contatto</a>.</div><div class="cc-msgs" id="cc-msgs" role="log" aria-live="polite"></div><div class="cc-sugs" id="cc-sugs"></div><div class="cc-foot"><textarea id="cc-inp" placeholder="Scrivi la tua domanda…" rows="1" aria-label="Domanda"></textarea><button id="cc-go" onclick="ccSend()" aria-label="Invia">➤</button></div>`;
