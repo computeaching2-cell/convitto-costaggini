@@ -277,26 +277,7 @@
   pecStyle.textContent = '@keyframes pecIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}';
   document.head.appendChild(pecStyle);
 
-  /* ── FAB Admin: solo su avvisi, posizionato a SINISTRA ── */
-  if (document.body.dataset.page === 'avvisi') {
-    document.body.insertAdjacentHTML('beforeend', `
-      <div id="admin-fab-bar" style="position:fixed;bottom:1.5rem;left:1.25rem;z-index:8800;">
-        <button id="open-admin-btn" aria-label="Pannello amministratore" style="
-          display:flex;align-items:center;gap:.55rem;
-          background:linear-gradient(135deg,#2C3E2D,#3D5C3E);
-          color:#F5F0E8;border:none;border-radius:50px;cursor:pointer;
-          font-family:'Source Sans 3',sans-serif;font-size:.78rem;font-weight:700;
-          letter-spacing:.06em;text-transform:uppercase;
-          padding:.75rem 1.2rem .75rem 1rem;min-height:48px;
-          box-shadow:0 4px 20px rgba(0,0,0,.4),0 0 0 2px rgba(212,170,74,.35);
-          white-space:nowrap;-webkit-tap-highlight-color:transparent;">
-          <svg viewBox="0 0 24 24" width="18" height="18" style="fill:#D4AA4A;flex-shrink:0" aria-hidden="true">
-            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
-          </svg>
-          <span>Admin</span>
-        </button>
-      </div>`);
-  }
+  /* Admin: accessibile solo dal menu navigazione */
 
   /* ── Evidenzia voce di menu attiva ── */
   const page = document.body.dataset.page;
@@ -560,9 +541,9 @@
     .goog-te-banner-frame,.skiptranslate{display:none!important;}
     body{top:0!important;}
     footer .ftop,.footer .fcols{transform:none!important;}
-    #tr-btn{position:fixed;top:68px;right:1rem;z-index:8500;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.3);border-radius:8px;padding:.38rem .7rem;display:flex;align-items:center;gap:.35rem;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);font-family:'Source Sans 3',sans-serif;font-size:.7rem;font-weight:700;color:rgba(245,240,232,.7);transition:all .2s;white-space:nowrap;}
+    #tr-btn{position:fixed;top:68px;right:1rem;z-index:8500;@media(max-width:700px){display:none}background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.3);border-radius:8px;padding:.38rem .7rem;display:flex;align-items:center;gap:.35rem;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);font-family:'Source Sans 3',sans-serif;font-size:.7rem;font-weight:700;color:rgba(245,240,232,.7);transition:all .2s;white-space:nowrap;}
 #tr-btn:hover{border-color:rgba(184,146,42,.6);color:#fff;}
-#tr-menu{position:fixed;top:102px;right:1rem;z-index:8499;background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.16);border:1px solid #e5e7eb;overflow:hidden;display:none;flex-direction:column;}
+#tr-menu{position:fixed;top:102px;right:1rem;z-index:8499;background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.16);border:1px solid #e5e7eb;overflow:hidden;display:none;flex-direction:column;}@media(max-width:700px){#tr-btn,#tr-menu{display:none!important;}}
 #tr-menu.open{display:flex;}
 .tr-opt{display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;cursor:pointer;font-family:'Source Sans 3',sans-serif;font-size:.78rem;color:#374151;transition:background .15s;border-bottom:1px solid #f3f4f6;}
 .tr-opt:last-child{border-bottom:none;}.tr-opt:hover{background:#f3f4f6;}.tr-opt.act{background:rgba(44,62,45,.06);color:#2C3E2D;font-weight:700;}`;
