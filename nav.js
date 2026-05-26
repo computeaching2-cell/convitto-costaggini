@@ -578,4 +578,106 @@
     function applyLang(code){const s=document.querySelector('.goog-te-combo');if(s){s.value=code;s.dispatchEvent(new Event('change'));}}
   })();
 
+  /* ── ✨ CURSORE STELLA DORATA — solo desktop ── */
+  (function(){
+    if (window.matchMedia('(hover:none)').matches) return; // skip touch devices
+    const CSS = `
+    #star-cursor { position:fixed; pointer-events:none; z-index:99999; width:18px; height:18px; transform:translate(-50%,-50%); transition:transform .1s; }
+    .star-trail { position:fixed; pointer-events:none; z-index:99998; border-radius:50%; transform:translate(-50%,-50%); background:radial-gradient(circle,#D4AA4A,rgba(184,146,42,0)); animation:trailFade .6s forwards; }
+    @keyframes trailFade { 0%{opacity:.7;width:8px;height:8px} 100%{opacity:0;width:2px;height:2px} }
+    `;
+    const st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
+
+    const cursor = document.createElement('div'); cursor.id = 'star-cursor';
+    cursor.innerHTML = `<svg viewBox="0 0 24 24" fill="#D4AA4A"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>`;
+    document.body.appendChild(cursor);
+
+    let mx = -100, my = -100, frame;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      // Scia
+      const t = document.createElement('div'); t.className = 'star-trail';
+      t.style.left = mx + 'px'; t.style.top = my + 'px';
+      t.style.width = (4 + Math.random()*6) + 'px';
+      t.style.height = t.style.width;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 600);
+    });
+    document.addEventListener('mouseleave', () => { cursor.style.left = '-100px'; });
+  })();
+
+  /* ── 🌟 SCHERMATA DI BENVENUTO ── */
+  (function(){
+    if (sessionStorage.getItem('cc-welcomed')) return; // solo la prima volta per sessione
+    sessionStorage.setItem('cc-welcomed', '1');
+
+    const CSS = `
+    #welcome-screen {
+      position:fixed; inset:0; z-index:99990;
+      background:linear-gradient(135deg,#0a0f0a,#1a2e1b);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:1.25rem; animation:wsFadeOut .6s ease 2.4s forwards;
+    }
+    @keyframes wsFadeOut { to { opacity:0; pointer-events:none; visibility:hidden; } }
+    .ws-logo { width:80px; height:80px; animation:wsZoom .5s ease; }
+    @keyframes wsZoom { from{transform:scale(.7);opacity:0} to{transform:scale(1);opacity:1} }
+    .ws-line { width:48px; height:2px; background:linear-gradient(90deg,transparent,#B8922A,transparent); animation:wsLine .6s ease .3s both; }
+    @keyframes wsLine { from{width:0;opacity:0} to{width:48px;opacity:1} }
+    .ws-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.4rem,5vw,2.2rem); font-weight:300; color:#fff; text-align:center; animation:wsFadeUp .5s ease .4s both; }
+    .ws-title em { font-style:italic; color:#D4AA4A; }
+    .ws-sub { font-family:'Source Sans 3',sans-serif; font-size:.72rem; font-weight:400; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,240,232,.4); animation:wsFadeUp .5s ease .7s both; }
+    @keyframes wsFadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    `;
+    const st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
+
+    const ws = document.createElement('div'); ws.id = 'welcome-screen';
+    ws.innerHTML = `
+      <img src="img/logo.png" class="ws-logo" alt="Logo Convitto Costaggini"/>
+      <div class="ws-line"></div>
+      <h1 class="ws-title">Dal <em>Terminillo</em> al mondo</h1>
+      <p class="ws-sub">Convitto "Costaggini" · Rieti · dal 1971</p>
+    `;
+    document.body.appendChild(ws);
+    ws.addEventListener('animationend', () => ws.remove());
+    ws.addEventListener('click', () => ws.style.animation = 'wsFadeOut .3s ease forwards');
+  })();
+
+  /* ── 📊 CONTATORI ANIMATI ── */
+  (function(){
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
+      const duration = 1800;
+      const start = performance.now();
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        // Easing ease-out
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(ease * target);
+        el.textContent = prefix + current.toLocaleString('it-IT') + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    const cObs = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.animated) {
+        e.target.dataset.animated = '1';
+        animateCounter(e.target);
+        cObs.unobserve(e.target);
+      }
+    }), { threshold: 0.5 });
+
+    // Osserva tutti gli elementi con data-count
+    document.querySelectorAll('[data-count]').forEach(el => cObs.observe(el));
+
+    // Riprova dopo il DOM (nel caso nav.js carichi prima del contenuto)
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-count]').forEach(el => cObs.observe(el));
+    });
+  })();
+
 })();
