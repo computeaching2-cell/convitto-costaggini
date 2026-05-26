@@ -554,37 +554,7 @@
     function applyLang(code){const s=document.querySelector('.goog-te-combo');if(s){s.value=code;s.dispatchEvent(new Event('change'));}}
   })();
 
-  /* ── ✨ CURSORE STELLA DORATA — solo desktop ── */
-  (function(){
-    if (window.matchMedia('(hover:none)').matches) return; // skip touch devices
-    const CSS = `
-    #star-cursor { position:fixed; pointer-events:none; z-index:99999; width:18px; height:18px; transform:translate(-50%,-50%); transition:transform .1s; }
-    .star-trail { position:fixed; pointer-events:none; z-index:99998; border-radius:50%; transform:translate(-50%,-50%); background:radial-gradient(circle,#D4AA4A,rgba(184,146,42,0)); animation:trailFade .6s forwards; }
-    @keyframes trailFade { 0%{opacity:.7;width:8px;height:8px} 100%{opacity:0;width:2px;height:2px} }
-    `;
-    const st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
-
-    const cursor = document.createElement('div'); cursor.id = 'star-cursor';
-    cursor.innerHTML = `<svg viewBox="0 0 24 24" fill="#D4AA4A"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>`;
-    document.body.appendChild(cursor);
-
-    let mx = -100, my = -100, frame;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-      // Scia
-      const t = document.createElement('div'); t.className = 'star-trail';
-      t.style.left = mx + 'px'; t.style.top = my + 'px';
-      t.style.width = (4 + Math.random()*6) + 'px';
-      t.style.height = t.style.width;
-      document.body.appendChild(t);
-      setTimeout(() => t.remove(), 600);
-    });
-    document.addEventListener('mouseleave', () => { cursor.style.left = '-100px'; });
-  })();
-
-  /* ── 🌟 SCHERMATA DI BENVENUTO ── */
+    /* ── 🌟 SCHERMATA DI BENVENUTO ── */
   (function(){
     if (sessionStorage.getItem('cc-welcomed')) return; // solo la prima volta per sessione
     sessionStorage.setItem('cc-welcomed', '1');
