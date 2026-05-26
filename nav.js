@@ -305,29 +305,25 @@
     window.location.href = 'admin.html';
   });
 
-  /* ── FAB — 3 pulsanti circolari, a scomparsa su mobile ── */
+  /* ── FAB — 3 cerchi fissi, sempre visibili ── */
   (function(){
     const isHome = !document.body.dataset.page || document.body.dataset.page === 'home';
 
     const CSS = `
-      #fab-wrap{position:fixed;bottom:1.5rem;right:1.25rem;z-index:8900;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
-      .fab-c{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:2px solid rgba(184,146,42,.35);box-shadow:0 4px 16px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;color:#fff;font-size:1.2rem;position:relative;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent;}
-      .fab-c:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(0,0,0,.4),0 0 0 2px rgba(184,146,42,.5);}
-      .fab-c svg{width:20px;height:20px;fill:#D4AA4A;flex-shrink:0;}
-      .fab-c[data-tip]:hover::after{content:attr(data-tip);position:absolute;right:54px;top:50%;transform:translateY(-50%);background:rgba(12,20,13,.9);color:#D4AA4A;font-family:'Source Sans 3',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .65rem;border-radius:5px;white-space:nowrap;border:1px solid rgba(184,146,42,.25);pointer-events:none;}
-      #fab-top{opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(6px);}
+      #fab-wrap{position:fixed;bottom:1.5rem;right:1.25rem;z-index:8900;display:flex;flex-direction:column;align-items:center;gap:.45rem;}
+      .fab-c{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.35);box-shadow:0 3px 12px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;color:#fff;font-size:1rem;position:relative;transition:transform .18s,box-shadow .18s;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
+      .fab-c:hover{transform:scale(1.12);box-shadow:0 5px 18px rgba(0,0,0,.38),0 0 0 2px rgba(184,146,42,.45);}
+      .fab-c svg{width:17px;height:17px;fill:#D4AA4A;flex-shrink:0;}
+      .fab-c[data-tip]:hover::after{content:attr(data-tip);position:absolute;right:46px;top:50%;transform:translateY(-50%);background:rgba(12,20,13,.9);color:#D4AA4A;font-family:'Source Sans 3',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .55rem;border-radius:4px;white-space:nowrap;border:1px solid rgba(184,146,42,.2);pointer-events:none;}
+      #fab-top{opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;transform:translateY(4px);}
       #fab-top.vis{opacity:1;pointer-events:auto;transform:translateY(0);}
-      @media(max-width:700px){
-        #fab-top{opacity:0;pointer-events:none;transform:scale(.6);transition:opacity .22s,transform .22s;}
-        #fab-wrap.exp #fab-top.vis{opacity:1;pointer-events:auto;transform:scale(1);}
-        .fab-c[data-tip]:hover::after{display:none;}
-      }
+      @media(max-width:700px){.fab-c[data-tip]:hover::after{display:none;}}
     `;
     const st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
 
     const wrap = document.createElement('div'); wrap.id = 'fab-wrap'; document.body.appendChild(wrap);
 
-    // 1. Torna su
+    // 1. Torna su — appare solo dopo scroll
     const fTop = document.createElement('button');
     fTop.id = 'fab-top'; fTop.className = 'fab-c';
     fTop.setAttribute('aria-label','Torna in cima'); fTop.setAttribute('data-tip','Torna su');
@@ -336,7 +332,7 @@
     wrap.appendChild(fTop);
     window.addEventListener('scroll', () => fTop.classList.toggle('vis', window.scrollY > 300), {passive:true});
 
-    // 2. Home (solo pagine interne)
+    // 2. Home — solo su pagine interne
     if (!isHome) {
       const fHome = document.createElement('a');
       fHome.id = 'fab-home'; fHome.className = 'fab-c';
@@ -346,32 +342,12 @@
       wrap.appendChild(fHome);
     }
 
-    // 3. Chatbot — adotta #cc-fab creato da assistente.js con MutationObserver
-    function adoptChat() {
-      const el = document.getElementById('cc-fab');
-      if (!el || el.parentElement === wrap) return false;
-      el.style.cssText = '';
-      el.className = 'fab-c';
-      el.setAttribute('data-tip','Assistente');
-      wrap.appendChild(el);
-      return true;
-    }
-    if (!adoptChat()) {
-      const mo = new MutationObserver(() => { if (adoptChat()) mo.disconnect(); });
-      mo.observe(document.body, {childList:true, subtree:true});
-    }
-
-    // Mobile: primo tap espande, secondo tap sul chat lo apre
-    let colTimer;
-    wrap.addEventListener('click', e => {
-      if (window.innerWidth > 700) return;
-      if (!wrap.classList.contains('exp')) {
-        e.stopImmediatePropagation();
-        wrap.classList.add('exp');
-        clearTimeout(colTimer);
-        colTimer = setTimeout(() => wrap.classList.remove('exp'), 4000);
-      }
-    });
+    // 3. Chatbot — creato qui, usato da assistente.js
+    const fChat = document.createElement('button');
+    fChat.id = 'cc-fab'; fChat.className = 'fab-c';
+    fChat.setAttribute('aria-label','Apri assistente virtuale'); fChat.setAttribute('data-tip','Assistente');
+    fChat.innerHTML = '🎓<span id="cc-badge" style="position:absolute;top:-2px;right:-2px;width:11px;height:11px;border-radius:50%;background:#B8922A;border:2px solid #fff;display:none" aria-hidden="true"></span>';
+    wrap.appendChild(fChat);
   })();
 
   const obs = new IntersectionObserver(es => es.forEach(e => {
