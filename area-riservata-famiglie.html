@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Area Famiglie — Convitto Costaggini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --bosco: #2C3E2D;
+      --bosco-light: #3d5c3e;
+      --oro: #B8922A;
+      --oro-light: #d4a843;
+      --panna: #F5F0E8;
+      --panna-scura: #EDE6D6;
+      --testo: #1a1a1a;
+      --testo-light: #555;
+      --bianco: #ffffff;
+      --ombra: 0 4px 20px rgba(44,62,45,0.12);
+      --radius: 12px;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Source Sans 3', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--panna);
+      color: var(--testo);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--bosco);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .site-header .logo {
+      font-family: var(--font-display);
+      color: var(--oro);
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .site-header .logo span {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.85rem;
+      font-weight: 300;
+      display: block;
+      font-family: var(--font-body);
+    }
+    .btn-logout {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.8);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: none;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.1); color: white; }
+
+    /* ── SCHERMATA LOGIN ── */
+    #schermata-login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 64px);
+      padding: 40px 20px;
+    }
+    .login-card {
+      background: var(--bianco);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: var(--ombra);
+      text-align: center;
+    }
+    .login-card .stemma {
+      width: 64px;
+      height: 64px;
+      background: var(--bosco);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 1.8rem;
+    }
+    .login-card h1 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--bosco);
+      margin-bottom: 6px;
+    }
+    .login-card p {
+      color: var(--testo-light);
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    .login-card .campo {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      transition: border-color 0.2s;
+      margin-bottom: 16px;
+      background: #fafafa;
+    }
+    .login-card .campo:focus {
+      outline: none;
+      border-color: var(--bosco);
+      background: white;
+    }
+    .btn-primario {
+      width: 100%;
+      padding: 14px;
+      background: var(--bosco);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .btn-primario:hover { background: var(--bosco-light); }
+    .btn-primario:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+    .login-note {
+      margin-top: 20px;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.5;
+    }
+    #msg-login {
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+    #msg-login.successo {
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      display: block;
+    }
+    #msg-login.errore {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      display: block;
+    }
+
+    /* ── SCHERMATA DASHBOARD ── */
+    #schermata-dashboard { display: none; padding: 0 0 60px 0; }
+
+    .dashboard-header {
+      background: var(--bianco);
+      border-bottom: 1px solid var(--panna-scura);
+      padding: 20px 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .dashboard-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--bosco);
+    }
+    .dashboard-header .sottotitolo {
+      font-size: 0.9rem;
+      color: var(--testo-light);
+      margin-top: 2px;
+    }
+
+    /* NAVIGAZIONE TAB */
+    .tab-nav {
+      background: var(--bianco);
+      border-bottom: 2px solid var(--panna-scura);
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      padding: 14px 20px;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--testo-light);
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+    .tab-btn.attivo {
+      color: var(--bosco);
+      border-bottom-color: var(--oro);
+    }
+    .tab-btn:hover { color: var(--bosco); }
+
+    /* CONTENUTO TAB */
+    .tab-contenuto { display: none; padding: 24px 20px; max-width: 760px; margin: 0 auto; }
+    .tab-contenuto.attivo { display: block; }
+
+    /* CARD GENERICA */
+    .card-dato {
+      background: var(--bianco);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: var(--ombra);
+      border-left: 4px solid var(--bosco);
+    }
+    .card-dato.oro { border-left-color: var(--oro); }
+    .card-dato.verde { border-left-color: #22c55e; }
+    .card-dato.giallo { border-left-color: #eab308; }
+    .card-dato.rosso { border-left-color: #ef4444; }
+    .card-dato.grigio { border-left-color: #94a3b8; }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .card-data {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--bosco);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+    .tag-gen { background: #dbeafe; color: #1d4ed8; }
+    .tag-disc { background: #fee2e2; color: #b91c1c; }
+    .tag-famiglia { background: #dcfce7; color: #15803d; }
+    .tag-docenti { background: #fef9c3; color: #a16207; }
+
+    .card-testo {
+      font-size: 0.95rem;
+      color: var(--testo);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .card-firma {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      margin-top: 8px;
+    }
+
+    /* RIEPILOGO SEMAFORI */
+    .sem-riepilogo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .sem-box {
+      background: var(--bianco);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--ombra);
+    }
+    .sem-box h3 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--testo-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .sem-pallini {
+      font-size: 2rem;
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 8px;
+    }
+    .sem-pallino { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .sem-pallino span { font-size: 0.75rem; color: var(--testo-light); font-weight: 700; }
+
+    /* PRESENZE */
+    .presenze-griglia {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .presenza-card {
+      background: var(--bianco);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--ombra);
+    }
+    .presenza-data {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--bosco);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    .pasti-riga {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pasto-chip {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .pasto-si { background: #dcfce7; color: #15803d; }
+    .pasto-no { background: #f1f5f9; color: #94a3b8; text-decoration: line-through; }
+
+    /* VUOTO */
+    .vuoto {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--testo-light);
+    }
+    .vuoto .icona { font-size: 3rem; margin-bottom: 12px; }
+    .vuoto p { font-size: 0.95rem; line-height: 1.5; }
+
+    /* LOADER */
+    .loader {
+      text-align: center;
+      padding: 40px;
+      color: var(--bosco);
+    }
+    .loader .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--panna-scura);
+      border-top-color: var(--bosco);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* RELAZIONI */
+    .relazione-card {
+      background: var(--bianco);
+      border-radius: var(--radius);
+      box-shadow: var(--ombra);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .relazione-head {
+      background: #fef2f2;
+      padding: 14px 18px;
+      border-bottom: 1px solid #fecaca;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .relazione-head h4 {
+      font-size: 0.95rem;
+      color: #b91c1c;
+      font-weight: 700;
+    }
+    .relazione-head .rel-meta {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+    .relazione-body {
+      padding: 16px 18px;
+      display: none;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--testo);
+      white-space: pre-wrap;
+    }
+    .relazione-body.aperto { display: block; }
+
+    /* BANNER INFORMATIVO */
+    .banner-info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      color: #1e40af;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 500px) {
+      .login-card { padding: 32px 24px; }
+      .sem-riepilogo { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">
+    Convitto Costaggini
+    <span>Area Riservata Famiglie</span>
+  </div>
+  <button class="btn-logout" id="btn-logout" onclick="eseguiLogout()">Esci</button>
+</header>
+
+<!-- SCHERMATA LOGIN -->
+<div id="schermata-login">
+  <div class="login-card">
+    <div class="stemma">🏫</div>
+    <h1>Accesso Famiglie</h1>
+    <p>Inserisci l'indirizzo email comunicato alla segreteria del Convitto. Riceverai un link di accesso diretto.</p>
+
+    <div id="msg-login"></div>
+
+    <input
+      type="email"
+      id="input-email"
+      class="campo"
+      placeholder="La tua email (es. mario.rossi@gmail.com)"
+      autocomplete="email"
+      inputmode="email"
+    >
+
+    <button class="btn-primario" id="btn-magic-link" onclick="inviamagicLink()">
+      Invia link di accesso
+    </button>
+
+    <p class="login-note">
+      Non serve una password. Riceverai un'email con un link che ti permetterà di accedere in modo sicuro.
+      Il link è valido per 24 ore.
+    </p>
+  </div>
+</div>
+
+<!-- SCHERMATA DASHBOARD -->
+<div id="schermata-dashboard">
+
+  <div class="dashboard-header">
+    <h2 id="titolo-studente">Caricamento...</h2>
+    <div class="sottotitolo" id="sottotitolo-studente"></div>
+  </div>
+
+  <nav class="tab-nav">
+    <button class="tab-btn attivo" onclick="cambiaTab('presenze', this)">🍽️ Pasti</button>
+    <button class="tab-btn" onclick="cambiaTab('semafori', this)">🚦 Comportamento</button>
+    <button class="tab-btn" onclick="cambiaTab('note', this)">📝 Note</button>
+    <button class="tab-btn" onclick="cambiaTab('colloqui', this)">🗣️ Colloqui</button>
+    <button class="tab-btn" onclick="cambiaTab('relazioni', this)">📄 Comunicazioni</button>
+  </nav>
+
+  <!-- TAB PRESENZE -->
+  <div class="tab-contenuto attivo" id="tab-presenze">
+    <div class="banner-info">
+      Registro delle presenze ai pasti degli ultimi 30 giorni. Una spunta verde indica la presenza registrata dall'educatore di turno.
+    </div>
+    <div id="contenuto-presenze">
+      <div class="loader"><div class="spinner"></div>Caricamento...</div>
+    </div>
+  </div>
+
+  <!-- TAB SEMAFORI -->
+  <div class="tab-contenuto" id="tab-semafori">
+    <div class="banner-info">
+      Valutazione giornaliera del comportamento in convitto: decoro della camera e rispetto dell'ora di studio. 🟢 Positivo · 🟡 Migliorabile · 🔴 Da migliorare
+    </div>
+    <div class="sem-riepilogo">
+      <div class="sem-box">
+        <h3>🛏️ Camera</h3>
+        <div class="sem-pallini">
+          <div class="sem-pallino">🟢<span id="cnt-cam-verde">0</span></div>
+          <div class="sem-pallino">🟡<span id="cnt-cam-giallo">0</span></div>
+          <div class="sem-pallino">🔴<span id="cnt-cam-rosso">0</span></div>
+        </div>
+      </div>
+      <div class="sem-box">
+        <h3>📚 Studio</h3>
+        <div class="sem-pallini">
+          <div class="sem-pallino">🟢<span id="cnt-stu-verde">0</span></div>
+          <div class="sem-pallino">🟡<span id="cnt-stu-giallo">0</span></div>
+          <div class="sem-pallino">🔴<span id="cnt-stu-rosso">0</span></div>
+        </div>
+      </div>
+    </div>
+    <div id="contenuto-semafori">
+      <div class="loader"><div class="spinner"></div>Caricamento...</div>
+    </div>
+  </div>
+
+  <!-- TAB NOTE -->
+  <div class="tab-contenuto" id="tab-note">
+    <div class="banner-info">
+      Note registrate dagli educatori. Le note generali riguardano la vita in convitto; le note disciplinari segnalano comportamenti che richiedono attenzione.
+    </div>
+    <div id="contenuto-note">
+      <div class="loader"><div class="spinner"></div>Caricamento...</div>
+    </div>
+  </div>
+
+  <!-- TAB COLLOQUI -->
+  <div class="tab-contenuto" id="tab-colloqui">
+    <div class="banner-info">
+      Registro delle comunicazioni tra il convitto e la famiglia o i docenti, comprese le uscite anticipate e i rientri.
+    </div>
+    <div id="contenuto-colloqui">
+      <div class="loader"><div class="spinner"></div>Caricamento...</div>
+    </div>
+  </div>
+
+  <!-- TAB RELAZIONI -->
+  <div class="tab-contenuto" id="tab-relazioni">
+    <div class="banner-info">
+      Comunicazioni formali da parte degli educatori. Tocca un titolo per leggere il testo completo.
+    </div>
+    <div id="contenuto-relazioni">
+      <div class="loader"><div class="spinner"></div>Caricamento...</div>
+    </div>
+  </div>
+
+</div><!-- fine dashboard -->
+
+<script>
+  // ================================================================
+  // CONFIGURAZIONE SUPABASE
+  // Sostituire i valori con quelli del progetto Supabase
+  // ================================================================
+  const SUPABASE_URL = 'https://sawclsysqnjsvbobioqo.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ'; // <-- Supabase → Settings → API → anon key
+
+  const { createClient } = supabase;
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // ================================================================
+  // STATO GLOBALE
+  // ================================================================
+  let nomeStudente = null;
+  let datiCaricati = {};
+
+  // ================================================================
+  // AVVIO: controlla se c'è già una sessione attiva
+  // ================================================================
+  window.addEventListener('load', async () => {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      await avviaDashboard(session.user.email);
+    }
+
+    // Gestisce il ritorno dal link magic link (hash nella URL)
+    sb.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        await avviaDashboard(session.user.email);
+      }
+      if (event === 'SIGNED_OUT') {
+        mostraLogin();
+      }
+    });
+  });
+
+  // ================================================================
+  // LOGIN — invia magic link
+  // ================================================================
+  async function inviamagicLink() {
+    const email = document.getElementById('input-email').value.trim().toLowerCase();
+    const btn = document.getElementById('btn-magic-link');
+    const msg = document.getElementById('msg-login');
+
+    if (!email || !email.includes('@')) {
+      mostraMsgLogin('Inserisci un indirizzo email valido.', 'errore');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Invio in corso...';
+    msg.className = '';
+    msg.style.display = 'none';
+
+    const { error } = await sb.auth.signInWithOtp({
+      email: email,
+      options: {
+        emailRedirectTo: window.location.href
+      }
+    });
+
+    if (error) {
+      mostraMsgLogin('Errore durante l\'invio. Verificare l\'indirizzo email e riprovare.', 'errore');
+      btn.disabled = false;
+      btn.textContent = 'Invia link di accesso';
+      return;
+    }
+
+    mostraMsgLogin(
+      '✅ Link inviato! Controlla la tua casella email (anche nella cartella spam) e clicca sul link ricevuto.',
+      'successo'
+    );
+    btn.textContent = 'Link inviato ✓';
+  }
+
+  function mostraMsgLogin(testo, tipo) {
+    const el = document.getElementById('msg-login');
+    el.textContent = testo;
+    el.className = tipo;
+  }
+
+  // ================================================================
+  // AVVIA DASHBOARD dopo login
+  // ================================================================
+  async function avviaDashboard(emailGenitore) {
+    // 1. Trova a quale studente è associata questa email
+    const { data: assoc, error } = await sb
+      .from('genitori_studenti')
+      .select('nome_studente, relazione')
+      .eq('email_genitore', emailGenitore)
+      .single();
+
+    if (error || !assoc) {
+      mostraMsgLogin(
+        'Email non riconosciuta. Contattare la segreteria del Convitto per richiedere l\'accesso.',
+        'errore'
+      );
+      return;
+    }
+
+    nomeStudente = assoc.nome_studente;
+
+    // 2. Aggiorna intestazione
+    document.getElementById('titolo-studente').textContent = nomeStudente;
+    document.getElementById('sottotitolo-studente').textContent =
+      'Accesso come ' + assoc.relazione + ' · ' + emailGenitore;
+
+    // 3. Mostra dashboard
+    document.getElementById('schermata-login').style.display = 'none';
+    document.getElementById('schermata-dashboard').style.display = 'block';
+    document.getElementById('btn-logout').style.display = 'block';
+
+    // 4. Carica tutti i dati
+    await Promise.all([
+      caricaPresenze(),
+      caricaSemafori(),
+      caricaNote(),
+      caricaColloqui(),
+      caricaRelazioni()
+    ]);
+  }
+
+  function mostraLogin() {
+    document.getElementById('schermata-login').style.display = 'flex';
+    document.getElementById('schermata-dashboard').style.display = 'none';
+    document.getElementById('btn-logout').style.display = 'none';
+    nomeStudente = null;
+  }
+
+  async function eseguiLogout() {
+    await sb.auth.signOut();
+    mostraLogin();
+  }
+
+  // ================================================================
+  // NAVIGAZIONE TAB
+  // ================================================================
+  function cambiaTab(nomeTab, btnCliccato) {
+    document.querySelectorAll('.tab-contenuto').forEach(t => t.classList.remove('attivo'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('attivo'));
+    document.getElementById('tab-' + nomeTab).classList.add('attivo');
+    btnCliccato.classList.add('attivo');
+  }
+
+  // ================================================================
+  // CARICAMENTO DATI
+  // ================================================================
+
+  async function caricaPresenze() {
+    const trenta = new Date();
+    trenta.setDate(trenta.getDate() - 30);
+    const dal = trenta.toISOString().split('T')[0];
+
+    const { data, error } = await sb
+      .from('famiglie_presenze')
+      .select('*')
+      .eq('nome_studente', nomeStudente)
+      .gte('data', dal)
+      .order('data', { ascending: false });
+
+    const el = document.getElementById('contenuto-presenze');
+
+    if (error || !data || data.length === 0) {
+      el.innerHTML = vuotoHTML('🍽️', 'Nessuna presenza registrata negli ultimi 30 giorni.');
+      return;
+    }
+
+    const pasti = ['colazione', 'pranzo', 'cena', 'rientro'];
+    const etichette = { colazione: 'Colazione', pranzo: 'Pranzo', cena: 'Cena', rientro: 'Rientro' };
+
+    const cards = data.map(r => {
+      const dataFmt = formattaData(r.data);
+      const chips = pasti.map(p =>
+        `<span class="pasto-chip ${r[p] ? 'pasto-si' : 'pasto-no'}">${etichette[p]}</span>`
+      ).join('');
+      return `<div class="presenza-card">
+        <div class="presenza-data">${dataFmt}</div>
+        <div class="pasti-riga">${chips}</div>
+      </div>`;
+    }).join('');
+
+    el.innerHTML = `<div class="presenze-griglia">${cards}</div>`;
+  }
+
+  async function caricaSemafori() {
+    const trenta = new Date();
+    trenta.setDate(trenta.getDate() - 30);
+    const dal = trenta.toISOString().split('T')[0];
+
+    const { data, error } = await sb
+      .from('famiglie_semafori')
+      .select('*')
+      .eq('nome_studente', nomeStudente)
+      .gte('data', dal)
+      .order('data', { ascending: false });
+
+    const el = document.getElementById('contenuto-semafori');
+
+    if (error || !data || data.length === 0) {
+      el.innerHTML = vuotoHTML('🚦', 'Nessuna valutazione registrata negli ultimi 30 giorni.');
+      return;
+    }
+
+    // Contatori per il riepilogo
+    const cnt = {
+      Camera: { '🟢': 0, '🟡': 0, '🔴': 0 },
+      Studio:  { '🟢': 0, '🟡': 0, '🔴': 0 }
+    };
+    data.forEach(r => {
+      if (cnt[r.tipo] && cnt[r.tipo][r.colore] !== undefined) cnt[r.tipo][r.colore]++;
+    });
+
+    document.getElementById('cnt-cam-verde').textContent  = cnt.Camera['🟢'];
+    document.getElementById('cnt-cam-giallo').textContent = cnt.Camera['🟡'];
+    document.getElementById('cnt-cam-rosso').textContent  = cnt.Camera['🔴'];
+    document.getElementById('cnt-stu-verde').textContent  = cnt.Studio['🟢'];
+    document.getElementById('cnt-stu-giallo').textContent = cnt.Studio['🟡'];
+    document.getElementById('cnt-stu-rosso').textContent  = cnt.Studio['🔴'];
+
+    const classeColore = { '🟢': 'verde', '🟡': 'giallo', '🔴': 'rosso' };
+
+    const cards = data.map(r => {
+      const cls = classeColore[r.colore] || 'grigio';
+      return `<div class="card-dato ${cls}">
+        <div class="card-meta">
+          <span class="card-data">${formattaData(r.data)}</span>
+          <span style="font-size:0.85rem; font-weight:700; color:var(--testo-light);">${r.tipo}</span>
+        </div>
+        <div style="font-size:1.5rem;">${r.colore}</div>
+      </div>`;
+    }).join('');
+
+    el.innerHTML = cards;
+  }
+
+  async function caricaNote() {
+    const trenta = new Date();
+    trenta.setDate(trenta.getDate() - 30);
+    const dal = trenta.toISOString().split('T')[0];
+
+    const { data, error } = await sb
+      .from('famiglie_note')
+      .select('*')
+      .eq('nome_studente', nomeStudente)
+      .gte('data', dal)
+      .order('data', { ascending: false });
+
+    const el = document.getElementById('contenuto-note');
+
+    // Filtra note vuote o automatiche di sistema
+    const noteFiltrate = (data || []).filter(r =>
+      r.testo && r.testo.trim() !== '' && !r.testo.includes('TEST_CONNESSIONE')
+    );
+
+    if (error || noteFiltrate.length === 0) {
+      el.innerHTML = vuotoHTML('📝', 'Nessuna nota registrata negli ultimi 30 giorni.');
+      return;
+    }
+
+    const cards = noteFiltrate.map(r => {
+      const isDisc = r.tipo === 'DISC';
+      return `<div class="card-dato ${isDisc ? 'rosso' : ''}">
+        <div class="card-meta">
+          <span class="card-data">${formattaData(r.data)}</span>
+          <span class="card-tag ${isDisc ? 'tag-disc' : 'tag-gen'}">${isDisc ? 'Nota disciplinare' : 'Nota generale'}</span>
+        </div>
+        <div class="card-testo">${sanitizza(r.testo)}</div>
+        ${r.operatore ? `<div class="card-firma">Educatore: ${r.operatore}</div>` : ''}
+      </div>`;
+    }).join('');
+
+    el.innerHTML = cards;
+  }
+
+  async function caricaColloqui() {
+    const { data, error } = await sb
+      .from('famiglie_colloqui')
+      .select('*')
+      .eq('nome_studente', nomeStudente)
+      .order('data', { ascending: false })
+      .limit(50);
+
+    const el = document.getElementById('contenuto-colloqui');
+
+    if (error || !data || data.length === 0) {
+      el.innerHTML = vuotoHTML('🗣️', 'Nessun colloquio registrato.');
+      return;
+    }
+
+    const cards = data.map(r => {
+      const isFam = (r.controparte || '').toLowerCase().includes('famiglia');
+      return `<div class="card-dato ${isFam ? 'verde' : 'oro'}">
+        <div class="card-meta">
+          <span class="card-data">${formattaData(r.data)}</span>
+          <span class="card-tag ${isFam ? 'tag-famiglia' : 'tag-docenti'}">${r.controparte || ''}</span>
+        </div>
+        <div class="card-testo">${sanitizza(r.testo)}</div>
+      </div>`;
+    }).join('');
+
+    el.innerHTML = cards;
+  }
+
+  async function caricaRelazioni() {
+    const { data, error } = await sb
+      .from('famiglie_relazioni')
+      .select('*')
+      .eq('nome_studente', nomeStudente)
+      .order('data_invio', { ascending: false })
+      .limit(20);
+
+    const el = document.getElementById('contenuto-relazioni');
+
+    if (error || !data || data.length === 0) {
+      el.innerHTML = vuotoHTML('📄', 'Nessuna comunicazione formale registrata.');
+      return;
+    }
+
+    const cards = data.map((r, i) => {
+      const dataEvento = r.data_evento ? formattaData(r.data_evento) : '';
+      const dataInvio  = r.data_invio  ? formattaDataOra(r.data_invio)  : '';
+      return `<div class="relazione-card">
+        <div class="relazione-head" onclick="toggleRelazione(${i})">
+          <div>
+            <h4>${sanitizza(r.oggetto || 'Comunicazione formale')}</h4>
+            <div class="rel-meta">${dataEvento ? 'Data: ' + dataEvento + ' · ' : ''}Inviata il ${dataInvio}</div>
+          </div>
+          <span id="freccia-${i}" style="font-size:1.2rem; color:#94a3b8;">▸</span>
+        </div>
+        <div class="relazione-body" id="rel-body-${i}">${sanitizza(r.testo)}</div>
+      </div>`;
+    }).join('');
+
+    el.innerHTML = cards;
+  }
+
+  function toggleRelazione(i) {
+    const body = document.getElementById('rel-body-' + i);
+    const freccia = document.getElementById('freccia-' + i);
+    const aperto = body.classList.toggle('aperto');
+    freccia.textContent = aperto ? '▾' : '▸';
+  }
+
+  // ================================================================
+  // UTILITÀ
+  // ================================================================
+  function formattaData(isoStr) {
+    if (!isoStr) return '';
+    const p = String(isoStr).substring(0, 10).split('-');
+    if (p.length !== 3) return isoStr;
+    const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+    const d = new Date(p[0], p[1] - 1, p[2]);
+    return giorni[d.getDay()] + ' ' + p[2] + '/' + p[1] + '/' + p[0];
+  }
+
+  function formattaDataOra(isoStr) {
+    if (!isoStr) return '';
+    const d = new Date(isoStr);
+    return d.toLocaleDateString('it-IT') + ' alle ' + d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function sanitizza(testo) {
+    if (!testo) return '';
+    return String(testo)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br>');
+  }
+
+  function vuotoHTML(icona, messaggio) {
+    return `<div class="vuoto"><div class="icona">${icona}</div><p>${messaggio}</p></div>`;
+  }
+</script>
+</body>
+</html>
