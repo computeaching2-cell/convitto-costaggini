@@ -386,13 +386,20 @@ async function inviaRichiesta() {
     );
 
     if (resp.ok || resp.status === 201) {
-      document.getElementById('form-contenuto').style.display = 'none';
-      mostraMsg(
-        '✅ Richiesta inviata con successo!\n\n' +
-        'La segreteria del Convitto verificherà i dati e attiverà il suo accesso entro 48 ore lavorative. ' +
-        'Riceverà una conferma all\'indirizzo email indicato.',
-        'ok'
-      );
+      // Mostra messaggio di successo al posto del form
+      const card = document.querySelector('.form-card');
+      if (card) {
+        card.innerHTML = '<div style="text-align:center;padding:2rem 1rem">' +
+          '<div style="font-size:3rem;margin-bottom:1rem">✅</div>' +
+          '<h2 style="font-family:var(--fd);font-size:1.6rem;color:var(--bosco);margin-bottom:1rem">Richiesta inviata!</h2>' +
+          '<p style="font-size:.95rem;color:var(--txt2);line-height:1.7;margin-bottom:1.5rem">' +
+          'La segreteria del Convitto verificherà i dati e attiverà il suo accesso entro 48 ore lavorative.<br>' +
+          'Riceverà una conferma all&apos;indirizzo email indicato.' +
+          '</p>' +
+          '<a href="index.html" style="display:inline-block;background:var(--bosco);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-family:var(--fu);font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase">← Torna alla Home</a>' +
+          '</div>';
+      }
+      window.scrollTo({top: 0, behavior: 'smooth'});
     } else {
       const errTxt = await resp.text();
       throw new Error('HTTP ' + resp.status + ': ' + errTxt);

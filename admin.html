@@ -944,9 +944,26 @@ async function famApprova(idx) {
   const nota = (document.getElementById('nota-fam-' + idx) || {}).value || '';
   if (!confirm('Attivare accesso per ' + r.email_genitore + '?')) return;
   try {
-    const ra = await sbFam('/auth/v1/admin/users', {method:'POST', body:JSON.stringify({email:r.email_genitore, password:r.password_hash, email_confirm:true, user_metadata:{nome_studente:r.nome_studente, relazione:r.relazione}})});
+    const authBody = {
+      email: r.email_genitore,
+      password: r.password_hash,
+      email_confirm: true,
+      user_metadata: {nome_studente: r.nome_studente, relazione: r.relazione}
+    };
+    const ra = await fetch(SB_URL_F + '/auth/v1/admin/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SB_KEY_F,
+        'Authorization': 'Bearer ' + SB_KEY_F
+      },
+      body: JSON.stringify(authBody)
+    });
     const ad = await ra.json();
-    if (!ra.ok && !(ad.message && ad.message.includes('already'))) throw new Error(ad.message || 'Errore Auth');
+    console.log('Auth response:', ra.status, JSON.stringify(ad));
+    if (!ra.ok && !(ad.msg && ad.msg.includes('already')) && !(ad.message && ad.message.includes('already'))) {
+      throw new Error('Auth HTTP ' + ra.status + ': ' + (ad.message || ad.msg || JSON.stringify(ad)));
+    }
     await sbFam('/rest/v1/genitori_studenti?on_conflict=email_genitore,nome_studente', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates'}, body:JSON.stringify({email_genitore:r.email_genitore, nome_studente:r.nome_studente, relazione:r.relazione})});
     await sbFam('/rest/v1/richieste_accesso?id=eq.' + r.id, {method:'PATCH', headers:{'Prefer':'return=minimal'}, body:JSON.stringify({stato:'approvata', processed_at:new Date().toISOString(), note_admin:nota})});
     alert('Accesso attivato per ' + r.email_genitore);
