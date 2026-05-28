@@ -370,18 +370,7 @@
     fChat.setAttribute('aria-label','Apri assistente virtuale'); fChat.setAttribute('data-tip','Assistente');
     fChat.innerHTML = '🎓<span id="cc-badge" style="position:absolute;top:-2px;right:-2px;width:11px;height:11px;border-radius:50%;background:#B8922A;border:2px solid #fff;display:none" aria-hidden="true"></span>';
     wrap.appendChild(fChat);
-  
-  /* ── 💬 CHATBOT FAB ── */
-  (function(){
-    const fab = document.createElement('button');
-    fab.id = 'cc-fab';
-    fab.setAttribute('aria-label', 'Apri assistente virtuale');
-    fab.style.cssText = 'position:fixed;bottom:1.5rem;right:1.25rem;z-index:9000;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:none;box-shadow:0 4px 18px rgba(0,0,0,.28);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:transform .2s;';
-    fab.innerHTML = '🎓<span id="cc-badge" style="position:absolute;top:-3px;right:-3px;width:14px;height:14px;border-radius:50%;background:#B8922A;border:2px solid #fff;display:none;"></span>';
-    document.body.appendChild(fab);
   })();
-
-})();
 
   const obs = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
