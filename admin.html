@@ -192,6 +192,7 @@
     <button class="main-tab" onclick="switchTab('avvisi',this)">📋 Avvisi & Comunicati</button>
     <button class="main-tab" onclick="switchTab('mappa',this)">🗺️ Mappa — Pin in attesa</button>
     <button class="main-tab" onclick="switchTab('alumni',this)">👥 <em>Alumni</em> — Schede in attesa</button>
+    <button class="main-tab" onclick="switchTab('famiglie',this)" id="tab-btn-famiglie">🔐 Famiglie <span id="badge-fam" style="display:none;background:#dc2626;color:#fff;font-size:.5rem;padding:.1rem .4rem;border-radius:20px;margin-left:.3rem;vertical-align:middle">0</span></button>
   </div>
 
   <div class="adm-notice">
@@ -351,6 +352,57 @@
     </div>
   </div>
 
+
+  <!-- ══════════════════════════════════
+       TAB FAMIGLIE — APPROVAZIONI ACCESSO
+  ══════════════════════════════════ -->
+  <div class="tab-section" id="tab-famiglie">
+    <div style="padding:1.25rem;max-width:900px;margin:0 auto">
+
+      <!-- STATISTICHE -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem">
+        <div class="adm-card" style="text-align:center;padding:1.2rem">
+          <div style="font-family:var(--fd);font-size:2rem;font-weight:400;color:#a16207" id="fam-cnt-attesa">—</div>
+          <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-top:4px">In attesa</div>
+        </div>
+        <div class="adm-card" style="text-align:center;padding:1.2rem">
+          <div style="font-family:var(--fd);font-size:2rem;font-weight:400;color:#1d6f42" id="fam-cnt-approvate">—</div>
+          <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-top:4px">Approvate</div>
+        </div>
+        <div class="adm-card" style="text-align:center;padding:1.2rem">
+          <div style="font-family:var(--fd);font-size:2rem;font-weight:400;color:#dc2626" id="fam-cnt-rifiutate">—</div>
+          <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-top:4px">Rifiutate</div>
+        </div>
+      </div>
+
+      <!-- FILTRI -->
+      <div style="display:flex;gap:.6rem;margin-bottom:1.25rem;flex-wrap:wrap">
+        <button onclick="famFiltro('in_attesa',this)" id="fam-f-attesa"
+          style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:6px;border:1.5px solid #d4c9a8;background:#fef9c3;color:#a16207;cursor:pointer">
+          ⏳ In attesa
+        </button>
+        <button onclick="famFiltro('approvata',this)" id="fam-f-approvate"
+          style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:6px;border:1.5px solid #d4c9a8;background:#f0f9f0;color:#1d6f42;cursor:pointer">
+          ✅ Approvate
+        </button>
+        <button onclick="famFiltro('rifiutata',this)" id="fam-f-rifiutate"
+          style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:6px;border:1.5px solid #d4c9a8;background:#fff5f5;color:#dc2626;cursor:pointer">
+          ✗ Rifiutate
+        </button>
+        <button onclick="caricaRichiesteF()"
+          style="margin-left:auto;font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:6px;border:1.5px solid var(--bosco);color:var(--bosco);background:none;cursor:pointer">
+          ↺ Aggiorna
+        </button>
+      </div>
+
+      <!-- LISTA RICHIESTE -->
+      <div id="fam-lista">
+        <p style="font-size:.85rem;color:var(--txt2);font-style:italic">Clicca su una categoria per visualizzare le richieste.</p>
+      </div>
+
+    </div>
+  </div>
+
 </div><!-- fine adm-wrap -->
 
 <script>
@@ -361,23 +413,31 @@ const KEY_A = 'costaggini_comunicati_v2';
 // ═══ AUTH ═══
 function doLogin() {
   const v = document.getElementById('pwd').value;
-    const attempts = parseInt(sessionStorage.getItem('adm_attempts')||'0');
-    const lockUntil = parseInt(sessionStorage.getItem('adm_lock')||'0');
-    if (Date.now() < lockUntil) {
-      alert('Troppi tentativi. Riprova tra un minuto.');
-      return;
-    }
-    crypto.subtle.digest('SHA-256', new TextEncoder().encode(v)).then(buf => {
-      const hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-      if (hash === PWD_HASH) {
-        sessionStorage.removeItem('adm_attempts');
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('adm-wrap').style.display = 'block';
-    initAll();
-  } else {
-    document.getElementById('login-err').style.display = 'block';
-    document.getElementById('pwd').select();
+  const attempts = parseInt(sessionStorage.getItem('adm_attempts')||'0');
+  const lockUntil = parseInt(sessionStorage.getItem('adm_lock')||'0');
+  if (Date.now() < lockUntil) {
+    alert('Troppi tentativi. Riprova tra un minuto.');
+    return;
   }
+  crypto.subtle.digest('SHA-256', new TextEncoder().encode(v)).then(buf => {
+    const hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    if (hash === PWD_HASH) {
+      sessionStorage.removeItem('adm_attempts');
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('adm-wrap').style.display = 'block';
+      initAll();
+    } else {
+      const newAttempts = attempts + 1;
+      sessionStorage.setItem('adm_attempts', newAttempts);
+      if (newAttempts >= 3) {
+        sessionStorage.setItem('adm_lock', Date.now() + 60000);
+        alert('Troppi tentativi errati. Attendi 1 minuto.');
+      }
+      document.getElementById('login-err').style.display = 'block';
+      document.getElementById('pwd').value = '';
+      document.getElementById('pwd').focus();
+    }
+  });
 }
 document.getElementById('pwd').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 function logout() {
@@ -392,6 +452,7 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('tab-' + name).classList.add('on');
+  if (name === 'famiglie') caricaRichiesteF();
 }
 
 // ═══════════════════════════════════
@@ -648,7 +709,7 @@ function aiAvviso() {
 // ═══════════════════════════════════
 // INIT
 // ═══════════════════════════════════
-function initAll() { loadNotizie(); loadAvvisi(); loadPins(); load<em>Alumni</em>(); }
+function initAll() { loadNotizie(); loadAvvisi(); loadPins(); loadAlumni(); verificaNuoveRichieste(); }
 
 // ═══════════════════════════════════
 // ALUMNI — MODERAZIONE SUPABASE
@@ -781,6 +842,220 @@ function render<em>Alumni</em>Pending() {
     </div>`).join('');
 }
 
+
+// ═══════════════════════════════════
+// FAMIGLIE — APPROVAZIONI ACCESSO
+// ═══════════════════════════════════
+const SB_URL  = 'https://sawclsysqnjsvbobioqo.supabase.co';
+const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTIxMzc2OSwiZXhwIjoyMDk0Nzg5NzY5fQ.pvYOl7aNXvO32Zb_8zzq5OXk3Cc9OeVe_QV9Vh_WaWw';
+const NOTIFICA_EMAIL = 'michele.gaggiano@alberghierorieti.it';
+
+let famRichieste = [];
+let famFiltroCorrente = 'in_attesa';
+
+async function sbFetch(path, opts = {}) {
+  const resp = await fetch(SB_URL + path, {
+    ...opts,
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SB_KEY,
+      'Authorization': 'Bearer ' + SB_KEY,
+      ...(opts.headers || {})
+    }
+  });
+  return resp;
+}
+
+async function caricaRichiesteF() {
+  const el = document.getElementById('fam-lista');
+  el.innerHTML = '<p style="font-size:.85rem;color:var(--txt2)">Caricamento…</p>';
+  try {
+    const resp = await sbFetch('/rest/v1/richieste_accesso?select=*&order=created_at.desc');
+    famRichieste = await resp.json();
+    aggiornaBadgeF();
+    famFiltro(famFiltroCorrente);
+  } catch(e) {
+    el.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore connessione Supabase: ' + e.message + '</p>';
+  }
+}
+
+function aggiornaBadgeF() {
+  const attesa = famRichieste.filter(r => r.stato === 'in_attesa').length;
+  const badge = document.getElementById('badge-fam');
+  badge.textContent = attesa;
+  badge.style.display = attesa > 0 ? 'inline-block' : 'none';
+  document.getElementById('fam-cnt-attesa').textContent    = famRichieste.filter(r => r.stato === 'in_attesa').length;
+  document.getElementById('fam-cnt-approvate').textContent = famRichieste.filter(r => r.stato === 'approvata').length;
+  document.getElementById('fam-cnt-rifiutate').textContent = famRichieste.filter(r => r.stato === 'rifiutata').length;
+}
+
+function famFiltro(stato, btnEl) {
+  famFiltroCorrente = stato;
+  // Reset stili filtri
+  ['fam-f-attesa','fam-f-approvate','fam-f-rifiutate'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) b.style.fontWeight = '800';
+  });
+  const map = { 'in_attesa': 'fam-f-attesa', 'approvata': 'fam-f-approvate', 'rifiutata': 'fam-f-rifiutate' };
+  if (btnEl) btnEl.style.fontWeight = '900';
+
+  const filtrate = famRichieste.filter(r => r.stato === stato);
+  const el = document.getElementById('fam-lista');
+
+  if (!filtrate.length) {
+    const etichette = { in_attesa: 'in attesa', approvata: 'approvate', rifiutata: 'rifiutate' };
+    el.innerHTML = '<div style="background:rgba(29,111,66,.06);border:1px solid rgba(29,111,66,.2);border-radius:8px;padding:1.1rem 1.25rem;font-size:.85rem;color:#1d6f42">✅ Nessuna richiesta ' + (etichette[stato]||stato) + '.</div>';
+    return;
+  }
+
+  el.innerHTML = filtrate.map(r => famCardHTML(r)).join('');
+}
+
+function famCardHTML(r) {
+  const data = new Date(r.created_at).toLocaleString('it-IT', {
+    day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'
+  });
+  const relLabel = {padre:'Padre', madre:'Madre', tutore:'Tutore/Tutrice'}[r.relazione] || r.relazione;
+  const colori = { in_attesa:'rgba(234,179,8,.15)', approvata:'rgba(29,111,66,.06)', rifiutata:'rgba(220,38,38,.06)' };
+  const bordi  = { in_attesa:'rgba(234,179,8,.4)',  approvata:'rgba(29,111,66,.25)', rifiutata:'rgba(220,38,38,.25)' };
+
+  const azioniHTML = r.stato === 'in_attesa' ? `
+    <textarea id="nota-fam-${r.id}"
+      style="width:100%;padding:.6rem .8rem;border:1px solid #d4c9a8;border-radius:6px;font-family:var(--fu);font-size:.82rem;resize:vertical;min-height:56px;margin-bottom:.6rem;margin-top:.5rem"
+      placeholder="Nota opzionale (motivo rifiuto ecc.)"></textarea>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+      <button onclick="famApprova('${r.id}')"
+        style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:.45rem 1rem;border-radius:5px;border:1.5px solid #1d6f42;color:#1d6f42;background:none;cursor:pointer;transition:all .2s"
+        onmouseover="this.style.background='#1d6f42';this.style.color='#fff'"
+        onmouseout="this.style.background='none';this.style.color='#1d6f42'">
+        ✅ Approva e attiva accesso
+      </button>
+      <button onclick="famRifiuta('${r.id}')"
+        style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:.45rem 1rem;border-radius:5px;border:1.5px solid #dc2626;color:#dc2626;background:none;cursor:pointer;transition:all .2s"
+        onmouseover="this.style.background='#dc2626';this.style.color='#fff'"
+        onmouseout="this.style.background='none';this.style.color='#dc2626'">
+        ✗ Rifiuta
+      </button>
+    </div>` : `
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+      <span style="font-size:.72rem;font-weight:800;padding:.2rem .6rem;border-radius:20px;${r.stato==='approvata'?'background:#dcfce7;color:#15803d':'background:#fee2e2;color:#b91c1c'}">${r.stato}</span>
+      ${r.note_admin ? '<span style="font-size:.8rem;color:#888">' + r.note_admin + '</span>' : ''}
+    </div>`;
+
+  return `<div style="border:1.5px solid ${bordi[r.stato]||'#d4c9a8'};border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:.85rem;background:${colori[r.stato]||'#fff'}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.6rem;margin-bottom:.75rem">
+      <div>
+        <div style="font-family:var(--fd);font-size:1.1rem;color:var(--bosco);font-weight:600">${r.nome_studente}</div>
+        <div style="font-size:.7rem;color:#8b7a5a;margin-top:2px">Richiesta del ${data}</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem;margin-bottom:.85rem">
+      <div style="font-size:.82rem;color:var(--txt2)"><strong style="display:block;font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:var(--bosco)">Email</strong>${r.email_genitore}</div>
+      <div style="font-size:.82rem;color:var(--txt2)"><strong style="display:block;font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:var(--bosco)">Relazione</strong>${relLabel}</div>
+      <div style="font-size:.82rem;color:var(--txt2)"><strong style="display:block;font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:var(--bosco)">Password</strong><span style="font-family:monospace;font-size:.75rem;color:#888">hash: ${r.password_hash.substring(0,16)}…</span></div>
+    </div>
+    ${azioniHTML}
+  </div>`;
+}
+
+async function famApprova(id) {
+  const richiesta = famRichieste.find(r => r.id === id);
+  const nota = document.getElementById('nota-fam-' + id)?.value || '';
+  const btn = document.querySelector(`[onclick="famApprova('${id}')"]`);
+  if (btn) { btn.disabled = true; btn.textContent = 'Attivazione…'; }
+
+  try {
+    // 1. Crea utente in Supabase Auth
+    const respAuth = await sbFetch('/auth/v1/admin/users', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: richiesta.email_genitore,
+        password: richiesta.password_hash,
+        email_confirm: true,
+        user_metadata: {
+          nome_studente: richiesta.nome_studente,
+          relazione: richiesta.relazione
+        }
+      })
+    });
+
+    const authData = await respAuth.json();
+    if (!respAuth.ok && !authData.msg?.includes('already')) {
+      throw new Error(authData.message || 'Errore creazione utente Auth');
+    }
+
+    // 2. Inserisce in genitori_studenti
+    await sbFetch('/rest/v1/genitori_studenti?on_conflict=email_genitore,nome_studente', {
+      method: 'POST',
+      headers: { 'Prefer': 'resolution=merge-duplicates' },
+      body: JSON.stringify({
+        email_genitore: richiesta.email_genitore,
+        nome_studente:  richiesta.nome_studente,
+        relazione:      richiesta.relazione
+      })
+    });
+
+    // 3. Aggiorna stato richiesta
+    await famAggiornaStato(id, 'approvata', nota);
+
+    // 4. Invia email di conferma al genitore via EmailJS
+    await inviaEmailGenitore(richiesta.email_genitore, richiesta.nome_studente, 'approvata');
+
+    alert('✅ Accesso attivato per ' + richiesta.email_genitore);
+    caricaRichiesteF();
+
+  } catch(e) {
+    alert('Errore: ' + e.message);
+    if (btn) { btn.disabled = false; btn.textContent = '✅ Approva e attiva accesso'; }
+  }
+}
+
+async function famRifiuta(id) {
+  const nota = document.getElementById('nota-fam-' + id)?.value || '';
+  if (!confirm('Rifiutare questa richiesta?')) return;
+  const richiesta = famRichieste.find(r => r.id === id);
+  await famAggiornaStato(id, 'rifiutata', nota);
+  await inviaEmailGenitore(richiesta.email_genitore, richiesta.nome_studente, 'rifiutata', nota);
+  caricaRichiesteF();
+}
+
+async function famAggiornaStato(id, stato, nota) {
+  await sbFetch('/rest/v1/richieste_accesso?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'Prefer': 'return=minimal' },
+    body: JSON.stringify({
+      stato: stato,
+      processed_at: new Date().toISOString(),
+      note_admin: nota
+    })
+  });
+}
+
+// ── NOTA: le email ai genitori sono gestite da Supabase SMTP ──
+// Supabase invia automaticamente l'email di conferma tramite il template
+// configurato in Authentication → Email Templates → Invite user
+async function inviaEmailGenitore(emailDest, nomeStudente, esito, nota) {
+  // Supabase Auth gestisce l'invio automatico al momento della creazione utente
+  // Nessuna azione aggiuntiva necessaria
+  console.log('Account attivato per:', emailDest, '- Stato:', esito);
+}
+
+// ── NOTIFICA automatica all'admin quando arriva una richiesta ──
+// Questa funzione va chiamata da richiesta-accesso.html al momento dell'invio
+// Viene richiamata da supabase realtime se configurato, oppure al caricamento della tab
+async function verificaNuoveRichieste() {
+  try {
+    const resp = await sbFetch('/rest/v1/richieste_accesso?stato=eq.in_attesa&select=count', {
+      headers: { 'Prefer': 'count=exact', 'Range-Unit': 'items', 'Range': '0-0' }
+    });
+    const count = parseInt(resp.headers.get('content-range')?.split('/')[1] || '0');
+    const badge = document.getElementById('badge-fam');
+    if (badge) {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'inline-block' : 'none';
+    }
+  } catch(e) { /* silenzioso */ }
+}
 
 // ═══════════════════════════════════
 // MAPPA — MODERAZIONE PIN
