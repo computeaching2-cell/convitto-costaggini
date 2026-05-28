@@ -7,7 +7,7 @@ const CSS=`
 #cc-fab:hover{transform:scale(1.08);}
 #cc-badge{position:absolute;top:-3px;right:-3px;width:14px;height:14px;border-radius:50%;background:#B8922A;border:2px solid #fff;display:none;}
 #cc-badge.show{display:block;}
-#cc-panel{position:fixed;bottom:9rem;right:1.25rem;z-index:8999;width:min(370px,calc(100vw - 2rem));height:min(520px,calc(100vh - 7rem));background:#fff;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.22);display:flex;flex-direction:column;transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .25s;overflow:hidden;}
+#cc-panel{position:fixed;bottom:9rem;right:1.25rem;z-index:8999;width:min(370px,calc(100vw - 2rem));height:min(520px,calc(100vh - 7rem));max-height:calc(100vh - 11rem);background:#fff;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.22);display:flex;flex-direction:column;transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .25s;overflow:hidden;}
 #cc-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
 .cc-head{background:linear-gradient(135deg,#2C3E2D,#1a3a1b);padding:.8rem 1rem;display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
 .cc-avatar{width:34px;height:34px;border-radius:50%;background:rgba(184,146,42,.2);border:1.5px solid rgba(184,146,42,.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
@@ -28,6 +28,18 @@ const CSS=`
 .cc-dots span{width:6px;height:6px;border-radius:50%;background:#9ca3af;animation:ccb .9s infinite;}
 .cc-dots span:nth-child(2){animation-delay:.15s}.cc-dots span:nth-child(3){animation-delay:.3s}
 @keyframes ccb{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+@media(max-width:600px){
+  #cc-panel{
+    bottom:auto!important;
+    top:60px!important;
+    left:.75rem!important;
+    right:.75rem!important;
+    width:auto!important;
+    height:calc(100dvh - 75px)!important;
+    max-height:calc(100dvh - 75px)!important;
+    border-radius:12px!important;
+  }
+}
 .cc-sugs{padding:.3rem .85rem .4rem;display:flex;flex-wrap:wrap;gap:.25rem;flex-shrink:0;max-height:52px;overflow:hidden;}
 .cc-sug{font-family:'Source Sans 3',sans-serif;font-size:.66rem;font-weight:600;padding:.28rem .65rem;border-radius:12px;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb;cursor:pointer;transition:all .15s;white-space:nowrap;}
 .cc-sug:hover{background:rgba(44,62,45,.08);border-color:#2C3E2D;color:#2C3E2D;}
@@ -159,7 +171,7 @@ function build(){
   agganciafab(20); // riprova fino a 2 secondi
   const panel=document.createElement('div');
   panel.id='cc-panel';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Assistente virtuale');panel.setAttribute('aria-modal','true');
-  panel.innerHTML=`<div class="cc-head"><div class="cc-avatar">🎓</div><div class="cc-info"><div class="cc-name">Assistente del Convitto</div><div class="cc-sub">Sistema automatico locale · nessun dato trasmesso</div></div><button class="cc-x" onclick="document.getElementById('cc-panel').classList.remove('open')" aria-label="Chiudi">✕</button></div><div class="cc-notice" role="note">🤖 <strong>Sistema automatico.</strong> Nessun dato viene trasmesso a servizi esterni. Per assistenza diretta usa il <a href="contatti.html">modulo di contatto</a>.</div><div class="cc-msgs" id="cc-msgs" role="log" aria-live="polite"></div><div class="cc-sugs" id="cc-sugs"></div><div class="cc-foot"><textarea id="cc-inp" placeholder="Scrivi la tua domanda…" rows="1" aria-label="Domanda"></textarea><button id="cc-go" onclick="ccSend()" aria-label="Invia">➤</button></div>`;
+  panel.innerHTML=`<div class="cc-head"><div class="cc-avatar">🎓</div><div class="cc-info"><div class="cc-name">Assistente del Convitto</div><div class="cc-sub">Sistema automatico locale · nessun dato trasmesso</div></div><button class="cc-x" onclick="document.getElementById('cc-panel').classList.remove('open')" aria-label="Chiudi">✕</button></div><div class="cc-notice" role="note">🤖 <strong>Sistema automatico.</strong> Nessun dato viene trasmesso a servizi esterni. Per assistenza diretta usa il <a href="contatti.html">modulo di contatto</a>.</div><div class="cc-msgs" id="cc-msgs" role="log" aria-live="polite"></div><div class="cc-sugs" id="cc-sugs"></div><div class="cc-foot"><textarea id="cc-inp" placeholder="Scrivi la tua domanda…" rows="1" aria-label="Domanda" inputmode="text"></textarea><button id="cc-go" onclick="ccSend()" aria-label="Invia">➤</button></div>`;
   document.body.appendChild(panel);
   const inp=document.getElementById('cc-inp');
   inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ccSend();}});
@@ -169,7 +181,45 @@ function build(){
   setTimeout(()=>{if(!document.getElementById('cc-panel').classList.contains('open'))document.getElementById('cc-badge').classList.add('show');},4000);
 }
 
-function ccToggle(){const p=document.getElementById('cc-panel');p.classList.toggle('open');document.getElementById('cc-badge').classList.remove('show');if(p.classList.contains('open'))setTimeout(()=>document.getElementById('cc-inp').focus(),300);}
+function ccToggle(){
+  const p=document.getElementById('cc-panel');
+  p.classList.toggle('open');
+  document.getElementById('cc-badge').classList.remove('show');
+  if(p.classList.contains('open')){
+    // Desktop: focus automatico sulla textarea
+    if(window.innerWidth > 600) setTimeout(()=>document.getElementById('cc-inp').focus(),300);
+    // Mobile: aggiusta posizione panel per evitare che la tastiera lo copra
+    if(window.innerWidth <= 600){
+      setTimeout(function(){
+        const panel = document.getElementById('cc-panel');
+        if(panel){
+          // Posiziona il panel in alto quando aperto su mobile
+          panel.style.bottom = 'auto';
+          panel.style.top = '60px';
+          panel.style.right = '.75rem';
+          panel.style.left = '.75rem';
+          panel.style.width = 'auto';
+          panel.style.height = 'calc(100vh - 75px)';
+          panel.style.maxHeight = 'calc(100vh - 75px)';
+        }
+      }, 50);
+    }
+  } else {
+    // Reset stile mobile alla chiusura
+    if(window.innerWidth <= 600){
+      const panel = document.getElementById('cc-panel');
+      if(panel){
+        panel.style.bottom = '';
+        panel.style.top = '';
+        panel.style.right = '';
+        panel.style.left = '';
+        panel.style.width = '';
+        panel.style.height = '';
+        panel.style.maxHeight = '';
+      }
+    }
+  }
+}
 
 function addMsg(role,html){const m=document.getElementById('cc-msgs');const d=document.createElement('div');d.className='cc-msg '+role;d.innerHTML=html;m.appendChild(d);setTimeout(()=>{m.scrollTop=m.scrollHeight;},50);}
 
