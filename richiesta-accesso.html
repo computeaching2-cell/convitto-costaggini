@@ -365,8 +365,6 @@ async function inviaRichiesta() {
   btn.textContent = 'Invio in corso...';
 
   try {
-    const hash = await sha256(password);
-
     const resp = await fetch(
       'https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/richieste_accesso',
       {
@@ -381,7 +379,7 @@ async function inviaRichiesta() {
           nome_studente:  nomeStudente,
           email_genitore: email,
           relazione:      relazione,
-          password_hash:  hash,
+          password_hash:  password,
           stato:          'in_attesa'
         })
       }
