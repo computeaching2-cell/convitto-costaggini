@@ -139,11 +139,55 @@
     .export-bar p { font-size:.78rem; color:#6b5a2a; margin-bottom:.6rem; line-height:1.5; }
     .btn-export { font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; padding:.5rem 1rem; border:1.5px solid var(--bosco); color:var(--bosco); background:none; border-radius:6px; cursor:pointer; transition:all .2s; }
     .btn-export:hover { background:var(--bosco); color:#fff; }
+  /* ── DIALOGO CUSTOM ── */
+  #adm-dialog-overlay {
+    position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;
+    display:none;align-items:center;justify-content:center;padding:1.25rem;
+    backdrop-filter:blur(2px);
+  }
+  #adm-dialog-overlay.show { display:flex; }
+  .adm-dialog-box {
+    background:#fff;border-radius:12px;width:100%;max-width:380px;
+    box-shadow:0 20px 40px rgba(0,0,0,.2);overflow:hidden;
+    animation:admDialogIn .18s ease;
+  }
+  @keyframes admDialogIn { from{transform:scale(.92);opacity:0} to{transform:scale(1);opacity:1} }
+  .adm-dialog-head {
+    background:var(--bosco);padding:1.1rem 1.4rem;
+    font-family:var(--fd);font-size:1.15rem;font-weight:400;color:#fff;
+    display:flex;align-items:center;gap:.6rem;
+  }
+  .adm-dialog-body {
+    padding:1.4rem;font-size:.9rem;color:var(--txt);line-height:1.65;
+    white-space:pre-wrap;
+  }
+  .adm-dialog-btns {
+    display:flex;border-top:1px solid #e8e0d0;
+  }
+  .adm-dialog-btn {
+    flex:1;padding:.9rem;border:none;background:none;font-family:var(--fu);
+    font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    cursor:pointer;transition:background .15s;
+  }
+  .adm-dialog-btn:hover { background:#f5f0e8; }
+  .adm-dialog-btn.primary { color:var(--bosco); border-left:1px solid #e8e0d0; }
+  .adm-dialog-btn.danger  { color:#dc2626; border-left:1px solid #e8e0d0; }
+  .adm-dialog-btn.cancel  { color:#8b7a5a; }
+
   </style>
 </head>
 <body>
 
 <!-- ════ LOGIN ════ -->
+
+<div id="adm-dialog-overlay">
+  <div class="adm-dialog-box">
+    <div class="adm-dialog-head" id="adm-dialog-head">🛡️ Conferma</div>
+    <div class="adm-dialog-body" id="adm-dialog-body"></div>
+    <div class="adm-dialog-btns" id="adm-dialog-btns"></div>
+  </div>
+</div>
+
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">🛡️</div>
@@ -358,6 +402,37 @@
 const PWD_HASH = '4d7f432968e1da3b3d6d7dec2f99f4d0b65b3751eeec4d1ea36d45d7bcda288b'; // password hashata SHA-256
 const KEY_N = 'costaggini_notizie_admin_v1';
 const KEY_A = 'costaggini_comunicati_v2';
+
+// ── DIALOGO CUSTOM (sostituisce alert/confirm del browser) ──
+function admAlert(msg, icon) {
+  icon = icon || '✅';
+  document.getElementById('adm-dialog-head').innerHTML = icon + ' Avviso';
+  document.getElementById('adm-dialog-body').textContent = msg;
+  document.getElementById('adm-dialog-btns').innerHTML =
+    '<button class="adm-dialog-btn primary" onclick="admCloseDialog()">OK</button>';
+  document.getElementById('adm-dialog-overlay').classList.add('show');
+}
+
+function admConfirm(msg, icon, onOk, onCancel) {
+  icon = icon || '❓';
+  document.getElementById('adm-dialog-head').innerHTML = icon + ' Conferma';
+  document.getElementById('adm-dialog-body').textContent = msg;
+  document.getElementById('adm-dialog-btns').innerHTML =
+    '<button class="adm-dialog-btn cancel" onclick="admCloseDialog(' + (onCancel ? 'true' : '') + ')">Annulla</button>' +
+    '<button class="adm-dialog-btn primary" onclick="admCloseDialog(false, true)">Conferma</button>';
+  window._admOk     = onOk;
+  window._admCancel = onCancel;
+  document.getElementById('adm-dialog-overlay').classList.add('show');
+}
+
+function admCloseDialog(isCancel, isOk) {
+  document.getElementById('adm-dialog-overlay').classList.remove('show');
+  if (isOk  && window._admOk)     { const fn = window._admOk;     window._admOk = null;     fn(); }
+  if (isCancel && window._admCancel) { const fn = window._admCancel; window._admCancel = null; fn(); }
+  window._admOk = null;
+  window._admCancel = null;
+}
+
 
 // ═══ AUTH ═══
 function doLogin() {
@@ -942,7 +1017,7 @@ async function famApprova(idx) {
   const r = filtrate[idx];
   if (!r) { alert('Errore: richiesta non trovata. Aggiorna la lista.'); return; }
   const nota = (document.getElementById('nota-fam-' + idx) || {}).value || '';
-  if (!confirm('Attivare accesso per ' + r.email_genitore + '?')) return;
+  await new Promise((res,rej) => admConfirm('Attivare accesso per:\n' + r.email_genitore + '?', '🔐', res, rej));
   try {
     const authBody = {
       email: r.email_genitore,
@@ -966,16 +1041,16 @@ async function famApprova(idx) {
     }
     await sbFam('/rest/v1/genitori_studenti?on_conflict=email_genitore,nome_studente', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates'}, body:JSON.stringify({email_genitore:r.email_genitore, nome_studente:r.nome_studente, relazione:r.relazione})});
     await sbFam('/rest/v1/richieste_accesso?id=eq.' + r.id, {method:'PATCH', headers:{'Prefer':'return=minimal'}, body:JSON.stringify({stato:'approvata', processed_at:new Date().toISOString(), note_admin:nota})});
-    alert('Accesso attivato per ' + r.email_genitore);
+    admAlert('Accesso attivato correttamente per:\n' + r.email_genitore + '\n\nIl genitore può ora accedere all\'Area Riservata.', '✅');
     caricaRichiesteF();
-  } catch(e) { alert('Errore: ' + e.message); }
+  } catch(e) { admAlert('Errore durante l\'attivazione:\n' + e.message, '⚠️'); }
 }
 async function famRifiuta(idx) {
   const filtrate = famRichieste.filter(r => r.stato === famFiltroCorrente);
   const r = filtrate[idx];
   if (!r) { alert('Errore: richiesta non trovata. Aggiorna la lista.'); return; }
   const nota = (document.getElementById('nota-fam-' + idx) || {}).value || '';
-  if (!confirm('Rifiutare la richiesta di ' + r.email_genitore + '?')) return;
+  await new Promise((res,rej) => admConfirm('Rifiutare la richiesta di:\n' + r.email_genitore + '?', '✗', res, rej));
   await sbFam('/rest/v1/richieste_accesso?id=eq.' + r.id, {method:'PATCH', headers:{'Prefer':'return=minimal'}, body:JSON.stringify({stato:'rifiutata', processed_at:new Date().toISOString(), note_admin:nota})});
   caricaRichiesteF();
 }
