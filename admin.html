@@ -919,13 +919,13 @@ function famFiltro(stato) {
   const filtrate = famRichieste.filter(r => r.stato === stato);
   const el = document.getElementById('fam-lista');
   if (!filtrate.length) { el.innerHTML = '<div style="background:rgba(29,111,66,.06);border:1px solid rgba(29,111,66,.2);border-radius:8px;padding:1rem;font-size:.85rem;color:#1d6f42">Nessuna richiesta.</div>'; return; }
-  el.innerHTML = filtrate.map(r => {
+  el.innerHTML = filtrate.map((r, idx) => {
     const data = new Date(r.created_at).toLocaleString('it-IT');
     const rel = ({padre:'Padre',madre:'Madre',tutore:'Tutore'})[r.relazione] || r.relazione;
     let azioni = '';
     if (r.stato === 'in_attesa') {
-      azioni = '<textarea id="nota-fam-' + r.id + '" style="width:100%;padding:.5rem;border:1px solid #d4c9a8;border-radius:6px;font-size:.82rem;resize:vertical;min-height:50px;margin-bottom:.5rem" placeholder="Nota opzionale..."></textarea>'
-             + '<div style="display:flex;gap:.6rem"><button onclick="famApprova(' + JSON.stringify(r.id) + ')" class="btn-ed edit">Approva</button><button onclick="famRifiuta(' + JSON.stringify(r.id) + ')" class="btn-ed del">Rifiuta</button></div>';
+      azioni = '<textarea id="nota-fam-' + idx + '" style="width:100%;padding:.5rem;border:1px solid #d4c9a8;border-radius:6px;font-size:.82rem;resize:vertical;min-height:50px;margin-bottom:.5rem" placeholder="Nota opzionale..."></textarea>'
+             + '<div style="display:flex;gap:.6rem"><button onclick="famApprova(' + idx + ')" class="btn-ed edit">Approva</button><button onclick="famRifiuta(' + idx + ')" class="btn-ed del">Rifiuta</button></div>';
     } else {
       const col = r.stato === 'approvata' ? 'background:#dcfce7;color:#15803d' : 'background:#fee2e2;color:#b91c1c';
       azioni = '<span style="font-size:.72rem;font-weight:800;padding:.2rem .6rem;border-radius:20px;' + col + '">' + r.stato + '</span>';
@@ -937,25 +937,29 @@ function famFiltro(stato) {
          + azioni + '</div>';
   }).join('');
 }
-async function famApprova(id) {
-  const r = famRichieste.find(x => x.id === id);
-  const nota = (document.getElementById('nota-fam-' + id) || {}).value || '';
+async function famApprova(idx) {
+  const filtrate = famRichieste.filter(r => r.stato === famFiltroCorrente);
+  const r = filtrate[idx];
+  if (!r) { alert('Errore: richiesta non trovata. Aggiorna la lista.'); return; }
+  const nota = (document.getElementById('nota-fam-' + idx) || {}).value || '';
   if (!confirm('Attivare accesso per ' + r.email_genitore + '?')) return;
   try {
     const ra = await sbFam('/auth/v1/admin/users', {method:'POST', body:JSON.stringify({email:r.email_genitore, password:r.password_hash, email_confirm:true, user_metadata:{nome_studente:r.nome_studente, relazione:r.relazione}})});
     const ad = await ra.json();
     if (!ra.ok && !(ad.message && ad.message.includes('already'))) throw new Error(ad.message || 'Errore Auth');
     await sbFam('/rest/v1/genitori_studenti?on_conflict=email_genitore,nome_studente', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates'}, body:JSON.stringify({email_genitore:r.email_genitore, nome_studente:r.nome_studente, relazione:r.relazione})});
-    await sbFam('/rest/v1/richieste_accesso?id=eq.' + id, {method:'PATCH', headers:{'Prefer':'return=minimal'}, body:JSON.stringify({stato:'approvata', processed_at:new Date().toISOString(), note_admin:nota})});
+    await sbFam('/rest/v1/richieste_accesso?id=eq.' + r.id, {method:'PATCH', headers:{'Prefer':'return=minimal'}, body:JSON.stringify({stato:'approvata', processed_at:new Date().toISOString(), note_admin:nota})});
     alert('Accesso attivato per ' + r.email_genitore);
     caricaRichiesteF();
   } catch(e) { alert('Errore: ' + e.message); }
 }
-async function famRifiuta(id) {
-  const r = famRichieste.find(x => x.id === id);
-  const nota = (document.getElementById('nota-fam-' + id) || {}).value || '';
+async function famRifiuta(idx) {
+  const filtrate = famRichieste.filter(r => r.stato === famFiltroCorrente);
+  const r = filtrate[idx];
+  if (!r) { alert('Errore: richiesta non trovata. Aggiorna la lista.'); return; }
+  const nota = (document.getElementById('nota-fam-' + idx) || {}).value || '';
   if (!confirm('Rifiutare la richiesta di ' + r.email_genitore + '?')) return;
-  await sbFam('/rest/v1/richieste_accesso?id=eq.' + id, {method:'PATCH', headers:{'Prefer':'return=minimal'}, body:JSON.stringify({stato:'rifiutata', processed_at:new Date().toISOString(), note_admin:nota})});
+  await sbFam('/rest/v1/richieste_accesso?id=eq.' + r.id, {method:'PATCH', headers:{'Prefer':'return=minimal'}, body:JSON.stringify({stato:'rifiutata', processed_at:new Date().toISOString(), note_admin:nota})});
   caricaRichiesteF();
 }
 async function verificaNuoveRichieste() {
