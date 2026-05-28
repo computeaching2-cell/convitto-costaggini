@@ -538,7 +538,7 @@ function modificaNotizia(id) {
   document.getElementById('n-featured').checked= !!n.featured;
   document.getElementById('n-edit-id').value   = id;
   const btn=document.getElementById('n-btn-salva');
-  document.getElementById('n-form-title').innerHTML='✏️ Modifica <em>notizia</em>';
+  document.getElementById('n-form-title').innerHTML='✏️ Modifica notizia';
   btn.textContent='💾 Aggiorna'; btn.classList.add('modifica');
   document.querySelector('#tab-notizie .adm-card').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -559,7 +559,7 @@ function resetNotizia() {
   document.getElementById('n-cat').value='Istituzionale';
   document.getElementById('n-evidenza').checked=false;
   document.getElementById('n-featured').checked=false;
-  document.getElementById('n-form-title').innerHTML='+ Nuova <em>notizia</em>';
+  document.getElementById('n-form-title').innerHTML='+ Nuova notizia';
   const btn=document.getElementById('n-btn-salva');
   btn.textContent='📌 Pubblica'; btn.classList.remove('modifica');
 }
@@ -644,7 +644,7 @@ function modificaAvviso(id) {
   document.getElementById('a-autore').value = a.autore||'';
   document.getElementById('a-pinned').checked=!!a.pinned;
   document.getElementById('a-edit-id').value=id;
-  document.getElementById('a-form-title').innerHTML='✏️ Modifica <em>avviso</em>';
+  document.getElementById('a-form-title').innerHTML='✏️ Modifica avviso';
   const btn=document.getElementById('a-btn-salva');
   btn.textContent='💾 Aggiorna'; btn.classList.add('modifica');
   document.querySelector('#tab-avvisi .adm-card').scrollIntoView({behavior:'smooth',block:'start'});
@@ -666,7 +666,7 @@ function resetAvviso() {
   document.getElementById('a-cat').value='famiglie';
   document.getElementById('a-data').value=new Date().toISOString().split('T')[0];
   document.getElementById('a-pinned').checked=false;
-  document.getElementById('a-form-title').innerHTML='+ Nuovo <em>avviso</em>';
+  document.getElementById('a-form-title').innerHTML='+ Nuovo avviso';
   const btn=document.getElementById('a-btn-salva');
   btn.textContent='📌 Pubblica'; btn.classList.remove('modifica');
 }
@@ -722,9 +722,9 @@ if (!SB_SERVICE) {
   if (SB_SERVICE) localStorage.setItem('sb_service_key', SB_SERVICE);
 }
 
-async function load<em>Alumni</em>() { await render<em>Alumni</em>Pending(); await render<em>Alumni</em>Approved(); }
+async function loadAlumni() { await renderAlumniPending(); await renderAlumniApproved(); }
 
-async function render<em>Alumni</em>Pending() {
+async function renderAlumniPending() {
   const el = document.getElementById('alumni-pending-list');
   el.innerHTML = '<p style="font-size:.85rem;color:var(--txt2)">Caricamento…</p>';
   try {
@@ -766,7 +766,7 @@ async function render<em>Alumni</em>Pending() {
   } catch(e) { el.innerHTML = '<p style="color:#dc2626">Errore connessione Supabase: '+e.message+'</p>'; }
 }
 
-async function render<em>Alumni</em>Approved() {
+async function renderAlumniApproved() {
   const el = document.getElementById('alumni-approved-list');
   try {
     const approved = await sb.select('alumni', 'approvato=eq.true');
@@ -785,7 +785,7 @@ async function render<em>Alumni</em>Approved() {
 async function approveAlumno(id) {
   try {
     await sb.update('alumni', id, { approvato: true }, SB_SERVICE);
-    await load<em>Alumni</em>();
+    await loadAlumni();
   } catch(e) { alert('Errore: '+e.message); }
 }
 
@@ -793,7 +793,7 @@ async function rejectAlumno(id, nome) {
   if (!confirm(`Rifiutare e cancellare la scheda di "${nome}"?`)) return;
   try {
     await sb.delete('alumni', id, SB_SERVICE);
-    await load<em>Alumni</em>();
+    await loadAlumni();
   } catch(e) { alert('Errore: '+e.message); }
 }
 
@@ -801,11 +801,11 @@ async function removeAlumno(id, nome) {
   if (!confirm(`Rimuovere la scheda di "${nome}" dalla gallery?`)) return;
   try {
     await sb.update('alumni', id, { approvato: false }, SB_SERVICE);
-    await load<em>Alumni</em>();
+    await loadAlumni();
   } catch(e) { alert('Errore: '+e.message); }
 }
 
-function render<em>Alumni</em>Pending() {
+function renderAlumniPending() {
   const pending = JSON.parse(localStorage.getItem('costaggini-alumni-pending') || '[]');
   const el = document.getElementById('alumni-pending-list');
   if (!pending.length) {
