@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Richiesta Accesso Famiglie — Convitto Costaggini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .form-wrap {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+    .form-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 4px 24px rgba(44,62,45,.10);
+    }
+    .form-titolo {
+      font-family: var(--fd);
+      font-size: 1.7rem;
+      font-weight: 300;
+      color: var(--bosco);
+      margin-bottom: .4rem;
+    }
+    .form-sub {
+      font-size: .88rem;
+      color: var(--txt2);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .campo-gruppo {
+      margin-bottom: 1.2rem;
+    }
+    .campo-gruppo label {
+      display: block;
+      font-family: var(--fu);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--bosco);
+      margin-bottom: .4rem;
+    }
+    .campo-gruppo input,
+    .campo-gruppo select {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-family: var(--fu);
+      font-size: .95rem;
+      color: #1a1a1a;
+      background: #fafafa;
+      transition: border-color .2s;
+    }
+    .campo-gruppo input:focus,
+    .campo-gruppo select:focus {
+      outline: none;
+      border-color: var(--bosco);
+      background: #fff;
+    }
+    .campo-gruppo .aiuto {
+      font-size: .78rem;
+      color: #888;
+      margin-top: .35rem;
+      line-height: 1.5;
+    }
+    .pwd-wrap { position: relative; }
+    .pwd-wrap input { padding-right: 44px; }
+    .pwd-occhio {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #888;
+      padding: 4px;
+    }
+    .requisiti {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: .9rem 1rem;
+      margin-top: .5rem;
+      font-size: .82rem;
+      color: #555;
+      line-height: 1.8;
+    }
+    .requisiti li {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .requisiti li::before {
+      content: '○';
+      color: #ccc;
+      font-size: .9rem;
+    }
+    .requisiti li.ok::before {
+      content: '✓';
+      color: #15803d;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 1.5rem 0;
+    }
+    .privacy-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .privacy-box label {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      font-size: .85rem;
+      color: #166534;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+    .privacy-box input[type=checkbox] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex-shrink: 0;
+      accent-color: var(--bosco);
+    }
+    .btn-invia {
+      width: 100%;
+      padding: 14px;
+      background: var(--bosco);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--fu);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-invia:hover { background: #3d5c3e; }
+    .btn-invia:disabled { background: #aaa; cursor: not-allowed; }
+    .msg {
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: .9rem;
+      margin-bottom: 1.2rem;
+      display: none;
+      line-height: 1.5;
+    }
+    .msg.ok  { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; display: block; }
+    .msg.err { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; display: block; }
+    .gia-account {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: .85rem;
+      color: #888;
+    }
+    .gia-account a {
+      color: var(--bosco);
+      font-weight: 700;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body data-page="richiesta-accesso">
+<main id="main">
+
+  <div class="page-hero">
+    <div class="w">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a><span>›</span>
+        <a href="genitori.html">Per i Genitori</a><span>›</span>
+        <span aria-current="page">Richiesta Accesso</span>
+      </nav>
+      <div class="gold-bar"></div>
+      <h1>Richiesta <em>Accesso Famiglie</em></h1>
+      <p class="sub">Compila il modulo per richiedere l'accesso all'area riservata. La segreteria attiverà il suo account entro 48 ore.</p>
+    </div>
+  </div>
+
+  <div class="form-wrap">
+    <div class="form-card">
+
+      <div id="msg-esito"></div>
+
+      <div id="form-contenuto">
+        <h2 class="form-titolo">I suoi dati</h2>
+        <p class="form-sub">
+          Inserisca i dati del proprio figlio/a, la sua email e la password che desidera utilizzare per accedere. 
+          La richiesta verrà verificata dalla segreteria prima dell'attivazione.
+        </p>
+
+        <!-- STUDENTE -->
+        <div class="campo-gruppo">
+          <label for="nome-studente">Nome e Cognome dello studente</label>
+          <input type="text" id="nome-studente" placeholder="Es. ROSSI MARIO"
+                 autocomplete="off" oninput="this.value = this.value.toUpperCase()">
+          <div class="aiuto">Scrivere in maiuscolo, esattamente come compare nel registro scolastico.</div>
+        </div>
+
+        <!-- RELAZIONE -->
+        <div class="campo-gruppo">
+          <label for="relazione">Lei è</label>
+          <select id="relazione">
+            <option value="">— Selezionare —</option>
+            <option value="padre">Il padre</option>
+            <option value="madre">La madre</option>
+            <option value="tutore">Tutore / Tutrice legale</option>
+          </select>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="campo-gruppo">
+          <label for="email">Indirizzo email</label>
+          <input type="email" id="email" placeholder="mario.rossi@gmail.com"
+                 autocomplete="email" inputmode="email">
+          <div class="aiuto">Usare sempre questa email per accedere. Verificare attentamente prima di procedere.</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- PASSWORD -->
+        <div class="campo-gruppo">
+          <label for="password">Password desiderata</label>
+          <div class="pwd-wrap">
+            <input type="password" id="password" placeholder="Scegliere una password sicura"
+                   autocomplete="new-password" oninput="verificaPassword()">
+            <button class="pwd-occhio" type="button" onclick="mostraPassword('password', this)" aria-label="Mostra password">👁️</button>
+          </div>
+          <ul class="requisiti" id="requisiti">
+            <li id="req-len">Almeno 8 caratteri</li>
+            <li id="req-mai">Almeno una lettera maiuscola</li>
+            <li id="req-num">Almeno un numero</li>
+            <li id="req-spe">Almeno un carattere speciale (!@#$%...)</li>
+          </ul>
+        </div>
+
+        <!-- CONFERMA PASSWORD -->
+        <div class="campo-gruppo">
+          <label for="conferma">Conferma password</label>
+          <div class="pwd-wrap">
+            <input type="password" id="conferma" placeholder="Ripetere la password"
+                   autocomplete="new-password" oninput="verificaConferma()">
+            <button class="pwd-occhio" type="button" onclick="mostraPassword('conferma', this)" aria-label="Mostra password">👁️</button>
+          </div>
+          <div class="aiuto" id="msg-conferma"></div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- PRIVACY -->
+        <div class="privacy-box">
+          <label>
+            <input type="checkbox" id="privacy">
+            Ho letto l'informativa sul trattamento dei dati personali ai sensi del Regolamento UE 2016/679 (GDPR) 
+            e presto il consenso al trattamento dei miei dati per l'attivazione del servizio Area Riservata Famiglie 
+            del Convitto "Costaggini" di Rieti.
+          </label>
+        </div>
+
+        <button class="btn-invia" id="btn-invia" onclick="inviaRichiesta()">
+          Invia richiesta di accesso
+        </button>
+
+        <p class="gia-account">
+          Hai già un account? <a href="area-riservata.html">Accedi →</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+<script src="nav.js"></script>
+<script>
+
+// ── Requisiti password ──
+function verificaPassword() {
+  const pwd = document.getElementById('password').value;
+  setReq('req-len', pwd.length >= 8);
+  setReq('req-mai', /[A-Z]/.test(pwd));
+  setReq('req-num', /[0-9]/.test(pwd));
+  setReq('req-spe', /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pwd));
+  verificaConferma();
+}
+
+function setReq(id, ok) {
+  const el = document.getElementById(id);
+  if (ok) el.classList.add('ok'); else el.classList.remove('ok');
+}
+
+function verificaConferma() {
+  const pwd = document.getElementById('password').value;
+  const conf = document.getElementById('conferma').value;
+  const msg = document.getElementById('msg-conferma');
+  if (!conf) { msg.textContent = ''; return; }
+  if (pwd === conf) {
+    msg.textContent = '✓ Le password coincidono';
+    msg.style.color = '#15803d';
+  } else {
+    msg.textContent = '✗ Le password non coincidono';
+    msg.style.color = '#b91c1c';
+  }
+}
+
+function mostraPassword(idCampo, btn) {
+  const inp = document.getElementById(idCampo);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁️'; }
+}
+
+function passwordValida() {
+  const pwd = document.getElementById('password').value;
+  return pwd.length >= 8 &&
+         /[A-Z]/.test(pwd) &&
+         /[0-9]/.test(pwd) &&
+         /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pwd);
+}
+
+// ── Hash SHA-256 ──
+async function sha256(testo) {
+  const enc = new TextEncoder();
+  const buf = await crypto.subtle.digest('SHA-256', enc.encode(testo));
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ── Invio richiesta ──
+async function inviaRichiesta() {
+  const nomeStudente = document.getElementById('nome-studente').value.trim();
+  const relazione    = document.getElementById('relazione').value;
+  const email        = document.getElementById('email').value.trim().toLowerCase();
+  const password     = document.getElementById('password').value;
+  const conferma     = document.getElementById('conferma').value;
+  const privacy      = document.getElementById('privacy').checked;
+  const msgEl        = document.getElementById('msg-esito');
+  const btn          = document.getElementById('btn-invia');
+
+  msgEl.className = '';
+  msgEl.style.display = 'none';
+
+  // Validazioni
+  if (!nomeStudente) return mostraMsg('Inserire il nome e cognome dello studente.', 'err');
+  if (!relazione)    return mostraMsg('Selezionare la relazione con lo studente.', 'err');
+  if (!email || !email.includes('@')) return mostraMsg('Inserire un indirizzo email valido.', 'err');
+  if (!passwordValida()) return mostraMsg('La password non soddisfa tutti i requisiti indicati.', 'err');
+  if (password !== conferma) return mostraMsg('Le due password non coincidono.', 'err');
+  if (!privacy) return mostraMsg('È necessario accettare l\'informativa sulla privacy per procedere.', 'err');
+
+  btn.disabled = true;
+  btn.textContent = 'Invio in corso...';
+
+  try {
+    const hash = await sha256(password);
+
+    const resp = await fetch(
+      'https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/richieste_accesso',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ',
+          'Authorization': 'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          nome_studente:  nomeStudente,
+          email_genitore: email,
+          relazione:      relazione,
+          password_hash:  hash,
+          stato:          'in_attesa'
+        })
+      }
+    );
+
+    if (resp.ok || resp.status === 201) {
+      document.getElementById('form-contenuto').style.display = 'none';
+      mostraMsg(
+        '✅ Richiesta inviata con successo!\n\n' +
+        'La segreteria del Convitto verificherà i dati e attiverà il suo accesso entro 48 ore lavorative. ' +
+        'Riceverà una conferma all\'indirizzo email indicato.',
+        'ok'
+      );
+    } else {
+      const errTxt = await resp.text();
+      throw new Error('HTTP ' + resp.status + ': ' + errTxt);
+    }
+
+  } catch(e) {
+    mostraMsg('Errore durante l\'invio. Riprovare o contattare la segreteria. (' + e.message + ')', 'err');
+    btn.disabled = false;
+    btn.textContent = 'Invia richiesta di accesso';
+  }
+}
+
+function mostraMsg(testo, tipo) {
+  const el = document.getElementById('msg-esito');
+  el.textContent = testo;
+  el.className = 'msg ' + tipo;
+}
+
+</script>
+</body>
+</html>

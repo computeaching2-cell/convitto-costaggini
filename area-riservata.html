@@ -1,276 +1,608 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8"/>
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-  <meta http-equiv="Pragma" content="no-cache"/>
-  <meta http-equiv="Expires" content="0"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <meta name="robots" content="noindex"/>
-  <meta name="description" content="Area Riservata — Convitto Costaggini Rieti. Accesso per famiglie e convittori."/>
-  <meta name="theme-color" content="#2C3E2D"/>
-  <title>Area Riservata | Convitto "Costaggini" — Rieti</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Area Riservata Famiglie — Convitto Costaggini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="style.css">
   <style>
-    .ar-hero{background:linear-gradient(135deg,#0a0f0a,var(--bosco));padding:5rem 1.25rem 3.5rem;text-align:center}
-    .ar-hero h1{font-family:var(--fd);font-size:clamp(2rem,6vw,3.5rem);font-weight:300;color:#fff;margin-bottom:.5rem}
-    .ar-hero h1 em{font-style:italic;color:var(--oro3)}
-    .ar-hero p{color:rgba(245,240,232,.55);font-size:.9rem;max-width:500px;margin:.75rem auto 2rem;line-height:1.75}
-    .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:680px;margin:0 auto}
-    @media(max-width:560px){.profile-grid{grid-template-columns:1fr}}
-    .profile-card{background:rgba(245,240,232,.05);border:1.5px solid rgba(184,146,42,.25);border-radius:14px;padding:2.5rem 2rem;text-align:center;cursor:pointer;transition:all .25s}
-    .profile-card:hover{background:rgba(184,146,42,.12);border-color:var(--oro2);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
-    .profile-card.selected{background:rgba(184,146,42,.18);border-color:var(--oro2);box-shadow:0 0 0 3px rgba(184,146,42,.3)}
-    .profile-icon{font-size:3rem;display:block;margin-bottom:1rem}
-    .profile-title{font-family:var(--fd);font-size:1.4rem;font-weight:300;color:#fff;margin-bottom:.4rem}
-    .profile-sub{font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.45)}
-    #login-box{display:none;max-width:420px;margin:2rem auto 0}
-    .login-card{background:rgba(245,240,232,.06);border:1px solid rgba(184,146,42,.25);border-radius:12px;padding:2rem}
-    .login-card h3{font-family:var(--fd);font-size:1.3rem;font-weight:300;color:#fff;margin-bottom:.25rem}
-    .login-card h3 em{font-style:italic;color:var(--oro3)}
-    .login-card p{font-family:var(--fu);font-size:.68rem;color:rgba(245,240,232,.4);margin-bottom:1.25rem;line-height:1.5}
-    .ar-input{width:100%;padding:.75rem 1rem;background:rgba(255,255,255,.08);border:1.5px solid rgba(184,146,42,.3);border-radius:8px;color:#fff;font-family:var(--fu);font-size:16px;outline:none;margin-bottom:.75rem;box-sizing:border-box;transition:border-color .2s}
-    .ar-input:focus{border-color:var(--oro2)}
-    .ar-input::placeholder{color:rgba(255,255,255,.3)}
-    .btn-login{width:100%;padding:.85rem;background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--bosco);border:none;border-radius:8px;font-family:var(--fu);font-size:.75rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:opacity .2s}
-    .btn-login:hover{opacity:.88}
-    .login-note{font-family:var(--fu);font-size:.62rem;color:rgba(245,240,232,.25);text-align:center;margin-top:.75rem;line-height:1.5}
-    #area-famiglie,#area-convittori{display:none}
-    .dash-hero{background:var(--bosco);padding:3rem 1.25rem 2rem}
-    .dash-hero h2{font-family:var(--fd);font-size:clamp(1.5rem,4vw,2.2rem);font-weight:300;color:#fff}
-    .dash-hero h2 em{font-style:italic;color:var(--oro3)}
-    .dash-hero p{color:rgba(245,240,232,.55);font-size:.85rem;margin:.4rem 0 0}
-    .dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;padding:2rem 1.25rem;background:var(--av2)}
-    .dash-card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--av3);transition:box-shadow .2s,transform .2s}
-    .dash-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.1);transform:translateY(-3px)}
-    .dash-card-head{background:linear-gradient(135deg,var(--bosco),#1a3a1b);padding:1.1rem 1.25rem;display:flex;align-items:center;gap:.75rem}
-    .dash-card-icon{font-size:1.5rem;flex-shrink:0}
-    .dash-card-title{font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro2)}
-    .dash-card-body{padding:1.1rem 1.25rem}
-    .dash-card-body p{font-size:.83rem;color:var(--txt2);line-height:1.7;margin-bottom:.75rem}
-    .dash-link{font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bosco2);text-decoration:none;border-bottom:1px solid rgba(44,62,45,.2);padding-bottom:1px;display:inline-block;transition:color .2s}
-    .dash-link:hover{color:var(--bosco)}
-    .coming-soon{background:var(--av);padding:3rem 1.25rem;text-align:center}
-    .coming-soon p{font-family:var(--fd);font-size:1.1rem;font-style:italic;color:var(--bosco2);max-width:480px;margin:0 auto 1.25rem;line-height:1.65}
+    :root {
+      --bosco: #2C3E2D; --bosco-light: #3d5c3e;
+      --oro: #B8922A; --oro2: #D4AA4A;
+      --panna: #F5F0E8; --panna-s: #EDE6D6;
+      --testo: #1a1a1a; --txt2: #555;
+      --fd: 'Cormorant Garamond', serif;
+      --fu: 'Source Sans 3', sans-serif;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--fu); background: var(--panna); color: var(--testo); min-height: 100vh; }
+
+    .auth-wrap {
+      display: flex; align-items: center; justify-content: center;
+      min-height: calc(100vh - 64px); padding: 40px 20px;
+    }
+    .auth-card {
+      background: #fff; border-radius: var(--radius); padding: 3rem 2.5rem;
+      width: 100%; max-width: 420px;
+      box-shadow: 0 4px 24px rgba(44,62,45,.12);
+    }
+    .auth-card .stemma {
+      width: 56px; height: 56px; background: var(--bosco); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; font-size: 1.5rem;
+    }
+    .auth-titolo {
+      font-family: var(--fd); font-size: 1.7rem; color: var(--bosco);
+      text-align: center; margin-bottom: 4px;
+    }
+    .auth-sub {
+      font-size: .85rem; color: var(--txt2); text-align: center;
+      margin-bottom: 2rem; line-height: 1.6;
+    }
+    .tabs-auth {
+      display: flex; border-bottom: 2px solid #e2e8f0; margin-bottom: 1.5rem;
+    }
+    .tab-auth {
+      flex: 1; padding: 10px; border: none; background: none;
+      font-family: var(--fu); font-size: .85rem; font-weight: 700;
+      color: #888; cursor: pointer; border-bottom: 3px solid transparent;
+      margin-bottom: -2px; transition: all .2s;
+    }
+    .tab-auth.attivo { color: var(--bosco); border-bottom-color: var(--oro); }
+
+    .campo-g { margin-bottom: 1rem; }
+    .campo-g label {
+      display: block; font-size: .72rem; font-weight: 800;
+      letter-spacing: .09em; text-transform: uppercase;
+      color: var(--bosco); margin-bottom: .4rem;
+    }
+    .campo-g .inp-wrap { position: relative; }
+    .campo-g input {
+      width: 100%; padding: 13px 14px; border: 1.5px solid #ddd;
+      border-radius: 8px; font-family: var(--fu); font-size: .95rem;
+      background: #fafafa; transition: border-color .2s;
+    }
+    .campo-g input:focus { outline: none; border-color: var(--bosco); background: #fff; }
+    .occhio {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; font-size: 1rem; color: #888;
+    }
+    .btn-auth {
+      width: 100%; padding: 14px; background: var(--bosco); color: #fff;
+      border: none; border-radius: 8px; font-family: var(--fu); font-size: .8rem;
+      font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer; transition: background .2s; margin-top: .5rem;
+    }
+    .btn-auth:hover { background: var(--bosco-light); }
+    .btn-auth:disabled { background: #aaa; cursor: not-allowed; }
+    .btn-sec {
+      width: 100%; padding: 11px; background: none; color: var(--bosco);
+      border: 1.5px solid var(--bosco); border-radius: 8px; font-family: var(--fu);
+      font-size: .8rem; font-weight: 700; cursor: pointer; margin-top: 8px;
+      transition: all .2s;
+    }
+    .btn-sec:hover { background: var(--panna); }
+    .msg-auth {
+      padding: 12px 14px; border-radius: 8px; font-size: .88rem;
+      margin-bottom: 1rem; display: none; line-height: 1.5;
+    }
+    .msg-auth.ok  { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; display: block; }
+    .msg-auth.err { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; display: block; }
+    .msg-auth.info { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; display: block; }
+
+    /* OTP */
+    .otp-wrap {
+      display: flex; gap: 8px; justify-content: center; margin: 1rem 0;
+    }
+    .otp-input {
+      width: 48px; height: 56px; border: 2px solid #ddd; border-radius: 8px;
+      text-align: center; font-size: 1.5rem; font-weight: 700;
+      font-family: var(--fu); color: var(--bosco);
+      transition: border-color .2s;
+    }
+    .otp-input:focus { outline: none; border-color: var(--bosco); }
+
+    .link-secondario {
+      text-align: center; font-size: .82rem; color: #888; margin-top: 1rem;
+    }
+    .link-secondario a { color: var(--bosco); font-weight: 700; text-decoration: none; cursor: pointer; }
+
+    /* SEZIONE NASCOSTA (OTP e Reset) */
+    .sezione { display: none; }
+    .sezione.attiva { display: block; }
+
+    /* DASHBOARD */
+    #schermata-dashboard { display: none; }
+    .dash-header {
+      background: var(--bosco); padding: 14px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .dash-header .logo { font-family: var(--fd); color: var(--oro2); font-size: 1.2rem; }
+    .dash-header .logo span { color: rgba(255,255,255,.6); font-size: .78rem; display: block; font-family: var(--fu); font-weight: 300; }
+    .btn-logout { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.8); padding: 8px 16px; border-radius: 6px; font-family: var(--fu); font-size: .82rem; cursor: pointer; }
+
+    .dash-info { background: #fff; padding: 16px 24px; border-bottom: 1px solid var(--panna-s); }
+    .dash-info h2 { font-family: var(--fd); font-size: 1.4rem; color: var(--bosco); }
+    .dash-info p { font-size: .85rem; color: var(--txt2); }
+
+    .tab-nav { background: #fff; border-bottom: 2px solid var(--panna-s); display: flex; overflow-x: auto; }
+    .tab-nav::-webkit-scrollbar { display: none; }
+    .tab-btn { padding: 13px 18px; border: none; background: none; font-family: var(--fu); font-size: .85rem; font-weight: 700; color: #888; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+    .tab-btn.attivo { color: var(--bosco); border-bottom-color: var(--oro); }
+
+    .tab-cont { display: none; padding: 20px; max-width: 760px; margin: 0 auto; padding-bottom: 60px; }
+    .tab-cont.attivo { display: block; }
+
+    .card-dato { background: #fff; border-radius: var(--radius); padding: 18px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(44,62,45,.08); border-left: 4px solid var(--bosco); }
+    .card-dato.oro { border-left-color: var(--oro); }
+    .card-dato.verde { border-left-color: #22c55e; }
+    .card-dato.giallo { border-left-color: #eab308; }
+    .card-dato.rosso { border-left-color: #ef4444; }
+    .card-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+    .card-data { font-size: .78rem; font-weight: 700; color: var(--bosco); text-transform: uppercase; letter-spacing: .05em; }
+    .card-tag { font-size: .72rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+    .tag-gen { background: #dbeafe; color: #1d4ed8; }
+    .tag-disc { background: #fee2e2; color: #b91c1c; }
+    .tag-fam { background: #dcfce7; color: #15803d; }
+    .card-testo { font-size: .92rem; color: var(--testo); line-height: 1.6; white-space: pre-wrap; }
+    .card-firma { font-size: .76rem; color: #94a3b8; margin-top: 6px; }
+
+    .sem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .sem-box { background: #fff; border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: 0 2px 8px rgba(44,62,45,.08); }
+    .sem-box h3 { font-size: .75rem; font-weight: 800; color: var(--txt2); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .sem-pallini { font-size: 1.8rem; display: flex; justify-content: space-around; margin-bottom: 6px; }
+    .sem-pallino { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .sem-pallino span { font-size: .72rem; color: var(--txt2); font-weight: 700; }
+
+    .presenze-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+    .pres-card { background: #fff; border-radius: var(--radius); padding: 14px 16px; box-shadow: 0 2px 8px rgba(44,62,45,.08); }
+    .pres-data { font-size: .78rem; font-weight: 700; color: var(--bosco); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .pasti { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pasto { padding: 4px 10px; border-radius: 20px; font-size: .78rem; font-weight: 700; }
+    .pasto-si { background: #dcfce7; color: #15803d; }
+    .pasto-no { background: #f1f5f9; color: #94a3b8; text-decoration: line-through; }
+
+    .rel-card { background: #fff; border-radius: var(--radius); box-shadow: 0 2px 8px rgba(44,62,45,.08); margin-bottom: 12px; overflow: hidden; }
+    .rel-head { background: #fef2f2; padding: 14px 16px; border-bottom: 1px solid #fecaca; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .rel-head h4 { font-size: .92rem; color: #b91c1c; font-weight: 700; }
+    .rel-meta { font-size: .78rem; color: #888; }
+    .rel-body { padding: 14px 16px; display: none; font-size: .88rem; line-height: 1.6; white-space: pre-wrap; }
+    .rel-body.aperto { display: block; }
+
+    .banner-info { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 14px; font-size: .82rem; color: #1e40af; margin-bottom: 16px; line-height: 1.5; }
+    .vuoto { text-align: center; padding: 40px 20px; color: #888; }
+    .vuoto .icona { font-size: 2.5rem; margin-bottom: 10px; }
+    .loader { text-align: center; padding: 30px; }
+    .spinner { width: 28px; height: 28px; border: 3px solid #e2e8f0; border-top-color: var(--bosco); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 10px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 480px) {
+      .auth-card { padding: 2rem 1.5rem; }
+      .sem-grid { grid-template-columns: 1fr; }
+      .otp-input { width: 42px; height: 50px; font-size: 1.3rem; }
+    }
   </style>
 </head>
-<body data-page="area-riservata">
-<main id="main">
+<body>
 
-  <section class="ar-hero" id="ar-hero">
-    <div class="w">
-      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">🔒 Accesso riservato</p>
-      <h1>Area <em>Riservata</em></h1>
-      <p>Scegli il tuo profilo per accedere ai servizi riservati al Convitto "Costaggini".</p>
-      <div class="profile-grid">
-        <div class="profile-card rv" onclick="selectProfile('famiglie',this)">
-          <span class="profile-icon">👨‍👩‍👧</span>
-          <div class="profile-title">Famiglie</div>
-          <div class="profile-sub">Genitori e tutori legali</div>
-        </div>
-        <div class="profile-card rv d1" onclick="selectProfile('convittori',this)">
-          <span class="profile-icon">🎓</span>
-          <div class="profile-title">Convittori</div>
-          <div class="profile-sub">Studenti residenti</div>
-        </div>
-      </div>
-      <div id="login-box">
-        <div class="login-card">
-          <h3 id="login-title">Accesso <em>famiglie</em></h3>
-          <p id="login-desc">Inserisci le credenziali fornite dalla segreteria.</p>
-          <input type="email" class="ar-input" id="ar-email" placeholder="Email registrata"/>
-          <input type="password" class="ar-input" id="ar-pwd" placeholder="Password"/>
-          <button class="btn-login" onclick="doLogin()">Accedi →</button>
-          <div id="login-err-msg" style="display:none;color:#fca5a5;font-family:var(--fu);font-size:.72rem;text-align:center;margin-top:.5rem">
-            Credenziali non riconosciute. Riprova.
-          </div>
-          <div style="margin-top:1rem;padding:.85rem 1rem;background:rgba(184,146,42,.08);border:1px solid rgba(184,146,42,.2);border-radius:8px">
-            <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">🔑 Account demo per il Collegio</p>
-            <p style="font-family:var(--fu);font-size:.72rem;color:rgba(245,240,232,.55);line-height:1.8">
-              <strong style="color:rgba(245,240,232,.8)">Famiglia:</strong> famiglia@costaggini.it<br/>
-              <strong style="color:rgba(245,240,232,.8)">Convittore:</strong> convittore@costaggini.it<br/>
-              <strong style="color:rgba(245,240,232,.8)">Password:</strong> Costaggini2025!
-            </p>
-          </div>
-          <p class="login-note">Credenziali fornite dalla segreteria · <a href="contatti.html" style="color:rgba(245,240,232,.4)">Hai problemi? Contattaci</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- HEADER -->
+<header style="background:var(--bosco);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.2);">
+  <div style="font-family:var(--fd);color:var(--oro2);font-size:1.2rem;font-weight:600;">
+    Convitto Costaggini
+    <span style="color:rgba(255,255,255,.6);font-size:.78rem;display:block;font-family:var(--fu);font-weight:300;">Area Riservata Famiglie</span>
+  </div>
+  <button class="btn-logout" id="btn-logout" style="display:none;" onclick="eseguiLogout()">Esci</button>
+</header>
 
-  <!-- AREA FAMIGLIE -->
-  <div id="area-famiglie">
-    <div class="dash-hero">
-      <div class="w">
-        <h2>Benvenuto, <em>Famiglia</em></h2>
-        <p>Servizi e informazioni riservate alle famiglie dei convittori.</p>
-        <button onclick="logout()" style="margin-top:1rem;font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .9rem;border:1px solid rgba(255,255,255,.2);background:none;color:rgba(255,255,255,.45);border-radius:4px;cursor:pointer">← Esci</button>
+<!-- ══ SCHERMATA AUTH ══ -->
+<div id="schermata-auth">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="stemma">🏫</div>
+      <h1 class="auth-titolo">Accesso Famiglie</h1>
+
+      <!-- TABS LOGIN / REGISTRATI -->
+      <div class="tabs-auth">
+        <button class="tab-auth attivo" id="tab-login" onclick="mostraSchermata('login')">Accedi</button>
+        <button class="tab-auth" id="tab-reg" onclick="mostraSchermata('registrati')">Richiedi accesso</button>
       </div>
-    </div>
-    <div class="dash-grid">
-      <div class="dash-card rv">
-        <div class="dash-card-head"><span class="dash-card-icon">📅</span><span class="dash-card-title">Presenze e assenze</span></div>
-        <div class="dash-card-body">
-          <p>Registro delle presenze aggiornato in tempo reale dagli educatori. Accessibile tramite il Registro Elettronico dell'Istituto.</p>
-          <a href="https://www.alberghierorieti.edu.it" target="_blank" rel="noopener" class="dash-link">Accedi al Registro Elettronico →</a>
+
+      <div id="msg-auth"></div>
+
+      <!-- ─ LOGIN ─ -->
+      <div class="sezione attiva" id="sez-login">
+        <div class="campo-g">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="la-tua@email.it"
+                 autocomplete="email" inputmode="email"
+                 onkeydown="if(event.key==='Enter') eseguiLogin()">
+        </div>
+        <div class="campo-g">
+          <label>Password</label>
+          <div class="inp-wrap">
+            <input type="password" id="login-pwd" placeholder="Password"
+                   autocomplete="current-password"
+                   onkeydown="if(event.key==='Enter') eseguiLogin()">
+            <button class="occhio" type="button" onclick="togglePwd('login-pwd',this)">👁️</button>
+          </div>
+        </div>
+        <button class="btn-auth" id="btn-login" onclick="eseguiLogin()">Accedi</button>
+        <div class="link-secondario">
+          <a onclick="mostraSchermata('reset')">Password dimenticata?</a>
         </div>
       </div>
-      <div class="dash-card rv d1">
-        <div class="dash-card-head"><span class="dash-card-icon">💬</span><span class="dash-card-title">Comunicazioni</span></div>
-        <div class="dash-card-body">
-          <p>Avvisi, circolari e comunicazioni ufficiali del Convitto riservate alle famiglie.</p>
-          <a href="avvisi.html" class="dash-link">Vai agli avvisi →</a>
+
+      <!-- ─ OTP ─ -->
+      <div class="sezione" id="sez-otp">
+        <p style="text-align:center;font-size:.9rem;color:var(--txt2);margin-bottom:1rem;line-height:1.6;">
+          Abbiamo inviato un codice a 6 cifre a <strong id="otp-email-label"></strong>.<br>
+          Inseriscilo qui sotto per completare l'accesso.
+        </p>
+        <div class="otp-wrap">
+          <input class="otp-input" type="text" maxlength="1" id="otp-0" oninput="avanzaOtp(0)" onkeydown="tornaOtp(0,event)">
+          <input class="otp-input" type="text" maxlength="1" id="otp-1" oninput="avanzaOtp(1)" onkeydown="tornaOtp(1,event)">
+          <input class="otp-input" type="text" maxlength="1" id="otp-2" oninput="avanzaOtp(2)" onkeydown="tornaOtp(2,event)">
+          <input class="otp-input" type="text" maxlength="1" id="otp-3" oninput="avanzaOtp(3)" onkeydown="tornaOtp(3,event)">
+          <input class="otp-input" type="text" maxlength="1" id="otp-4" oninput="avanzaOtp(4)" onkeydown="tornaOtp(4,event)">
+          <input class="otp-input" type="text" maxlength="1" id="otp-5" oninput="avanzaOtp(5)" onkeydown="tornaOtp(5,event)">
+        </div>
+        <button class="btn-auth" id="btn-otp" onclick="verificaOtp()">Verifica codice</button>
+        <button class="btn-sec" onclick="reinviaOtp()">Reinvia codice</button>
+        <div class="link-secondario"><a onclick="mostraSchermata('login')">← Torna al login</a></div>
+      </div>
+
+      <!-- ─ RESET PASSWORD ─ -->
+      <div class="sezione" id="sez-reset">
+        <p style="font-size:.88rem;color:var(--txt2);margin-bottom:1rem;line-height:1.6;">
+          Inserisci la tua email. Ti invieremo un link per reimpostare la password.
+        </p>
+        <div class="campo-g">
+          <label>Email</label>
+          <input type="email" id="reset-email" placeholder="la-tua@email.it"
+                 autocomplete="email" inputmode="email">
+        </div>
+        <button class="btn-auth" onclick="inviaReset()">Invia link di reset</button>
+        <div class="link-secondario"><a onclick="mostraSchermata('login')">← Torna al login</a></div>
+      </div>
+
+      <!-- ─ REGISTRATI (redirect) ─ -->
+      <div class="sezione" id="sez-registrati">
+        <p style="font-size:.9rem;color:var(--txt2);margin-bottom:1.5rem;line-height:1.7;">
+          Per accedere all'area riservata è necessario che la segreteria attivi il suo account.
+        </p>
+        <a href="richiesta-accesso.html" class="btn-auth" style="display:block;text-align:center;text-decoration:none;">
+          Compila il modulo di richiesta →
+        </a>
+        <div class="link-secondario" style="margin-top:1rem;">
+          L'accesso viene attivato entro 48 ore dalla richiesta.
         </div>
       </div>
-      <div class="dash-card rv d2">
-        <div class="dash-card-head"><span class="dash-card-icon">📞</span><span class="dash-card-title">Contatti educatori</span></div>
-        <div class="dash-card-body">
-          <p><strong>Convitto:</strong> 0746 296862<br/><strong>Email:</strong> convitto@alberghierorieti.it</p>
-          <a href="educatori.html" class="dash-link">Conosci il team →</a>
-        </div>
-      </div>
-      <div class="dash-card rv">
-        <div class="dash-card-head"><span class="dash-card-icon">📄</span><span class="dash-card-title">Moduli e documenti</span></div>
-        <div class="dash-card-body">
-          <p>Modulistica per uscite straordinarie, autorizzazioni e comunicazioni ufficiali.</p>
-          <a href="ammissione.html" class="dash-link">Modulistica →</a>
-        </div>
-      </div>
-      <div class="dash-card rv d1">
-        <div class="dash-card-head"><span class="dash-card-icon">💰</span><span class="dash-card-title">Pagamenti e rette</span></div>
-        <div class="dash-card-body">
-          <p>Per informazioni sulla situazione contabile contattare la segreteria amministrativa: <strong>0746 201113</strong></p>
-          <a href="contatti.html" class="dash-link">Contatta la segreteria →</a>
-        </div>
-      </div>
-      <div class="dash-card rv d2">
-        <div class="dash-card-head"><span class="dash-card-icon">📋</span><span class="dash-card-title">Regolamento</span></div>
-        <div class="dash-card-body">
-          <p>Il Regolamento di Convitto con tutte le norme che disciplinano la vita comunitaria.</p>
-          <a href="regolamento.html" class="dash-link">Leggi il Regolamento →</a>
-        </div>
-      </div>
-    </div>
-    <div class="coming-soon">
-      <p>"Presto sarà possibile gestire tutto online — presenze, autorizzazioni, comunicazioni e pagamenti."</p>
-      <a href="contatti.html" class="btn-gold" style="display:inline-block">Per ora, contattaci direttamente →</a>
+
     </div>
   </div>
+</div>
 
-  <!-- AREA CONVITTORI -->
-  <div id="area-convittori">
-    <div class="dash-hero">
-      <div class="w">
-        <h2>Benvenuto, <em>Convittore</em></h2>
-        <p>I tuoi servizi e le tue comunicazioni.</p>
-        <button onclick="logout()" style="margin-top:1rem;font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .9rem;border:1px solid rgba(255,255,255,.2);background:none;color:rgba(255,255,255,.45);border-radius:4px;cursor:pointer">← Esci</button>
-      </div>
-    </div>
-    <div class="dash-grid">
-      <div class="dash-card rv">
-        <div class="dash-card-head"><span class="dash-card-icon">📅</span><span class="dash-card-title">Orario giornaliero</span></div>
-        <div class="dash-card-body">
-          <p>📚 Studio guidato: <strong>15:30–17:15</strong><br/>🍽️ Pranzo: <strong>14:00</strong> · Cena: <strong>19:15</strong><br/>🌙 Riposo: <strong>22:30</strong></p>
-          <a href="giornata-tipo.html" class="dash-link">Vedi la giornata tipo →</a>
-        </div>
-      </div>
-      <div class="dash-card rv d1">
-        <div class="dash-card-head"><span class="dash-card-icon">📢</span><span class="dash-card-title">Bacheca avvisi</span></div>
-        <div class="dash-card-body">
-          <p>Comunicazioni degli educatori, cambi orario e attività straordinarie.</p>
-          <a href="avvisi.html" class="dash-link">Vai alla bacheca →</a>
-        </div>
-      </div>
-      <div class="dash-card rv d2">
-        <div class="dash-card-head"><span class="dash-card-icon">🎵</span><span class="dash-card-title">Laboratorio Musicale</span></div>
-        <div class="dash-card-body">
-          <p>Iscrizioni, programma e concerti. Puoi iscriverti in qualsiasi momento dell'anno.</p>
-          <a href="laboratorio-musicale.html" class="dash-link">Scopri il Laboratorio →</a>
-        </div>
-      </div>
-      <div class="dash-card rv">
-        <div class="dash-card-head"><span class="dash-card-icon">🏥</span><span class="dash-card-title">Infermeria</span></div>
-        <div class="dash-card-body">
-          <p>L'infermeria è aperta nelle ore diurne. In caso di malessere avvisa subito l'educatore. I farmaci si consegnano all'infermiera.</p>
-        </div>
-      </div>
-      <div class="dash-card rv d1">
-        <div class="dash-card-head"><span class="dash-card-icon">🚶</span><span class="dash-card-title">Uscite</span></div>
-        <div class="dash-card-body">
-          <p>Libera uscita: <strong>17:30–22:00</strong> con autorizzazione genitori. Per uscite straordinarie parla con l'educatore di turno.</p>
-        </div>
-      </div>
-      <div class="dash-card rv d2">
-        <div class="dash-card-head"><span class="dash-card-icon">🗳️</span><span class="dash-card-title">Rappresentanza</span></div>
-        <div class="dash-card-body">
-          <p>Hai una proposta o una critica? Rivolgiti al tuo rappresentante di piano o di corso.</p>
-          <a href="regolamento-guida.html" class="dash-link">Il Regolamento →</a>
-        </div>
-      </div>
-    </div>
-    <div class="coming-soon">
-      <p>"Presto potrai gestire online le richieste di uscita e prenotare i colloqui con gli educatori."</p>
-      <a href="contatti.html" class="btn-gold" style="display:inline-block">Per ora, parla con il tuo educatore →</a>
-    </div>
+<!-- ══ SCHERMATA DASHBOARD ══ -->
+<div id="schermata-dashboard">
+
+  <div class="dash-info">
+    <h2 id="dash-nome">Caricamento...</h2>
+    <p id="dash-sub"></p>
   </div>
 
-</main>
-<script src="nav.js"></script>
+  <nav class="tab-nav">
+    <button class="tab-btn attivo" onclick="cambiaTab('presenze',this)">🍽️ Pasti</button>
+    <button class="tab-btn" onclick="cambiaTab('semafori',this)">🚦 Comportamento</button>
+    <button class="tab-btn" onclick="cambiaTab('note',this)">📝 Note</button>
+    <button class="tab-btn" onclick="cambiaTab('colloqui',this)">🗣️ Colloqui</button>
+    <button class="tab-btn" onclick="cambiaTab('relazioni',this)">📄 Comunicazioni</button>
+  </nav>
+
+  <div class="tab-cont attivo" id="tab-presenze">
+    <div class="banner-info">Presenze ai pasti degli ultimi 30 giorni.</div>
+    <div id="cont-presenze"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+  <div class="tab-cont" id="tab-semafori">
+    <div class="banner-info">🟢 Positivo · 🟡 Migliorabile · 🔴 Da migliorare</div>
+    <div class="sem-grid">
+      <div class="sem-box"><h3>🛏️ Camera</h3><div class="sem-pallini">
+        <div class="sem-pallino">🟢<span id="c-cam-v">0</span></div>
+        <div class="sem-pallino">🟡<span id="c-cam-g">0</span></div>
+        <div class="sem-pallino">🔴<span id="c-cam-r">0</span></div>
+      </div></div>
+      <div class="sem-box"><h3>📚 Studio</h3><div class="sem-pallini">
+        <div class="sem-pallino">🟢<span id="c-stu-v">0</span></div>
+        <div class="sem-pallino">🟡<span id="c-stu-g">0</span></div>
+        <div class="sem-pallino">🔴<span id="c-stu-r">0</span></div>
+      </div></div>
+    </div>
+    <div id="cont-semafori"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+  <div class="tab-cont" id="tab-note">
+    <div class="banner-info">Note degli educatori degli ultimi 30 giorni.</div>
+    <div id="cont-note"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+  <div class="tab-cont" id="tab-colloqui">
+    <div class="banner-info">Registro comunicazioni con famiglia e docenti.</div>
+    <div id="cont-colloqui"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+  <div class="tab-cont" id="tab-relazioni">
+    <div class="banner-info">Comunicazioni formali degli educatori.</div>
+    <div id="cont-relazioni"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+
+</div>
+
 <script>
-let currentProfile=null;
-function selectProfile(type,card){
-  document.querySelectorAll('.profile-card').forEach(c=>c.classList.remove('selected'));
-  card.classList.add('selected');
-  currentProfile=type;
-  const box=document.getElementById('login-box');
-  box.style.display='block';
-  box.scrollIntoView({behavior:'smooth',block:'nearest'});
-  const t=document.getElementById('login-title');
-  const d=document.getElementById('login-desc');
-  if(type==='famiglie'){t.innerHTML='Accesso <em>famiglie</em>';d.textContent='Inserisci le credenziali fornite dalla segreteria.';}
-  else{t.innerHTML='Accesso <em>convittori</em>';d.textContent='Inserisci le tue credenziali personali. Per assistenza parla con l\'educatore.';}
-}
-function doLogin(){
-  const email=document.getElementById('ar-email').value.trim().toLowerCase();
-  const pwd=document.getElementById('ar-pwd').value;
-  const err=document.getElementById('login-err-msg');
+  const { createClient } = supabase;
+  const sb = createClient(
+    'https://sawclsysqnjsvbobioqo.supabase.co',
+    'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ'
+  );
 
-  // Credenziali demo
-  const ACCOUNTS = {
-    'famiglia@costaggini.it':  { pwd:'Costaggini2025!', profile:'famiglie' },
-    'convittore@costaggini.it':{ pwd:'Costaggini2025!', profile:'convittori' },
-  };
+  let emailUtente = '';
+  let nomeStudente = '';
+  let schermataCorrente = 'login';
 
-  const account = ACCOUNTS[email];
-  if (!account || account.pwd !== pwd) {
-    err.style.display='block';
-    document.getElementById('ar-pwd').value='';
-    document.getElementById('ar-pwd').focus();
-    return;
+  // ── AVVIO ──
+  window.addEventListener('load', async () => {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) avviaDashboard(session.user.email);
+
+    sb.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) avviaDashboard(session.user.email);
+      if (event === 'SIGNED_OUT') mostraAuth();
+    });
+  });
+
+  // ── NAVIGAZIONE SCHERMATE ──
+  function mostraSchermata(nome) {
+    schermataCorrente = nome;
+    document.querySelectorAll('.sezione').forEach(s => s.classList.remove('attiva'));
+    document.querySelectorAll('.tab-auth').forEach(t => t.classList.remove('attivo'));
+    document.getElementById('sez-' + nome).classList.add('attiva');
+    const tab = document.getElementById('tab-' + nome);
+    if (tab) tab.classList.add('attivo');
+    document.getElementById('msg-auth').className = 'msg-auth';
   }
-  err.style.display='none';
 
-  // Forza il profilo corretto in base all'account
-  currentProfile = account.profile;
+  function mostraMsg(testo, tipo) {
+    const el = document.getElementById('msg-auth');
+    el.textContent = testo;
+    el.className = 'msg-auth ' + tipo;
+  }
 
-  document.getElementById('ar-hero').style.display='none';
-  document.getElementById(currentProfile==='famiglie'?'area-famiglie':'area-convittori').style.display='block';
-  window.scrollTo(0,0);
-}
-function logout(){
-  document.getElementById('ar-hero').style.display='block';
-  document.getElementById('area-famiglie').style.display='none';
-  document.getElementById('area-convittori').style.display='none';
-  document.querySelectorAll('.profile-card').forEach(c=>c.classList.remove('selected'));
-  document.getElementById('login-box').style.display='none';
-  document.getElementById('ar-email').value='';
-  document.getElementById('ar-pwd').value='';
-  window.scrollTo(0,0);
-}
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('login-box').style.display!=='none')doLogin();});
+  // ── LOGIN ──
+  async function eseguiLogin() {
+    const email = document.getElementById('login-email').value.trim().toLowerCase();
+    const pwd   = document.getElementById('login-pwd').value;
+    const btn   = document.getElementById('btn-login');
+    if (!email || !pwd) return mostraMsg('Inserire email e password.', 'err');
+
+    btn.disabled = true; btn.textContent = 'Accesso in corso...';
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
+
+    if (error) {
+      mostraMsg('Credenziali non valide. Verificare email e password.', 'err');
+      btn.disabled = false; btn.textContent = 'Accedi';
+      return;
+    }
+
+    // Login ok → invia OTP via email
+    emailUtente = email;
+    await inviaOtpEmail(email);
+    document.getElementById('otp-email-label').textContent = email;
+    mostraSchermata('otp');
+    btn.disabled = false; btn.textContent = 'Accedi';
+  }
+
+  // ── OTP ──
+  async function inviaOtpEmail(email) {
+    await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: false } });
+  }
+
+  async function reinviaOtp() {
+    await inviaOtpEmail(emailUtente);
+    mostraMsg('Nuovo codice inviato a ' + emailUtente, 'info');
+  }
+
+  function avanzaOtp(i) {
+    const val = document.getElementById('otp-' + i).value;
+    if (val && i < 5) document.getElementById('otp-' + (i+1)).focus();
+    if (i === 5 && val) verificaOtp();
+  }
+
+  function tornaOtp(i, e) {
+    if (e.key === 'Backspace' && !document.getElementById('otp-' + i).value && i > 0)
+      document.getElementById('otp-' + (i-1)).focus();
+  }
+
+  async function verificaOtp() {
+    const codice = [0,1,2,3,4,5].map(i => document.getElementById('otp-' + i).value).join('');
+    if (codice.length < 6) return mostraMsg('Inserire il codice completo a 6 cifre.', 'err');
+
+    const btn = document.getElementById('btn-otp');
+    btn.disabled = true; btn.textContent = 'Verifica...';
+
+    const { data, error } = await sb.auth.verifyOtp({
+      email: emailUtente, token: codice, type: 'email'
+    });
+
+    if (error) {
+      mostraMsg('Codice non valido o scaduto. Richiederne uno nuovo.', 'err');
+      btn.disabled = false; btn.textContent = 'Verifica codice';
+      return;
+    }
+
+    // OTP ok → dashboard
+    btn.disabled = false; btn.textContent = 'Verifica codice';
+  }
+
+  // ── RESET PASSWORD ──
+  async function inviaReset() {
+    const email = document.getElementById('reset-email').value.trim().toLowerCase();
+    if (!email) return mostraMsg('Inserire l\'email.', 'err');
+    await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/area-riservata.html'
+    });
+    mostraMsg('Link di reset inviato a ' + email + '. Controlla la casella email.', 'ok');
+  }
+
+  // ── DASHBOARD ──
+  async function avviaDashboard(email) {
+    const { data: assoc } = await sb
+      .from('genitori_studenti').select('nome_studente, relazione')
+      .eq('email_genitore', email).single();
+
+    if (!assoc) {
+      mostraMsg('Account non ancora attivato dalla segreteria. Riprovare più tardi.', 'err');
+      await sb.auth.signOut();
+      return;
+    }
+
+    nomeStudente = assoc.nome_studente;
+    document.getElementById('dash-nome').textContent = nomeStudente;
+    document.getElementById('dash-sub').textContent = assoc.relazione + ' · ' + email;
+    document.getElementById('btn-logout').style.display = 'block';
+    document.getElementById('schermata-auth').style.display = 'none';
+    document.getElementById('schermata-dashboard').style.display = 'block';
+
+    await Promise.all([
+      caricaPresenze(), caricaSemafori(), caricaNote(),
+      caricaColloqui(), caricaRelazioni()
+    ]);
+  }
+
+  function mostraAuth() {
+    document.getElementById('schermata-auth').style.display = 'block';
+    document.getElementById('schermata-dashboard').style.display = 'none';
+    document.getElementById('btn-logout').style.display = 'none';
+    mostraSchermata('login');
+  }
+
+  async function eseguiLogout() { await sb.auth.signOut(); }
+
+  function cambiaTab(nome, btn) {
+    document.querySelectorAll('.tab-cont').forEach(t => t.classList.remove('attivo'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('attivo'));
+    document.getElementById('tab-' + nome).classList.add('attivo');
+    btn.classList.add('attivo');
+  }
+
+  function togglePwd(id, btn) {
+    const i = document.getElementById(id);
+    i.type = i.type === 'password' ? 'text' : 'password';
+    btn.textContent = i.type === 'password' ? '👁️' : '🙈';
+  }
+
+  // ── DATI ──
+  function fmt(iso) {
+    if (!iso) return '';
+    const p = String(iso).substring(0,10).split('-');
+    const g = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+    const d = new Date(p[0], p[1]-1, p[2]);
+    return g[d.getDay()] + ' ' + p[2] + '/' + p[1] + '/' + p[0];
+  }
+  function san(t) {
+    return String(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+  function vuoto(ico, txt) { return `<div class="vuoto"><div class="icona">${ico}</div><p>${txt}</p></div>`; }
+
+  async function caricaPresenze() {
+    const dal = new Date(); dal.setDate(dal.getDate()-30);
+    const { data } = await sb.from('famiglie_presenze').select('*')
+      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
+      .order('data', { ascending: false });
+    const el = document.getElementById('cont-presenze');
+    if (!data?.length) { el.innerHTML = vuoto('🍽️','Nessuna presenza registrata.'); return; }
+    const pasti = ['colazione','pranzo','cena','rientro'];
+    const lab   = { colazione:'Colazione', pranzo:'Pranzo', cena:'Cena', rientro:'Rientro' };
+    el.innerHTML = '<div class="presenze-grid">' + data.map(r =>
+      `<div class="pres-card"><div class="pres-data">${fmt(r.data)}</div>
+       <div class="pasti">${pasti.map(p =>
+         `<span class="pasto ${r[p]?'pasto-si':'pasto-no'}">${lab[p]}</span>`
+       ).join('')}</div></div>`
+    ).join('') + '</div>';
+  }
+
+  async function caricaSemafori() {
+    const dal = new Date(); dal.setDate(dal.getDate()-30);
+    const { data } = await sb.from('famiglie_semafori').select('*')
+      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
+      .order('data', { ascending: false });
+    const el = document.getElementById('cont-semafori');
+    if (!data?.length) { el.innerHTML = vuoto('🚦','Nessuna valutazione registrata.'); return; }
+    const cnt = { Camera:{'🟢':0,'🟡':0,'🔴':0}, Studio:{'🟢':0,'🟡':0,'🔴':0} };
+    data.forEach(r => { if(cnt[r.tipo]?.[r.colore]!==undefined) cnt[r.tipo][r.colore]++; });
+    ['cam','stu'].forEach((k,i) => {
+      const tipo = ['Camera','Studio'][i];
+      document.getElementById(`c-${k}-v`).textContent = cnt[tipo]['🟢'];
+      document.getElementById(`c-${k}-g`).textContent = cnt[tipo]['🟡'];
+      document.getElementById(`c-${k}-r`).textContent = cnt[tipo]['🔴'];
+    });
+    const cls = {'🟢':'verde','🟡':'giallo','🔴':'rosso'};
+    el.innerHTML = data.map(r =>
+      `<div class="card-dato ${cls[r.colore]||''}">
+         <div class="card-meta"><span class="card-data">${fmt(r.data)}</span>
+         <span style="font-size:.82rem;font-weight:700;color:var(--txt2);">${r.tipo}</span></div>
+         <div style="font-size:1.4rem;">${r.colore}</div></div>`
+    ).join('');
+  }
+
+  async function caricaNote() {
+    const dal = new Date(); dal.setDate(dal.getDate()-30);
+    const { data } = await sb.from('famiglie_note').select('*')
+      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
+      .order('data', { ascending: false });
+    const el = document.getElementById('cont-note');
+    const filtrate = (data||[]).filter(r => r.testo?.trim() && !r.testo.includes('TEST_CONNESSIONE'));
+    if (!filtrate.length) { el.innerHTML = vuoto('📝','Nessuna nota registrata.'); return; }
+    el.innerHTML = filtrate.map(r => {
+      const disc = r.tipo==='DISC';
+      return `<div class="card-dato ${disc?'rosso':''}">
+        <div class="card-meta"><span class="card-data">${fmt(r.data)}</span>
+        <span class="card-tag ${disc?'tag-disc':'tag-gen'}">${disc?'Disciplinare':'Generale'}</span></div>
+        <div class="card-testo">${san(r.testo)}</div>
+        ${r.operatore?`<div class="card-firma">Educatore: ${r.operatore}</div>`:''}
+      </div>`;
+    }).join('');
+  }
+
+  async function caricaColloqui() {
+    const { data } = await sb.from('famiglie_colloqui').select('*')
+      .eq('nome_studente', nomeStudente).order('data', { ascending: false }).limit(50);
+    const el = document.getElementById('cont-colloqui');
+    if (!data?.length) { el.innerHTML = vuoto('🗣️','Nessun colloquio registrato.'); return; }
+    el.innerHTML = data.map(r => {
+      const fam = (r.controparte||'').toLowerCase().includes('famiglia');
+      return `<div class="card-dato ${fam?'verde':'oro'}">
+        <div class="card-meta"><span class="card-data">${fmt(r.data)}</span>
+        <span class="card-tag ${fam?'tag-fam':'tag-gen'}">${r.controparte||''}</span></div>
+        <div class="card-testo">${san(r.testo)}</div></div>`;
+    }).join('');
+  }
+
+  async function caricaRelazioni() {
+    const { data } = await sb.from('famiglie_relazioni').select('*')
+      .eq('nome_studente', nomeStudente).order('data_invio', { ascending: false }).limit(20);
+    const el = document.getElementById('cont-relazioni');
+    if (!data?.length) { el.innerHTML = vuoto('📄','Nessuna comunicazione formale.'); return; }
+    el.innerHTML = data.map((r,i) =>
+      `<div class="rel-card">
+        <div class="rel-head" onclick="this.nextElementSibling.classList.toggle('aperto');this.querySelector('span').textContent=this.nextElementSibling.classList.contains('aperto')?'▾':'▸'">
+          <div><h4>${san(r.oggetto||'Comunicazione formale')}</h4>
+          <div class="rel-meta">${r.data_evento?'Data: '+fmt(r.data_evento)+' · ':''}</div></div>
+          <span>▸</span>
+        </div>
+        <div class="rel-body">${san(r.testo)}</div>
+      </div>`
+    ).join('');
+  }
 </script>
 </body>
 </html>

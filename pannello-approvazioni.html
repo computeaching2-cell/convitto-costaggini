@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pannello Approvazioni — Convitto Costaggini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bosco: #2C3E2D; --oro: #B8922A; --oro2: #D4AA4A;
+      --panna: #F5F0E8; --testo: #1a1a1a; --txt2: #555;
+      --fd: 'Cormorant Garamond', serif;
+      --fu: 'Source Sans 3', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--fu); background: var(--panna); color: var(--testo); min-height: 100vh; }
+
+    /* LOGIN */
+    #schermata-login {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 20px;
+    }
+    .login-card {
+      background: #fff; border-radius: 14px; padding: 3rem 2.5rem;
+      width: 100%; max-width: 380px; text-align: center;
+      box-shadow: 0 4px 24px rgba(44,62,45,.12);
+    }
+    .login-card h1 {
+      font-family: var(--fd); font-size: 1.7rem; color: var(--bosco);
+      margin-bottom: .3rem;
+    }
+    .login-card p { font-size: .88rem; color: var(--txt2); margin-bottom: 1.8rem; }
+    .campo { width: 100%; padding: 13px 14px; border: 1.5px solid #ddd; border-radius: 8px; font-family: var(--fu); font-size: .95rem; margin-bottom: 12px; background: #fafafa; }
+    .campo:focus { outline: none; border-color: var(--bosco); background: #fff; }
+    .btn-p { width: 100%; padding: 13px; background: var(--bosco); color: #fff; border: none; border-radius: 8px; font-family: var(--fu); font-size: .8rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
+    .btn-p:hover { background: #3d5c3e; }
+    #msg-login { font-size: .85rem; color: #b91c1c; margin-bottom: 12px; display: none; }
+
+    /* PANNELLO */
+    #pannello { display: none; }
+    .pannello-header {
+      background: var(--bosco); padding: 16px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .pannello-header h1 { font-family: var(--fd); color: var(--oro2); font-size: 1.3rem; }
+    .btn-esci { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.8); padding: 8px 16px; border-radius: 6px; font-family: var(--fu); font-size: .82rem; cursor: pointer; }
+
+    .pannello-body { padding: 24px 20px; max-width: 900px; margin: 0 auto; }
+    .sezione-titolo {
+      font-family: var(--fd); font-size: 1.4rem; color: var(--bosco);
+      margin-bottom: 6px;
+    }
+    .badge {
+      display: inline-block; background: #b91c1c; color: #fff;
+      font-size: .72rem; font-weight: 800; padding: 2px 8px;
+      border-radius: 20px; margin-left: 8px; vertical-align: middle;
+    }
+    .badge.verde { background: #15803d; }
+
+    /* TABS */
+    .tabs { display: flex; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; margin-top: 16px; }
+    .tab { padding: 10px 20px; border: none; background: none; font-family: var(--fu); font-size: .88rem; font-weight: 700; color: #888; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+    .tab.attivo { color: var(--bosco); border-bottom-color: var(--oro); }
+
+    /* RICHIESTA CARD */
+    .richiesta-card {
+      background: #fff; border-radius: 12px; padding: 20px;
+      margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+      border-left: 4px solid #e2e8f0;
+    }
+    .richiesta-card.in_attesa { border-left-color: #f59e0b; }
+    .richiesta-card.approvata { border-left-color: #15803d; }
+    .richiesta-card.rifiutata { border-left-color: #b91c1c; }
+
+    .ric-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .ric-nome { font-family: var(--fd); font-size: 1.2rem; color: var(--bosco); font-weight: 600; }
+    .ric-data { font-size: .78rem; color: #888; }
+    .ric-dettagli { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 14px; }
+    .ric-campo { font-size: .85rem; color: var(--txt2); }
+    .ric-campo strong { color: var(--testo); display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px; }
+    .ric-azioni { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-approva { padding: 10px 20px; background: var(--bosco); color: #fff; border: none; border-radius: 7px; font-family: var(--fu); font-size: .8rem; font-weight: 800; cursor: pointer; letter-spacing: .05em; }
+    .btn-approva:hover { background: #3d5c3e; }
+    .btn-approva:disabled { background: #aaa; cursor: not-allowed; }
+    .btn-rifiuta { padding: 10px 20px; background: #fff; color: #b91c1c; border: 1.5px solid #b91c1c; border-radius: 7px; font-family: var(--fu); font-size: .8rem; font-weight: 800; cursor: pointer; }
+    .btn-rifiuta:hover { background: #fef2f2; }
+
+    .stato-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: .75rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+    .stato-in_attesa { background: #fef9c3; color: #a16207; }
+    .stato-approvata { background: #dcfce7; color: #15803d; }
+    .stato-rifiutata { background: #fee2e2; color: #b91c1c; }
+
+    .vuoto { text-align: center; padding: 50px 20px; color: #888; }
+    .vuoto .icona { font-size: 3rem; margin-bottom: 12px; }
+    .loader { text-align: center; padding: 40px; color: var(--bosco); }
+    .spinner { width: 30px; height: 30px; border: 3px solid #e2e8f0; border-top-color: var(--bosco); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 10px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .nota-campo { width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 6px; font-family: var(--fu); font-size: .85rem; margin-top: 10px; }
+
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .stat-box { background: #fff; border-radius: 10px; padding: 16px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,.05); }
+    .stat-num { font-family: var(--fd); font-size: 2rem; font-weight: 600; }
+    .stat-lbl { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: #888; font-weight: 700; margin-top: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN ADMIN -->
+<div id="schermata-login">
+  <div class="login-card">
+    <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+    <h1>Pannello Approvazioni</h1>
+    <p>Accesso riservato alla segreteria del Convitto Costaggini</p>
+    <div id="msg-login"></div>
+    <input type="password" id="pwd-admin" class="campo" placeholder="Password di accesso"
+           onkeydown="if(event.key==='Enter') accediPannello()">
+    <button class="btn-p" onclick="accediPannello()">Accedi</button>
+  </div>
+</div>
+
+<!-- PANNELLO PRINCIPALE -->
+<div id="pannello">
+  <div class="pannello-header">
+    <h1>Pannello Approvazioni Famiglie</h1>
+    <button class="btn-esci" onclick="esciPannello()">Esci</button>
+  </div>
+
+  <div class="pannello-body">
+
+    <div class="stats">
+      <div class="stat-box">
+        <div class="stat-num" id="cnt-attesa" style="color:#a16207">0</div>
+        <div class="stat-lbl">In attesa</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="cnt-approvate" style="color:#15803d">0</div>
+        <div class="stat-lbl">Approvate</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="cnt-rifiutate" style="color:#b91c1c">0</div>
+        <div class="stat-lbl">Rifiutate</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab attivo" id="tab-attesa" onclick="cambiaTab('in_attesa', this)">
+        In attesa <span id="badge-attesa" class="badge" style="display:none">0</span>
+      </button>
+      <button class="tab" id="tab-approvate" onclick="cambiaTab('approvata', this)">Approvate</button>
+      <button class="tab" id="tab-rifiutate" onclick="cambiaTab('rifiutata', this)">Rifiutate</button>
+    </div>
+
+    <div id="lista-richieste">
+      <div class="loader"><div class="spinner"></div>Caricamento...</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ── CONFIG ──
+  const SUPABASE_URL = 'https://sawclsysqnjsvbobioqo.supabase.co';
+  const SERVICE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTIxMzc2OSwiZXhwIjoyMDk0Nzg5NzY5fQ.pvYOl7aNXvO32Zb_8zzq5OXk3Cc9OeVe_QV9Vh_WaWw';
+
+  // Password pannello — hash SHA-256 di "Alluquartelachiazzetta_2025"
+  // CAMBIARE con la propria password sicura (calcolare il nuovo hash su sha256.io)
+  const HASH_ADMIN = '4d7f432968e1da3b3d6d7dec2f99f4d0b65b3751eeec4d1ea36d45d7bcda288b';
+
+  let tabCorrente = 'in_attesa';
+  let tutteRichieste = [];
+
+  // ── SHA-256 ──
+  async function sha256(testo) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(testo));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  // ── LOGIN ──
+  async function accediPannello() {
+    const pwd = document.getElementById('pwd-admin').value;
+    const hash = await sha256(pwd);
+    if (hash !== HASH_ADMIN) {
+      const msg = document.getElementById('msg-login');
+      msg.textContent = 'Password non valida.';
+      msg.style.display = 'block';
+      return;
+    }
+    document.getElementById('schermata-login').style.display = 'none';
+    document.getElementById('pannello').style.display = 'block';
+    caricaRichieste();
+  }
+
+  function esciPannello() {
+    document.getElementById('pannello').style.display = 'none';
+    document.getElementById('schermata-login').style.display = 'flex';
+    document.getElementById('pwd-admin').value = '';
+  }
+
+  // ── CARICA RICHIESTE ──
+  async function caricaRichieste() {
+    document.getElementById('lista-richieste').innerHTML =
+      '<div class="loader"><div class="spinner"></div>Caricamento...</div>';
+    try {
+      const resp = await fetch(
+        SUPABASE_URL + '/rest/v1/richieste_accesso?select=*&order=created_at.desc',
+        { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } }
+      );
+      tutteRichieste = await resp.json();
+      aggiornaStats();
+      renderRichieste(tabCorrente);
+    } catch(e) {
+      document.getElementById('lista-richieste').innerHTML =
+        '<div class="vuoto"><div class="icona">⚠️</div><p>Errore di connessione: ' + e.message + '</p></div>';
+    }
+  }
+
+  function aggiornaStats() {
+    const attesa    = tutteRichieste.filter(r => r.stato === 'in_attesa').length;
+    const approvate = tutteRichieste.filter(r => r.stato === 'approvata').length;
+    const rifiutate = tutteRichieste.filter(r => r.stato === 'rifiutata').length;
+    document.getElementById('cnt-attesa').textContent    = attesa;
+    document.getElementById('cnt-approvate').textContent = approvate;
+    document.getElementById('cnt-rifiutate').textContent = rifiutate;
+    const badge = document.getElementById('badge-attesa');
+    badge.textContent = attesa;
+    badge.style.display = attesa > 0 ? 'inline-block' : 'none';
+  }
+
+  function cambiaTab(stato, btn) {
+    tabCorrente = stato;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('attivo'));
+    btn.classList.add('attivo');
+    renderRichieste(stato);
+  }
+
+  function renderRichieste(stato) {
+    const filtrate = tutteRichieste.filter(r => r.stato === stato);
+    const el = document.getElementById('lista-richieste');
+    if (filtrate.length === 0) {
+      el.innerHTML = '<div class="vuoto"><div class="icona">' +
+        (stato === 'in_attesa' ? '✅' : '📭') +
+        '</div><p>Nessuna richiesta ' +
+        (stato === 'in_attesa' ? 'in attesa' : stato === 'approvata' ? 'approvata' : 'rifiutata') +
+        '.</p></div>';
+      return;
+    }
+    el.innerHTML = filtrate.map(r => cardHTML(r)).join('');
+  }
+
+  function cardHTML(r) {
+    const data = new Date(r.created_at).toLocaleDateString('it-IT', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+    const relLabel = { padre: 'Padre', madre: 'Madre', tutore: 'Tutore/Tutrice' }[r.relazione] || r.relazione;
+
+    const azioniHTML = r.stato === 'in_attesa' ? `
+      <textarea class="nota-campo" id="nota-${r.id}" placeholder="Nota opzionale (motivo rifiuto, ecc.)"></textarea>
+      <div class="ric-azioni" style="margin-top:10px;">
+        <button class="btn-approva" onclick="approvaRichiesta('${r.id}')">✅ Approva e attiva accesso</button>
+        <button class="btn-rifiuta" onclick="rifiutaRichiesta('${r.id}')">✗ Rifiuta</button>
+      </div>` : `
+      <div class="ric-azioni">
+        <span class="stato-badge stato-${r.stato}">${r.stato}</span>
+        ${r.note_admin ? '<span style="font-size:.82rem;color:#888;margin-left:8px;">' + r.note_admin + '</span>' : ''}
+      </div>`;
+
+    return `<div class="richiesta-card ${r.stato}" id="card-${r.id}">
+      <div class="ric-header">
+        <div>
+          <div class="ric-nome">${r.nome_studente}</div>
+          <div class="ric-data">Richiesta del ${data}</div>
+        </div>
+        <span class="stato-badge stato-${r.stato}">${r.stato.replace('_', ' ')}</span>
+      </div>
+      <div class="ric-dettagli">
+        <div class="ric-campo"><strong>Email</strong>${r.email_genitore}</div>
+        <div class="ric-campo"><strong>Relazione</strong>${relLabel}</div>
+        <div class="ric-campo"><strong>Password</strong><span style="font-family:monospace;font-size:.78rem;color:#888;">hash: ${r.password_hash.substring(0,16)}...</span></div>
+      </div>
+      ${azioniHTML}
+    </div>`;
+  }
+
+  // ── APPROVA ──
+  async function approvaRichiesta(id) {
+    const btn = document.querySelector(`#card-${id} .btn-approva`);
+    btn.disabled = true;
+    btn.textContent = 'Attivazione in corso...';
+
+    const richiesta = tutteRichieste.find(r => r.id === id);
+    const nota = document.getElementById('nota-' + id)?.value || '';
+
+    try {
+      // 1. Crea l'utente in Supabase Auth
+      const respAuth = await fetch(
+        SUPABASE_URL + '/auth/v1/admin/users',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SERVICE_KEY,
+            'Authorization': 'Bearer ' + SERVICE_KEY
+          },
+          body: JSON.stringify({
+            email: richiesta.email_genitore,
+            password: richiesta.password_hash, // usa l'hash come password temporanea
+            email_confirm: true,
+            user_metadata: {
+              nome_studente: richiesta.nome_studente,
+              relazione: richiesta.relazione
+            }
+          })
+        }
+      );
+
+      if (!respAuth.ok) {
+        const err = await respAuth.json();
+        // Se l'utente esiste già, proseguiamo comunque
+        if (!err.message?.includes('already')) throw new Error(err.message);
+      }
+
+      // 2. Inserisce in genitori_studenti
+      await fetch(
+        SUPABASE_URL + '/rest/v1/genitori_studenti?on_conflict=email_genitore,nome_studente',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SERVICE_KEY,
+            'Authorization': 'Bearer ' + SERVICE_KEY,
+            'Prefer': 'resolution=merge-duplicates'
+          },
+          body: JSON.stringify({
+            email_genitore: richiesta.email_genitore,
+            nome_studente: richiesta.nome_studente,
+            relazione: richiesta.relazione
+          })
+        }
+      );
+
+      // 3. Aggiorna stato richiesta
+      await aggiornaStato(id, 'approvata', nota);
+
+      alert('✅ Accesso attivato per ' + richiesta.email_genitore);
+      caricaRichieste();
+
+    } catch(e) {
+      alert('Errore: ' + e.message);
+      btn.disabled = false;
+      btn.textContent = '✅ Approva e attiva accesso';
+    }
+  }
+
+  // ── RIFIUTA ──
+  async function rifiutaRichiesta(id) {
+    const nota = document.getElementById('nota-' + id)?.value || '';
+    if (!confirm('Rifiutare questa richiesta?')) return;
+    await aggiornaStato(id, 'rifiutata', nota);
+    caricaRichieste();
+  }
+
+  async function aggiornaStato(id, stato, nota) {
+    await fetch(
+      SUPABASE_URL + '/rest/v1/richieste_accesso?id=eq.' + id,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SERVICE_KEY,
+          'Authorization': 'Bearer ' + SERVICE_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          stato: stato,
+          processed_at: new Date().toISOString(),
+          note_admin: nota
+        })
+      }
+    );
+  }
+</script>
+</body>
+</html>
