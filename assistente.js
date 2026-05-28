@@ -130,12 +130,30 @@ const KB=[
   // ── ALUMNI ──
   {k:['alumni','ex convittor','ex student','diplomati','community'],
    r:'Community degli <em>Alumni</em>: <a href="comunita.html">La nostra Comunità →</a><br>Se sei ex convittore: <a href="iscriviti-alumni.html">Unisciti →</a>'},
+  // ── AREA RISERVATA FAMIGLIE ──
+  {k:['area riservata','area famiglie','area genitori','portale famiglie','portale genitori','accesso famiglie','accesso genitori','login famiglie','login genitori','sezione famiglie','sezione genitori','spazio famiglie','spazio genitori','zona famiglie','zona genitori','bacheca famiglie','bacheca genitori'],
+   r:'L'<strong>Area Riservata Famiglie</strong> è la sezione del sito dove il genitore può consultare in modo sicuro — senza dover chiamare — le presenze ai pasti, le valutazioni giornaliere, le note degli educatori e le comunicazioni ufficiali del proprio figlio/a.<br><br>📋 <a href="richiesta-accesso.html">Richiedi l'accesso →</a><br>🔐 <a href="area-riservata.html">Accedi se già registrato →</a>'},
+  {k:['richied','richiedere accesso','richiedere password','registrazione','registrarsi','come si accede','come si entra','primo accesso','attivazione account','attivare account','creare account','aprire account','aprire profilo','come funziona accesso','procedura accesso'],
+   r:'Per accedere all'Area Riservata Famiglie:<br>1️⃣ Compila il modulo su <a href="richiesta-accesso.html">Richiedi accesso →</a><br>2️⃣ Inserisci nome dello studente, la tua email e una password a tua scelta<br>3️⃣ La segreteria verifica i dati entro 48 ore<br>4️⃣ Ricevi conferma via email e puoi accedere<br><br>🔐 <a href="area-riservata.html">Vai all'area riservata →</a>'},
+  {k:['password dimenticata','password persa','non ricordo password','ho dimenticato','reset password','cambiare password','recuperare password','password scaduta','non riesco ad entrare','non riesco ad accedere','problemi accesso','problemi login'],
+   r:'Se hai dimenticato la password:<br>1️⃣ Vai su <a href="area-riservata.html">Area Riservata →</a><br>2️⃣ Clicca su <strong>"Password dimenticata?"</strong><br>3️⃣ Inserisci la tua email<br>4️⃣ Ricevi un link via email per sceglierne una nuova<br><br>Per assistenza: <a href="contatti.html">Contattaci →</a>'},
+  {k:['presenza','presenze','pasto','pasti','colazione','pranzo','cena','ha mangiato','ha pranzato','ha cenato','ha fatto colazione','presenza mensa','come sta mangiando'],
+   r:'Tramite l'<strong>Area Riservata Famiglie</strong> puoi controllare in tempo reale le presenze ai pasti del tuo figlio/a (colazione, pranzo, cena) per tutto l'anno scolastico corrente.<br><br>📋 <a href="richiesta-accesso.html">Richiedi accesso →</a>'},
+  {k:['note','nota','note educatori','nota disciplinare','comportamento','valutazione','semaforo','come si comporta','rapporto','aggiornamenti','notizie figlio','notizie studente','come va','come sta'],
+   r:'Nell'<strong>Area Riservata Famiglie</strong> trovi le <strong>note degli educatori</strong> (generali e disciplinari), le <strong>valutazioni giornaliere</strong> del comportamento (decoro camera e ora di studio) e i <strong>colloqui</strong> registrati.<br><br>📋 <a href="richiesta-accesso.html">Richiedi accesso →</a>'},
+  {k:['comunicazione','comunicazioni','relazione','relazione disciplinare','lettera','avviso','avvisi familiari','documenti ufficiali','provvedimento','sospensione'],
+   r:'Le <strong>comunicazioni formali</strong> degli educatori (relazioni disciplinari, avvisi, provvedimenti) sono disponibili nell'Area Riservata Famiglie nella sezione <em>Comunicazioni</em>.<br><br>🔐 <a href="area-riservata.html">Accedi →</a> · 📋 <a href="richiesta-accesso.html">Richiedi accesso →</a>'},
+  {k:['seguire figlio','seguire figlia','monitorare figlio','monitorare figlia','tenersi aggiornati','sapere cosa succede','essere informati','informazioni studente','informazioni figlio','controllare figlio','controllare figlia'],
+   r:'Con l'<strong>Area Riservata Famiglie</strong> puoi seguire la vita del tuo figlio/a al Convitto direttamente dal telefono o dal computer, senza dover chiamare:<br>🍽️ Presenze ai pasti<br>🚦 Valutazioni giornaliere<br>📝 Note degli educatori<br>🗣️ Colloqui registrati<br>📄 Comunicazioni ufficiali<br><br>📋 <a href="richiesta-accesso.html">Richiedi l'accesso →</a>'},
+  {k:['otp','codice otp','codice sicurezza','codice verifica','doppia autenticazione','verifica due fattori','codice email','non ricevo codice','codice non arriva'],
+   r:'Al login nell'Area Riservata ti viene inviato un <strong>codice OTP</strong> a 6 cifre via email per verificare la tua identità. Controlla anche nella cartella spam. Se non arriva clicca <em>"Reinvia codice"</em>.<br><br>Per assistenza: <a href="contatti.html">Contattaci →</a>'},
+
   // ── SALUTO ──
   {k:['ciao','salve','buongiorno','buonasera','hey','help','aiuto','cosa sai','cosa puoi'],
    r:'Ciao! 👋 Sono l\'assistente del Convitto "Costaggini" di Rieti. Posso aiutarti su: iscrizioni, orari, contatti, rette, camere, servizi e vita convittuale. Cosa ti serve?'},
 ];
 
-const SUGS=['Numero di telefono','Come ci si iscrive?','Orari della giornata','Quanto costa?','Visita guidata'];
+const SUGS=['Numero di telefono','Come ci si iscrive?','Orari della giornata','Quanto costa?','Area riservata famiglie'];
 
 function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 function match(q){
