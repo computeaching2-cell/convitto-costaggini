@@ -40,6 +40,8 @@
           <li><a href="educatori.html" data-page="educatori">Gli Educatori</a></li>
           <li><a href="giornata-tipo.html" data-page="giornata-tipo">Una giornata tipo</a></li>
           <li><a href="laboratorio-musicale.html" data-page="laboratorio-musicale">♪ Laboratorio Musicale</a></li>
+          <li><a href="vinile.html" data-page="vinile">🎵 Il Vinile del Convitto</a></li>
+          <li><a href="solidarieta.html" data-page="solidarieta">🎶 La Solidarietà — 2019</a></li>
           <li><a href="comunita.html" data-page="comunita">🌟 La nostra Comunità</a></li>
         </ul>
       </div>
@@ -114,6 +116,8 @@
         <li><a href="educatori.html">Gli Educatori</a></li>
         <li><a href="giornata-tipo.html">Una giornata tipo</a></li>
         <li><a href="laboratorio-musicale.html">♪ Laboratorio Musicale</a></li>
+        <li><a href="vinile.html">🎵 Il Vinile del Convitto</a></li>
+        <li><a href="solidarieta.html">🎶 La Solidarietà — 2019</a></li>
         <li><a href="comunita.html">🌟 La nostra Comunità</a></li>
       </ul>
     </li>
