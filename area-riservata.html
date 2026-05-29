@@ -269,31 +269,6 @@
         <div class="link-secondario"><a onclick="mostraSchermata('login')">← Torna al login</a></div>
       </div>
 
-      <!-- ─ NUOVA PASSWORD (dopo reset) ─ -->
-      <div class="sezione" id="sez-nuovapwd">
-        <p style="font-size:.9rem;color:var(--txt2);margin-bottom:1.5rem;line-height:1.7;text-align:center;">
-          Scegli la tua nuova password di accesso.
-        </p>
-        <div class="campo-g">
-          <label>Nuova password</label>
-          <div class="inp-wrap">
-            <input type="password" id="nuovapwd-1" placeholder="Almeno 8 caratteri"
-                   autocomplete="new-password" oninput="verificaNuovaPwd()">
-            <button class="occhio" type="button" onclick="togglePwd('nuovapwd-1',this)">👁️</button>
-          </div>
-        </div>
-        <div class="campo-g">
-          <label>Conferma nuova password</label>
-          <div class="inp-wrap">
-            <input type="password" id="nuovapwd-2" placeholder="Ripeti la password"
-                   autocomplete="new-password" oninput="verificaNuovaPwd()">
-            <button class="occhio" type="button" onclick="togglePwd('nuovapwd-2',this)">👁️</button>
-          </div>
-          <div style="font-size:.78rem;margin-top:.35rem;min-height:1.2rem" id="msg-nuovapwd-match"></div>
-        </div>
-        <button class="btn-auth" id="btn-nuovapwd" onclick="salvaNuovaPassword()">Salva nuova password</button>
-      </div>
-
       <!-- ─ REGISTRATI (redirect) ─ -->
       <div class="sezione" id="sez-registrati">
         <p style="font-size:.9rem;color:var(--txt2);margin-bottom:1.5rem;line-height:1.7;">
@@ -328,11 +303,11 @@
   </nav>
 
   <div class="tab-cont attivo" id="tab-presenze">
-    <div class="banner-info">Presenze ai pasti dall'inizio dell'anno scolastico.</div>
+    <div class="banner-info">Presenze ai pasti degli ultimi 30 giorni.</div>
     <div id="cont-presenze"><div class="loader"><div class="spinner"></div></div></div>
   </div>
   <div class="tab-cont" id="tab-semafori">
-    <div class="banner-info">Valutazioni dall'inizio dell'anno scolastico. 🟢 Positivo · 🟡 Migliorabile · 🔴 Da migliorare</div>
+    <div class="banner-info">🟢 Positivo · 🟡 Migliorabile · 🔴 Da migliorare</div>
     <div class="sem-grid">
       <div class="sem-box"><h3>🛏️ Camera</h3><div class="sem-pallini">
         <div class="sem-pallino">🟢<span id="c-cam-v">0</span></div>
@@ -348,7 +323,7 @@
     <div id="cont-semafori"><div class="loader"><div class="spinner"></div></div></div>
   </div>
   <div class="tab-cont" id="tab-note">
-    <div class="banner-info">Note degli educatori dall'inizio dell'anno scolastico.</div>
+    <div class="banner-info">Note degli educatori degli ultimi 30 giorni.</div>
     <div id="cont-note"><div class="loader"><div class="spinner"></div></div></div>
   </div>
   <div class="tab-cont" id="tab-colloqui">
@@ -366,7 +341,7 @@
   const { createClient } = supabase;
   const sb = createClient(
     'https://sawclsysqnjsvbobioqo.supabase.co',
-    'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ'
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTM3NjksImV4cCI6MjA5NDc4OTc2OX0.vS-hoxI2YUlxCWIdDzARqqpGzmXTDi8hq1AVU2jdhZ0'
   );
 
   let emailUtente = '';
@@ -375,36 +350,11 @@
 
   // ── AVVIO ──
   window.addEventListener('load', async () => {
-
-    // Controlla se l'URL contiene un token di recovery
-    // Supabase aggiunge #access_token=...&type=recovery all'URL
-    const hash = window.location.hash;
-    const isRecovery = hash.includes('type=recovery');
-
-    if (isRecovery) {
-      // Mostra subito la schermata nuova password
-      // Supabase gestirà il token in background tramite onAuthStateChange
-      document.getElementById('schermata-auth').style.display = 'flex';
-      document.getElementById('schermata-dashboard').style.display = 'none';
-      mostraSchermata('nuovapwd');
-      // Pulisce l'URL per sicurezza
-      history.replaceState(null, '', window.location.pathname);
-    } else {
-      // Flusso normale — controlla sessione esistente
-      const { data: { session } } = await sb.auth.getSession();
-      if (session) avviaDashboard(session.user.email);
-    }
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) avviaDashboard(session.user.email);
 
     sb.auth.onAuthStateChange((event, session) => {
-      if (event === 'PASSWORD_RECOVERY') {
-        document.getElementById('schermata-auth').style.display = 'flex';
-        document.getElementById('schermata-dashboard').style.display = 'none';
-        mostraSchermata('nuovapwd');
-        return;
-      }
-      if (event === 'SIGNED_IN' && session) {
-        if (schermataCorrente !== 'nuovapwd') avviaDashboard(session.user.email);
-      }
+      if (event === 'SIGNED_IN' && session) avviaDashboard(session.user.email);
       if (event === 'SIGNED_OUT') mostraAuth();
     });
   });
@@ -498,7 +448,7 @@
     const email = document.getElementById('reset-email').value.trim().toLowerCase();
     if (!email) return mostraMsg('Inserire l\'email.', 'err');
     await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.href.split('?')[0].split('#')[0]
+      redirectTo: window.location.origin + '/area-riservata.html'
     });
     mostraMsg('Link di reset inviato a ' + email + '. Controlla la casella email.', 'ok');
   }
@@ -535,35 +485,6 @@
     mostraSchermata('login');
   }
 
-  // ── NUOVA PASSWORD (recovery) ──
-  function verificaNuovaPwd() {
-    const p1 = document.getElementById('nuovapwd-1').value;
-    const p2 = document.getElementById('nuovapwd-2').value;
-    const msg = document.getElementById('msg-nuovapwd-match');
-    if (!p2) { msg.textContent = ''; return; }
-    if (p1 === p2) { msg.textContent = '✓ Le password coincidono'; msg.style.color = '#15803d'; }
-    else { msg.textContent = '✗ Le password non coincidono'; msg.style.color = '#b91c1c'; }
-  }
-
-  async function salvaNuovaPassword() {
-    const p1 = document.getElementById('nuovapwd-1').value;
-    const p2 = document.getElementById('nuovapwd-2').value;
-    const btn = document.getElementById('btn-nuovapwd');
-    if (!p1 || p1.length < 8) return mostraMsg('La password deve essere di almeno 8 caratteri.', 'err');
-    if (p1 !== p2) return mostraMsg('Le due password non coincidono.', 'err');
-    btn.disabled = true; btn.textContent = 'Salvataggio...';
-    const { error } = await sb.auth.updateUser({ password: p1 });
-    if (error) {
-      mostraMsg('Errore: ' + error.message, 'err');
-      btn.disabled = false; btn.textContent = 'Salva nuova password';
-      return;
-    }
-    mostraMsg('✅ Password aggiornata! Accedi con le nuove credenziali.', 'ok');
-    btn.disabled = false; btn.textContent = 'Salva nuova password';
-    // Torna al login dopo 2 secondi
-    setTimeout(() => { sb.auth.signOut(); mostraSchermata('login'); }, 2000);
-  }
-
   async function eseguiLogout() { await sb.auth.signOut(); }
 
   function cambiaTab(nome, btn) {
@@ -577,13 +498,6 @@
     const i = document.getElementById(id);
     i.type = i.type === 'password' ? 'text' : 'password';
     btn.textContent = i.type === 'password' ? '👁️' : '🙈';
-  }
-
-  // ── ANNO SCOLASTICO ──
-  function inizioAnnoScolastico() {
-    const oggi = new Date();
-    const anno = oggi.getMonth() >= 8 ? oggi.getFullYear() : oggi.getFullYear() - 1;
-    return anno + '-09-01';
   }
 
   // ── DATI ──
@@ -600,9 +514,9 @@
   function vuoto(ico, txt) { return `<div class="vuoto"><div class="icona">${ico}</div><p>${txt}</p></div>`; }
 
   async function caricaPresenze() {
-    const dal = inizioAnnoScolastico();
+    const dal = new Date(); dal.setDate(dal.getDate()-30);
     const { data } = await sb.from('famiglie_presenze').select('*')
-      .eq('nome_studente', nomeStudente).gte('data', dal)
+      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
       .order('data', { ascending: false });
     const el = document.getElementById('cont-presenze');
     if (!data?.length) { el.innerHTML = vuoto('🍽️','Nessuna presenza registrata.'); return; }
@@ -617,9 +531,9 @@
   }
 
   async function caricaSemafori() {
-    const dal = inizioAnnoScolastico();
+    const dal = new Date(); dal.setDate(dal.getDate()-30);
     const { data } = await sb.from('famiglie_semafori').select('*')
-      .eq('nome_studente', nomeStudente).gte('data', dal)
+      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
       .order('data', { ascending: false });
     const el = document.getElementById('cont-semafori');
     if (!data?.length) { el.innerHTML = vuoto('🚦','Nessuna valutazione registrata.'); return; }
@@ -641,9 +555,9 @@
   }
 
   async function caricaNote() {
-    const dal = inizioAnnoScolastico();
+    const dal = new Date(); dal.setDate(dal.getDate()-30);
     const { data } = await sb.from('famiglie_note').select('*')
-      .eq('nome_studente', nomeStudente).gte('data', dal)
+      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
       .order('data', { ascending: false });
     const el = document.getElementById('cont-note');
     const filtrate = (data||[]).filter(r => r.testo?.trim() && !r.testo.includes('TEST_CONNESSIONE'));
@@ -690,6 +604,5 @@
     ).join('');
   }
 </script>
-<script src="nav.js"></script>
 </body>
 </html>
