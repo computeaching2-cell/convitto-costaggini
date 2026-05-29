@@ -902,8 +902,7 @@ function removeApproved(i) {
   localStorage.setItem('costaggini-pins-v2', JSON.stringify(approved));
   renderApproved();
 }
-</script>
-<script src="supabase.js">
+
 // ===== FAMIGLIE =====
 var FAM_SB = 'https://sawclsysqnjsvbobioqo.supabase.co';
 var FAM_GAS = 'https://script.google.com/macros/s/AKfycbyuZZTry0o7OQhnx0-LxTolWHOtfR3FumqISF3aD2ML36OHK5P7V_ZfQNZLzz663m7rIg/exec';
@@ -1014,6 +1013,8 @@ async function famRifiuta(btn) {
   });
   famLoad('in_attesa');
 }
+</script>
+<script src="supabase.js">
 </script>
 </body>
 </html>
