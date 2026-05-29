@@ -40,8 +40,6 @@
           <li><a href="educatori.html" data-page="educatori">Gli Educatori</a></li>
           <li><a href="giornata-tipo.html" data-page="giornata-tipo">Una giornata tipo</a></li>
           <li><a href="laboratorio-musicale.html" data-page="laboratorio-musicale">♪ Laboratorio Musicale</a></li>
-          <li><a href="vinile.html" data-page="vinile">🎵 Il Vinile del Convitto</a></li>
-          <li><a href="solidarieta.html" data-page="solidarieta">🎶 La Solidarietà — 2019</a></li>
           <li><a href="comunita.html" data-page="comunita">🌟 La nostra Comunità</a></li>
         </ul>
       </div>
@@ -116,8 +114,6 @@
         <li><a href="educatori.html">Gli Educatori</a></li>
         <li><a href="giornata-tipo.html">Una giornata tipo</a></li>
         <li><a href="laboratorio-musicale.html">♪ Laboratorio Musicale</a></li>
-        <li><a href="vinile.html">🎵 Il Vinile del Convitto</a></li>
-        <li><a href="solidarieta.html">🎶 La Solidarietà — 2019</a></li>
         <li><a href="comunita.html">🌟 La nostra Comunità</a></li>
       </ul>
     </li>
@@ -156,6 +152,11 @@
         <li><a href="organizzazione.html">Organizzazione</a></li>
       </ul>
     </li>
+
+    <li><a href="area-riservata.html" style="color:var(--oro2);font-weight:700;display:flex;align-items:center;gap:.5rem;padding:.6rem 0;">
+      <svg viewBox="0 0 24 24" width="15" height="15" style="fill:var(--oro2);flex-shrink:0"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+      🔐 Area Riservata Famiglie
+    </a></li>
 
     <li><a href="#" id="drw-admin-btn" style="color:#D4AA4A;display:flex;align-items:center;gap:.5rem;">
       <svg viewBox="0 0 24 24" width="15" height="15" style="fill:#D4AA4A;flex-shrink:0"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1z"/></svg>
@@ -545,7 +546,7 @@
     footer .ftop,.footer .fcols{transform:none!important;}
     #tr-btn{position:fixed;top:68px;right:1rem;z-index:8500;@media(max-width:700px){display:none}background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.3);border-radius:8px;padding:.38rem .7rem;display:flex;align-items:center;gap:.35rem;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);font-family:'Source Sans 3',sans-serif;font-size:.7rem;font-weight:700;color:rgba(245,240,232,.7);transition:all .2s;white-space:nowrap;}
 #tr-btn:hover{border-color:rgba(184,146,42,.6);color:#fff;}
-#tr-menu{position:fixed;top:102px;right:1rem;z-index:8499;background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.16);border:1px solid #e5e7eb;overflow:hidden;display:none;flex-direction:column;}@media(max-width:700px){#tr-btn{top:60px;right:.6rem;padding:.3rem .55rem;font-size:.62rem;}#tr-menu{top:95px;right:.6rem;}}
+#tr-menu{position:fixed;top:102px;right:1rem;z-index:8499;background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.16);border:1px solid #e5e7eb;overflow:hidden;display:none;flex-direction:column;}@media(max-width:700px){#tr-btn,#tr-menu{display:none!important;}}
 #tr-menu.open{display:flex;}
 .tr-opt{display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;cursor:pointer;font-family:'Source Sans 3',sans-serif;font-size:.78rem;color:#374151;transition:background .15s;border-bottom:1px solid #f3f4f6;}
 .tr-opt:last-child{border-bottom:none;}.tr-opt:hover{background:#f3f4f6;}.tr-opt.act{background:rgba(44,62,45,.06);color:#2C3E2D;font-weight:700;}`;
