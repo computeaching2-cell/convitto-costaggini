@@ -157,6 +157,17 @@ code { background: rgba(255,255,255,.06); padding: .1rem .38rem; border-radius: 
 
 #mob-tog { display: none; position: fixed; top: .9rem; left: .9rem; z-index: 200; width: 38px; height: 38px; background: var(--bosco); border: 1px solid rgba(184,146,42,.25); border-radius: 8px; align-items: center; justify-content: center; cursor: pointer; }
 #mob-tog svg { fill: var(--oro2); width: 17px; height: 17px; }
+#pdf-modal { display: none; position: fixed; inset: 0; z-index: 9998; background: rgba(0,0,0,.85); flex-direction: column; }
+#pdf-modal.open { display: flex; }
+#pdf-modal-bar { display: flex; align-items: center; justify-content: space-between; padding: .75rem 1.25rem; background: var(--bg2); border-bottom: 1px solid rgba(184,146,42,.15); flex-shrink: 0; }
+#pdf-modal-title { font-family: var(--fu); font-size: .75rem; font-weight: 700; color: var(--txt2); }
+#pdf-modal-actions { display: flex; gap: .6rem; align-items: center; }
+#pdf-modal-close { background: none; border: 1.5px solid rgba(255,255,255,.15); border-radius: 6px; padding: .4rem .9rem; font-family: var(--fu); font-size: .65rem; font-weight: 700; color: var(--txt2); cursor: pointer; letter-spacing: .06em; text-transform: uppercase; transition: all .15s; }
+#pdf-modal-close:hover { border-color: rgba(255,255,255,.4); color: var(--txt); }
+#pdf-modal-download { display: inline-flex; align-items: center; gap: .35rem; background: linear-gradient(135deg,var(--bosco),var(--bosco2)); border: 1.5px solid rgba(184,146,42,.35); border-radius: 6px; padding: .4rem .9rem; font-family: var(--fu); font-size: .65rem; font-weight: 700; color: var(--oro2); cursor: pointer; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; transition: all .15s; }
+#pdf-modal-download:hover { border-color: rgba(184,146,42,.7); }
+#pdf-modal-download svg { width: 13px; height: 13px; fill: currentColor; }
+#pdf-frame { flex: 1; width: 100%; border: none; background: #fff; }
 @media(max-width:720px) {
   #sidebar { transform: translateX(-100%); transition: transform .28s; }
   #sidebar.open { transform: translateX(0); }
@@ -183,6 +194,20 @@ code { background: rgba(255,255,255,.06); padding: .1rem .38rem; border-radius: 
   <button id="mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Menu">
     <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
   </button>
+
+  <div id="pdf-modal">
+    <div id="pdf-modal-bar">
+      <span id="pdf-modal-title">Documento</span>
+      <div id="pdf-modal-actions">
+        <a id="pdf-modal-download" href="#" download>
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8v2h14v-2H5z"/></svg>
+          Scarica PDF
+        </a>
+        <button id="pdf-modal-close" onclick="chiudiPDF()">&#10005; Chiudi</button>
+      </div>
+    </div>
+    <iframe id="pdf-frame" src="" title="Visualizzatore PDF"></iframe>
+  </div>
 
   <nav id="sidebar">
     <div class="sb-hdr">
@@ -353,6 +378,7 @@ code { background: rgba(255,255,255,.06); padding: .1rem .38rem; border-radius: 
           <div class="dl-btns">
             <a class="dl-btn word" href="dossier-docs/Guida-Operativa-Messa-In-Produzione-v2.docx" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>Word</a>
             <a class="dl-btn pdf" href="dossier-docs/Guida-Operativa-Messa-In-Produzione-v2.pdf" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>PDF</a>
+            <button class="dl-btn" onclick="apriPDF('dossier-docs/Guida-Operativa-Messa-In-Produzione-v2.pdf','Guida Operativa — Messa in Produzione v2')" style="border-color:rgba(74,222,128,.3);color:#4ade80;background:none;cursor:pointer;"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>Visualizza</button>
           </div>
         </div>
         <h3>Stato attuale</h3>
@@ -434,6 +460,7 @@ code { background: rgba(255,255,255,.06); padding: .1rem .38rem; border-radius: 
           <div class="dl-btns">
             <a class="dl-btn word" href="dossier-docs/Incarico-ResponsabileTecnico-Gaggiano-v4.docx" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>Word</a>
             <a class="dl-btn pdf" href="dossier-docs/Incarico-ResponsabileTecnico-Gaggiano-v4.pdf" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>PDF</a>
+            <button class="dl-btn" onclick="apriPDF('dossier-docs/Incarico-ResponsabileTecnico-Gaggiano-v4.pdf','Atto di Incarico — Resp. Tecnico v4')" style="border-color:rgba(74,222,128,.3);color:#4ade80;background:none;cursor:pointer;"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>Visualizza</button>
           </div>
         </div>
         <div class="pq"><p>L&rsquo;atto formalizza l&rsquo;incarico di Responsabile Tecnico del sito web e dell&rsquo;applicativo gestionale del Convitto, conferito all&rsquo;Educatore Michele Gaggiano per gli A.S. 2024/2025 e 2025/2026, a titolo gratuito.</p></div>
@@ -458,6 +485,7 @@ code { background: rgba(255,255,255,.06); padding: .1rem .38rem; border-radius: 
           <div class="dl-btns">
             <a class="dl-btn word" href="dossier-docs/Dichiarazione-Accessibilita-AGID-Istruzioni-v2.docx" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>Word</a>
             <a class="dl-btn pdf" href="dossier-docs/Dichiarazione-Accessibilita-AGID-Istruzioni-v2.pdf" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>PDF</a>
+            <button class="dl-btn" onclick="apriPDF('dossier-docs/Dichiarazione-Accessibilita-AGID-Istruzioni-v2.pdf','Dichiarazione Accessibilit&agrave; AGID v2')" style="border-color:rgba(74,222,128,.3);color:#4ade80;background:none;cursor:pointer;"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>Visualizza</button>
           </div>
         </div>
         <p>Aprire <a class="lnk" href="https://form.agid.gov.it" target="_blank">form.agid.gov.it</a> con SPID del Dirigente e copiare i testi dalle sezioni qui sotto.</p>
@@ -486,6 +514,7 @@ code { background: rgba(255,255,255,.06); padding: .1rem .38rem; border-radius: 
           <div class="dl-btns">
             <a class="dl-btn word" href="dossier-docs/Guida-Uso-Sito-Convitto.docx" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>Word</a>
             <a class="dl-btn pdf" href="dossier-docs/Guida-Uso-Sito-Convitto.pdf" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>PDF</a>
+            <button class="dl-btn" onclick="apriPDF('dossier-docs/Guida-Uso-Sito-Convitto.pdf','Guida all&rsquo;Uso del Sito')" style="border-color:rgba(74,222,128,.3);color:#4ade80;background:none;cursor:pointer;"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>Visualizza</button>
           </div>
         </div>
         <h3>Accesso al pannello admin</h3>
@@ -632,6 +661,29 @@ function logout() {
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('pwd-in').value = '';
 }
+
+function apriPDF(url, titolo) {
+  var modal = document.getElementById('pdf-modal');
+  var frame = document.getElementById('pdf-frame');
+  var title = document.getElementById('pdf-modal-title');
+  var dlBtn = document.getElementById('pdf-modal-download');
+  frame.src = url;
+  title.textContent = titolo.replace(/&rsquo;/g,"'").replace(/&agrave;/g,"à");
+  dlBtn.href = url;
+  dlBtn.download = url.split('/').pop();
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function chiudiPDF() {
+  var modal = document.getElementById('pdf-modal');
+  var frame = document.getElementById('pdf-frame');
+  modal.classList.remove('open');
+  frame.src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') chiudiPDF();
+});
 
 function tog(btn) {
   var item = btn.closest('.acc');
