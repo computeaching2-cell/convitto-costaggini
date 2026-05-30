@@ -318,10 +318,12 @@
   /* ── Drawer ── */
   const brg = document.getElementById('brg');
   const drw = document.getElementById('drw');
-  function openD() { drw.classList.add('on'); brg.setAttribute('aria-expanded','true'); brg.setAttribute('aria-label','Chiudi menu'); document.body.style.overflow='hidden'; }
-  function closeD() { drw.classList.remove('on'); brg.setAttribute('aria-expanded','false'); brg.setAttribute('aria-label','Apri menu'); document.body.style.overflow=''; }
-  brg.addEventListener('click', () => drw.classList.contains('on') ? closeD() : openD());
-  drw.querySelectorAll('a').forEach(a => a.addEventListener('click', closeD));
+  function openD() { if(!drw||!brg) return; drw.classList.add('on'); brg.setAttribute('aria-expanded','true'); brg.setAttribute('aria-label','Chiudi menu'); document.body.style.overflow='hidden'; }
+  function closeD() { if(!drw||!brg) return; drw.classList.remove('on'); brg.setAttribute('aria-expanded','false'); brg.setAttribute('aria-label','Apri menu'); document.body.style.overflow=''; }
+  if (brg && drw) {
+    brg.addEventListener('click', () => drw.classList.contains('on') ? closeD() : openD());
+    drw.querySelectorAll('a').forEach(a => a.addEventListener('click', closeD));
+  }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeD(); });
 
   /* ── Bottone Admin nel menu ── */
