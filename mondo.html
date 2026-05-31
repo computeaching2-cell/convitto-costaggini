@@ -197,8 +197,17 @@ async function loadApprovedPins() {
     if (!resp.ok) return;
     const data = await resp.json();
     if (data && data.length) {
-      // Rimuove i DEMO e usa solo dati reali una volta che ce ne sono
-      allPins = [...DEMO, ...data];
+      // Mappa i nomi colonna Supabase ai nomi usati dal renderer
+      const mapped = data.map(p => ({
+        name: p.nome,
+        city: p.citta,
+        type: p.tipo || 'alumni',
+        year: p.anni,
+        role: p.ruolo,
+        lat:  p.lat,
+        lng:  p.lng
+      }));
+      allPins = [...DEMO, ...mapped];
     }
   } catch(e) {
     console.warn('Supabase non raggiungibile:', e);
@@ -299,11 +308,11 @@ async function submitPin() {
 
   // 2. Invia a Supabase con approvato=false — in attesa di moderazione admin
   const pin = {
-    name,
-    city,
-    type:  document.getElementById('pf-type').value,
-    year:  document.getElementById('pf-year').value.trim() || null,
-    role:  document.getElementById('pf-role').value.trim() || null,
+    nome:  name,
+    citta: city,
+    tipo:  document.getElementById('pf-type').value,
+    anni:  document.getElementById('pf-year').value.trim() || null,
+    ruolo: document.getElementById('pf-role').value.trim() || null,
     lat,
     lng,
     approvato: false
