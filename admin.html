@@ -150,6 +150,8 @@
     .fam-azioni{display:flex;gap:.5rem;flex-wrap:wrap;}
     .btn-approva{padding:.5rem 1.1rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:6px;font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
     .btn-rifiuta{padding:.5rem 1.1rem;border:1.5px solid #dc2626;color:#dc2626;background:none;border-radius:6px;font-family:var(--fu);font-size:.65rem;font-weight:700;cursor:pointer;}
+    .btn-annulla-fam{padding:.5rem 1.1rem;border:1.5px solid #8b7a5a;color:#8b7a5a;background:none;border-radius:6px;font-family:var(--fu);font-size:.65rem;font-weight:700;cursor:pointer;transition:all .2s;}
+    .btn-annulla-fam:hover{border-color:var(--bosco);color:var(--bosco);}
   </style>
 </head>
 <body>
@@ -325,17 +327,19 @@
   <div class="tab-section" id="tab-mappa">
     <div style="padding:1.5rem 1.25rem">
       <div class="adm-card">
-        <h2>Pin in attesa di <em>approvazione</em></h2>
-        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
-          Ogni volta che un visitatore aggiunge un segnaposto sulla mappa del mondo, entra qui in attesa. Solo dopo la tua approvazione apparirà pubblicamente sulla mappa. Approva, rifiuta o modifica ogni pin prima di pubblicarlo.
-        </p>
-        <div id="pin-pending-list">
-          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento in corso…</p>
+        <h2>Mappa <em>— gestione pin</em></h2>
+        <div style="background:#f5f2e8;border:1px solid #d4c9a8;border-radius:8px;padding:1.1rem 1.25rem;margin-bottom:1.5rem">
+          <p style="font-size:.82rem;color:#6b5a2a;line-height:1.7;margin-bottom:.5rem">
+            <strong>ℹ️ Nota tecnica:</strong> I pin della mappa sono attualmente salvati nel browser di ogni visitatore (<code>localStorage</code>). Non transitano da un server centrale, quindi non è possibile moderarli da qui.
+          </p>
+          <p style="font-size:.82rem;color:#6b5a2a;line-height:1.7">
+            Per attivare la moderazione server-side (pin → tabella Supabase → approvazione admin) è necessario aggiornare <code>mondo.html</code> per inviare i nuovi pin a Supabase invece che al localStorage.
+          </p>
         </div>
-        <div style="border-top:1px solid #e8e0d0;margin-top:1.25rem;padding-top:1rem">
-          <p style="font-size:.75rem;color:#8b7a5a;margin-bottom:.6rem">Pin già approvati e visibili sulla mappa:</p>
-          <div id="pin-approved-list"></div>
-        </div>
+        <a href="mondo.html" target="_blank"
+           style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1.2rem;background:var(--bosco);color:#fff;border-radius:6px;text-decoration:none">
+          🗺️ Apri mappa del mondo →
+        </a>
       </div>
     </div>
   </div>
@@ -345,16 +349,18 @@
   <div class="tab-section" id="tab-alumni">
     <div style="padding:1.5rem 1.25rem">
       <div class="adm-card">
-        <h2>Schede <em>Alumni</em> in <em>attesa di approvazione</em></h2>
+        <h2>Schede <em>Alumni</em> in attesa</h2>
         <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
-          Ogni ex convittore che compila il form "Unisciti agli <em>Alumni</em>" appare qui. Approva la scheda e apparirà automaticamente nella gallery di alumni.html. Rifiutala e scompare silenziosamente.
+          Ogni ex convittore che compila il form "Unisciti agli <em>Alumni</em>" appare qui con <code>approvato = false</code>. Approva la scheda e apparirà nella gallery. Rifiuta e scompare silenziosamente. Puoi annullare un'approvazione in qualsiasi momento.
         </p>
         <div id="alumni-pending-list">
-          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento in corso…</p>
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
         </div>
-        <div style="border-top:1px solid #e8e0d0;margin-top:1.25rem;padding-top:1rem">
-          <p style="font-size:.75rem;color:#8b7a5a;margin-bottom:.6rem"><em>Alumni</em> già approvati e visibili nella gallery:</p>
-          <div id="alumni-approved-list"></div>
+        <div style="border-top:1px solid #e8e0d0;margin-top:1.75rem;padding-top:1.25rem">
+          <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8b7a5a;margin-bottom:.85rem"><em>Alumni</em> approvati — visibili nella gallery</p>
+          <div id="alumni-approved-list">
+            <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
+          </div>
         </div>
       </div>
     </div>
@@ -623,11 +629,14 @@ async function famLoad(stato) {
           <div class="fam-campo"><strong>Richiesta</strong>${f.created_at ? f.created_at.slice(0,10) : '—'}</div>
           <div class="fam-campo"><strong>Stato</strong>${f.stato}</div>
         </div>
-        ${f.stato === 'in_attesa' ? `
         <div class="fam-azioni">
-          <button class="btn-approva" onclick="famAzione('${f.id}','approvata')">✅ Approva</button>
-          <button class="btn-rifiuta" onclick="famAzione('${f.id}','rifiutata')">✗ Rifiuta</button>
-        </div>` : ''}
+          ${f.stato === 'in_attesa' ? `
+            <button class="btn-approva" onclick="famAzione('${f.id}','approvata')">✅ Approva</button>
+            <button class="btn-rifiuta" onclick="famAzione('${f.id}','rifiutata')">✗ Rifiuta</button>
+          ` : `
+            <button class="btn-annulla-fam" onclick="famAzione('${f.id}','in_attesa')">↩ Annulla</button>
+          `}
+        </div>
       </div>`).join('');
 
     // Aggiorna badge tab famiglie
@@ -656,6 +665,96 @@ async function famAzione(id, nuovoStato) {
   } else {
     alert('Errore: ' + resp.status);
   }
+}
+
+
+// ═══ ALUMNI ═══
+async function loadAlumni() {
+  const pendingEl  = document.getElementById('alumni-pending-list');
+  const approvedEl = document.getElementById('alumni-approved-list');
+
+  pendingEl.innerHTML  = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+  approvedEl.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+
+  try {
+    // In attesa
+    const pending = await sbFetch('alumni_pubblici?approvato=eq.false&order=created_at.desc');
+    if (!pending.length) {
+      pendingEl.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessuna scheda in attesa.</p>';
+    } else {
+      pendingEl.innerHTML = pending.map(a => alumniCard(a, false)).join('');
+    }
+
+    // Approvati
+    const approved = await sbFetch('alumni_pubblici?approvato=eq.true&order=created_at.desc');
+    if (!approved.length) {
+      approvedEl.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessun alumni approvato.</p>';
+    } else {
+      approvedEl.innerHTML = approved.map(a => alumniCard(a, true)).join('');
+    }
+  } catch(e) {
+    pendingEl.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+function alumniCard(a, approvato) {
+  return `
+    <div class="fam-card ${approvato ? 'approvata' : 'in_attesa'}" style="margin-bottom:.75rem">
+      <div class="fam-info">
+        <div class="fam-campo"><strong>Nome</strong>${a.nome || '—'}</div>
+        <div class="fam-campo"><strong>Lavoro</strong>${a.lavoro || '—'}</div>
+        <div class="fam-campo"><strong>Città</strong>${a.citta || '—'}</div>
+        <div class="fam-campo"><strong>Anni convitto</strong>${a.anni || '—'}</div>
+        <div class="fam-campo"><strong>Email</strong>${a.email || '—'}</div>
+      </div>
+      ${a.ricordo ? `<div style="font-size:.8rem;color:#6b5a2a;font-style:italic;margin:0 0 .75rem;padding:.5rem .75rem;background:#f9f6ef;border-radius:6px">"${a.ricordo}"</div>` : ''}
+      <div class="fam-azioni">
+        ${!approvato ? `
+          <button class="btn-approva" onclick="alumniAzione('${a.id}', true)">✅ Approva</button>
+          <button class="btn-rifiuta" onclick="alumniElimina('${a.id}')">🗑️ Rifiuta ed elimina</button>
+        ` : `
+          <button class="btn-annulla-fam" onclick="alumniAzione('${a.id}', false)">↩ Annulla approvazione</button>
+          <button class="btn-rifiuta" onclick="alumniElimina('${a.id}')">🗑️ Elimina</button>
+        `}
+      </div>
+    </div>`;
+}
+
+async function alumniAzione(id, approva) {
+  const label = approva ? 'approvare' : "annullare l'approvazione di";
+  if (!confirm('Sei sicuro di voler ' + label + ' questa scheda alumni?')) return;
+  const resp = await fetch(SB_N + '/rest/v1/alumni_pubblici?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ approvato: approva })
+  });
+  if (resp.ok) {
+    await loadAlumni();
+  } else {
+    alert('Errore: ' + resp.status);
+  }
+}
+
+async function alumniElimina(id) {
+  if (!confirm("Eliminare definitivamente questa scheda alumni? L'operazione non è reversibile.")) return;
+  const resp = await fetch(SB_N + '/rest/v1/alumni_pubblici?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  if (resp.ok) {
+    await loadAlumni();
+  } else {
+    alert('Errore: ' + resp.status);
+  }
+}
+
+// Helper fetch generico con service key
+async function sbFetch(endpoint) {
+  const resp = await fetch(SB_N + '/rest/v1/' + endpoint, {
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  if (!resp.ok) throw new Error('HTTP ' + resp.status + ': ' + await resp.text());
+  return resp.json();
 }
 
 // ═══ AI — genera testo notizie e avvisi ═══
@@ -773,6 +872,8 @@ function switchTab(nome, btn) {
   const section = document.getElementById('tab-' + nome);
   if (section) section.classList.add('on');
   if (btn) btn.classList.add('on');
+  // Carica dati al primo accesso al tab
+  if (nome === 'alumni') loadAlumni();
 }
 
 </script>
