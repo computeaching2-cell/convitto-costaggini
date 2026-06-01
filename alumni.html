@@ -37,8 +37,8 @@
     .badge-ex{display:inline-block;font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .55rem;border-radius:20px;background:rgba(184,146,42,.12);color:#8B6914;margin-top:.25rem}
     .alumni-card{background:var(--bosco);border-radius:10px;overflow:hidden;border:1px solid rgba(184,146,42,.15);transition:transform .2s,box-shadow .2s;min-width:0;word-break:break-word}
     .alumni-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.25)}
-    .alumni-avatar{width:100%;aspect-ratio:2/1;background:linear-gradient(135deg,rgba(245,240,232,.08),rgba(245,240,232,.03));display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:3.5rem;font-style:italic;color:rgba(184,146,42,.4);border-bottom:1px solid rgba(184,146,42,.1)}
-    .alumni-body{padding:1.25rem}
+    .alumni-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,rgba(184,146,42,.2),rgba(184,146,42,.08));border:1.5px solid rgba(184,146,42,.25);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.4rem;font-style:italic;color:var(--oro2)}
+    .alumni-card-inner{display:flex;align-items:flex-start;gap:.85rem;padding:1.1rem}.alumni-body{flex:1;min-width:0}
     .alumni-name{font-family:var(--fd);font-size:1.15rem;font-weight:400;color:var(--av);margin-bottom:.2rem}
     .alumni-role{font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);margin-bottom:.7rem}
     .alumni-quote{font-size:.82rem;color:rgba(245,240,232,.65);line-height:1.75;font-style:italic}
@@ -219,13 +219,15 @@
       const card = document.createElement('div');
       card.className = 'alumni-card';
       card.innerHTML = `
-        <div class="alumni-avatar">${(a.nome||'?')[0].toUpperCase()}</div>
-        <div class="alumni-body">
+        <div class="alumni-card-inner">
+          <div class="alumni-avatar">${(a.nome||'?')[0].toUpperCase()}</div>
+          <div class="alumni-body">
           <h3 class="alumni-name">${a.nome||''}</h3>
           <p class="alumni-role">${a.lavoro||''}${a.citta?' · '+a.citta:''}</p>
           <p class="alumni-quote">"${a.ricordo||''}"</p>
           <p class="alumni-years">Convittore/trice ${a.anni||''}</p>
           ${socialRow}${contattaBtn}
+          </div>
         </div>`;
       grid.appendChild(card);
     });
