@@ -34,7 +34,7 @@ const sb = {
           'apikey': SUPABASE_PUB,
           'Authorization': `Bearer ${SUPABASE_PUB}`,
           'Content-Type': 'application/json',
-          'Prefer': 'return=representation'
+          'Prefer': 'return=minimal'
         },
         body: JSON.stringify(data)
       }
@@ -53,7 +53,7 @@ const sb = {
           'apikey': serviceKey || SUPABASE_PUB,
           'Authorization': `Bearer ${serviceKey || SUPABASE_PUB}`,
           'Content-Type': 'application/json',
-          'Prefer': 'return=representation'
+          'Prefer': 'return=minimal'
         },
         body: JSON.stringify(data)
       }
