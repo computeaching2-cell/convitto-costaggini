@@ -452,23 +452,30 @@ document.getElementById('ia-form').addEventListener('submit', async function(e) 
 
   try {
     // 1. Salva scheda alumni su Supabase (approvato=false → in attesa)
-    await sb.insert('alumni', {
-      nome, firma, anni, citta, lavoro, settore, ricordo, email,
-      social_fb: fb, social_ig: ig, social_li: li, social_web: web,
-      contattabile,
-      colore: Math.floor(Math.random()*5),
-      approvato: false
-    });
+    try {
+      await sb.insert('alumni', {
+        nome, firma, anni, citta, lavoro, settore, ricordo, email,
+        social_fb: fb, social_ig: ig, social_li: li, social_web: web,
+        contattabile,
+        colore: Math.floor(Math.random()*5),
+        approvato: false
+      });
+    } catch(insertErr) {
+      // Ignora errore JSON su risposta vuota (201 senza body)
+      if (!insertErr.message.includes('JSON') && !insertErr.message.includes('end of JSON')) throw insertErr;
+    }
 
     // 2. Salva ricordo su Supabase (approvato=false)
-    await sb.insert('ricordi', {
-      testo: ricordo,
-      nome: firma,
-      anni,
-      dove: [citta, lavoro].filter(Boolean).join(' · '),
-      colore: Math.floor(Math.random()*5),
-      approvato: false
-    });
+    try {
+      await sb.insert('ricordi', {
+        testo: ricordo,
+        nome: firma,
+        anni,
+        dove: [citta, lavoro].filter(Boolean).join(' · '),
+        colore: Math.floor(Math.random()*5),
+        approvato: false
+      });
+    } catch(e) { if (!e.message.includes('JSON') && !e.message.includes('end of JSON')) console.warn('ricordi:', e); }
 
     // 3. Se ha acconsentito alla mappa → geocodifica e salva pin
     if (mappa && citta) {
