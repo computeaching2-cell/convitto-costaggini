@@ -205,7 +205,8 @@
     <button class="main-tab" onclick="switchTab('avvisi',this)">📋 Avvisi & Comunicati</button>
     <button class="main-tab" onclick="switchTab('mappa',this)">🗺️ Mappa — Pin in attesa</button>
     <button class="main-tab" onclick="switchTab('alumni',this)">👥 <em>Alumni</em> — Schede in attesa</button>
-    <button class="main-tab" id="tab-btn-famiglie" onclick="switchTab('famiglie',this)">👨‍👩‍👧 Famiglie <span id="badge-famiglie" style="display:none;background:#dc2626;color:#fff;font-size:.5rem;padding:.1rem .4rem;border-radius:10px;margin-left:.3rem;vertical-align:middle"></span></button>
+    <button class="main-tab" onclick="switchTab('openday',this)">📅 Open Day</button>
+      <button class="main-tab" id="tab-btn-famiglie" onclick="switchTab('famiglie',this)">👨‍👩‍👧 Famiglie <span id="badge-famiglie" style="display:none;background:#dc2626;color:#fff;font-size:.5rem;padding:.1rem .4rem;border-radius:10px;margin-left:.3rem;vertical-align:middle"></span></button>
   </div>
 
   
@@ -367,6 +368,27 @@
           <div id="alumni-approved-list">
             <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB OPEN DAY -->
+  <div class="tab-section" id="tab-openday">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Prenotazioni <em>Open Day</em></h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
+          Richieste di visita guidata ricevute tramite il form della pagina Open Day.
+        </p>
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">
+          <button class="btn-approva" style="font-size:.65rem" onclick="odLoad('nuova')">🆕 Nuove</button>
+          <button class="btn-ed edit" onclick="odLoad('confermata')">✅ Confermate</button>
+          <button class="btn-ed" onclick="odLoad('annullata')">✗ Annullate</button>
+          <button class="btn-ed" onclick="odLoad('')">Tutte</button>
+        </div>
+        <div id="od-list">
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
         </div>
       </div>
     </div>
@@ -745,6 +767,65 @@ async function pinElimina(id) {
   else { alert('Errore: ' + resp.status); }
 }
 
+
+// ═══ OPEN DAY ═══
+async function odLoad(stato) {
+  const list = document.getElementById('od-list');
+  list.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+  try {
+    const filter = stato ? '&stato=eq.' + stato : '';
+    const data   = await sbFetch('prenotazioni_openday?order=created_at.desc' + filter);
+    if (!data.length) {
+      list.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessuna prenotazione.</p>';
+      return;
+    }
+    list.innerHTML = data.map(p => `
+      <div class="fam-card ${p.stato}" style="margin-bottom:.75rem">
+        <div class="fam-info">
+          <div class="fam-campo"><strong>Nome</strong>${p.nome || '—'}</div>
+          <div class="fam-campo"><strong>Email</strong>${p.email || '—'}</div>
+          <div class="fam-campo"><strong>Telefono</strong>${p.telefono || '—'}</div>
+          <div class="fam-campo"><strong>Data preferita</strong>${p.data_pref || '—'}</div>
+          <div class="fam-campo"><strong>Persone</strong>${p.persone || '—'}</div>
+          <div class="fam-campo"><strong>Richiesta</strong>${p.created_at ? p.created_at.slice(0,10) : '—'}</div>
+          <div class="fam-campo"><strong>Stato</strong>${p.stato}</div>
+        </div>
+        ${p.note ? `<div style="font-size:.8rem;color:#6b5a2a;font-style:italic;margin:.5rem 0 .75rem;padding:.5rem .75rem;background:#f9f6ef;border-radius:6px">"${p.note}"</div>` : ''}
+        <div class="fam-azioni">
+          ${p.stato === 'nuova' ? `
+            <button class="btn-approva" onclick="odAzione('${p.id}','confermata')">✅ Conferma</button>
+            <button class="btn-rifiuta" onclick="odAzione('${p.id}','annullata')">✗ Annulla</button>
+          ` : `
+            <button class="btn-annulla-fam" onclick="odAzione('${p.id}','nuova')">↩ Riporta a nuova</button>
+            <button class="btn-rifiuta" onclick="odElimina('${p.id}')">🗑️ Elimina</button>
+          `}
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    list.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+async function odAzione(id, stato) {
+  const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/prenotazioni_openday?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ', 'Authorization': 'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ', 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ stato })
+  });
+  if (resp.ok) { await odLoad('nuova'); }
+  else { alert('Errore: ' + resp.status); }
+}
+
+async function odElimina(id) {
+  if (!confirm("Eliminare definitivamente questa prenotazione?")) return;
+  const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/prenotazioni_openday?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ', 'Authorization': 'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ' }
+  });
+  if (resp.ok) { await odLoad(''); }
+  else { alert('Errore: ' + resp.status); }
+}
+
 // ═══ ALUMNI ═══
 async function loadAlumni() {
   const pendingEl  = document.getElementById('alumni-pending-list');
@@ -951,8 +1032,9 @@ function switchTab(nome, btn) {
   if (section) section.classList.add('on');
   if (btn) btn.classList.add('on');
   // Carica dati al primo accesso al tab
-  if (nome === 'alumni') loadAlumni();
-  if (nome === 'mappa')  loadPins();
+  if (nome === 'alumni')  loadAlumni();
+  if (nome === 'mappa')   loadPins();
+  if (nome === 'openday') odLoad('nuova');
 }
 
 </script>
