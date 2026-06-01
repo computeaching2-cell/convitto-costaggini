@@ -24,6 +24,9 @@ const sb = {
 
   // ── INSERT ────────────────────────────────────────
   async insert(table, data) {
+    console.log('[SB INSERT] table:', table);
+    console.log('[SB INSERT] apikey starts with:', SUPABASE_PUB.substring(0, 20));
+    console.log('[SB INSERT] data:', JSON.stringify(data).substring(0, 100));
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/${table}`,
       { method: 'POST',
@@ -36,6 +39,7 @@ const sb = {
         body: JSON.stringify(data)
       }
     );
+    console.log('[SB INSERT] response status:', res.status);
     if (!res.ok) throw new Error(await res.text());
     return res.json();
   },
