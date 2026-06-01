@@ -308,6 +308,9 @@
               <input type="checkbox" id="ia-cons1" required/>
               <span class="ia-check-label">Acconsento alla pubblicazione della mia scheda sul sito del Convitto "Costaggini" dopo approvazione dell'amministratore. <span style="color:#f87171">*</span></span>
             </label>
+            <div id="ia-cons-msg" style="display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:.6rem 1rem;font-size:.82rem;color:#b91c1c;margin-bottom:.5rem">
+              ⚠️ È necessario accettare entrambi i consensi per procedere.
+            </div>
             <label class="ia-check">
               <input type="checkbox" id="ia-cons2" required/>
               <span class="ia-check-label">Ho letto l'<a href="privacy.html" target="_blank">informativa privacy</a> e acconsento al trattamento dei miei dati ai sensi del GDPR. <span style="color:#f87171">*</span></span>
@@ -320,6 +323,9 @@
         </div>
 
         <!-- SUBMIT -->
+        <div id="ia-error-msg" style="display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:.75rem 1rem;font-size:.85rem;color:#b91c1c;margin-bottom:1rem;line-height:1.6">
+          ❌ Errore durante l'invio. Controlla la connessione e riprova. Se il problema persiste, scrivi a <strong>convitto@alberghierorieti.it</strong>
+        </div>
         <button type="submit" class="ia-submit">
           <svg viewBox="0 0 24 24" width="16" height="16" style="fill:#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
           Invia la mia scheda
@@ -409,12 +415,20 @@ document.getElementById('ia-form').addEventListener('submit', async function(e) 
     if (!el.value.trim()) { el.style.borderColor='#f87171'; ok=false; }
     else el.style.borderColor='';
   });
+  const consMsg = document.getElementById('ia-cons-msg');
   if (!document.getElementById('ia-cons1').checked ||
       !document.getElementById('ia-cons2').checked) {
-    alert('Accetta i consensi obbligatori prima di procedere.');
+    if (consMsg) { consMsg.style.display = 'block'; consMsg.scrollIntoView({behavior:'smooth',block:'nearest'}); }
     ok = false;
+  } else {
+    if (consMsg) consMsg.style.display = 'none';
   }
-  if (!ok) return;
+  if (!ok) {
+    // Scrolla al primo campo invalido
+    const firstInvalid = document.querySelector('[style*="border-color: rgb(248"]');
+    if (firstInvalid) firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
 
   const btn = document.querySelector('.ia-submit');
   btn.disabled = true;
@@ -485,7 +499,8 @@ document.getElementById('ia-form').addEventListener('submit', async function(e) 
   } catch(err) {
     btn.disabled = false;
     btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" style="fill:#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Invia la mia scheda';
-    alert('Errore durante l\'invio. Riprova tra qualche momento.');
+    const errBox = document.getElementById('ia-error-msg');
+    if (errBox) { errBox.style.display = 'block'; errBox.scrollIntoView({behavior:'smooth',block:'nearest'}); }
     console.error(err);
   }
 });
