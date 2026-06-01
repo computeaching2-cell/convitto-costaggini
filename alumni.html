@@ -52,7 +52,7 @@
     .hub-card-desc{font-family:var(--fu);font-size:.72rem;color:rgba(245,240,232,.5);line-height:1.65}
     .hub-card-arrow{position:absolute;bottom:1.25rem;right:1.25rem;font-size:.8rem;color:rgba(184,146,42,.4);transition:color .2s,transform .2s}
     .hub-card:hover .hub-card-arrow{color:var(--oro2);transform:translateX(3px)}
-  @media(min-width:480px){#alumni-community-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:860px){#alumni-community-grid{grid-template-columns:repeat(auto-fill,minmax(240px,320px))}}
+  @media(min-width:480px){#alumni-community-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:860px){#alumni-community-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
 </style>
 </head>
 <body data-page="alumni">
@@ -131,7 +131,7 @@
 
       <!-- Schede alumni dalla community (Supabase) -->
       <div id="alumni-community-grid" style="display:grid;gap:1.25rem;grid-template-columns:1fr">
-        <style>@media(min-width:480px){#alumni-community-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:860px){#alumni-community-grid{grid-template-columns:repeat(auto-fill,minmax(240px,320px))}}</style>
+        <style>@media(min-width:480px){#alumni-community-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:860px){#alumni-community-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}</style>
       </div>
 
       <!-- Messaggio se nessun alumni ancora -->
@@ -219,17 +219,15 @@
       const card = document.createElement('div');
       card.className = 'alumni-card';
       card.innerHTML = `
-        <div style="display:flex;align-items:flex-start;gap:.9rem;padding:1.1rem 1.1rem .9rem">
-          <div style="width:46px;height:46px;border-radius:50%;background:rgba(184,146,42,.15);border:1.5px solid rgba(184,146,42,.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;font-style:italic;color:var(--oro2)">
+        <div style="padding:1.25rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem">
+          <div style="width:56px;height:56px;border-radius:50%;background:rgba(184,146,42,.15);border:1.5px solid rgba(184,146,42,.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.6rem;font-style:italic;color:var(--oro2)">
             ${(a.nome||'?')[0].toUpperCase()}
           </div>
-          <div style="flex:1;min-width:0">
-            <h3 style="font-family:var(--fd);font-size:1rem;font-weight:400;color:var(--txt);margin:0 0 .1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.nome||''}</h3>
-            <p style="font-size:.78rem;color:var(--txt2);margin:0 0 .5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.lavoro||''}${a.citta?' · '+a.citta:''}</p>
-            ${a.ricordo?`<p style="font-size:.8rem;color:var(--txt2);font-style:italic;line-height:1.6;margin:0 0 .5rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">"${a.ricordo}"</p>`:''}
-            <p style="font-family:var(--fu);font-size:.58rem;color:rgba(184,146,42,.6);letter-spacing:.08em;text-transform:uppercase;margin:0">${a.anni?'Convittore/trice '+a.anni:''}</p>
-            ${socialRow}${contattaBtn}
-          </div>
+          <h3 style="font-family:var(--fd);font-size:.95rem;font-weight:400;color:var(--txt);margin:0;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.nome||''}</h3>
+          <p style="font-size:.75rem;color:var(--txt2);margin:0;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.lavoro||''}${a.citta?' · '+a.citta:''}</p>
+          ${a.anni?`<p style="font-family:var(--fu);font-size:.58rem;color:rgba(184,146,42,.6);letter-spacing:.08em;text-transform:uppercase;margin:0">${a.anni}</p>`:''}
+          ${a.ricordo?`<p style="font-size:.78rem;color:var(--txt2);font-style:italic;line-height:1.5;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">"${a.ricordo}"</p>`:''}
+          ${socialRow}${contattaBtn}
         </div>
       `;
       grid.appendChild(card);
