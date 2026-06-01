@@ -41,7 +41,7 @@ const sb = {
     );
     console.log('[SB INSERT] response status:', res.status);
     if (!res.ok) throw new Error(await res.text());
-    return res.json();
+    return res.status === 201 ? {} : await res.json();
   },
 
   // ── UPDATE (solo per admin con service key) ───────
