@@ -452,7 +452,7 @@ window.addEventListener('DOMContentLoaded', function() {
 const PWD_HASH = '4d7f432968e1da3b3d6d7dec2f99f4d0b65b3751eeec4d1ea36d45d7bcda288b'; // password hashata SHA-256
 // ═══ NOTIZIE — SUPABASE ═══
 const SB_N = 'https://sawclsysqnjsvbobioqo.supabase.co';
-const SB_PUB = 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ';
+const SB_PUB = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTM3NjksImV4cCI6MjA5NDc4OTc2OX0.vS-hoxI2YUlxCWIdDzARqqpGzmXTDi8hq1AVU2jdhZ0';
 
 let editNotiziaId = null;
 
@@ -940,7 +940,7 @@ async function alumniElimina(id) {
 // Helper fetch generico con service key
 async function sbFetch(endpoint) {
   const resp = await fetch(SB_N + '/rest/v1/' + endpoint, {
-    headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
   });
   if (!resp.ok) throw new Error('HTTP ' + resp.status + ': ' + await resp.text());
   return resp.json();

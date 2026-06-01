@@ -500,8 +500,9 @@ document.getElementById('ia-form').addEventListener('submit', async function(e) 
 
     // Mostra successo
     document.getElementById('ia-form').style.display = 'none';
-    document.getElementById('ia-success').style.display = 'block';
-    window.scrollTo({ top:0, behavior:'smooth' });
+    const successEl = document.getElementById('ia-success');
+    successEl.style.display = 'block';
+    setTimeout(() => successEl.scrollIntoView({ behavior:'smooth', block:'center' }), 100);
 
   } catch(err) {
     btn.disabled = false;
