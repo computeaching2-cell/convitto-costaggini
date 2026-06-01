@@ -498,11 +498,31 @@ document.getElementById('ia-form').addEventListener('submit', async function(e) 
       } catch(e) { /* geocoding fallito — non blocca */ }
     }
 
-    // Mostra successo
-    document.getElementById('ia-form').style.display = 'none';
-    const successEl = document.getElementById('ia-success');
-    successEl.style.display = 'block';
-    setTimeout(() => successEl.scrollIntoView({ behavior:'smooth', block:'center' }), 100);
+    // Mostra successo — overlay centrato
+    const ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(6,13,6,.92);display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px)';
+    ov.innerHTML = `
+      <div style="background:#141e14;border:1px solid rgba(184,146,42,.3);border-radius:16px;padding:2.5rem 2rem;max-width:460px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)">
+        <div style="font-size:3rem;margin-bottom:1rem">✦</div>
+        <h2 style="font-family:var(--fd);font-size:1.8rem;font-weight:300;color:#fff;margin-bottom:.75rem">Scheda <em style="color:var(--oro3)">ricevuta</em></h2>
+        <p style="font-family:var(--fu);font-size:.84rem;color:rgba(245,240,232,.65);line-height:1.75;margin-bottom:.6rem">
+          Grazie. La tua scheda è in attesa di approvazione — apparirà nella gallery degli alumni entro 24 ore.
+        </p>
+        <p style="font-family:var(--fu);font-size:.84rem;color:rgba(245,240,232,.65);line-height:1.75;margin-bottom:1.75rem">
+          Hai anche lasciato una traccia sul Muro dei Ricordi. Benvenuto nella comunità del Costaggini.
+        </p>
+        <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+          <a href="alumni.html" style="display:inline-block;background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--bosco);padding:.7rem 1.75rem;border-radius:40px;text-decoration:none;font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase">
+            Vai alla gallery →
+          </a>
+          <button onclick="this.closest('div[style*=fixed]').remove();document.body.style.overflow=''"
+            style="background:none;border:1px solid rgba(245,240,232,.25);color:rgba(245,240,232,.7);padding:.7rem 1.75rem;border-radius:40px;cursor:pointer;font-family:var(--fu);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase">
+            Chiudi
+          </button>
+        </div>
+      </div>`;
+    document.body.appendChild(ov);
+    document.body.style.overflow = 'hidden';
 
   } catch(err) {
     btn.disabled = false;
