@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="La comunità del Convitto Costaggini — alumni, ricordi, testimonianze, mappa nel mondo. Chi è passato di qui, rimane qui."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>La nostra Comunità | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .al-hero{position:relative;min-height:55vh;display:flex;flex-direction:column;justify-content:flex-end;background:var(--bosco);overflow:hidden}
+    .al-hero-bg{position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,20,13,.5) 0%,rgba(12,20,13,.88) 100%),url('https://www.alberghierorieti.edu.it/wp-content/uploads/1704014837735-300x225.jpg') center/cover no-repeat}
+    .al-hero-content{position:relative;z-index:2;padding:5rem 1.25rem 3rem;max-width:700px}
+    .al-hero h1{font-family:var(--fd);font-size:clamp(2rem,7vw,4rem);font-weight:300;color:#fff;line-height:1.1;margin-bottom:.7rem}
+    .al-hero h1 em{font-style:italic;color:var(--oro3);display:block}
+    .al-hero p{color:rgba(255,255,255,.65);font-size:.95rem;line-height:1.75;max-width:520px}
+    .video-hero-wrap{position:relative;padding-bottom:56.25%;background:#0a0f0a;overflow:hidden}
+    .video-hero-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+    .stat-row{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(184,146,42,.15);border-radius:8px;overflow:hidden}
+    @media(min-width:480px){.stat-row{grid-template-columns:repeat(4,1fr)}}
+    .stat-cell{background:var(--bosco);padding:1.25rem 1rem;text-align:center}
+    .stat-n{font-family:var(--fd);font-size:2.2rem;font-weight:300;color:var(--oro3);display:block;line-height:1}
+    .stat-l{font-family:var(--fu);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.45);margin-top:.3rem;display:block}
+    .test-big{background:var(--av2);border:1px solid var(--av3);border-radius:10px;padding:1.75rem 1.5rem;position:relative}
+    .test-big::before{content:'"';position:absolute;top:-.5rem;left:1rem;font-family:var(--fd);font-size:5rem;color:var(--oro2);opacity:.15;line-height:1;pointer-events:none}
+    .test-big blockquote{font-family:var(--fd);font-size:clamp(1rem,2.5vw,1.2rem);font-style:italic;color:var(--bosco);line-height:1.7;margin:0 0 1.25rem}
+    .test-author-row{display:flex;align-items:center;gap:.9rem}
+    .test-avatar-big{width:48px;height:48px;border-radius:50%;background:var(--bosco);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;font-style:italic;color:var(--oro2);flex-shrink:0;border:2px solid rgba(184,146,42,.2)}
+    .test-name-big{font-family:var(--fu);font-size:.72rem;font-weight:700;color:var(--bosco);letter-spacing:.05em}
+    .test-role-big{font-size:.75rem;color:var(--txt2);margin-top:.1rem}
+    .badge-ex{display:inline-block;font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .55rem;border-radius:20px;background:rgba(184,146,42,.12);color:#8B6914;margin-top:.25rem}
+    .alumni-card{background:var(--bosco);border-radius:10px;overflow:hidden;border:1px solid rgba(184,146,42,.15);transition:transform .2s,box-shadow .2s;min-width:0;word-break:break-word}
+    .alumni-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.25)}
+    
+    .alumni-body{padding:1.25rem}
+    .alumni-name{font-family:var(--fd);font-size:1.15rem;font-weight:400;color:var(--av);margin-bottom:.2rem}
+    .alumni-role{font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--oro2);margin-bottom:.7rem}
+    .alumni-quote{font-size:.82rem;color:rgba(245,240,232,.65);line-height:1.75;font-style:italic}
+    .alumni-years{font-family:var(--fu);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.3);margin-top:.75rem}
+    .hub-grid{display:grid;grid-template-columns:1fr;gap:1.25rem;margin-top:2rem}@media(min-width:480px){.hub-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:860px){.hub-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}}
+    .hub-card{display:block;text-decoration:none;background:linear-gradient(135deg,var(--bosco),#1a3a1b);border:1px solid rgba(184,146,42,.2);border-radius:12px;padding:1.75rem 1.5rem;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s}
+    .hub-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.35);border-color:rgba(184,146,42,.4)}
+    .hub-card-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
+    .hub-card-title{font-family:var(--fd);font-size:1.25rem;font-weight:300;color:#fff;margin-bottom:.35rem}
+    .hub-card-title em{font-style:italic;color:var(--oro3)}
+    .hub-card-desc{font-family:var(--fu);font-size:.72rem;color:rgba(245,240,232,.5);line-height:1.65}
+    .hub-card-arrow{position:absolute;bottom:1.25rem;right:1.25rem;font-size:.8rem;color:rgba(184,146,42,.4);transition:color .2s,transform .2s}
+    .hub-card:hover .hub-card-arrow{color:var(--oro2);transform:translateX(3px)}
+  #alumni-community-grid{grid-template-columns:repeat(2,1fr);gap:1rem;max-width:1200px;margin:0 auto}@media(min-width:600px){#alumni-community-grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:900px){#alumni-community-grid{grid-template-columns:repeat(5,1fr)}}
+</style>
+<script src="supabase.js"></script>
+</head>
+<body data-page="alumni">
+<main id="main">
+
+  <section class="al-hero">
+    <div class="al-hero-bg" aria-hidden="true"></div>
+    <div class="al-hero-content w">
+      <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:1.5rem">
+        <a href="index.html" style="color:rgba(245,240,232,.55)">Home</a>
+        <span style="color:rgba(245,240,232,.3)">›</span>
+        <span aria-current="page" style="color:var(--oro2)">La nostra Comunità</span>
+      </nav>
+      <span style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);display:block;margin-bottom:.75rem">— <em>Alumni</em> &amp; Comunità</span>
+      <h1>Chi è passato<br><em>di qui, rimane qui</em></h1>
+      <p>Oltre 3.000 alumni stimati in 60 anni di storia. Sparsi per il mondo, uniti dalla stessa esperienza. Questa è la nostra comunità.</p>
+    </div>
+  </section>
+
+  <section style="background:#0a0f0a;padding:0">
+    <div class="w" style="padding-top:2.5rem;padding-bottom:1.5rem">
+      <p class="lbl" style="color:var(--oro2)">Video</p>
+      <h2 style="color:var(--av)">Il Convitto si <em style="color:var(--oro3)">presenta</em></h2>
+      <p style="color:rgba(245,240,232,.5);font-size:.88rem;max-width:520px;margin:.4rem 0 1.5rem">Una presentazione dell'Istituto e del Convitto "Costaggini" di Rieti.</p>
+    </div>
+    <div style="max-width:860px;margin:0 auto">
+      <div class="video-hero-wrap">
+        <iframe src="https://www.youtube.com/embed/a5KTPj68dso"
+                title="IPSSEOA Alberghiero Costaggini Rieti"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+    <div style="padding:1rem 1.25rem 2.5rem;text-align:center">
+      <p style="font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.3)">IPSSEOA "R. A. Costaggini" — Rieti · Dal 1962</p>
+    </div>
+  </section>
+
+  <section style="background:linear-gradient(135deg,var(--bosco),#1a2e1b);padding:3.5rem 1.25rem">
+    <div class="w">
+      <p class="lbl" style="color:var(--oro2)">60 anni di storia</p>
+      <h2 style="color:var(--av)">Il Convitto <em style="color:var(--oro3)">in numeri</em></h2>
+      <div class="stat-row rv" style="margin-top:1.75rem">
+        <div class="stat-cell"><span class="stat-n">60</span><span class="stat-l">Anni di attività</span></div>
+        <div class="stat-cell"><span class="stat-n">129</span><span class="stat-l">Convittori oggi</span></div>
+        <div class="stat-cell"><span class="stat-n">~3.000</span><span class="stat-l"><em>Alumni</em> stimati</span></div>
+        <div class="stat-cell"><span class="stat-n">20+</span><span class="stat-l">Nazioni di provenienza</span></div>
+      </div>
+      <div class="stat-row rv d1" style="margin-top:1px">
+        <div class="stat-cell"><span class="stat-n">5</span><span class="stat-l">Piani residenziali</span></div>
+        <div class="stat-cell"><span class="stat-n">20</span><span class="stat-l">Anni Lab. Musicale</span></div>
+        <div class="stat-cell"><span class="stat-n">6+</span><span class="stat-l">Sport praticati</span></div>
+        <div class="stat-cell"><span class="stat-n">10+</span><span class="stat-l">Paesi Erasmus+</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--av);padding:5rem 1.25rem">
+    <div class="w">
+      <p class="lbl">Le voci</p>
+      <h2>Cosa dicono <em>i protagonisti</em></h2>
+      <p style="color:var(--txt2);max-width:560px;margin:.5rem 0 2.5rem;font-size:.88rem;line-height:1.75">Voci autentiche — convittori in corso ed ex alunni.</p>
+      <div style="background:var(--av2);border:1px solid var(--av3);border-radius:10px;padding:1.75rem;text-align:center" class="rv">
+        <p style="font-family:var(--fd);font-size:1.1rem;font-style:italic;color:var(--bosco);margin-bottom:.75rem">Le testimonianze degli alumni arriveranno presto.</p>
+        <p style="font-size:.85rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.7">Sei un ex convittore? Aggiungi la tua voce — sarà pubblicata dopo la nostra approvazione.</p>
+        <a href="iscriviti-alumni.html" class="btn-gold">✦ Aggiungi la tua testimonianza →</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--av2);padding:3rem 1.25rem">
+    <div class="w">
+      <p class="lbl">Dove sono ora</p>
+      <h2>Le storie degli <em>Alumni</em></h2>
+      <p style="color:var(--txt2);max-width:560px;margin:.5rem 0 2rem;font-size:.88rem;line-height:1.75">Dal Costaggini al mondo. Cuochi, maître, hotel manager, imprenditori, musicisti.</p>
+
+      <!-- Schede alumni dalla community (Supabase) -->
+      <div id="alumni-community-grid" style="display:grid;gap:1.25rem;grid-template-columns:1fr">
+        <style>#alumni-community-grid{grid-template-columns:repeat(2,1fr);gap:1rem;max-width:1200px;margin:0 auto}@media(min-width:600px){#alumni-community-grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:900px){#alumni-community-grid{grid-template-columns:repeat(5,1fr)}}</style>
+      </div>
+
+      <!-- Messaggio se nessun alumni ancora -->
+      <div id="alumni-empty-msg" style="background:var(--av);border:1px solid var(--av3);border-radius:10px;padding:1.75rem;text-align:center;display:none">
+        <p style="font-family:var(--fd);font-size:1.05rem;font-style:italic;color:var(--bosco);margin-bottom:.5rem">Le schede degli alumni arriveranno presto.</p>
+        <p style="font-size:.83rem;color:var(--txt2)">Sei un ex convittore? Aggiungi la tua storia.</p>
+      </div>
+
+      <div style="text-align:center;margin-top:2rem">
+        <p style="font-family:var(--fd);font-size:1rem;font-style:italic;color:var(--bosco);margin-bottom:1rem">Sei passato dal Costaggini? Aggiungi la tua scheda.</p>
+        <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+          <a href="iscriviti-alumni.html" class="btn-gold">✦ Aggiungi la tua scheda →</a>
+          <a href="ricordi.html" class="btn-outline-dark">🕯️ Solo un ricordo →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--av);padding:5rem 1.25rem">
+    <div class="w">
+      <p class="lbl">Esplora la comunità</p>
+      <h2>Tutto quello che abbiamo <em>costruito insieme</em></h2>
+      <p style="color:var(--txt2);max-width:560px;margin:.5rem 0 0;font-size:.88rem;line-height:1.75">Ogni sezione è un modo diverso di raccontare chi siamo — nel tempo, nello spazio, nella memoria.</p>
+      <div class="hub-grid">
+        <a href="ricordi.html" class="hub-card rv">
+          <span class="hub-card-icon">🕯️</span>
+          <div class="hub-card-title">Il Muro dei <em>Ricordi</em></div>
+          <p class="hub-card-desc">Un frammento, una frase, un'emozione. Gli ex convittori lasciano qui un pezzo del loro tempo al Costaggini.</p>
+          <span class="hub-card-arrow">→</span>
+        </a>
+        <a href="lettera.html" class="hub-card rv d1">
+          <span class="hub-card-icon">💌</span>
+          <div class="hub-card-title">Lettera a un Futuro <em>Convittore</em></div>
+          <p class="hub-card-desc">Scritta da chi è già passato. Con i dubbi che aveva prima di entrare, e quello che ha trovato.</p>
+          <span class="hub-card-arrow">→</span>
+        </a>
+        <a href="mondo.html" class="hub-card rv d2">
+          <span class="hub-card-icon">🌍</span>
+          <div class="hub-card-title">Il Costaggini <em>nel Mondo</em></div>
+          <p class="hub-card-desc">Una mappa interattiva con i pin degli alumni sparsi in Italia e nel mondo. Aggiungi anche il tuo.</p>
+          <span class="hub-card-arrow">→</span>
+        </a>
+        <a href="vinile.html" class="hub-card rv d3">
+          <span class="hub-card-icon">🎵</span>
+          <div class="hub-card-title">Il Vinile del <em>Convitto</em></div>
+          <p class="hub-card-desc">Vent'anni di musica al Laboratorio. Ascolta le registrazioni dei ragazzi nel tempo.</p>
+          <span class="hub-card-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="nav.js"></script>
+<script>
+// Carica le schede alumni approvate da Supabase
+(async function() {
+  const grid = document.getElementById('alumni-community-grid');
+  if (!grid) return;
+  try {
+    const approved = await sb.select('alumni_pubblici', '');
+    if (!approved || !approved.length) {
+      const emptyMsg = document.getElementById('alumni-empty-msg');
+      if (emptyMsg) emptyMsg.style.display = 'block';
+      return;
+    }
+    approved.forEach(a => {
+      const s = a || {};
+      const socialIcons = [
+        a.social_fb  ? `<a href="${a.social_fb.startsWith('http')?a.social_fb:'https://facebook.com/'+a.social_fb}" target="_blank" rel="noopener" title="Facebook" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">📘</a>` : '',
+        a.social_ig  ? `<a href="${a.social_ig.startsWith('http')?a.social_ig:'https://instagram.com/'+a.social_ig.replace('@','')}" target="_blank" rel="noopener" title="Instagram" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">📸</a>` : '',
+        a.social_li  ? `<a href="${a.social_li}" target="_blank" rel="noopener" title="LinkedIn" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">💼</a>` : '',
+        a.social_web ? `<a href="${a.social_web}" target="_blank" rel="noopener" title="Sito web" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">🌐</a>` : '',
+      ].filter(Boolean).join('');
+
+      const socialRow = socialIcons ? `<div style="display:flex;gap:.5rem;margin-top:.6rem">${socialIcons}</div>` : '';
+      const contattaBtn = a.contattabile && a.email
+        ? `<a href="mailto:${a.email}?subject=Ciao%20dal%20Costaggini&body=Ciao%20${encodeURIComponent(a.nome||'')}%2C%20ti%20scrivo%20dal%20sito%20del%20Convitto..."
+             style="display:inline-flex;align-items:center;gap:.3rem;margin-top:.65rem;font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;background:rgba(184,146,42,.12);border:1px solid rgba(184,146,42,.25);border-radius:20px;color:var(--oro2);text-decoration:none"
+             onmouseover="this.style.background='rgba(184,146,42,.22)'" onmouseout="this.style.background='rgba(184,146,42,.12)'">
+             📩 Scrivimi
+           </a>` : '';
+
+      const card = document.createElement('div');
+      card.className = 'alumni-card';
+      const colore = a.colore !== undefined ? a.colore % 5 : 0;
+      const grads = [
+        'linear-gradient(135deg,#1a2e1b,#2d4a2e)',
+        'linear-gradient(135deg,#1e1e2e,#2a2a4a)',
+        'linear-gradient(135deg,#2e1e1a,#4a2d2a)',
+        'linear-gradient(135deg,#1e2a20,#2a3d30)',
+        'linear-gradient(135deg,#2a1e2e,#3d2a4a)'
+      ];
+      const grad = grads[colore];
+      card.style.background = grad;
+      card.style.border = '1px solid rgba(245,240,232,.1)';
+      card.innerHTML = `
+        <div style="padding:1.25rem 1rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;height:100%">
+          <div style="width:52px;height:52px;border-radius:50%;background:rgba(245,240,232,.1);border:1.5px solid rgba(245,240,232,.2);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.5rem;font-style:italic;color:rgba(245,240,232,.9)">
+            ${(a.nome||'?')[0].toUpperCase()}
+          </div>
+          <h3 style="font-family:var(--fd);font-size:.95rem;font-weight:400;color:#F5F0E8;margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.nome||''}</h3>
+          <p style="font-size:.72rem;color:rgba(245,240,232,.65);margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${[a.lavoro,a.citta].filter(Boolean).join(' · ')}</p>
+          ${a.anni?`<p style="font-family:var(--fu);font-size:.55rem;color:rgba(184,146,42,.8);letter-spacing:.08em;text-transform:uppercase;margin:0">${a.anni}</p>`:''}
+          ${a.ricordo?`<p style="font-size:.76rem;color:rgba(245,240,232,.55);font-style:italic;line-height:1.5;margin:.2rem 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">"${a.ricordo}"</p>`:''}
+          ${socialRow}${contattaBtn}
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  } catch(e) { console.warn('Supabase non raggiungibile:', e); }
+})();
+</script>
+</body>
+</html>
