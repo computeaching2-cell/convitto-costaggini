@@ -52,7 +52,7 @@
     .hub-card-desc{font-family:var(--fu);font-size:.72rem;color:rgba(245,240,232,.5);line-height:1.65}
     .hub-card-arrow{position:absolute;bottom:1.25rem;right:1.25rem;font-size:.8rem;color:rgba(184,146,42,.4);transition:color .2s,transform .2s}
     .hub-card:hover .hub-card-arrow{color:var(--oro2);transform:translateX(3px)}
-  #alumni-community-grid{grid-template-columns:repeat(2,1fr);gap:1rem;max-width:1200px;margin:0 auto}@media(min-width:600px){#alumni-community-grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:900px){#alumni-community-grid{grid-template-columns:repeat(5,1fr)}}
+  #alumni-community-grid{display:grid;grid-template-columns:repeat(2,180px);gap:.75rem;justify-content:center;margin:0 auto}@media(min-width:640px){#alumni-community-grid{grid-template-columns:repeat(3,180px)}}@media(min-width:960px){#alumni-community-grid{grid-template-columns:repeat(5,180px)}}}
 </style>
 <script src="supabase.js"></script>
 <script>
@@ -164,7 +164,7 @@ function alumniNoContact(e) {
 
       <!-- Schede alumni dalla community (Supabase) -->
       <div id="alumni-community-grid" style="display:grid;gap:1.25rem;grid-template-columns:1fr">
-        <style>#alumni-community-grid{grid-template-columns:repeat(2,1fr);gap:1rem;max-width:1200px;margin:0 auto}@media(min-width:600px){#alumni-community-grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:900px){#alumni-community-grid{grid-template-columns:repeat(5,1fr)}}</style>
+        <style>#alumni-community-grid{display:grid;grid-template-columns:repeat(2,180px);gap:.75rem;justify-content:center;margin:0 auto}@media(min-width:640px){#alumni-community-grid{grid-template-columns:repeat(3,180px)}}@media(min-width:960px){#alumni-community-grid{grid-template-columns:repeat(5,180px)}}}</style>
       </div>
 
       <!-- Messaggio se nessun alumni ancora -->
@@ -252,27 +252,28 @@ function alumniNoContact(e) {
       card.className = 'alumni-card';
       let colore = a.colore !== undefined ? a.colore % 5 : 0;
       let grads = [
-        'linear-gradient(135deg,#1a2e1b,#2d4a2e)',
-        'linear-gradient(135deg,#1e1e2e,#2a2a4a)',
-        'linear-gradient(135deg,#2e1e1a,#4a2d2a)',
-        'linear-gradient(135deg,#1e2a20,#2a3d30)',
-        'linear-gradient(135deg,#2a1e2e,#3d2a4a)'
+        'linear-gradient(160deg,#1a2e1b,#2d4a2e)',
+        'linear-gradient(160deg,#1e1e2e,#2a2a4a)',
+        'linear-gradient(160deg,#2e1a1a,#4a2d2d)',
+        'linear-gradient(160deg,#1a2a20,#2a3d30)',
+        'linear-gradient(160deg,#241a2e,#3a2a4a)'
       ];
-      let grad = grads[colore];
-      card.style.background = grad;
-      card.style.border = '1px solid rgba(245,240,232,.1)';
+      card.style.cssText = 'background:' + grads[colore] + ';border:1px solid rgba(245,240,232,.1);border-radius:10px;overflow:hidden;transition:transform .2s,box-shadow .2s';
+      card.onmouseenter = function(){ card.style.transform='translateY(-3px)';card.style.boxShadow='0 8px 24px rgba(0,0,0,.35)'; };
+      card.onmouseleave = function(){ card.style.transform='';card.style.boxShadow=''; };
+      let hasContact = a.contattabile && a.email;
       card.innerHTML = `
-        <div style="padding:1.1rem .9rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.4rem">
-          <div style="width:48px;height:48px;border-radius:50%;background:rgba(245,240,232,.1);border:1.5px solid rgba(245,240,232,.18);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.4rem;font-style:italic;color:rgba(245,240,232,.85);flex-shrink:0">
+        <div style="padding:1rem .85rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.35rem;height:100%;box-sizing:border-box">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(245,240,232,.1);border:1.5px solid rgba(245,240,232,.18);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;font-style:italic;color:rgba(245,240,232,.85);flex-shrink:0">
             ${(a.nome||'?')[0].toUpperCase()}
           </div>
-          <h3 style="font-family:var(--fd);font-size:1.05rem;font-weight:400;color:#F5F0E8;margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.nome||''}</h3>
-          <p style="font-size:.82rem;color:rgba(245,240,232,.7);margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${[a.lavoro,a.citta].filter(Boolean).join(' · ')}</p>
-          ${a.anni?`<p style="font-family:var(--fu);font-size:.6rem;color:rgba(184,146,42,.75);letter-spacing:.08em;text-transform:uppercase;margin:0">${a.anni}</p>`:''}
-          ${a.ricordo?`<p style="font-size:.8rem;color:rgba(245,240,232,.5);font-style:italic;line-height:1.5;margin:.2rem 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">"${a.ricordo}"</p>`:''}
-          ${a.contattabile && a.email
-            ? `<a href="mailto:${a.email}?subject=Ciao%20dal%20Costaggini" style="display:inline-flex;align-items:center;gap:.3rem;margin-top:.5rem;font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .85rem;background:rgba(184,146,42,.2);border:1px solid rgba(184,146,42,.4);border-radius:20px;color:var(--oro2);text-decoration:none">✉ Scrivimi</a>`
-            : `<button onclick="alumniNoContact(event)" style="display:inline-flex;align-items:center;gap:.3rem;margin-top:.5rem;font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .85rem;background:rgba(245,240,232,.05);border:1px solid rgba(245,240,232,.12);border-radius:20px;color:rgba(245,240,232,.35);cursor:pointer">✉ Scrivimi</button>`
+          <h3 style="font-family:var(--fd);font-size:.95rem;font-weight:400;color:#F5F0E8;margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.nome||''}</h3>
+          <p style="font-size:.75rem;color:rgba(245,240,232,.65);margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${[a.lavoro,a.citta].filter(Boolean).join(' · ')}</p>
+          ${a.anni ? '<p style="font-family:var(--fu);font-size:.58rem;color:rgba(184,146,42,.75);letter-spacing:.08em;text-transform:uppercase;margin:0">' + a.anni + '</p>' : ''}
+          ${a.ricordo ? '<p style="font-size:.75rem;color:rgba(245,240,232,.45);font-style:italic;line-height:1.5;margin:.15rem 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">"' + a.ricordo + '"</p>' : ''}
+          ${hasContact
+            ? '<a href="mailto:' + a.email + '?subject=Ciao%20dal%20Costaggini" style="display:inline-flex;align-items:center;gap:.25rem;margin-top:.4rem;font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;background:rgba(184,146,42,.2);border:1px solid rgba(184,146,42,.4);border-radius:20px;color:var(--oro2);text-decoration:none">✉ Scrivimi</a>'
+            : '<button onclick="alumniNoContact(event)" style="display:inline-flex;align-items:center;gap:.25rem;margin-top:.4rem;font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;background:rgba(245,240,232,.05);border:1px solid rgba(245,240,232,.12);border-radius:20px;color:rgba(245,240,232,.3);cursor:pointer">✉ Scrivimi</button>'
           }
         </div>
       `;
