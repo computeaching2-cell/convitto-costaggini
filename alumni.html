@@ -52,8 +52,9 @@
     .hub-card-desc{font-family:var(--fu);font-size:.72rem;color:rgba(245,240,232,.5);line-height:1.65}
     .hub-card-arrow{position:absolute;bottom:1.25rem;right:1.25rem;font-size:.8rem;color:rgba(184,146,42,.4);transition:color .2s,transform .2s}
     .hub-card:hover .hub-card-arrow{color:var(--oro2);transform:translateX(3px)}
-  @media(min-width:480px){#alumni-community-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:860px){#alumni-community-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
+  #alumni-community-grid{grid-template-columns:repeat(2,1fr);gap:1rem;max-width:1200px;margin:0 auto}@media(min-width:600px){#alumni-community-grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:900px){#alumni-community-grid{grid-template-columns:repeat(5,1fr)}}
 </style>
+<script src="supabase.js"></script>
 </head>
 <body data-page="alumni">
 <main id="main">
@@ -131,7 +132,7 @@
 
       <!-- Schede alumni dalla community (Supabase) -->
       <div id="alumni-community-grid" style="display:grid;gap:1.25rem;grid-template-columns:1fr">
-        <style>@media(min-width:480px){#alumni-community-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:860px){#alumni-community-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}</style>
+        <style>#alumni-community-grid{grid-template-columns:repeat(2,1fr);gap:1rem;max-width:1200px;margin:0 auto}@media(min-width:600px){#alumni-community-grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:900px){#alumni-community-grid{grid-template-columns:repeat(5,1fr)}}</style>
       </div>
 
       <!-- Messaggio se nessun alumni ancora -->
@@ -185,7 +186,6 @@
   </section>
 
 </main>
-<script src="supabase.js"></script>
 <script src="nav.js"></script>
 <script>
 // Carica le schede alumni approvate da Supabase
@@ -218,15 +218,26 @@
 
       const card = document.createElement('div');
       card.className = 'alumni-card';
+      const colore = a.colore !== undefined ? a.colore % 5 : 0;
+      const grads = [
+        'linear-gradient(135deg,#1a2e1b,#2d4a2e)',
+        'linear-gradient(135deg,#1e1e2e,#2a2a4a)',
+        'linear-gradient(135deg,#2e1e1a,#4a2d2a)',
+        'linear-gradient(135deg,#1e2a20,#2a3d30)',
+        'linear-gradient(135deg,#2a1e2e,#3d2a4a)'
+      ];
+      const grad = grads[colore];
+      card.style.background = grad;
+      card.style.border = '1px solid rgba(245,240,232,.1)';
       card.innerHTML = `
-        <div style="padding:1.25rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem">
-          <div style="width:56px;height:56px;border-radius:50%;background:rgba(184,146,42,.15);border:1.5px solid rgba(184,146,42,.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.6rem;font-style:italic;color:var(--oro2)">
+        <div style="padding:1.25rem 1rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;height:100%">
+          <div style="width:52px;height:52px;border-radius:50%;background:rgba(245,240,232,.1);border:1.5px solid rgba(245,240,232,.2);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.5rem;font-style:italic;color:rgba(245,240,232,.9)">
             ${(a.nome||'?')[0].toUpperCase()}
           </div>
-          <h3 style="font-family:var(--fd);font-size:.95rem;font-weight:400;color:var(--txt);margin:0;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.nome||''}</h3>
-          <p style="font-size:.75rem;color:var(--txt2);margin:0;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.lavoro||''}${a.citta?' · '+a.citta:''}</p>
-          ${a.anni?`<p style="font-family:var(--fu);font-size:.58rem;color:rgba(184,146,42,.6);letter-spacing:.08em;text-transform:uppercase;margin:0">${a.anni}</p>`:''}
-          ${a.ricordo?`<p style="font-size:.78rem;color:var(--txt2);font-style:italic;line-height:1.5;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">"${a.ricordo}"</p>`:''}
+          <h3 style="font-family:var(--fd);font-size:.95rem;font-weight:400;color:#F5F0E8;margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.nome||''}</h3>
+          <p style="font-size:.72rem;color:rgba(245,240,232,.65);margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${[a.lavoro,a.citta].filter(Boolean).join(' · ')}</p>
+          ${a.anni?`<p style="font-family:var(--fu);font-size:.55rem;color:rgba(184,146,42,.8);letter-spacing:.08em;text-transform:uppercase;margin:0">${a.anni}</p>`:''}
+          ${a.ricordo?`<p style="font-size:.76rem;color:rgba(245,240,232,.55);font-style:italic;line-height:1.5;margin:.2rem 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">"${a.ricordo}"</p>`:''}
           ${socialRow}${contattaBtn}
         </div>
       `;
