@@ -239,18 +239,34 @@ function updateCount() {
 async function submitRicordo(e) {
   e.preventDefault();
   const r = {
-    testo: document.getElementById('mr-testo').value.trim(),
-    nome:  document.getElementById('mr-nome').value.trim(),
-    anni:  document.getElementById('mr-anni').value.trim(),
-    dove:  document.getElementById('mr-dove').value.trim(),
+    testo:  document.getElementById('mr-testo').value.trim(),
+    nome:   document.getElementById('mr-nome').value.trim(),
+    anni:   document.getElementById('mr-anni').value.trim(),
+    dove:   document.getElementById('mr-dove').value.trim(),
     colore: Math.floor(Math.random()*5),
-    pending: true,
-    sentAt: new Date().toISOString()
+    approvato: false
   };
-  // In coda di moderazione ricordi
-  const queue = JSON.parse(localStorage.getItem('costaggini-ricordi-pending') || '[]');
-  queue.push(r);
-  localStorage.setItem('costaggini-ricordi-pending', JSON.stringify(queue));
+
+  const btn = e.target.querySelector('button[type=submit]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Invio…'; }
+
+  try {
+    const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/ricordi', {
+      method: 'POST',
+      headers: {
+        'apikey':        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTM3NjksImV4cCI6MjA5NDc4OTc2OX0.vS-hoxI2YUlxCWIdDzARqqpGzmXTDi8hq1AVU2jdhZ0',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTM3NjksImV4cCI6MjA5NDc4OTc2OX0.vS-hoxI2YUlxCWIdDzARqqpGzmXTDi8hq1AVU2jdhZ0',
+        'Content-Type':  'application/json',
+        'Prefer':        'return=minimal'
+      },
+      body: JSON.stringify(r)
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+  } catch(err) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Invia'; }
+    alert('Errore durante l\'invio. Riprova tra poco.');
+    return;
+  }
 
   // Se ha indicato dove abita, crea automaticamente anche un pin per la mappa
   if (r.dove.trim()) {

@@ -255,7 +255,8 @@ function admConfirm(opts) {
   <div class="main-tabs">
     <button class="main-tab on" onclick="switchTab('notizie',this)">📰 Notizie</button>
     <button class="main-tab" onclick="switchTab('avvisi',this)">📋 Avvisi & Comunicati</button>
-    <button class="main-tab" onclick="switchTab('mappa',this)">🗺️ Mappa — Pin in attesa</button>
+    <button class="main-tab" onclick="switchTab('ricordi',this)">💬 Ricordi</button>
+      <button class="main-tab" onclick="switchTab('mappa',this)">🗺️ Mappa — Pin in attesa</button>
     <button class="main-tab" onclick="switchTab('alumni',this)">👥 <em>Alumni</em> — Schede in attesa</button>
     <button class="main-tab" onclick="switchTab('openday',this)">📅 Open Day</button>
       <button class="main-tab" id="tab-btn-famiglie" onclick="switchTab('famiglie',this)">👨‍👩‍👧 Famiglie <span id="badge-famiglie" style="display:none;background:#dc2626;color:#fff;font-size:.5rem;padding:.1rem .4rem;border-radius:10px;margin-left:.3rem;vertical-align:middle"></span></button>
@@ -420,6 +421,26 @@ function admConfirm(opts) {
           <div id="alumni-approved-list">
             <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB RICORDI -->
+  <div class="tab-section" id="tab-ricordi">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Muro dei <em>Ricordi</em></h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
+          I ricordi inviati dai visitatori arrivano qui con <code>approvato=false</code>. Approva e appariranno sul Muro dei Ricordi pubblico.
+        </p>
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">
+          <button class="btn-approva" style="font-size:.65rem" onclick="ricordiLoad(false)">⏳ In attesa</button>
+          <button class="btn-ed edit" onclick="ricordiLoad(true)">✅ Approvati</button>
+          <button class="btn-ed" onclick="ricordiLoad(null)">Tutti</button>
+        </div>
+        <div id="ricordi-list">
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
         </div>
       </div>
     </div>
@@ -879,6 +900,69 @@ async function odElimina(id) {
   else { alert('Errore: ' + resp.status); }
 }
 
+
+// ═══ RICORDI ═══
+async function ricordiLoad(approvato) {
+  const list = document.getElementById('ricordi-list');
+  list.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+  try {
+    const filter = approvato === null ? '' : '&approvato=eq.' + approvato;
+    const data = await sbFetch('ricordi?order=created_at.desc' + filter);
+    if (!data.length) {
+      list.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessun ricordo.</p>';
+      return;
+    }
+    list.innerHTML = data.map(r => `
+      <div class="fam-card ${r.approvato ? 'approvata' : 'in_attesa'}" style="margin-bottom:.75rem">
+        <div class="fam-info">
+          <div class="fam-campo"><strong>Nome</strong>${r.nome || '—'}</div>
+          <div class="fam-campo"><strong>Anni</strong>${r.anni || '—'}</div>
+          <div class="fam-campo"><strong>Dove ora</strong>${r.dove || '—'}</div>
+          <div class="fam-campo"><strong>Data</strong>${r.created_at ? r.created_at.slice(0,10) : '—'}</div>
+        </div>
+        ${r.testo ? `<div style="font-size:.82rem;color:rgba(245,240,232,.7);font-style:italic;margin:.5rem 0 .75rem;padding:.6rem .85rem;background:rgba(245,240,232,.05);border-radius:6px;line-height:1.6">"${r.testo}"</div>` : ''}
+        <div class="fam-azioni">
+          ${!r.approvato ? `
+            <button class="btn-approva" onclick="ricordiAzione('${r.id}', true)">✅ Approva</button>
+            <button class="btn-rifiuta" onclick="ricordiElimina('${r.id}')">🗑️ Elimina</button>
+          ` : `
+            <button class="btn-annulla-fam" onclick="ricordiAzione('${r.id}', false)">↩ Annulla</button>
+            <button class="btn-rifiuta" onclick="ricordiElimina('${r.id}')">🗑️ Elimina</button>
+          `}
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    list.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+async function ricordiAzione(id, approva) {
+  if (!await admConfirm({
+    icon: approva ? '✅' : '↩',
+    title: approva ? 'Approva ricordo' : 'Annulla approvazione',
+    message: approva ? 'Il ricordo apparirà sul Muro pubblico.' : 'Il ricordo tornerà in attesa.',
+    confirmText: approva ? 'Approva' : 'Annulla',
+    type: approva ? 'success' : 'neutral'
+  })) return;
+  const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/ricordi?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ approvato: approva })
+  });
+  if (resp.ok) { await ricordiLoad(false); }
+  else { alert('Errore: ' + resp.status); }
+}
+
+async function ricordiElimina(id) {
+  if (!await admConfirm({icon:'🗑️',title:'Elimina ricordo',message:'Operazione irreversibile.',confirmText:'Elimina',type:'danger'})) return;
+  const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/ricordi?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  if (resp.ok) { await ricordiLoad(null); }
+  else { alert('Errore: ' + resp.status); }
+}
+
 // ═══ ALUMNI ═══
 async function loadAlumni() {
   const pendingEl  = document.getElementById('alumni-pending-list');
@@ -1085,6 +1169,7 @@ function switchTab(nome, btn) {
   if (section) section.classList.add('on');
   if (btn) btn.classList.add('on');
   // Carica dati al primo accesso al tab
+  if (nome === 'ricordi') ricordiLoad(false);
   if (nome === 'alumni')  loadAlumni();
   if (nome === 'mappa')   loadPins();
   if (nome === 'openday') odLoad('nuova');
