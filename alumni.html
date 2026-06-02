@@ -63,7 +63,10 @@ function alumniNoContact(e) {
   ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(6,13,6,.88);display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px)';
   var box = document.createElement('div');
   box.style.cssText = 'background:#1a2e1b;border:1px solid rgba(184,146,42,.3);border-radius:14px;padding:2rem 1.75rem;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)';
-  box.innerHTML = '<div style="font-size:2.2rem;margin-bottom:.75rem">🔒</div>'
+  box.innerHTML = '<div style="font-size:2.2rem;margin-bottom:.75rem">🔒
+      <div style="margin-top:1.25rem">
+        <a href="comunita.html" style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.7);text-decoration:none;padding:.45rem 1rem;border:1px solid rgba(245,240,232,.25);border-radius:6px">← Torna alla Comunità</a>
+      </div></div>'
     + '<h3 style="font-family:var(--fd);font-size:1.3rem;font-weight:300;color:#F5F0E8;margin:0 0 .6rem">Contatto non disponibile</h3>'
     + '<p style="font-size:.85rem;color:rgba(245,240,232,.6);line-height:1.7;margin:0 0 1.5rem">Questo alumni ha scelto di non condividere il proprio recapito.<br><br>Se sei un ex convittore o convittrice e vuoi essere rintracciabile, aggiungi la tua scheda e spunta <em style="color:rgba(245,240,232,.8)">Acconsento ad essere contattato</em>.</p>'
     + '<div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">'

@@ -120,7 +120,10 @@
       <p class="mr-hero-sub">— Voci nel tempo</p>
       <h1>Il Muro<br>dei <em>Ricordi</em></h1>
       <p>Un posto, una stagione, una frase che non si dimentica. Gli ex convittori del Costaggini lasciano qui un frammento del loro tempo qui. Piccolo. Vero.</p>
-    </div>
+    
+      <div style="margin-top:1.25rem">
+        <a href="comunita.html" style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.7);text-decoration:none;padding:.45rem 1rem;border:1px solid rgba(245,240,232,.25);border-radius:6px">← Torna alla Comunità</a>
+      </div></div>
   </section>
 
   <!-- CTA -->
@@ -186,10 +189,7 @@
 <script src="supabase.js"></script>
 <script src="nav.js"></script>
 <script>
-// ── Ricordi di esempio (pre-caricati) ──────────────────────────
-const RICORDI_DEFAULT = [
-  { testo:"Il Terminillo di notte, dalla finestra del terzo piano. Non l'avevo mai visto così.", nome:"Anna V.", anni:"2007–2012", dove:"Zurigo · Barista", colore:4 },
-];
+const RICORDI_DEFAULT = [];
 
 function buildCard(r, delay = 0) {
   const div = document.createElement('div');
