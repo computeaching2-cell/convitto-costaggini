@@ -52,7 +52,7 @@
     .hub-card-desc{font-family:var(--fu);font-size:.72rem;color:rgba(245,240,232,.5);line-height:1.65}
     .hub-card-arrow{position:absolute;bottom:1.25rem;right:1.25rem;font-size:.8rem;color:rgba(184,146,42,.4);transition:color .2s,transform .2s}
     .hub-card:hover .hub-card-arrow{color:var(--oro2);transform:translateX(3px)}
-  #alumni-community-grid{display:grid;grid-template-columns:repeat(2,180px);gap:.75rem;justify-content:center;margin:0 auto}@media(min-width:640px){#alumni-community-grid{grid-template-columns:repeat(3,180px)}}@media(min-width:960px){#alumni-community-grid{grid-template-columns:repeat(5,180px)}}}
+  #alumni-community-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;max-width:1000px;margin:0 auto}@media(min-width:640px){#alumni-community-grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:960px){#alumni-community-grid{grid-template-columns:repeat(5,1fr);max-width:960px}}}@media(min-width:960px){#alumni-community-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;max-width:1000px;margin:0 auto}@media(min-width:640px){#alumni-community-grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:960px){#alumni-community-grid{grid-template-columns:repeat(5,1fr);max-width:960px}}}}
 </style>
 <script src="supabase.js"></script>
 <script>
@@ -164,7 +164,6 @@ function alumniNoContact(e) {
 
       <!-- Schede alumni dalla community (Supabase) -->
       <div id="alumni-community-grid">
-        <style>#alumni-community-grid{display:grid;grid-template-columns:repeat(2,180px);gap:.75rem;justify-content:center;margin:0 auto}@media(min-width:640px){#alumni-community-grid{grid-template-columns:repeat(3,180px)}}@media(min-width:960px){#alumni-community-grid{grid-template-columns:repeat(5,180px)}}}</style>
       </div>
 
       <!-- Messaggio se nessun alumni ancora -->
