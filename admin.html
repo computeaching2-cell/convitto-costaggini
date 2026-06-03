@@ -755,7 +755,7 @@ async function famLoad(stato) {
 
 async function famAzione(id, nuovoStato) {
   const label = nuovoStato === 'approvata' ? 'approvare' : 'rifiutare';
-  if (!await admConfirm({icon: stato==='approvata'?'✅':'✗', title: stato==='approvata'?'Approva richiesta':'Rifiuta richiesta', message: stato==='approvata'?'L\'accesso verrà attivato per questa famiglia.':'La richiesta verrà rifiutata.', confirmText: stato==='approvata'?'Approva':'Rifiuta', type: stato==='approvata'?'success':'danger'})) return;
+  if (!await admConfirm({icon: nuovoStato==='approvata'?'✅':'✗', title: nuovoStato==='approvata'?'Approva richiesta':'Rifiuta richiesta', message: nuovoStato==='approvata'?'L\'accesso verrà attivato per questa famiglia.':'La richiesta verrà rifiutata.', confirmText: nuovoStato==='approvata'?'Approva':'Rifiuta', type: nuovoStato==='approvata'?'success':'danger'})) return;
   const resp = await fetch(SB_N + '/rest/v1/richieste_accesso?id=eq.' + id, {
     method: 'PATCH',
     headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
