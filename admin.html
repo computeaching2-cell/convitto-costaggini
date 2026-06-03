@@ -754,17 +754,67 @@ async function famLoad(stato) {
 }
 
 async function famAzione(id, nuovoStato) {
-  const label = nuovoStato === 'approvata' ? 'approvare' : 'rifiutare';
-  if (!await admConfirm({icon: nuovoStato==='approvata'?'✅':'✗', title: nuovoStato==='approvata'?'Approva richiesta':'Rifiuta richiesta', message: nuovoStato==='approvata'?'L\'accesso verrà attivato per questa famiglia.':'La richiesta verrà rifiutata.', confirmText: nuovoStato==='approvata'?'Approva':'Rifiuta', type: nuovoStato==='approvata'?'success':'danger'})) return;
-  const resp = await fetch(SB_N + '/rest/v1/richieste_accesso?id=eq.' + id, {
+  if (!await admConfirm({icon: nuovoStato==='approvata'?'✅':'✗', title: nuovoStato==='approvata'?'Approva richiesta':'Rifiuta richiesta', message: nuovoStato==='approvata'?'Verrà inviata un\'email di invito alla famiglia.':'La richiesta verrà rifiutata.', confirmText: nuovoStato==='approvata'?'Approva':'Rifiuta', type: nuovoStato==='approvata'?'success':'danger'})) return;
+
+  // 1. Aggiorna stato nella tabella richieste_accesso
+  const patch = await fetch(SB_N + '/rest/v1/richieste_accesso?id=eq.' + id, {
     method: 'PATCH',
     headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
     body: JSON.stringify({ stato: nuovoStato })
   });
-  if (resp.ok) {
-    await famLoad('in_attesa');
+  if (!patch.ok) { alert('Errore aggiornamento stato: ' + patch.status); return; }
+
+  // 2. Se approvata, crea account Auth e invia email di invito
+  if (nuovoStato === 'approvata') {
+    // Recupera email e nome studente dalla richiesta
+    const richResp = await fetch(SB_N + '/rest/v1/richieste_accesso?id=eq.' + id, {
+      headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+    });
+    const rich = await richResp.json();
+    if (!rich.length) { alert('Errore: richiesta non trovata.'); return; }
+    const email      = rich[0].email_genitore;
+    const nomeStud   = rich[0].nome_studente || '';
+
+    // Invita utente tramite Supabase Auth Admin API
+    const invite = await fetch(SB_N + '/auth/v1/invite', {
+      method: 'POST',
+      headers: {
+        'apikey':        SB_NK,
+        'Authorization': 'Bearer ' + SB_NK,
+        'Content-Type':  'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        data: { nome_studente: nomeStud }
+      })
+    });
+
+    if (invite.ok) {
+      await famLoad('in_attesa');
+      // Mostra conferma
+      const ov = document.createElement('div');
+      ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(6,13,6,.88);display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px)';
+      const box = document.createElement('div');
+      box.style.cssText = 'background:#1a2e1b;border:1px solid rgba(184,146,42,.3);border-radius:14px;padding:2rem 1.75rem;max-width:400px;width:100%;text-align:center';
+      box.innerHTML = '<div style="font-size:2.5rem;margin-bottom:.75rem">✅</div>'
+        + '<h3 style="font-family:var(--fd);font-size:1.3rem;font-weight:300;color:#F5F0E8;margin:0 0 .6rem">Accesso approvato</h3>'
+        + '<p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.7;margin:0 0 1.25rem">Email di invito inviata a <strong style="color:var(--oro2)">' + email + '</strong>.<br>La famiglia riceverà un link per impostare la password e accedere all\'area riservata.</p>'
+        + '<button id="fam-ok-btn" style="background:linear-gradient(135deg,#B8922A,#D4AA4A);color:#1a2e1b;border:none;cursor:pointer;font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.75rem;border-radius:40px">OK</button>';
+      ov.appendChild(box);
+      document.body.appendChild(ov);
+      document.getElementById('fam-ok-btn').addEventListener('click', () => { ov.remove(); document.body.style.overflow=''; });
+    } else {
+      const err = await invite.json();
+      // Se l'utente esiste già, non è un errore grave
+      if (err.msg && err.msg.includes('already')) {
+        await famLoad('in_attesa');
+        alert('Attenzione: esiste già un account con questa email. La famiglia può accedere con le credenziali precedenti.');
+      } else {
+        alert('Errore invio invito: ' + (err.msg || invite.status));
+      }
+    }
   } else {
-    alert('Errore: ' + resp.status);
+    await famLoad('in_attesa');
   }
 }
 
