@@ -1268,29 +1268,26 @@ async function labLoad() {
   lista.innerHTML = rows.map(r => {
     const data = new Date(r.created_at).toLocaleDateString('it-IT', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
     const interessi = Array.isArray(r.interessi) && r.interessi.length ? r.interessi.join(', ') : '—';
-    return `
-    <div class="fam-card approvata" style="margin-bottom:.85rem">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
-        <div>
-          <strong style="font-size:1rem;color:var(--bosco)">${r.cognome} ${r.nome}</strong>
-          <span style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:#e8f5e9;color:#1d6f42;padding:.15rem .5rem;border-radius:4px;margin-left:.5rem">${r.classe || '—'}</span>
-        </div>
-        <span style="font-family:var(--fu);font-size:.6rem;color:var(--txt2)">${data}</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem .85rem;font-size:.82rem;margin-bottom:.6rem">
-        <div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Email</span><br>${r.email || '—'}</div>
-        <div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Strumento</span><br>${r.strumento || '—'}</div>
-        <div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Esperienza</span><br>${r.esperienza || '—'}</div>
-        <div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Interessi</span><br>${interessi}</div>
-      </div>
-      ${r.note ? `<div style="font-size:.82rem;background:#faf7f0;border-left:3px solid var(--oro);padding:.5rem .75rem;border-radius:0 6px 6px 0;color:var(--txt2)"><em>${r.note}</em></div>` : ''}
-      <div style="margin-top:.75rem;text-align:right">
-        <button onclick="labElimina(${r.id},'${r.cognome} ${r.nome}')"
-                style="padding:.3rem .8rem;font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid #dc2626;background:none;color:#dc2626;border-radius:6px;cursor:pointer">
-          🗑 Elimina
-        </button>
-      </div>
-    </div>`;
+    var noteHtml = r.note ? '<div style="font-size:.82rem;background:#faf7f0;border-left:3px solid var(--oro);padding:.5rem .75rem;border-radius:0 6px 6px 0;color:var(--txt2)"><em>' + r.note + '</em></div>' : '';
+    return '<div class="fam-card approvata" style="margin-bottom:.85rem">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">'
+        + '<div>'
+          + '<strong style="font-size:1rem;color:var(--bosco)">' + r.cognome + ' ' + r.nome + '</strong>'
+          + '<span style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:#e8f5e9;color:#1d6f42;padding:.15rem .5rem;border-radius:4px;margin-left:.5rem">' + (r.classe || '—') + '</span>'
+        + '</div>'
+        + '<span style="font-family:var(--fu);font-size:.6rem;color:var(--txt2)">' + data + '</span>'
+      + '</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem .85rem;font-size:.82rem;margin-bottom:.6rem">'
+        + '<div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Email</span><br>' + (r.email || '—') + '</div>'
+        + '<div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Strumento</span><br>' + (r.strumento || '—') + '</div>'
+        + '<div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Esperienza</span><br>' + (r.esperienza || '—') + '</div>'
+        + '<div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Interessi</span><br>' + interessi + '</div>'
+      + '</div>'
+      + noteHtml
+      + '<div style="margin-top:.75rem;text-align:right">'
+        + '<button onclick="labElimina(' + r.id + ',\"' + r.cognome + ' ' + r.nome + '\")" style="padding:.3rem .8rem;font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid #dc2626;background:none;color:#dc2626;border-radius:6px;cursor:pointer">🗑 Elimina</button>'
+      + '</div>'
+    + '</div>';
   }).join('');
 }
 
@@ -1314,8 +1311,7 @@ function labExport() {
         const v = Array.isArray(r[c]) ? r[c].join('|') : (r[c] ?? '');
         return '"' + String(v).replace(/"/g,'""') + '"';
       }).join(';')
-    )].join('
-');
+    )].join('\n');
     const a = document.createElement('a');
     a.href = 'data:text/csv;charset=utf-8,﻿' + encodeURIComponent(csv);
     a.download = 'lab-musicale-iscrizioni.csv';
