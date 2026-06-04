@@ -1093,13 +1093,14 @@ async function labFormInvia(e) {
   btn.textContent = 'Invio in corso…';
 
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/lab_musicale_iscrizioni`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/lab_musicale_iscrizioni?apikey=${SUPABASE_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type':  'application/json',
         'apikey':        SUPABASE_KEY,
         'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Prefer':        'return=minimal'
+        'Prefer':        'return=minimal',
+        'Content-Profile': 'public'
       },
       body: JSON.stringify(payload)
     });
