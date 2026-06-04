@@ -947,11 +947,9 @@
     </div>
 
     <!-- Form -->
-    <form name="laboratorio-musicale" netlify netlify-honeypot="bot-field"
-          method="POST" action="/grazie.html"
-          style="padding:1.5rem 1.75rem" onsubmit="labFormValidate(event)">
-      <input type="hidden" name="form-name" value="laboratorio-musicale"/>
-      <p style="display:none"><label>Non compilare: <input name="bot-field"/></label></p>
+    <form name="laboratorio-musicale"
+          style="padding:1.5rem 1.75rem" onsubmit="labFormInvia(event)">
+      <p style="display:none"><label>Non compilare: <input id="lab-bot-field"/></label></p>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem">
         <div>
@@ -1066,23 +1064,65 @@
 </div>
 
 <script>
-function labFormSend(e) {
+const SUPABASE_URL = 'https://sawclsysqnjsvbobioqo.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTM3NjksImV4cCI6MjA5NDc4OTc2OX0.vS-hoxI2YUlxCWIdDzARqqpGzmXTDi8hq1AVU2jdhZ0';
+
+async function labFormInvia(e) {
   e.preventDefault();
   const form = e.target;
-  fetch(form.action, {
-    method:'POST',
-    body: new FormData(form),
-    headers: {'Accept':'application/json'}
-  }).then(r => {
-    if (r.ok) {
+  const btn  = form.querySelector('button[type="submit"]');
+
+  // Honeypot anti-spam
+  if (document.getElementById('lab-bot-field').value) return;
+
+  // Raccoglie i dati dal form
+  const fd = new FormData(form);
+  const payload = {
+    nome:       fd.get('nome')?.trim()       || null,
+    cognome:    fd.get('cognome')?.trim()    || null,
+    classe:     fd.get('classe')             || null,
+    email:      fd.get('email')?.trim()      || null,
+    esperienza: fd.get('esperienza')         || null,
+    strumento:  fd.get('strumento')          || null,
+    interessi:  fd.get('interesse') ? [fd.get('interesse')] : null,
+    note:       fd.get('note')?.trim()       || null,
+  };
+
+  // Feedback visivo
+  btn.disabled = true;
+  btn.textContent = 'Invio in corso…';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/lab_musicale_iscrizioni`, {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'apikey':        SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer':        'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok || res.status === 201) {
       document.getElementById('lab-ok').style.display = 'block';
       form.reset();
       setTimeout(() => {
         document.getElementById('lab-modal').style.display = 'none';
         document.getElementById('lab-ok').style.display = 'none';
-      }, 3000);
+      }, 3500);
+    } else {
+      const err = await res.text();
+      console.error('Supabase error:', res.status, err);
+      alert('Si è verificato un errore. Riprova o contatta la segreteria.');
     }
-  }).catch(() => {});
+  } catch (err) {
+    console.error('Rete:', err);
+    alert('Impossibile connettersi. Controlla la connessione e riprova.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🎵 Invia richiesta di iscrizione';
+  }
 }
 // Chiudi cliccando fuori
 document.getElementById('lab-modal').addEventListener('click', function(e) {
