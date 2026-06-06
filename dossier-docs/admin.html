@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>Pannello Admin | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bosco:#2C3E2D; --bosco2:#3D5C3E; --oro:#B8922A; --oro2:#9a7820;
+      --av:#F5F0E8; --av2:#EDE8DC; --txt:#1a2e1b; --txt2:#5a7a5b;
+      --fu:'Source Sans 3',sans-serif; --fd:'Cormorant Garamond',serif;
+    }
+    body { font-family:var(--fu); background:#f0ebe0; color:var(--txt); min-height:100vh; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      position:fixed; inset:0; background:var(--bosco);
+      display:flex; align-items:center; justify-content:center;
+      z-index:1000; padding:1.25rem;
+    }
+    .login-box {
+      background:rgba(245,240,232,.06); border:1px solid rgba(184,146,42,.3);
+      border-radius:14px; padding:2.5rem 2rem; width:100%; max-width:360px; text-align:center;
+    }
+    .login-logo { font-size:2.5rem; margin-bottom:.75rem; }
+    .login-box h1 { font-family:var(--fd); font-size:1.9rem; font-weight:300; color:#fff; margin-bottom:.25rem; }
+    .login-box h1 em { font-style:italic; color:#D4AA4A; }
+    .login-box p { font-family:var(--fu); font-size:.65rem; color:rgba(255,255,255,.35); letter-spacing:.12em; text-transform:uppercase; margin-bottom:2rem; }
+    .login-box input {
+      width:100%; padding:.8rem 1rem; background:rgba(255,255,255,.08);
+      border:1.5px solid rgba(184,146,42,.3); border-radius:8px; color:#fff;
+      font-family:var(--fu); font-size:16px; outline:none; margin-bottom:.75rem;
+      transition:border-color .2s; text-align:center; letter-spacing:.05em;
+    }
+    .login-box input:focus { border-color:#B8922A; }
+    .login-box input::placeholder { color:rgba(255,255,255,.3); letter-spacing:0; }
+    .btn-accedi {
+      width:100%; padding:.85rem; background:linear-gradient(135deg,#B8922A,#D4AA4A);
+      color:var(--bosco); border:none; border-radius:8px; font-family:var(--fu);
+      font-size:.8rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+      cursor:pointer; transition:opacity .2s;
+    }
+    .btn-accedi:hover { opacity:.88; }
+    #login-err { color:#fca5a5; font-size:.82rem; margin-top:.75rem; display:none; }
+
+    /* ── HEADER ── */
+    .adm-hdr {
+      background:var(--bosco); padding:.9rem 1.25rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.75rem;
+      position:sticky; top:0; z-index:100; box-shadow:0 2px 16px rgba(0,0,0,.25);
+    }
+    .adm-hdr-brand { display:flex; align-items:center; gap:.75rem; }
+    .adm-hdr-brand span { font-size:1.5rem; }
+    .adm-hdr-brand h1 { font-family:var(--fd); font-size:1.25rem; font-weight:300; color:#fff; line-height:1.1; }
+    .adm-hdr-brand h1 em { font-style:italic; color:#D4AA4A; }
+    .adm-hdr-brand small { font-family:var(--fu); font-size:.6rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.35); display:block; }
+    .adm-hdr-links { display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; }
+    .adm-hdr-links a { font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.45); text-decoration:none; transition:color .2s; }
+    .adm-hdr-links a:hover { color:#D4AA4A; }
+    .btn-logout { font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.4rem .9rem; border:1px solid rgba(255,255,255,.2); background:none; color:rgba(255,255,255,.45); border-radius:4px; cursor:pointer; transition:all .2s; }
+    .btn-logout:hover { color:#fff; border-color:rgba(255,255,255,.5); }
+
+    /* ── TAB PRINCIPALE ── */
+    .main-tabs { display:flex; border-bottom:2px solid #d4c9a8; background:#fff; padding:0 1.25rem; overflow-x:auto; }
+    .main-tab { font-family:var(--fu); font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:.9rem 1.25rem; border:none; background:none; cursor:pointer; color:#8b7a5a; border-bottom:3px solid transparent; margin-bottom:-2px; transition:all .2s; white-space:nowrap; }
+    .main-tab.on { color:var(--bosco); border-bottom-color:var(--oro); }
+    .main-tab:hover:not(.on) { color:var(--bosco); }
+    .tab-section { display:none; }
+    .tab-section.on { display:block; }
+
+    /* ── AVVISO LIMITE ── */
+    .adm-notice { background:rgba(234,88,12,.08); border-left:4px solid #ea580c; padding:.85rem 1.25rem; font-size:.8rem; color:#92400e; line-height:1.6; margin:1rem 1.25rem; border-radius:0 6px 6px 0; }
+
+    /* ── LAYOUT 2 COLONNE ── */
+    .adm-body { display:grid; grid-template-columns:1fr; gap:1.25rem; padding:1.25rem; }
+    @media(min-width:860px){ .adm-body { grid-template-columns:360px 1fr; } }
+
+    /* ── CARD ── */
+    .adm-card { background:#fff; border-radius:10px; padding:1.4rem; box-shadow:0 2px 10px rgba(0,0,0,.06); }
+    .adm-card h2 { font-family:var(--fd); font-size:1.25rem; font-weight:400; color:var(--bosco); margin-bottom:1.1rem; padding-bottom:.75rem; border-bottom:1px solid #e8e0d0; }
+    .adm-card h2 em { font-style:italic; color:var(--oro); }
+
+    /* ── FORM ── */
+    .fg { margin-bottom:.85rem; }
+    .fg label { display:block; font-family:var(--fu); font-size:.58rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#6b5a2a; margin-bottom:.3rem; }
+    .fg input,.fg select,.fg textarea { width:100%; padding:.62rem .9rem; border:1.5px solid #d4c9a8; border-radius:6px; font-family:var(--fu); font-size:15px; color:var(--txt); background:#faf7f0; outline:none; transition:border-color .2s; }
+    .fg input:focus,.fg select:focus,.fg textarea:focus { border-color:var(--oro); }
+    .fg textarea { resize:vertical; min-height:90px; }
+    .fg-row2 { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
+    .fg-check { display:flex; align-items:center; gap:.45rem; font-size:.82rem; color:var(--txt); cursor:pointer; }
+    .fg-check input { width:auto; min-height:auto; accent-color:var(--oro); cursor:pointer; }
+    .form-btns { display:flex; gap:.6rem; margin-top:1.1rem; flex-wrap:wrap; align-items:center; }
+    .btn-pubblica { flex:1; padding:.72rem; background:linear-gradient(135deg,var(--bosco),#1a3a1b); color:#fff; border:none; border-radius:6px; font-family:var(--fu); font-size:.7rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; transition:opacity .2s; min-width:140px; }
+    .btn-pubblica:hover { opacity:.88; }
+    .btn-pubblica.modifica { background:linear-gradient(135deg,#1a4a7a,#1e5a96); }
+    .btn-annulla { padding:.72rem 1rem; border:1.5px solid #d4c9a8; background:none; color:#6b5a2a; border-radius:6px; font-family:var(--fu); font-size:.7rem; font-weight:700; cursor:pointer; }
+    .ok-msg { font-family:var(--fu); font-size:.75rem; color:#1d6f42; font-weight:700; display:none; }
+
+    /* ── AI BOX ── */
+    .ai-box { background:#f5f2e8; border:1px solid #d4c9a8; border-radius:8px; padding:1rem; margin-bottom:.9rem; }
+    .ai-box h4 { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--bosco); margin-bottom:.65rem; }
+    .ai-row { display:flex; gap:.5rem; }
+    .ai-input { flex:1; padding:.6rem .85rem; border:1.5px solid #d4c9a8; border-radius:6px; font-family:var(--fu); font-size:14px; background:#fff; outline:none; min-width:0; }
+    .ai-input:focus { border-color:var(--oro); }
+    .btn-ai { padding:.6rem 1rem; background:var(--bosco); color:#fff; border:none; border-radius:6px; font-family:var(--fu); font-size:.62rem; font-weight:700; cursor:pointer; white-space:nowrap; flex-shrink:0; }
+    .ai-stato { font-size:.75rem; color:#8b7a5a; margin-top:.45rem; min-height:1.1rem; }
+
+    /* ── LISTA ELEMENTI ── */
+    .list-wrap { background:#fff; border-radius:10px; padding:1.4rem; box-shadow:0 2px 10px rgba(0,0,0,.06); }
+    .list-count { font-family:var(--fu); font-size:.62rem; color:#8b7a5a; margin-bottom:.9rem; }
+    .el-item { border:1px solid #e8e0d0; border-radius:8px; padding:.9rem 1rem; margin-bottom:.6rem; transition:box-shadow .2s; }
+    .el-item:hover { box-shadow:0 3px 12px rgba(0,0,0,.08); }
+    .el-top { display:flex; align-items:flex-start; gap:.6rem; }
+    .el-cat { font-family:var(--fu); font-size:.5rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:.18rem .5rem; border-radius:20px; background:rgba(44,62,45,.1); color:var(--bosco); flex-shrink:0; margin-top:.2rem; }
+    .el-cat.urgente { background:rgba(220,38,38,.1); color:#dc2626; }
+    .el-titolo { font-family:var(--fd); font-size:.95rem; color:var(--bosco); line-height:1.3; flex:1; }
+    .el-meta { font-family:var(--fu); font-size:.58rem; color:#8b7a5a; margin-top:.25rem; }
+    .el-actions { display:flex; gap:.4rem; margin-top:.7rem; flex-wrap:wrap; }
+    .btn-ed { font-family:var(--fu); font-size:.58rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:.3rem .7rem; border-radius:4px; border:1.5px solid; cursor:pointer; transition:all .2s; background:none; }
+    .btn-ed.edit { border-color:#1a4a7a; color:#1a4a7a; }
+    .btn-ed.edit:hover { background:#1a4a7a; color:#fff; }
+    .btn-ed.del  { border-color:#dc2626; color:#dc2626; }
+    .btn-ed.del:hover  { background:#dc2626; color:#fff; }
+    .btn-ed.up,.btn-ed.dn { border-color:#d4c9a8; color:#6b5a2a; padding:.3rem .6rem; }
+    .btn-ed.up:hover,.btn-ed.dn:hover { border-color:var(--oro); }
+    .badge-home { font-family:var(--fu); font-size:.48rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; background:#1d6f42; color:#fff; padding:.12rem .4rem; border-radius:8px; margin-left:.35rem; vertical-align:middle; }
+    .badge-pin { font-family:var(--fu); font-size:.48rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; background:#1a4a7a; color:#fff; padding:.12rem .4rem; border-radius:8px; margin-left:.35rem; vertical-align:middle; }
+
+    /* ── ESPORTA ── */
+    .export-bar { border-top:1px solid #e8e0d0; margin-top:1.25rem; padding-top:1rem; }
+    .export-bar p { font-size:.78rem; color:#6b5a2a; margin-bottom:.6rem; line-height:1.5; }
+    .btn-export { font-family:var(--fu); font-size:.62rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; padding:.5rem 1rem; border:1.5px solid var(--bosco); color:var(--bosco); background:none; border-radius:6px; cursor:pointer; transition:all .2s; }
+    .btn-export:hover { background:var(--bosco); color:#fff; }
+
+    .fam-card{border:1px solid #e8e0d0;border-radius:10px;padding:1.1rem;margin-bottom:.75rem;background:#fff;}
+    .fam-card.in_attesa{border-left:4px solid var(--oro);}
+    .fam-card.approvata{border-left:4px solid #1d6f42;}
+    .fam-card.rifiutata{border-left:4px solid #dc2626;opacity:.7;}
+    .fam-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.5rem;margin-bottom:.85rem;}
+    .fam-campo{font-family:var(--fu);font-size:.75rem;color:#6b5a2a;}
+    .fam-campo strong{display:block;font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8b7a5a;margin-bottom:.15rem;}
+    .fam-azioni{display:flex;gap:.5rem;flex-wrap:wrap;}
+    .btn-approva{padding:.5rem 1.1rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:6px;font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
+    .btn-rifiuta{padding:.5rem 1.1rem;border:1.5px solid #dc2626;color:#dc2626;background:none;border-radius:6px;font-family:var(--fu);font-size:.65rem;font-weight:700;cursor:pointer;}
+    .btn-annulla-fam{padding:.5rem 1.1rem;border:1.5px solid #8b7a5a;color:#8b7a5a;background:none;border-radius:6px;font-family:var(--fu);font-size:.65rem;font-weight:700;cursor:pointer;transition:all .2s;}
+    .btn-annulla-fam:hover{border-color:var(--bosco);color:var(--bosco);}
+  
+    /* Modal conferma */
+    .adm-modal-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(6,13,6,.85); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .adm-modal {
+      background: #1a2e1b; border: 1px solid rgba(184,146,42,.35);
+      border-radius: 14px; padding: 2rem 1.75rem; max-width: 380px; width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5); text-align: center;
+    }
+    .adm-modal-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+    .adm-modal h3 { font-family: var(--fd); font-size: 1.3rem; font-weight: 300;
+      color: var(--av); margin-bottom: .5rem; }
+    .adm-modal p { font-size: .85rem; color: var(--txt2); line-height: 1.6; margin-bottom: 1.5rem; }
+    .adm-modal-btns { display: flex; gap: .75rem; justify-content: center; }
+    .adm-modal-btn-cancel {
+      padding: .55rem 1.5rem; border: 1.5px solid rgba(245,240,232,.25);
+      background: none; color: var(--txt2); border-radius: 6px;
+      font-family: var(--fu); font-size: .7rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+    .adm-modal-btn-cancel:hover { border-color: rgba(245,240,232,.5); color: var(--txt); }
+    .adm-modal-btn-confirm {
+      padding: .55rem 1.5rem; border: none; border-radius: 6px;
+      font-family: var(--fu); font-size: .7rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+    .adm-modal-btn-confirm.danger { background: #dc2626; color: #fff; }
+    .adm-modal-btn-confirm.success { background: linear-gradient(135deg,var(--oro),var(--oro2)); color: var(--bosco); }
+    .adm-modal-btn-confirm.neutral { background: rgba(245,240,232,.15); color: var(--txt); }
+  </style>
+<script>
+function admConfirm(opts) {
+  return new Promise(resolve => {
+    const ov = document.createElement('div');
+    ov.className = 'adm-modal-overlay';
+    const btnType = opts.type || 'danger';
+    ov.innerHTML = `
+      <div class="adm-modal">
+        <div class="adm-modal-icon">${opts.icon || '⚠️'}</div>
+        <h3>${opts.title || 'Conferma'}</h3>
+        <p>${opts.message || 'Sei sicuro?'}</p>
+        <div class="adm-modal-btns">
+          <button class="adm-modal-btn-cancel">Annulla</button>
+          <button class="adm-modal-btn-confirm ${btnType}">${opts.confirmText || 'Conferma'}</button>
+        </div>
+      </div>`;
+    document.body.appendChild(ov);
+    ov.querySelector('.adm-modal-btn-cancel').onclick  = () => { ov.remove(); resolve(false); };
+    ov.querySelector('.adm-modal-btn-confirm').onclick = () => { ov.remove(); resolve(true);  };
+  });
+}
+</script>
+</head>
+<body>
+
+<!-- ════ LOGIN ════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">🛡️</div>
+    <h1>Pannello <em>Admin</em></h1>
+    <p>Convitto "Costaggini" — Rieti</p>
+    <input type="password" id="pwd" placeholder="Password" autocomplete="new-password" value="" autofocus/>
+    <button class="btn-accedi" onclick="doLogin()">Accedi →</button>
+    <p id="login-err">Password errata. Riprova.</p>
+    <a href="index.html"
+       style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1.25rem;
+              font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+              padding:.5rem 1.2rem;background:linear-gradient(135deg,#B8922A,#d4aa4a);
+              color:#2C3E2D;border-radius:6px;text-decoration:none;transition:opacity .2s"
+       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      🏠 Torna alla Home
+    </a>
+  </div>
+</div>
+
+<!-- ════ PANNELLO ════ -->
+<div id="adm-wrap" style="display:none">
+
+  <header class="adm-hdr">
+    <div class="adm-hdr-brand">
+      <span>🛡️</span>
+      <div>
+        <h1>Pannello <em>Admin</em></h1>
+        <small>Convitto "Costaggini" — Rieti</small>
+      </div>
+    </div>
+    <div class="adm-hdr-links">
+      <a href="index.html"
+         style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1.1rem;background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--bosco);border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:opacity .2s"
+         onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        🏠 Home
+      </a>
+      <a href="notizie.html" target="_blank">↗ Notizie</a>
+      <a href="avvisi.html" target="_blank">↗ Avvisi</a>
+      <button class="btn-logout" onclick="logout()">Esci</button>
+    </div>
+  </header>
+
+  <!-- TAB -->
+  <div class="main-tabs">
+    <button class="main-tab on" onclick="switchTab('notizie',this)">📰 Notizie</button>
+    <button class="main-tab" onclick="switchTab('avvisi',this)">📋 Avvisi & Comunicati</button>
+    <button class="main-tab" onclick="switchTab('ricordi',this)">💬 Ricordi</button>
+      <button class="main-tab" onclick="switchTab('mappa',this)">🗺️ Mappa — Pin in attesa</button>
+    <button class="main-tab" onclick="switchTab('alumni',this)">👥 <em>Alumni</em> — Schede in attesa</button>
+    <button class="main-tab" onclick="switchTab('openday',this)">📅 Open Day</button>
+      <button class="main-tab" id="tab-btn-famiglie" onclick="switchTab('famiglie',this)">👨‍👩‍👧 Famiglie <span id="badge-famiglie" style="display:none;background:#dc2626;color:#fff;font-size:.5rem;padding:.1rem .4rem;border-radius:10px;margin-left:.3rem;vertical-align:middle"></span></button>
+    <button class="main-tab" id="tab-btn-lab" onclick="switchTab('lab',this)">🎵 Laboratorio Musicale <span id="badge-lab" style="display:none;background:#dc2626;color:#fff;font-size:.5rem;padding:.1rem .4rem;border-radius:10px;margin-left:.3rem;vertical-align:middle"></span></button>
+  </div>
+
+  
+
+  <!-- ══════════════════════════════════
+       TAB 1 — NOTIZIE
+  ══════════════════════════════════ -->
+  <div class="tab-section on" id="tab-notizie">
+    <div class="adm-body">
+
+      <!-- FORM NOTIZIE -->
+      <div class="adm-card">
+        <h2 id="n-form-title">+ Nuova <em>notizia</em></h2>
+        <div class="ai-box">
+          <h4>⚡ AI — genera il testo automaticamente</h4>
+          <div class="ai-row">
+            <input type="text" class="ai-input" id="n-ai-prompt" placeholder="Es: inaugurazione palestra, ottobre 2025"/>
+            <button class="btn-ai" onclick="aiNotizia()">Genera</button>
+          </div>
+          <div class="ai-stato" id="n-ai-stato">Descrivi la notizia — l'AI scrive per te.</div>
+        </div>
+        <div class="fg"><label>Titolo *</label><input type="text" id="n-titolo" placeholder="Es: Inaugurazione nuova palestra"/></div>
+        <div class="fg-row2">
+          <div class="fg"><label>Data</label><input type="text" id="n-data" placeholder="Es: Ottobre 2025"/></div>
+          <div class="fg"><label>Categoria</label>
+            <select id="n-cat">
+              <option>Istituzionale</option><option>Vita al Convitto</option>
+              <option>PNRR</option><option>Successi</option>
+              <option>Eventi</option><option>Erasmus+</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg"><label>Testo *</label><textarea id="n-testo" rows="5" placeholder="Testo della notizia…"></textarea></div>
+        <div class="fg"><label>Link</label><input type="text" id="n-link" placeholder="https://… oppure natale2024.html"/></div>
+        <div class="fg"><label>Testo del link</label><input type="text" id="n-link-testo" placeholder="Leggi →"/></div>
+        <div class="fg"><label>URL immagine</label><input type="text" id="n-img" placeholder="https://images.unsplash.com/…"/></div>
+        <div class="fg"><label>Descrizione immagine</label><input type="text" id="n-img-alt" placeholder="Breve descrizione"/></div>
+        <div class="fg" style="display:flex;gap:1.25rem;flex-wrap:wrap">
+          <label class="fg-check"><input type="checkbox" id="n-evidenza"/> In evidenza</label>
+          <label class="fg-check"><input type="checkbox" id="n-featured"/> In primo piano</label>
+        </div>
+        <input type="hidden" id="n-edit-id"/>
+        <div class="form-btns">
+          <button class="btn-pubblica" id="n-btn-salva" onclick="salvaNotizia()">📌 Pubblica</button>
+          <button class="btn-annulla" onclick="resetNotizia()">Annulla</button>
+          <span class="ok-msg" id="n-ok">✅ Salvata!</span>
+        </div>
+      </div>
+
+      <!-- LISTA NOTIZIE -->
+      <div class="list-wrap">
+        <h2>Notizie pubblicate <em>— gestisci</em></h2>
+        <p class="list-count" id="n-count"></p>
+        <div id="n-list"></div>
+        <div class="export-bar">
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 2 — AVVISI
+  ══════════════════════════════════ -->
+  <div class="tab-section" id="tab-avvisi">
+    <div class="adm-body">
+
+      <!-- FORM AVVISI -->
+      <div class="adm-card">
+        <h2 id="a-form-title">+ Nuovo <em>avviso</em></h2>
+        <div class="ai-box">
+          <h4>⚡ AI — genera il testo automaticamente</h4>
+          <div class="ai-row">
+            <input type="text" class="ai-input" id="a-ai-prompt" placeholder="Es: chiusura mensa venerdì per pulizie"/>
+            <button class="btn-ai" onclick="aiAvviso()">Genera</button>
+          </div>
+          <div class="ai-stato" id="a-ai-stato">Descrivi l'avviso — l'AI scrive per te.</div>
+        </div>
+        <div class="fg-row2">
+          <div class="fg"><label>Categoria</label>
+            <select id="a-cat">
+              <option value="famiglie">Famiglie</option>
+              <option value="convittori">Convittori</option>
+              <option value="istituzionale">Istituzionale</option>
+              <option value="eventi">Eventi</option>
+              <option value="urgente">🔴 Urgente</option>
+            </select>
+          </div>
+          <div class="fg"><label>Data</label><input type="date" id="a-data" style="font-size:15px"/></div>
+        </div>
+        <div class="fg"><label>Autore / Ufficio</label><input type="text" id="a-autore" placeholder="Es: La Direzione"/></div>
+        <div class="fg"><label>Titolo *</label><input type="text" id="a-titolo" placeholder="Es: Variazione orario mensa — venerdì 16 maggio"/></div>
+        <div class="fg"><label>Testo *</label><textarea id="a-testo" rows="5" placeholder="Testo del comunicato…"></textarea></div>
+        <div class="fg">
+          <label class="fg-check"><input type="checkbox" id="a-pinned"/> 📌 Metti in evidenza (pinnato in cima)</label>
+        </div>
+        <input type="hidden" id="a-edit-id"/>
+        <div class="form-btns">
+          <button class="btn-pubblica" id="a-btn-salva" onclick="salvaAvviso()">📌 Pubblica</button>
+          <button class="btn-annulla" onclick="resetAvviso()">Annulla</button>
+          <span class="ok-msg" id="a-ok">✅ Pubblicato!</span>
+        </div>
+      </div>
+
+      <!-- LISTA AVVISI -->
+      <div class="list-wrap">
+        <h2>Avvisi pubblicati <em>— gestisci</em></h2>
+        <p class="list-count" id="a-count"></p>
+        <div id="a-list"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 3 — MAPPA PIN
+  ══════════════════════════════════ -->
+  <div class="tab-section" id="tab-mappa">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Pin mappa <em>in attesa</em></h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
+          Quando un visitatore aggiunge il suo segnaposto dalla pagina "Il Costaggini nel Mondo", la richiesta arriva qui con <code>approvato=false</code>. Approva e apparirà sulla mappa pubblica. Rifiuta ed elimina.
+        </p>
+        <div id="pin-pending-list">
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
+        </div>
+        <div style="border-top:1px solid #e8e0d0;margin-top:1.75rem;padding-top:1.25rem">
+          <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8b7a5a;margin-bottom:.85rem">Pin già approvati — visibili sulla mappa</p>
+          <div id="pin-approved-list">
+            <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
+          </div>
+        </div>
+        <div style="margin-top:1.25rem">
+          <a href="mondo.html" target="_blank"
+             style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1.1rem;border:1.5px solid var(--bosco);color:var(--bosco);border-radius:6px;text-decoration:none">
+            🗺️ Apri mappa pubblica →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ══════════════════════════════════
+       TAB 4 — ALUMNI
+  ══════════════════════════════════ -->
+  <div class="tab-section" id="tab-alumni">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Schede <em>Alumni</em> in attesa</h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
+          Ogni ex convittore che compila il form "Unisciti agli <em>Alumni</em>" appare qui con <code>approvato = false</code>. Approva la scheda e apparirà nella gallery. Rifiuta e scompare silenziosamente. Puoi annullare un'approvazione in qualsiasi momento.
+        </p>
+        <div id="alumni-pending-list">
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
+        </div>
+        <div style="border-top:1px solid #e8e0d0;margin-top:1.75rem;padding-top:1.25rem">
+          <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8b7a5a;margin-bottom:.85rem"><em>Alumni</em> approvati — visibili nella gallery</p>
+          <div id="alumni-approved-list">
+            <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB RICORDI -->
+  <div class="tab-section" id="tab-ricordi">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Muro dei <em>Ricordi</em></h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
+          I ricordi inviati dai visitatori arrivano qui con <code>approvato=false</code>. Approva e appariranno sul Muro dei Ricordi pubblico.
+        </p>
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">
+          <button class="btn-approva" style="font-size:.65rem" onclick="ricordiLoad(false)">⏳ In attesa</button>
+          <button class="btn-ed edit" onclick="ricordiLoad(true)">✅ Approvati</button>
+          <button class="btn-ed" onclick="ricordiLoad(null)">Tutti</button>
+        </div>
+        <div id="ricordi-list">
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB OPEN DAY -->
+  <div class="tab-section" id="tab-openday">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Prenotazioni <em>Open Day</em></h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
+          Richieste di visita guidata ricevute tramite il form della pagina Open Day.
+        </p>
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">
+          <button class="btn-approva" style="font-size:.65rem" onclick="odLoad('nuova')">🆕 Nuove</button>
+          <button class="btn-ed edit" onclick="odLoad('confermata')">✅ Confermate</button>
+          <button class="btn-ed" onclick="odLoad('annullata')">✗ Annullate</button>
+          <button class="btn-ed" onclick="odLoad('')">Tutte</button>
+        </div>
+        <div id="od-list">
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB FAMIGLIE -->
+  <div class="tab-section" id="tab-famiglie">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Richieste di accesso <em>Famiglie</em></h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">Quando un genitore compila il modulo, appare qui. Verificare i dati prima di approvare. All&rsquo;approvazione viene creato l&rsquo;account e inviata l&rsquo;email di benvenuto.</p>
+        <div style="display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap">
+          <button onclick="famLoad('in_attesa')" style="padding:.45rem 1rem;font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid var(--bosco);background:var(--bosco);color:#fff;border-radius:6px;cursor:pointer">In attesa</button>
+          <button onclick="famLoad('approvata')" style="padding:.45rem 1rem;font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid #d4c9a8;background:none;color:#6b5a2a;border-radius:6px;cursor:pointer">Approvate</button>
+          <button onclick="famLoad('rifiutata')" style="padding:.45rem 1rem;font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid #d4c9a8;background:none;color:#6b5a2a;border-radius:6px;cursor:pointer">Rifiutate</button>
+        </div>
+        <div id="fam-lista"><p style="color:var(--txt2);font-size:.85rem;font-style:italic">Clicca In attesa per caricare le richieste.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB LAB MUSICALE -->
+  <div class="tab-section" id="tab-lab">
+    <div style="padding:1.5rem 1.25rem">
+      <div class="adm-card">
+        <h2>Iscrizioni <em>Laboratorio Musicale</em></h2>
+        <p style="font-size:.82rem;color:var(--txt2);margin-bottom:1.25rem;line-height:1.65">
+          Richieste di iscrizione ricevute tramite il form della pagina Laboratorio Musicale.
+        </p>
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">
+          <button class="btn-approva" style="font-size:.65rem" onclick="labLoad()">🔄 Aggiorna</button>
+          <button class="btn-ed edit" onclick="labExport()">⬇️ Esporta CSV</button>
+        </div>
+        <div id="lab-lista">
+          <p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- fine adm-wrap -->
+
+<script>
+// Pulisci il campo password all'avvio per evitare caratteri pre-compilati
+window.addEventListener('DOMContentLoaded', function() {
+  var pwd = document.getElementById('pwd');
+  if (pwd) { pwd.value = ''; pwd.focus(); }
+});
+
+const PWD_HASH = '4d7f432968e1da3b3d6d7dec2f99f4d0b65b3751eeec4d1ea36d45d7bcda288b'; // password hashata SHA-256
+// ═══ NOTIZIE — SUPABASE ═══
+const SB_N = 'https://sawclsysqnjsvbobioqo.supabase.co';
+const SB_PUB = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTM3NjksImV4cCI6MjA5NDc4OTc2OX0.vS-hoxI2YUlxCWIdDzARqqpGzmXTDi8hq1AVU2jdhZ0';
+const SB_NK  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTIxMzc2OSwiZXhwIjoyMDk0Nzg5NzY5fQ.pvYOl7aNXvO32Zb_8zzq5OXk3Cc9OeVe_QV9Vh_WaWw';
+
+let editNotiziaId = null;
+
+async function initNotizie() {
+  await loadNotizie();
+}
+
+async function loadNotizie() {
+  const list = document.getElementById('n-list');
+  list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Caricamento...</p>';
+  try {
+    const resp = await fetch(SB_N + '/rest/v1/notizie?order=created_at.desc', {
+      headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+    });
+    const data = await resp.json();
+    document.getElementById('n-count').textContent = data.length + ' notizie · le prime 3 appaiono in homepage';
+    if (!data.length) { list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Nessuna notizia.</p>'; return; }
+    list.innerHTML = data.map(n => `
+      <div class="adm-item" data-id="${n.id}">
+        <div class="adm-item-head">
+          <strong>${n.titolo}</strong>
+          <span class="adm-badge">${n.categoria || ''}</span>
+          <span style="font-size:.75rem;color:#8b7a5a;margin-left:.5rem">${n.data_pub || ''}</span>
+        </div>
+        <div class="adm-item-foot">
+          <button class="btn-ed" onclick="editNotizia('${n.id}')">✏️ Modifica</button>
+          <button class="btn-ed del" onclick="deleteNotizia('${n.id}')">🗑️ Elimina</button>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    list.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+async function salvaNotizia() {
+  const titolo = document.getElementById('n-titolo').value.trim();
+  const testo  = document.getElementById('n-testo').value.trim();
+  const cat    = document.getElementById('n-cat').value;
+  const data   = document.getElementById('n-data').value.trim();
+  const img    = document.getElementById('n-img').value.trim();
+  const link   = document.getElementById('n-link').value.trim();
+  const linkT  = document.getElementById('n-link-testo').value.trim();
+  if (!titolo) { alert('Inserire il titolo.'); return; }
+
+  const payload = { titolo, testo, categoria: cat, data_pub: data, immagine: img, link, link_testo: linkT };
+  
+  let url = SB_N + '/rest/v1/notizie';
+  let method = 'POST';
+  if (editNotiziaId) { url += '?id=eq.' + editNotiziaId; method = 'PATCH'; }
+
+  const resp = await fetch(url, {
+    method,
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify(payload)
+  });
+
+  if (resp.ok || resp.status === 201) {
+    resetFormNotizia();
+    await loadNotizie();
+  } else {
+    alert('Errore salvataggio: ' + resp.status);
+  }
+}
+
+async function editNotizia(id) {
+  const resp = await fetch(SB_N + '/rest/v1/notizie?id=eq.' + id, {
+    headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+  });
+  const data = await resp.json();
+  if (!data.length) return;
+  const n = data[0];
+  document.getElementById('n-titolo').value = n.titolo || '';
+  document.getElementById('n-testo').value  = n.testo  || '';
+  document.getElementById('n-cat').value    = n.categoria || 'istituzionale';
+  document.getElementById('n-data').value   = n.data_pub || '';
+  document.getElementById('n-img').value    = n.immagine || '';
+  document.getElementById('n-link').value   = n.link || '';
+  document.getElementById('n-link-testo').value = n.link_testo || '';
+  editNotiziaId = id;
+  document.getElementById('n-btn-salva').textContent = '💾 Aggiorna notizia';
+  document.querySelector('#tab-notizie .adm-card').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+async function deleteNotizia(id) {
+  if (!await admConfirm({icon:'🗑️',title:'Elimina notizia',message:'Questa operazione è irreversibile.',confirmText:'Elimina',type:'danger'})) return;
+  await fetch(SB_N + '/rest/v1/notizie?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  await loadNotizie();
+}
+
+function resetNotizia() { resetFormNotizia(); }
+function resetFormNotizia() {
+  ['n-titolo','n-testo','n-data','n-img','n-link','n-link-testo'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const cat = document.getElementById('n-cat');
+  if (cat) cat.value = 'istituzionale';
+  editNotiziaId = null;
+  document.getElementById('n-btn-salva').textContent = '📌 Pubblica';
+}
+
+
+
+// ═══ AVVISI — SUPABASE ═══
+let editAvvisoId = null;
+
+async function loadAvvisi() {
+  const list = document.getElementById('a-list');
+  list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Caricamento...</p>';
+  try {
+    const resp = await fetch(SB_N + '/rest/v1/avvisi?order=created_at.desc', {
+      headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+    });
+    const data = await resp.json();
+    document.getElementById('a-count').textContent = data.length + ' avvisi pubblicati';
+    if (!data.length) { list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Nessun avviso.</p>'; return; }
+    list.innerHTML = data.map(a => `
+      <div class="el-item" data-id="${a.id}">
+        <div class="el-top">
+          <span class="el-cat ${a.categoria === 'urgente' ? 'urgente' : ''}">${a.categoria || ''}</span>
+          <div>
+            <div class="el-titolo">${a.titolo || ''}${a.pinned ? '<span class="badge-pin">📌 PIN</span>' : ''}</div>
+            <div class="el-meta">${a.autore || ''} · ${a.data || ''}</div>
+          </div>
+        </div>
+        <div class="el-actions">
+          <button class="btn-ed edit" onclick="editAvviso('${a.id}')">✏️ Modifica</button>
+          <button class="btn-ed del"  onclick="deleteAvviso('${a.id}')">🗑️ Elimina</button>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    list.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+async function salvaAvviso() {
+  const titolo  = document.getElementById('a-titolo').value.trim();
+  const testo   = document.getElementById('a-testo').value.trim();
+  const cat     = document.getElementById('a-cat').value;
+  const data    = document.getElementById('a-data').value.trim();
+  const autore  = document.getElementById('a-autore').value.trim();
+  const pinned  = document.getElementById('a-pinned').checked;
+  if (!titolo) { alert('Inserire il titolo.'); return; }
+
+  const payload = { titolo, testo, categoria: cat, data, autore, pinned };
+
+  let url = SB_N + '/rest/v1/avvisi';
+  let method = 'POST';
+  if (editAvvisoId) { url += '?id=eq.' + editAvvisoId; method = 'PATCH'; }
+
+  const resp = await fetch(url, {
+    method,
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify(payload)
+  });
+
+  if (resp.ok || resp.status === 201) {
+    resetAvviso();
+    await loadAvvisi();
+    document.getElementById('a-ok').style.display = 'inline';
+    setTimeout(() => { document.getElementById('a-ok').style.display = 'none'; }, 3000);
+  } else {
+    alert('Errore salvataggio: ' + resp.status);
+  }
+}
+
+async function editAvviso(id) {
+  const resp = await fetch(SB_N + '/rest/v1/avvisi?id=eq.' + id, {
+    headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+  });
+  const data = await resp.json();
+  if (!data.length) return;
+  const a = data[0];
+  document.getElementById('a-titolo').value  = a.titolo  || '';
+  document.getElementById('a-testo').value   = a.testo   || '';
+  document.getElementById('a-cat').value     = a.categoria || 'famiglie';
+  document.getElementById('a-data').value    = a.data    || '';
+  document.getElementById('a-autore').value  = a.autore  || '';
+  document.getElementById('a-pinned').checked = !!a.pinned;
+  editAvvisoId = id;
+  document.getElementById('a-btn-salva').textContent = '💾 Aggiorna avviso';
+  document.getElementById('a-form-title').innerHTML = 'Modifica <em>avviso</em>';
+  document.querySelector('#tab-avvisi .adm-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function deleteAvviso(id) {
+  if (!await admConfirm({icon:'🗑️',title:'Elimina avviso',message:'Questa operazione è irreversibile.',confirmText:'Elimina',type:'danger'})) return;
+  await fetch(SB_N + '/rest/v1/avvisi?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  await loadAvvisi();
+}
+
+function resetAvviso() {
+  ['a-titolo', 'a-testo', 'a-data', 'a-autore'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const cat = document.getElementById('a-cat');
+  if (cat) cat.value = 'famiglie';
+  const pinned = document.getElementById('a-pinned');
+  if (pinned) pinned.checked = false;
+  editAvvisoId = null;
+  document.getElementById('a-btn-salva').textContent = '📌 Pubblica';
+  document.getElementById('a-form-title').innerHTML = '+ Nuovo <em>avviso</em>';
+}
+
+// ═══ FAMIGLIE ═══
+async function famLoad(stato) {
+  const lista = document.getElementById('fam-lista');
+  lista.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+  try {
+    const resp = await fetch(SB_N + '/rest/v1/richieste_accesso?stato=eq.' + stato + '&order=created_at.desc', {
+      headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+    });
+    const data = await resp.json();
+    if (!data.length) {
+      lista.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessuna richiesta in questa categoria.</p>';
+      return;
+    }
+    lista.innerHTML = data.map(f => `
+      <div class="fam-card ${f.stato}">
+        <div class="fam-info">
+          <div class="fam-campo"><strong>Studente</strong>${f.nome_studente || '—'}</div>
+          <div class="fam-campo"><strong>Email</strong>${f.email_genitore || '—'}</div>
+          <div class="fam-campo"><strong>Relazione</strong>${f.relazione || '—'}</div>
+          <div class="fam-campo"><strong>Richiesta</strong>${f.created_at ? f.created_at.slice(0,10) : '—'}</div>
+          <div class="fam-campo"><strong>Stato</strong>${f.stato}</div>
+        </div>
+        <div class="fam-azioni">
+          ${f.stato === 'in_attesa' ? `
+            <button class="btn-approva" onclick="famAzione('${f.id}','approvata')">✅ Approva</button>
+            <button class="btn-rifiuta" onclick="famAzione('${f.id}','rifiutata')">✗ Rifiuta</button>
+          ` : `
+            <button class="btn-annulla-fam" onclick="famAzione('${f.id}','in_attesa')">↩ Annulla</button>
+          `}
+        </div>
+      </div>`).join('');
+
+    // Aggiorna badge tab famiglie
+    if (stato === 'in_attesa') {
+      const badge = document.getElementById('badge-famiglie');
+      if (badge) {
+        badge.textContent = data.length;
+        badge.style.display = data.length ? 'inline' : 'none';
+      }
+    }
+  } catch(e) {
+    lista.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+async function famAzione(id, nuovoStato) {
+  if (!await admConfirm({icon: nuovoStato==='approvata'?'✅':'✗', title: nuovoStato==='approvata'?'Approva richiesta':'Rifiuta richiesta', message: nuovoStato==='approvata'?'Verrà inviata un\'email di invito alla famiglia.':'La richiesta verrà rifiutata.', confirmText: nuovoStato==='approvata'?'Approva':'Rifiuta', type: nuovoStato==='approvata'?'success':'danger'})) return;
+
+  // 1. Aggiorna stato nella tabella richieste_accesso
+  const patch = await fetch(SB_N + '/rest/v1/richieste_accesso?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ stato: nuovoStato })
+  });
+  if (!patch.ok) { alert('Errore aggiornamento stato: ' + patch.status); return; }
+
+  // 2. Se approvata, crea account Auth e invia email di invito
+  if (nuovoStato === 'approvata') {
+    // Recupera email e nome studente dalla richiesta
+    const richResp = await fetch(SB_N + '/rest/v1/richieste_accesso?id=eq.' + id, {
+      headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+    });
+    const rich = await richResp.json();
+    if (!rich.length) { alert('Errore: richiesta non trovata.'); return; }
+    const email      = rich[0].email_genitore;
+    const nomeStud   = rich[0].nome_studente || '';
+
+    // Invita utente tramite Supabase Auth Admin API
+    const invite = await fetch(SB_N + '/auth/v1/invite', {
+      method: 'POST',
+      headers: {
+        'apikey':        SB_NK,
+        'Authorization': 'Bearer ' + SB_NK,
+        'Content-Type':  'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        data: { nome_studente: nomeStud }
+      })
+    });
+
+    if (invite.ok) {
+      await famLoad('in_attesa');
+      // Mostra conferma
+      const ov = document.createElement('div');
+      ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(6,13,6,.88);display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px)';
+      const box = document.createElement('div');
+      box.style.cssText = 'background:#1a2e1b;border:1px solid rgba(184,146,42,.3);border-radius:14px;padding:2rem 1.75rem;max-width:400px;width:100%;text-align:center';
+      box.innerHTML = '<div style="font-size:2.5rem;margin-bottom:.75rem">✅</div>'
+        + '<h3 style="font-family:var(--fd);font-size:1.3rem;font-weight:300;color:#F5F0E8;margin:0 0 .6rem">Accesso approvato</h3>'
+        + '<p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.7;margin:0 0 1.25rem">Email di invito inviata a <strong style="color:var(--oro2)">' + email + '</strong>.<br>La famiglia riceverà un link per impostare la password e accedere all\'area riservata.</p>'
+        + '<button id="fam-ok-btn" style="background:linear-gradient(135deg,#B8922A,#D4AA4A);color:#1a2e1b;border:none;cursor:pointer;font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.75rem;border-radius:40px">OK</button>';
+      ov.appendChild(box);
+      document.body.appendChild(ov);
+      document.getElementById('fam-ok-btn').addEventListener('click', () => { ov.remove(); document.body.style.overflow=''; });
+    } else {
+      const err = await invite.json();
+      // Se l'utente esiste già, non è un errore grave
+      if (err.msg && err.msg.includes('already')) {
+        await famLoad('in_attesa');
+        alert('Attenzione: esiste già un account con questa email. La famiglia può accedere con le credenziali precedenti.');
+      } else {
+        alert('Errore invio invito: ' + (err.msg || invite.status));
+      }
+    }
+  } else {
+    await famLoad('in_attesa');
+  }
+}
+
+
+
+// ═══ MAPPA PIN ═══
+async function loadPins() {
+  const pendingEl  = document.getElementById('pin-pending-list');
+  const approvedEl = document.getElementById('pin-approved-list');
+
+  pendingEl.innerHTML  = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+  approvedEl.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+
+  try {
+    const pending  = await sbFetch('pin_mappa?approvato=eq.false&order=created_at.desc');
+    const approved = await sbFetch('pin_mappa?approvato=eq.true&order=created_at.desc');
+
+    pendingEl.innerHTML = pending.length
+      ? pending.map(p => pinCard(p, false)).join('')
+      : '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessun pin in attesa.</p>';
+
+    approvedEl.innerHTML = approved.length
+      ? approved.map(p => pinCard(p, true)).join('')
+      : '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessun pin approvato.</p>';
+
+  } catch(e) {
+    pendingEl.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+function pinCard(p, approvato) {
+  const LABELS = { alumni: 'Alumni', visitor: 'Visitatore', school: 'Scuola partner' };
+  return `
+    <div class="fam-card ${approvato ? 'approvata' : 'in_attesa'}" style="margin-bottom:.75rem">
+      <div class="fam-info">
+        <div class="fam-campo"><strong>Nome</strong>${p.nome || '—'}</div>
+        <div class="fam-campo"><strong>Città</strong>${p.citta || '—'}</div>
+        <div class="fam-campo"><strong>Tipo</strong>${LABELS[p.tipo] || p.tipo || '—'}</div>
+        <div class="fam-campo"><strong>Anno</strong>${p.anni || '—'}</div>
+        <div class="fam-campo"><strong>Ruolo</strong>${p.ruolo || '—'}</div>
+        <div class="fam-campo"><strong>Coordinate</strong>${p.lat ? p.lat.toFixed(2) + ', ' + p.lng.toFixed(2) : '—'}</div>
+      </div>
+      <div class="fam-azioni">
+        ${!approvato ? `
+          <button class="btn-approva" onclick="pinAzione('${p.id}', true)">✅ Approva</button>
+          <button class="btn-rifiuta" onclick="pinElimina('${p.id}')">🗑️ Elimina</button>
+        ` : `
+          <button class="btn-annulla-fam" onclick="pinAzione('${p.id}', false)">↩ Annulla approvazione</button>
+          <button class="btn-rifiuta" onclick="pinElimina('${p.id}')">🗑️ Elimina</button>
+        `}
+      </div>
+    </div>`;
+}
+
+async function pinAzione(id, approva) {
+  const label = approva ? 'approvare' : "annullare l'approvazione di";
+  if (!await admConfirm({icon: approva?'✅':'↩', title: approva?'Approva pin':'Annulla approvazione', message: approva?'Il pin apparirà sulla mappa pubblica.':'Il pin tornerà in stato di attesa.', confirmText: approva?'Approva':'Annulla', type: approva?'success':'neutral'})) return;
+  const resp = await fetch(SB_N + '/rest/v1/pin_mappa?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ approvato: approva })
+  });
+  if (resp.ok) { await loadPins(); }
+  else { alert('Errore: ' + resp.status); }
+}
+
+async function pinElimina(id) {
+  if (!await admConfirm({icon:'🗑️',title:'Elimina pin',message:'Questa operazione è irreversibile.',confirmText:'Elimina',type:'danger'})) return;
+  const resp = await fetch(SB_N + '/rest/v1/pin_mappa?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  if (resp.ok) { await loadPins(); }
+  else { alert('Errore: ' + resp.status); }
+}
+
+
+// ═══ OPEN DAY ═══
+async function odLoad(stato) {
+  const list = document.getElementById('od-list');
+  list.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+  try {
+    const filter = stato ? '&stato=eq.' + stato : '';
+    const data   = await sbFetch('prenotazioni_openday?order=created_at.desc' + filter);
+    if (!data.length) {
+      list.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessuna prenotazione.</p>';
+      return;
+    }
+    list.innerHTML = data.map(p => `
+      <div class="fam-card ${p.stato}" style="margin-bottom:.75rem">
+        <div class="fam-info">
+          <div class="fam-campo"><strong>Nome</strong>${p.nome || '—'}</div>
+          <div class="fam-campo"><strong>Email</strong>${p.email || '—'}</div>
+          <div class="fam-campo"><strong>Telefono</strong>${p.telefono || '—'}</div>
+          <div class="fam-campo"><strong>Data preferita</strong>${p.data_pref || '—'}</div>
+          <div class="fam-campo"><strong>Persone</strong>${p.persone || '—'}</div>
+          <div class="fam-campo"><strong>Richiesta</strong>${p.created_at ? p.created_at.slice(0,10) : '—'}</div>
+          <div class="fam-campo"><strong>Stato</strong>${p.stato}</div>
+        </div>
+        ${p.note ? `<div style="font-size:.8rem;color:#6b5a2a;font-style:italic;margin:.5rem 0 .75rem;padding:.5rem .75rem;background:#f9f6ef;border-radius:6px">"${p.note}"</div>` : ''}
+        <div class="fam-azioni">
+          ${p.stato === 'nuova' ? `
+            <button class="btn-approva" onclick="odAzione('${p.id}','confermata')">✅ Conferma</button>
+            <button class="btn-rifiuta" onclick="odAzione('${p.id}','annullata')">✗ Annulla</button>
+          ` : `
+            <button class="btn-annulla-fam" onclick="odAzione('${p.id}','nuova')">↩ Riporta a nuova</button>
+            <button class="btn-rifiuta" onclick="odElimina('${p.id}')">🗑️ Elimina</button>
+          `}
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    list.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+async function odAzione(id, stato) {
+  const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/prenotazioni_openday?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ', 'Authorization': 'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ', 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ stato })
+  });
+  if (resp.ok) { await odLoad('nuova'); }
+  else { alert('Errore: ' + resp.status); }
+}
+
+async function odElimina(id) {
+  if (!await admConfirm({icon:'🗑️',title:'Elimina prenotazione',message:'Questa operazione è irreversibile.',confirmText:'Elimina',type:'danger'})) return;
+  const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/prenotazioni_openday?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ', 'Authorization': 'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ' }
+  });
+  if (resp.ok) { await odLoad(''); }
+  else { alert('Errore: ' + resp.status); }
+}
+
+
+// ═══ RICORDI ═══
+async function ricordiLoad(approvato) {
+  const list = document.getElementById('ricordi-list');
+  list.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+  try {
+    const filter = approvato === null ? '' : '&approvato=eq.' + approvato;
+    const data = await sbFetch('ricordi?order=created_at.desc' + filter);
+    if (!data.length) {
+      list.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessun ricordo.</p>';
+      return;
+    }
+    list.innerHTML = data.map(r => `
+      <div class="fam-card ${r.approvato ? 'approvata' : 'in_attesa'}" style="margin-bottom:.75rem">
+        <div class="fam-info">
+          <div class="fam-campo"><strong>Nome</strong>${r.nome || '—'}</div>
+          <div class="fam-campo"><strong>Anni</strong>${r.anni || '—'}</div>
+          <div class="fam-campo"><strong>Dove ora</strong>${r.dove || '—'}</div>
+          <div class="fam-campo"><strong>Data</strong>${r.created_at ? r.created_at.slice(0,10) : '—'}</div>
+        </div>
+        ${r.testo ? `<div style="font-size:.82rem;color:rgba(245,240,232,.7);font-style:italic;margin:.5rem 0 .75rem;padding:.6rem .85rem;background:rgba(245,240,232,.05);border-radius:6px;line-height:1.6">"${r.testo}"</div>` : ''}
+        <div class="fam-azioni">
+          ${!r.approvato ? `
+            <button class="btn-approva" onclick="ricordiAzione('${r.id}', true)">✅ Approva</button>
+            <button class="btn-rifiuta" onclick="ricordiElimina('${r.id}')">🗑️ Elimina</button>
+          ` : `
+            <button class="btn-annulla-fam" onclick="ricordiAzione('${r.id}', false)">↩ Annulla</button>
+            <button class="btn-rifiuta" onclick="ricordiElimina('${r.id}')">🗑️ Elimina</button>
+          `}
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    list.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+async function ricordiAzione(id, approva) {
+  if (!await admConfirm({
+    icon: approva ? '✅' : '↩',
+    title: approva ? 'Approva ricordo' : 'Annulla approvazione',
+    message: approva ? 'Il ricordo apparirà sul Muro pubblico.' : 'Il ricordo tornerà in attesa.',
+    confirmText: approva ? 'Approva' : 'Annulla',
+    type: approva ? 'success' : 'neutral'
+  })) return;
+  const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/ricordi?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ approvato: approva })
+  });
+  if (resp.ok) { await ricordiLoad(false); }
+  else { alert('Errore: ' + resp.status); }
+}
+
+async function ricordiElimina(id) {
+  if (!await admConfirm({icon:'🗑️',title:'Elimina ricordo',message:'Operazione irreversibile.',confirmText:'Elimina',type:'danger'})) return;
+  const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/ricordi?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  if (resp.ok) { await ricordiLoad(null); }
+  else { alert('Errore: ' + resp.status); }
+}
+
+// ═══ ALUMNI ═══
+async function loadAlumni() {
+  const pendingEl  = document.getElementById('alumni-pending-list');
+  const approvedEl = document.getElementById('alumni-approved-list');
+
+  pendingEl.innerHTML  = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+  approvedEl.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+
+  try {
+    // In attesa
+    const pending = await sbFetch('alumni?approvato=eq.false&order=created_at.desc');
+    if (!pending.length) {
+      pendingEl.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessuna scheda in attesa.</p>';
+    } else {
+      pendingEl.innerHTML = pending.map(a => alumniCard(a, false)).join('');
+    }
+
+    // Approvati
+    const approved = await sbFetch('alumni?approvato=eq.true&order=created_at.desc');
+    if (!approved.length) {
+      approvedEl.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessun alumni approvato.</p>';
+    } else {
+      approvedEl.innerHTML = approved.map(a => alumniCard(a, true)).join('');
+    }
+  } catch(e) {
+    pendingEl.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+function alumniCard(a, approvato) {
+  return `
+    <div class="fam-card ${approvato ? 'approvata' : 'in_attesa'}" style="margin-bottom:.75rem">
+      <div class="fam-info">
+        <div class="fam-campo"><strong>Nome</strong>${a.nome || '—'}</div>
+        <div class="fam-campo"><strong>Lavoro</strong>${a.lavoro || '—'}</div>
+        <div class="fam-campo"><strong>Settore</strong>${a.settore || '—'}</div>
+        <div class="fam-campo"><strong>Città</strong>${a.citta || '—'}</div>
+        <div class="fam-campo"><strong>Anni convitto</strong>${a.anni || '—'}</div>
+        <div class="fam-campo"><strong>Email</strong>${a.email || '—'}</div>
+      </div>
+      ${a.ricordo ? `<div style="font-size:.8rem;color:#6b5a2a;font-style:italic;margin:0 0 .75rem;padding:.5rem .75rem;background:#f9f6ef;border-radius:6px">"${a.ricordo}"</div>` : ''}
+      <div class="fam-azioni">
+        ${!approvato ? `
+          <button class="btn-approva" onclick="alumniAzione('${a.id}', true)">✅ Approva</button>
+          <button class="btn-rifiuta" onclick="alumniElimina('${a.id}')">🗑️ Rifiuta ed elimina</button>
+        ` : `
+          <button class="btn-annulla-fam" onclick="alumniAzione('${a.id}', false)">↩ Annulla approvazione</button>
+          <button class="btn-rifiuta" onclick="alumniElimina('${a.id}')">🗑️ Elimina</button>
+        `}
+      </div>
+    </div>`;
+}
+
+async function alumniAzione(id, approva) {
+  const label = approva ? 'approvare' : "annullare l'approvazione di";
+  if (!await admConfirm({icon: approva?'✅':'↩', title: approva?'Approva scheda alumni':'Annulla approvazione', message: approva?'La scheda apparirà nella gallery pubblica.':'La scheda tornerà in stato di attesa.', confirmText: approva?'Approva':'Annulla', type: approva?'success':'neutral'})) return;
+  const resp = await fetch(SB_N + '/rest/v1/alumni?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ approvato: approva })
+  });
+  if (resp.ok) {
+    await loadAlumni();
+  } else {
+    alert('Errore: ' + resp.status);
+  }
+}
+
+async function alumniElimina(id) {
+  if (!await admConfirm({icon:'🗑️',title:'Elimina scheda alumni',message:'Questa operazione è irreversibile.',confirmText:'Elimina',type:'danger'})) return;
+  const resp = await fetch(SB_N + '/rest/v1/alumni?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  if (resp.ok) {
+    await loadAlumni();
+  } else {
+    alert('Errore: ' + resp.status);
+  }
+}
+
+// Helper fetch generico con service key
+async function sbFetch(endpoint) {
+  const resp = await fetch(SB_N + '/rest/v1/' + endpoint, {
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  if (!resp.ok) throw new Error('HTTP ' + resp.status + ': ' + await resp.text());
+  return resp.json();
+}
+
+// ═══ AI — genera testo notizie e avvisi ═══
+async function aiNotizia() {
+  const prompt = document.getElementById('n-ai-prompt').value.trim();
+  if (!prompt) { alert('Descrivi brevemente la notizia.'); return; }
+  const stato = document.getElementById('n-ai-stato');
+  stato.textContent = '⏳ Generazione in corso…';
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [{
+          role: 'user',
+          content: 'Scrivi una breve notizia istituzionale in italiano per il sito del Convitto "Costaggini" di Rieti (scuola alberghiera con convitto). Tono professionale ma caldo. Titolo e testo separati. Argomento: ' + prompt
+        }]
+      })
+    });
+    const data = await resp.json();
+    const testo = data.content?.[0]?.text || '';
+    // Separa titolo e testo: prima riga come titolo
+    const righe = testo.split('\n').filter(r => r.trim());
+    document.getElementById('n-titolo').value = righe[0].replace(/^[#*\s]+/, '').trim();
+    document.getElementById('n-testo').value  = righe.slice(1).join('\n').trim();
+    stato.textContent = '✅ Testo generato — controlla e pubblica.';
+  } catch(e) {
+    stato.textContent = '❌ Errore: ' + e.message;
+  }
+}
+
+async function aiAvviso() {
+  const prompt = document.getElementById('a-ai-prompt').value.trim();
+  if (!prompt) { alert('Descrivi brevemente l\'avviso.'); return; }
+  const stato = document.getElementById('a-ai-stato');
+  stato.textContent = '⏳ Generazione in corso…';
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        messages: [{
+          role: 'user',
+          content: 'Scrivi un avviso ufficiale breve in italiano per il Convitto "Costaggini" di Rieti. Tono istituzionale, diretto. Solo titolo e testo (separati da riga vuota). Argomento: ' + prompt
+        }]
+      })
+    });
+    const data = await resp.json();
+    const testo = data.content?.[0]?.text || '';
+    const righe = testo.split('\n').filter(r => r.trim());
+    document.getElementById('a-titolo').value = righe[0].replace(/^[#*\s]+/, '').trim();
+    document.getElementById('a-testo').value  = righe.slice(1).join('\n').trim();
+    stato.textContent = '✅ Testo generato — controlla e pubblica.';
+  } catch(e) {
+    stato.textContent = '❌ Errore: ' + e.message;
+  }
+}
+
+// ═══ LOGIN / LOGOUT / NAVIGAZIONE ═══
+async function doLogin() {
+  const pwd = document.getElementById('pwd').value;
+  const err = document.getElementById('login-err');
+  err.style.display = 'none';
+  try {
+    const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+    const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    if (hash === PWD_HASH) {
+      sessionStorage.setItem('adm_auth', '1');
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('adm-wrap').style.display     = 'block';
+      await initNotizie();
+      await loadAvvisi();
+      await famLoad('in_attesa');
+    } else {
+      err.style.display = 'block';
+      document.getElementById('pwd').value = '';
+      document.getElementById('pwd').focus();
+    }
+  } catch(e) {
+    err.textContent = 'Errore: ' + e.message;
+    err.style.display = 'block';
+  }
+}
+
+// Consente login anche con Invio
+document.addEventListener('DOMContentLoaded', () => {
+  const pwd = document.getElementById('pwd');
+  if (pwd) pwd.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+  // Se già autenticato in questa sessione, salta il login
+  if (sessionStorage.getItem('adm_auth') === '1') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('adm-wrap').style.display     = 'block';
+    initNotizie();
+    loadAvvisi();
+    famLoad('in_attesa');
+  }
+});
+
+function logout() {
+  sessionStorage.removeItem('adm_auth');
+  document.getElementById('adm-wrap').style.display     = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pwd').value = '';
+  document.getElementById('pwd').focus();
+}
+
+function switchTab(nome, btn) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('on'));
+  const section = document.getElementById('tab-' + nome);
+  if (section) section.classList.add('on');
+  if (btn) btn.classList.add('on');
+  // Carica dati al primo accesso al tab
+  if (nome === 'ricordi') ricordiLoad(false);
+  if (nome === 'alumni')  loadAlumni();
+  if (nome === 'mappa')   loadPins();
+  if (nome === 'openday') odLoad('nuova');
+  if (nome === 'lab')     labLoad();
+}
+
+
+// ═══ LABORATORIO MUSICALE ═══
+async function labLoad() {
+  const lista = document.getElementById('lab-lista');
+  lista.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
+  const resp = await fetch(SB_N + '/rest/v1/lab_musicale_iscrizioni?order=created_at.desc', {
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  const rows = await resp.json();
+  if (!rows.length) {
+    lista.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Nessuna iscrizione ricevuta.</p>';
+    document.getElementById('badge-lab').style.display = 'none';
+    return;
+  }
+  // badge
+  const badge = document.getElementById('badge-lab');
+  badge.textContent = rows.length;
+  badge.style.display = 'inline';
+
+  lista.innerHTML = rows.map(r => {
+    const data = new Date(r.created_at).toLocaleDateString('it-IT', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    const interessi = Array.isArray(r.interessi) && r.interessi.length ? r.interessi.join(', ') : '—';
+    var noteHtml = r.note ? '<div style="font-size:.82rem;background:#faf7f0;border-left:3px solid var(--oro);padding:.5rem .75rem;border-radius:0 6px 6px 0;color:var(--txt2)"><em>' + r.note + '</em></div>' : '';
+    return '<div class="fam-card approvata" style="margin-bottom:.85rem">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">'
+        + '<div>'
+          + '<strong style="font-size:1rem;color:var(--bosco)">' + r.cognome + ' ' + r.nome + '</strong>'
+          + '<span style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:#e8f5e9;color:#1d6f42;padding:.15rem .5rem;border-radius:4px;margin-left:.5rem">' + (r.classe || '—') + '</span>'
+        + '</div>'
+        + '<span style="font-family:var(--fu);font-size:.6rem;color:var(--txt2)">' + data + '</span>'
+      + '</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem .85rem;font-size:.82rem;margin-bottom:.6rem">'
+        + '<div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Email</span><br>' + (r.email || '—') + '</div>'
+        + '<div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Strumento</span><br>' + (r.strumento || '—') + '</div>'
+        + '<div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Esperienza</span><br>' + (r.esperienza || '—') + '</div>'
+        + '<div><span style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b5a2a">Interessi</span><br>' + interessi + '</div>'
+      + '</div>'
+      + noteHtml
+      + '<div style="margin-top:.75rem;text-align:right">'
+        + '<button onclick="labElimina(' + r.id + ',\"' + r.cognome + ' ' + r.nome + '\")" style="padding:.3rem .8rem;font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid #dc2626;background:none;color:#dc2626;border-radius:6px;cursor:pointer">🗑 Elimina</button>'
+      + '</div>'
+    + '</div>';
+  }).join('');
+}
+
+async function labElimina(id, nome) {
+  if (!confirm('Eliminare la richiesta di ' + nome + '?')) return;
+  await fetch(SB_N + '/rest/v1/lab_musicale_iscrizioni?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  });
+  labLoad();
+}
+
+function labExport() {
+  fetch(SB_N + '/rest/v1/lab_musicale_iscrizioni?order=created_at.desc', {
+    headers: { 'apikey': SB_NK, 'Authorization': 'Bearer ' + SB_NK }
+  }).then(r => r.json()).then(rows => {
+    if (!rows.length) { alert('Nessuna iscrizione da esportare.'); return; }
+    const cols = ['created_at','cognome','nome','classe','email','esperienza','strumento','interessi','note'];
+    const csv = [cols.join(';'), ...rows.map(r =>
+      cols.map(c => {
+        const v = Array.isArray(r[c]) ? r[c].join('|') : (r[c] ?? '');
+        return '"' + String(v).replace(/"/g,'""') + '"';
+      }).join(';')
+    )].join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = 'lab-musicale-iscrizioni.csv';
+    a.click();
+  });
+}
+
+</script>
+</body>
+</html>
