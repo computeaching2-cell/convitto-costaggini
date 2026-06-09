@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Collegio Educatori — Convitto Costaggini · Rieti</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bosco: #2C3E2D;
+  --bosco2: #1a2e1b;
+  --bg: #0a0f0a;
+  --bg2: #0d150d;
+  --oro: #B8922A;
+  --oro2: #D4AA4A;
+  --oro3: #E8C86A;
+  --txt: rgba(245,240,232,1);
+  --txt2: rgba(245,240,232,.65);
+  --txt3: rgba(245,240,232,.32);
+  --fd: 'Cormorant Garamond', serif;
+  --fu: 'Source Sans 3', sans-serif;
+  --r: 10px;
+  --verde: #4ade80;
+  --azzurro: #38bdf8;
+  --arancio: #fb923c;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--txt); font-family: var(--fu); overflow-x: hidden; }
+
+/* LOGIN */
+#login-screen {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg2);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 2rem; gap: 1.25rem;
+}
+.ls-logo { font-family: var(--fd); font-size: clamp(1.8rem,5vw,2.6rem); color: var(--oro2); font-weight: 300; text-align: center; line-height: 1.2; }
+.ls-sub { font-family: var(--fu); font-size: .6rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--txt3); }
+.ls-line { width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--oro), transparent); }
+.ls-note { font-family: var(--fd); font-size: .95rem; color: var(--txt3); font-style: italic; text-align: center; }
+#pwd-in {
+  width: min(300px, 90%); background: rgba(255,255,255,.04);
+  border: 1.5px solid rgba(184,146,42,.2); border-radius: 8px;
+  padding: .8rem 1rem; font-family: var(--fu); font-size: .95rem;
+  color: var(--txt); outline: none; text-align: center;
+  letter-spacing: .12em; transition: border-color .2s;
+}
+#pwd-in:focus { border-color: rgba(184,146,42,.55); }
+#pwd-in::placeholder { color: var(--txt3); letter-spacing: .08em; }
+#login-btn {
+  width: min(300px, 90%);
+  background: linear-gradient(135deg, var(--bosco), var(--bosco2));
+  border: 1.5px solid rgba(184,146,42,.3); border-radius: 8px;
+  padding: .8rem; font-family: var(--fu); font-size: .7rem;
+  font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--oro2); cursor: pointer; transition: all .2s;
+}
+#login-btn:hover { border-color: rgba(184,146,42,.6); }
+#login-err { font-family: var(--fu); font-size: .75rem; color: #e74c3c; display: none; }
+#dossier-wrap { display: none; }
+
+/* SIDEBAR */
+#sidebar {
+  position: fixed; top: 0; left: 0; width: 252px; height: 100vh;
+  background: var(--bg2); border-right: 1px solid rgba(184,146,42,.07);
+  display: flex; flex-direction: column; overflow-y: auto; z-index: 100;
+}
+.sb-hdr { padding: 1.6rem 1.4rem 1rem; border-bottom: 1px solid rgba(184,146,42,.07); }
+.sb-logo { font-family: var(--fd); font-size: 1rem; color: var(--oro2); line-height: 1.3; }
+.sb-sub { font-family: var(--fu); font-size: .52rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--txt3); margin-top: .25rem; }
+.sb-tag { display: inline-block; font-family: var(--fu); font-size: .46rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: .12rem .4rem; border-radius: 20px; background: rgba(74,222,128,.1); color: var(--verde); border: 1px solid rgba(74,222,128,.2); margin-top: .45rem; }
+.sb-nav { padding: .5rem 0; flex: 1; }
+.sb-cat { font-family: var(--fu); font-size: .5rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--txt3); padding: .45rem 1.4rem .25rem; }
+.sb-lnk { display: flex; align-items: center; gap: .55rem; padding: .5rem 1.4rem; font-family: var(--fu); font-size: .76rem; color: var(--txt2); cursor: pointer; border-left: 2px solid transparent; transition: all .14s; }
+.sb-lnk:hover { color: var(--txt); background: rgba(184,146,42,.04); }
+.sb-lnk.on { color: var(--oro2); background: rgba(184,146,42,.06); border-left-color: var(--oro); }
+.sb-lnk .n { font-family: var(--fd); font-size: .72rem; color: var(--oro); opacity: .65; min-width: 14px; }
+.sb-sep { height: 1px; background: rgba(184,146,42,.06); margin: .4rem 1.4rem; }
+.sb-out { margin: .9rem 1.4rem 1.4rem; padding: .45rem; font-family: var(--fu); font-size: .55rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--txt3); background: none; border: 1px solid rgba(255,255,255,.05); border-radius: 6px; cursor: pointer; transition: all .2s; width: calc(100% - 2.8rem); }
+.sb-out:hover { color: var(--txt2); border-color: rgba(255,255,255,.1); }
+
+#main { margin-left: 252px; min-height: 100vh; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(150deg, #040b04, var(--bg2) 65%);
+  padding: 4rem 3rem 3rem; position: relative; overflow: hidden;
+  border-bottom: 1px solid rgba(184,146,42,.08);
+}
+.hero::before { content: ''; position: absolute; top: 0; left: -100%; width: 55%; height: 1px; background: linear-gradient(90deg, transparent, rgba(184,146,42,.35), transparent); animation: scan 5s ease-in-out infinite; }
+@keyframes scan { to { left: 150%; } }
+.hero-eye { font-family: var(--fu); font-size: .56rem; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--oro2); margin-bottom: .7rem; }
+.hero h1 { font-family: var(--fd); font-size: clamp(2rem,5vw,3.6rem); font-weight: 300; color: #fff; line-height: 1.1; margin-bottom: .7rem; }
+.hero h1 em { font-style: italic; color: var(--oro3); }
+.hero-meta { font-family: var(--fu); font-size: .65rem; color: var(--txt3); letter-spacing: .08em; }
+.kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: .85rem; margin-top: 2.25rem; max-width: 680px; }
+.kpi-c { background: rgba(255,255,255,.025); border: 1px solid rgba(184,146,42,.1); border-radius: var(--r); padding: .9rem 1.1rem; }
+.kpi-v { font-family: var(--fd); font-size: 2.1rem; color: var(--oro2); line-height: 1; }
+.kpi-l { font-family: var(--fu); font-size: .55rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--txt3); margin-top: .3rem; }
+
+/* SEZIONI */
+.sec { padding: 3rem; border-bottom: 1px solid rgba(255,255,255,.03); display: none; }
+.sec.on { display: block; }
+.sec h2 { font-family: var(--fd); font-size: clamp(1.5rem,3vw,2.1rem); font-weight: 300; color: #fff; margin-bottom: .4rem; line-height: 1.2; }
+.sec h2 em { color: var(--oro3); font-style: italic; }
+.sec-meta { font-family: var(--fu); font-size: .57rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--txt3); margin-bottom: 2rem; padding-bottom: .6rem; border-bottom: 1px solid rgba(184,146,42,.08); }
+.body { max-width: 740px; }
+.body h3 { font-family: var(--fu); font-size: .6rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--oro2); margin: 2rem 0 .7rem; padding-bottom: .45rem; border-bottom: 1px solid rgba(184,146,42,.1); }
+.body p { font-family: var(--fd); font-size: 1.02rem; color: var(--txt2); line-height: 1.85; margin-bottom: .9rem; }
+.body p strong { color: var(--txt); font-weight: 600; }
+.body ul { list-style: none; margin: .4rem 0 1.1rem; }
+.body li { font-family: var(--fd); font-size: 1rem; color: var(--txt2); line-height: 1.75; padding: .25rem 0 .25rem 1.4rem; position: relative; }
+.body li::before { content: '·'; position: absolute; left: .25rem; color: var(--oro); font-size: 1.2rem; }
+.pq { border-left: 3px solid var(--oro); padding: .9rem 1.4rem; margin: 1.5rem 0; background: rgba(184,146,42,.04); border-radius: 0 var(--r) var(--r) 0; }
+.pq p { font-family: var(--fd); font-size: 1.08rem; font-style: italic; color: rgba(245,240,232,.78); margin: 0; }
+.note { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); border-radius: var(--r); padding: .8rem 1.1rem; font-family: var(--fu); font-size: .75rem; color: var(--txt3); margin: 1rem 0; line-height: 1.6; }
+
+/* ACCORDION */
+.acc { border: 1px solid rgba(255,255,255,.05); border-radius: var(--r); margin-bottom: .55rem; overflow: hidden; }
+.acc-btn { width: 100%; padding: 1rem 1.3rem; background: rgba(255,255,255,.02); border: none; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-family: var(--fu); font-size: .8rem; font-weight: 700; color: var(--txt); text-align: left; transition: background .14s; }
+.acc-btn:hover { background: rgba(184,146,42,.045); }
+.acc-btn .an { font-family: var(--fd); font-size: .88rem; color: var(--oro); margin-right: .7rem; opacity: .75; }
+.acc-arr { width: 18px; height: 18px; fill: rgba(184,146,42,.35); transition: transform .22s; flex-shrink: 0; }
+.acc.open .acc-arr { transform: rotate(180deg); }
+.acc-body { display: none; padding: .2rem 1.3rem 1.2rem; }
+.acc.open .acc-body { display: block; }
+
+/* TABELLA */
+.tbl { width: 100%; border-collapse: collapse; margin: 1.1rem 0; font-size: .84rem; }
+.tbl th { background: var(--bosco); color: #fff; font-family: var(--fu); font-size: .58rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: .65rem .85rem; text-align: left; }
+.tbl td { padding: .55rem .85rem; border-bottom: 1px solid rgba(255,255,255,.035); font-family: var(--fu); font-size: .8rem; color: var(--txt2); vertical-align: top; }
+.tbl tr:last-child td { border-bottom: none; }
+.ok { color: #4ade80; } .no { color: #f87171; } .warn { color: #fbbf24; }
+
+/* STEPS */
+.steps { display: flex; flex-direction: column; gap: .7rem; margin: 1rem 0; }
+.step { display: flex; gap: .9rem; align-items: flex-start; }
+.step-n { width: 26px; height: 26px; border-radius: 50%; background: var(--bosco); border: 1.5px solid rgba(184,146,42,.28); display: flex; align-items: center; justify-content: center; font-family: var(--fd); font-size: .82rem; color: var(--oro2); flex-shrink: 0; margin-top: .12rem; }
+.step-t { font-family: var(--fd); font-size: 1rem; color: var(--txt2); line-height: 1.75; padding-top: .05rem; }
+
+/* CARD FUNZIONE */
+.fn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; margin: 1.25rem 0; }
+.fn-card { background: rgba(255,255,255,.02); border: 1px solid rgba(184,146,42,.1); border-radius: var(--r); padding: 1.25rem; }
+.fn-card.hi { border-color: rgba(74,222,128,.25); background: rgba(74,222,128,.03); }
+.fn-card.new { border-color: rgba(56,189,248,.25); background: rgba(56,189,248,.03); }
+.fn-icon { font-size: 1.6rem; margin-bottom: .55rem; }
+.fn-title { font-family: var(--fu); font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--oro2); margin-bottom: .4rem; }
+.fn-card.hi .fn-title { color: var(--verde); }
+.fn-card.new .fn-title { color: var(--azzurro); }
+.fn-desc { font-family: var(--fd); font-size: .9rem; color: var(--txt2); line-height: 1.65; }
+
+/* BADGE AZIONE */
+.badge { display: inline-block; font-family: var(--fu); font-size: .52rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .55rem; border-radius: 20px; margin-bottom: .6rem; }
+.badge.edu { background: rgba(74,222,128,.12); color: var(--verde); border: 1px solid rgba(74,222,128,.25); }
+.badge.admin { background: rgba(251,146,60,.12); color: var(--arancio); border: 1px solid rgba(251,146,60,.25); }
+.badge.fam { background: rgba(56,189,248,.12); color: var(--azzurro); border: 1px solid rgba(56,189,248,.25); }
+
+/* SCHERMATA DEMO */
+.demo-box { background: rgba(0,0,0,.35); border: 1px solid rgba(184,146,42,.15); border-radius: var(--r); padding: 1.25rem; margin: 1rem 0; font-family: var(--fu); font-size: .8rem; color: var(--txt2); line-height: 1.7; }
+.demo-box .dm-url { font-family: 'Courier New', monospace; font-size: .78rem; color: var(--oro2); background: rgba(184,146,42,.08); padding: .2rem .5rem; border-radius: 4px; }
+.demo-box .dm-pwd { font-family: 'Courier New', monospace; font-size: .85rem; color: var(--verde); background: rgba(74,222,128,.08); padding: .2rem .5rem; border-radius: 4px; letter-spacing: .08em; }
+
+code { background: rgba(255,255,255,.06); padding: .1rem .38rem; border-radius: 4px; font-family: 'Courier New', monospace; font-size: .82rem; }
+.lnk { color: var(--oro2); text-decoration: none; border-bottom: 1px solid rgba(184,146,42,.3); }
+.lnk:hover { border-bottom-color: var(--oro2); }
+
+/* MOBILE */
+#mob-tog { display: none; position: fixed; top: .9rem; left: .9rem; z-index: 200; width: 38px; height: 38px; background: var(--bosco); border: 1px solid rgba(184,146,42,.25); border-radius: 8px; align-items: center; justify-content: center; cursor: pointer; }
+#mob-tog svg { fill: var(--oro2); width: 17px; height: 17px; }
+@media(max-width:720px) {
+  #sidebar { transform: translateX(-100%); transition: transform .28s; }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; }
+  .hero { padding: 2rem 1.2rem; }
+  .sec { padding: 2rem 1.2rem; }
+  #mob-tog { display: flex; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="ls-logo">Convitto<br><em style="font-style:italic">"Costaggini"</em></div>
+  <div class="ls-sub">IPSSEOA &middot; Rieti</div>
+  <div class="ls-line"></div>
+  <p class="ls-note">Materiale formativo &mdash; Collegio Educatori &middot; A.S. 2025/2026</p>
+  <input type="password" id="pwd-in" placeholder="password di accesso" autocomplete="new-password" value=""/>
+  <button id="login-btn" onclick="tryLogin()">Accedi al materiale &rarr;</button>
+  <p id="login-err">Password non corretta. Riprovare.</p>
+</div>
+
+<div id="dossier-wrap">
+  <button id="mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Menu">
+    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+  </button>
+
+  <nav id="sidebar">
+    <div class="sb-hdr">
+      <div class="sb-logo">Convitto "Costaggini"</div>
+      <div class="sb-sub">Rieti &middot; A.S. 2025/2026</div>
+      <div class="sb-tag">&#127979; Formazione Educatori</div>
+    </div>
+    <div class="sb-nav">
+      <div class="sb-cat">Presentazione</div>
+      <div class="sb-lnk on" onclick="show('intro',this)"><span class="n">&middot;</span>Il sito — panoramica</div>
+      <div class="sb-lnk" onclick="show('mappa',this)"><span class="n">&middot;</span>Mappa del sito</div>
+      <div class="sb-sep"></div>
+      <div class="sb-cat">Il Registro Elettronico</div>
+      <div class="sb-lnk" onclick="show('registro',this)"><span class="n">1</span>Accesso e login</div>
+      <div class="sb-lnk" onclick="show('presenze',this)"><span class="n">2</span>Presenze e pasti</div>
+      <div class="sb-lnk" onclick="show('note',this)"><span class="n">3</span>Note e colloqui</div>
+      <div class="sb-lnk" onclick="show('semafori',this)"><span class="n">4</span>Semafori comportamento</div>
+      <div class="sb-lnk" onclick="show('report',this)"><span class="n">5</span>Report e comunicazioni</div>
+      <div class="sb-sep"></div>
+      <div class="sb-cat">Area Riservata Famiglie</div>
+      <div class="sb-lnk" onclick="show('famiglie',this)"><span class="n">6</span>Come funziona</div>
+      <div class="sb-lnk" onclick="show('approvazione',this)"><span class="n">7</span>Approvare un accesso</div>
+      <div class="sb-sep"></div>
+      <div class="sb-cat">Il Sito Pubblico</div>
+      <div class="sb-lnk" onclick="show('sito',this)"><span class="n">8</span>Le sezioni principali</div>
+      <div class="sb-lnk" onclick="show('faq',this)"><span class="n">9</span>Domande frequenti</div>
+    </div>
+    <button class="sb-out" onclick="logout()">Esci &middot; Chiudi sessione</button>
+  </nav>
+
+  <main id="main">
+
+    <!-- INTRO -->
+    <section id="s-intro" class="sec on">
+      <div class="hero">
+        <p class="hero-eye">Collegio Educatori &middot; A.S. 2025/2026</p>
+        <h1>Il sito web del Convitto<br><em>Costaggini</em></h1>
+        <p style="font-family:var(--fd);font-size:1.05rem;font-style:italic;color:var(--txt2);max-width:540px;margin:.7rem 0 0;line-height:1.75">Un ecosistema digitale completo al servizio del Convitto e di chi ci lavora ogni giorno. Questa guida &egrave; il vostro manuale operativo.</p>
+        <div class="hero-meta" style="margin-top:.75rem">Educatore Michele Gaggiano<span style="color:var(--oro2);margin:0 .35rem">&middot;</span>A.S. 2025/2026</div>
+        <div class="kpi-strip">
+          <div class="kpi-c"><div class="kpi-v">55+</div><div class="kpi-l">pagine</div></div>
+          <div class="kpi-c"><div class="kpi-v">&euro;&thinsp;0</div><div class="kpi-l">costo annuo</div></div>
+          <div class="kpi-c"><div class="kpi-v">6</div><div class="kpi-l">quiz interattivi</div></div>
+          <div class="kpi-c"><div class="kpi-v">24/7</div><div class="kpi-l">assistente virtuale</div></div>
+        </div>
+      </div>
+
+      <div style="padding:3rem">
+        <div class="body">
+          <h3>Visitiamo il sito insieme</h3>
+          <div class="demo-box">
+            <div style="margin-bottom:.5rem;font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3)">Indirizzo del sito</div>
+            <span class="dm-url">computeaching2-cell.github.io/convitto-costaggini</span>
+            <div style="margin-top:.75rem;font-size:.78rem;color:var(--txt3)">Presto su: <strong style="color:var(--txt2)">convitto.alberghierorieti.edu.it</strong></div>
+            <div style="margin-top:.75rem">
+              <a class="lnk" href="https://computeaching2-cell.github.io/convitto-costaggini/" target="_blank" style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1.1rem;background:var(--bosco);border:1.5px solid rgba(184,146,42,.35);border-radius:8px;color:var(--oro2);text-decoration:none;display:inline-block;margin-top:.25rem">Apri il sito &rarr;</a>
+            </div>
+          </div>
+
+          <h3>Cosa c'&egrave; nel sito — in sintesi</h3>
+          <div class="fn-grid">
+            <div class="fn-card">
+              <div class="fn-icon">📋</div>
+              <div class="fn-title">Registro elettronico</div>
+              <div class="fn-desc">Presenze ai pasti, note, colloqui, semafori comportamento, report, emergenze. Accessibile da smartphone.</div>
+            </div>
+            <div class="fn-card hi">
+              <div class="fn-icon">👨‍👩‍👦</div>
+              <div class="fn-title">Area Riservata Famiglie</div>
+              <div class="fn-desc">I genitori vedono in tempo reale i dati del figlio: pasti, comportamento, note, comunicazioni.</div>
+            </div>
+            <div class="fn-card">
+              <div class="fn-icon">🏛️</div>
+              <div class="fn-title">Sito istituzionale</div>
+              <div class="fn-desc">55+ pagine: storia, servizi, rette, regolamento, PTOF, modulistica, tour virtuale, alumni.</div>
+            </div>
+            <div class="fn-card new">
+              <div class="fn-icon">🤖</div>
+              <div class="fn-title">Assistente virtuale</div>
+              <div class="fn-desc">Risponde automaticamente a 40+ categorie di domande 24 ore su 24. GDPR-compliant.</div>
+            </div>
+            <div class="fn-card">
+              <div class="fn-icon">🎮</div>
+              <div class="fn-title">6 quiz interattivi</div>
+              <div class="fn-desc">Strumenti di orientamento per le famiglie interessate. Il pi&ugrave; avanzato tra i convitti italiani.</div>
+            </div>
+            <div class="fn-card new">
+              <div class="fn-icon">🌐</div>
+              <div class="fn-title">5 lingue</div>
+              <div class="fn-desc">Italiano, inglese, spagnolo, arabo, romeno. Con consenso esplicito GDPR per la traduzione.</div>
+            </div>
+          </div>
+
+          <div class="pq"><p>Ogni dato che inserite nel registro arriva automaticamente alle famiglie nell&rsquo;Area Riservata. Il vostro lavoro quotidiano &egrave; gi&agrave; una comunicazione.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAPPA -->
+    <section id="s-mappa" class="sec">
+      <h2>Mappa del <em>sito</em></h2>
+      <div class="sec-meta">Orientamento generale</div>
+      <div class="body">
+        <p>Il sito &egrave; organizzato in tre aree principali, ciascuna con un pubblico e uno scopo diverso.</p>
+        <table class="tbl">
+          <thead><tr><th>Area</th><th>Chi la usa</th><th>Scopo</th></tr></thead>
+          <tbody>
+            <tr><td><strong style="color:var(--oro2)">Sito pubblico</strong></td><td>Famiglie, studenti, visitatori</td><td>Conoscere il Convitto, iscriversi, scaricare moduli</td></tr>
+            <tr><td><strong style="color:var(--verde)">Area Riservata Famiglie</strong></td><td>Genitori approvati</td><td>Seguire il figlio in tempo reale</td></tr>
+            <tr><td><strong style="color:var(--azzurro)">Registro elettronico</strong></td><td>Educatori, Admin, Infermiere</td><td>Gestire le attivit&agrave; quotidiane del Convitto</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Le sezioni del sito pubblico</h3>
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#128218;</span>Il Convitto</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Storia, mission, la giornata tipo, il team degli educatori (con foto), le strutture, il corredo obbligatorio, le rette e le agevolazioni.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#127981;</span>Servizi e modulistica</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><ul><li>Domanda di ammissione con invio diretto alla segreteria</li><li>Dichiarazione allergie e intolleranze</li><li>Autorizzazione uscite autonome</li><li>Lista corredo con stampa</li><li>Form semiconvitto</li><li>Richiesta certificato di frequenza</li></ul></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#128247;</span>Tour virtuale</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Viewer a 360&deg; degli ambienti del Convitto: ingresso, corridoi, sala ricreativa, ufficio educatori, mensa, sala studio, lab musicale, giardino. Si naviga come su Google Maps Street View, direttamente dallo smartphone, senza installare nulla.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#127979;</span>Regolamento interattivo</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>35 articoli del regolamento convittuale in formato navigabile, con ricerca per parola chiave. Ogni studente e ogni famiglia pu&ograve; consultarlo in qualsiasi momento senza chiedere una copia cartacea.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#127942;</span>Alumni e Lab Musicale</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Mappa del mondo degli ex-convittori, Muro dei Ricordi, schede con moderazione. Il Laboratorio Musicale ha la propria sezione con storia, video e le pagine del vinile <em>La Solidariet&agrave;</em> (autoprodotto 2019).</p></div></div>
+      </div>
+    </section>
+
+    <!-- REGISTRO — ACCESSO -->
+    <section id="s-registro" class="sec">
+      <h2><em>1.</em> Accesso al registro</h2>
+      <div class="sec-meta">Registro elettronico &middot; Come entrare</div>
+      <div class="body">
+        <div class="badge edu">&#128100; Per gli Educatori</div>
+        <p>Il registro &egrave; un&rsquo;applicazione web che si apre nel browser del vostro smartphone, tablet o computer. Non si installa nulla.</p>
+
+        <div class="demo-box">
+          <div style="margin-bottom:.5rem;font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3)">Indirizzo del registro</div>
+          <span class="dm-url">script.google.com/macros/s/AKfycb…/exec</span>
+          <div style="margin-top:.6rem;font-size:.75rem;color:var(--txt3)">(L&rsquo;indirizzo completo vi viene fornito dall&rsquo;Educatore Gaggiano)</div>
+        </div>
+
+        <h3>Ruoli disponibili</h3>
+        <table class="tbl">
+          <thead><tr><th>Ruolo</th><th>Cosa pu&ograve; fare</th></tr></thead>
+          <tbody>
+            <tr><td><strong class="ok">EDUCATORE</strong></td><td>Presenze, note, colloqui, semafori, report, scanner QR, emergenze</td></tr>
+            <tr><td><strong style="color:var(--arancio)">ADMIN</strong></td><td>Tutto + gestione utenti, log, statistiche, sblocco orari, bacheca globale</td></tr>
+            <tr><td><strong style="color:#a78bfa)">INFERMIERE</strong></td><td>Registro visite, storico sanitario, contatti genitori</td></tr>
+            <tr><td><strong class="warn">GUEST</strong></td><td>Sola lettura — nessun salvataggio</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Il primo accesso</h3>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-t">Aprire il browser (Chrome o Safari) e incollare l&rsquo;indirizzo del registro</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-t">Inserire username e password forniti dall&rsquo;Educatore Gaggiano</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-t">Spuntare <strong>"Ricordami"</strong> per non dover reinserire le credenziali ogni volta</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-n" style="width:auto;border-radius:4px;padding:0 .4rem;font-size:.7rem">SUGGERIMENTO</div><div class="step-t" style="padding-top:0">Salvare il link tra i preferiti del browser o aggiungere il sito alla schermata Home dello smartphone</div></div>
+        </div>
+
+        <h3>Cambiare la propria password</h3>
+        <p>Dal registro, in basso a destra, toccare l&rsquo;icona <strong>&#128295; Admin</strong> &rarr; tab <strong>Utenti</strong> &rarr; sezione <strong>"La tua password"</strong>. Inserire la password attuale e quella nuova (minimo 6 caratteri).</p>
+      </div>
+    </section>
+
+    <!-- PRESENZE -->
+    <section id="s-presenze" class="sec">
+      <h2><em>2.</em> Presenze e pasti</h2>
+      <div class="sec-meta">Registro elettronico &middot; Funzione principale</div>
+      <div class="body">
+        <div class="badge edu">&#128100; Uso quotidiano</div>
+        <p>La registrazione delle presenze &egrave; il cuore del registro. Ogni spunta che inserite aggiorna in tempo reale la dashboard delle famiglie e i report della segreteria.</p>
+
+        <h3>Le quattro caselle per ogni studente</h3>
+        <table class="tbl">
+          <thead><tr><th>Casella</th><th>Quando</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td><strong>COL</strong></td><td>Mattina, prima delle 11:00</td><td>Colazione. Il sistema la blocca dopo le 11:00</td></tr>
+            <tr><td><strong>PRA</strong></td><td>Dalle 13:00 alle 15:00</td><td>Pranzo. Diventa <strong>SACCO</strong> se il ragazzo ha il cestino</td></tr>
+            <tr><td><strong>CENA</strong></td><td>Dalle 19:00 in poi</td><td>Cena. Diventa <strong>SACCO</strong> per i cestini</td></tr>
+            <tr><td><strong>RIENTRO</strong></td><td>Solo il luned&igrave;</td><td>Segnala il rientro domenicale</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note">&#128274; Le caselle sono bloccate fuori orario per evitare errori. L&rsquo;Admin pu&ograve; sbloccarle temporaneamente dalla Control Room se necessario.</div>
+
+        <h3>Gesti rapidi</h3>
+        <ul>
+          <li><strong>Swipe a destra</strong> sulla card di uno studente: spunta automatica del pasto in corso</li>
+          <li><strong>Swipe a sinistra</strong>: menu rapido assenze (A casa, Assente, ecc.)</li>
+          <li><strong>Nota rapida</strong>: tendina sotto ogni card con le diciture pi&ugrave; usate</li>
+          <li><strong>&#128197; Appello</strong> (in basso): registra le presenze in blocco per plesso o classe</li>
+        </ul>
+
+        <h3>Assenze prolungate e ritiri</h3>
+        <p>Toccare l&rsquo;icona <strong>&#128197;</strong> sulla card dello studente. Si apre il pannello assenza prolungata: scegliere il motivo (gita, malattia, motivi familiari, sospeso, ritirato), le date di inizio e fine. Il sistema mostra automaticamente un banner colorato sulla card per tutta la durata dell&rsquo;assenza.</p>
+
+        <h3>Il salvaconto &ldquo;Radar presenze&rdquo;</h3>
+        <p>In alto a destra, il contatore mostra in tempo reale quanti studenti hanno gi&agrave; passato il pasto corrente rispetto a quelli attesi. Toccandolo compare la lista di chi manca ancora. Utile per controllare senza scorrere tutta la lista.</p>
+      </div>
+    </section>
+
+    <!-- NOTE -->
+    <section id="s-note" class="sec">
+      <h2><em>3.</em> Note e colloqui</h2>
+      <div class="sec-meta">Registro elettronico &middot; Comunicazioni</div>
+      <div class="body">
+        <div class="badge edu">&#128100; Comunicazione tracciabile</div>
+
+        <h3>Note generali e disciplinari</h3>
+        <p>Ogni card studente ha due aree di testo: <strong>Note</strong> (grigio chiaro) per le osservazioni generali e <strong>Disc.</strong> (rosso tenue) per le note disciplinari. Modificando il testo e premendo il tasto salva globale &#128190; in alto, la nota viene registrata e resa visibile alle famiglie nell&rsquo;Area Riservata.</p>
+
+        <h3>Note rapide disciplinari</h3>
+        <p>Toccare l&rsquo;icona <strong>&#9888;&#65039;</strong> sulla card: si apre il pannello nota rapida con un men&ugrave; a tendina dei tipi di infrazione pi&ugrave; frequenti (comportamento scorretto, ritardo, disturbo ore studio, ecc.) e un campo testo libero.</p>
+
+        <h3>Colloqui con famiglie e docenti</h3>
+        <p>Dal men&ugrave; in basso, toccare <strong>&#128483; Colloqui</strong>. Selezionare lo studente, il tipo di colloquio (entrata/uscita), la controparte (famiglia o docenti) e scrivere le note. Il sistema salva con firma e data automatica e lo storico &egrave; visibile anche alle famiglie.</p>
+
+        <h3>Consegne tra turni</h3>
+        <p>Nel pannello Colloqui, toccare il pulsante <strong>&#128276; Consegne (Educatori)</strong>. Le consegne vengono salvate e mostrate come banner giallo lampeggiante all&rsquo;educatore del turno successivo, che deve leggerle e confermarle prima che spariscano.</p>
+
+        <h3>Relazioni disciplinari formali</h3>
+        <p>Dalla scheda personale dello studente (toccare il nome), scorrere fino in fondo e toccare <strong>&#128196; Nuova Relazione</strong>. Si compila l&rsquo;oggetto e il testo, si vede l&rsquo;anteprima di stampa e si invia con un tocco. La relazione arriva via email all&rsquo;Educatore Gaggiano e viene registrata nel database.</p>
+      </div>
+    </section>
+
+    <!-- SEMAFORI -->
+    <section id="s-semafori" class="sec">
+      <h2><em>4.</em> Semafori comportamento</h2>
+      <div class="sec-meta">Registro elettronico &middot; Valutazione giornaliera</div>
+      <div class="body">
+        <div class="badge edu">&#128100; Valutazione rapida</div>
+        <p>I semafori sono uno strumento di valutazione giornaliera rapida. Non sostituiscono le note — le <em>integrano</em> con un segnale visivo immediato visibile anche alle famiglie.</p>
+
+        <h3>Le due dimensioni</h3>
+        <div class="fn-grid" style="grid-template-columns:1fr 1fr">
+          <div class="fn-card">
+            <div class="fn-icon">&#128716;</div>
+            <div class="fn-title">Decoro Camera</div>
+            <div class="fn-desc">Ordine, pulizia, rispetto degli spazi comuni della camera.</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-icon">&#128218;</div>
+            <div class="fn-title">Ora di Studio</div>
+            <div class="fn-desc">Concentrazione, silenzio, rispetto del momento di studio.</div>
+          </div>
+        </div>
+
+        <h3>I tre livelli</h3>
+        <table class="tbl">
+          <thead><tr><th>Colore</th><th>Significato</th><th>Punti gamification</th></tr></thead>
+          <tbody>
+            <tr><td><strong class="ok">🟢 Verde</strong></td><td>Comportamento positivo</td><td>+3 punti</td></tr>
+            <tr><td><strong class="warn">🟡 Giallo</strong></td><td>Migliorabile</td><td>+1 punto</td></tr>
+            <tr><td><strong class="no">🔴 Rosso</strong></td><td>Critico &mdash; richiede attenzione</td><td>&minus;2 punti</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Come assegnare il semaforo</h3>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-t">Toccare il nome dello studente per aprire la sua scheda personale</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-t">Scorrere fino al blocco <strong>"Valutazione giornaliera"</strong></div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-t">Toccare il pallino verde, giallo o rosso nella dimensione desiderata</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-t">Il sistema salva automaticamente &mdash; non serve premere nessun altro tasto</div></div>
+        </div>
+
+        <h3>Classifica e gamification</h3>
+        <p>I punti accumulati nel tempo generano una classifica individuale (con codici anonimi per la privacy) e una classifica per camera. La pagina <strong>Top Studenti</strong> &egrave; accessibile dalla Control Room Admin e pu&ograve; essere proiettata durante le assemblee dei convittori.</p>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section id="s-report" class="sec">
+      <h2><em>5.</em> Report e comunicazioni</h2>
+      <div class="sec-meta">Registro elettronico &middot; Strumenti avanzati</div>
+      <div class="body">
+
+        <h3>Report presenze per la segreteria</h3>
+        <p>Dal men&ugrave; in basso, toccare <strong>&#128424; Report</strong>. Il sistema genera automaticamente la tabella delle presenze per il filtro attivo (plesso, classe, camera, sesso). Si pu&ograve; inviare via email in PDF alla segreteria con un solo tocco.</p>
+
+        <h3>Distinta mensa per la cucina</h3>
+        <p>Dallo stesso pannello Report, passare al tab <strong>&#127842; Diete Speciali (Cucina)</strong>. Il sistema calcola automaticamente il numero di presenti al pasto successivo e mostra la lista degli studenti con allergie e intolleranze. Si invia in PDF alla cucina.</p>
+
+        <h3>Scanner QR — Totem e portineria</h3>
+        <p>Dal men&ugrave; in basso, toccare <strong>&#128247; Scanner</strong>. Sono disponibili due modalit&agrave;:</p>
+        <ul>
+          <li><strong>Fotocamera (controllo manuale):</strong> inquadra il QR del tesserino, il sistema registra entrata o uscita</li>
+          <li><strong>Totem Porta Girevole:</strong> modalit&agrave; automatica a schermo intero — il sistema riconosce da solo se il ragazzo sta entrando o uscendo in base all&rsquo;ultima registrazione</li>
+          <li><strong>Totem Mensa:</strong> auto-registra il pasto in base all&rsquo;orario</li>
+        </ul>
+
+        <h3>Appello evacuazione</h3>
+        <p>Dal men&ugrave; in basso, toccare <strong>&#128680; Emergenza</strong>. Il sistema calcola automaticamente chi dovrebbe essere in struttura in quel momento e mostra l&rsquo;elenco. Ogni educatore tocca il nome dello studente per segnalarlo "in salvo". Il contatore in tempo reale mostra quanti mancano ancora.</p>
+
+        <div class="pq"><p>In caso di emergenza reale, l&rsquo;appello digitale &egrave; 10 volte pi&ugrave; rapido di quello su carta &mdash; e non pu&ograve; andare perso.</p></div>
+      </div>
+    </section>
+
+    <!-- FAMIGLIE -->
+    <section id="s-famiglie" class="sec">
+      <h2><em>6.</em> Area Riservata <em>Famiglie</em></h2>
+      <div class="sec-meta">Come funziona &middot; Cosa vedono i genitori</div>
+      <div class="body">
+        <div class="badge fam">&#128106; Vista Famiglie</div>
+        <p>L&rsquo;Area Riservata Famiglie &egrave; una sezione separata del sito, accessibile solo ai genitori approvati dall&rsquo;amministrazione. &Egrave; il punto di contatto diretto tra il lavoro degli educatori e le famiglie.</p>
+
+        <h3>Cosa vede il genitore</h3>
+        <div class="fn-grid">
+          <div class="fn-card">
+            <div class="fn-icon">🍽️</div>
+            <div class="fn-title">Presenze ai pasti</div>
+            <div class="fn-desc">Colazione, pranzo, cena — aggiornati in tempo reale ogni giorno.</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-icon">🚦</div>
+            <div class="fn-title">Semafori</div>
+            <div class="fn-desc">Valutazione Camera e Studio con storico degli ultimi giorni.</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-icon">📝</div>
+            <div class="fn-title">Note educatori</div>
+            <div class="fn-desc">Note generali e disciplinari inserite dagli educatori.</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-icon">🗣️</div>
+            <div class="fn-title">Colloqui</div>
+            <div class="fn-desc">Storico dei colloqui con educatori e docenti.</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-icon">📄</div>
+            <div class="fn-title">Comunicazioni</div>
+            <div class="fn-desc">Relazioni disciplinari formali inviate dagli educatori.</div>
+          </div>
+        </div>
+
+        <div class="note">&#128161; Tutto ci&ograve; che inserite nel registro (note, semafori, colloqui) &egrave; visibile ai genitori nell&rsquo;Area Riservata. &Egrave; lo stesso principio del registro dei docenti su Argo &mdash; ma per le attivit&agrave; convittuali.</div>
+
+        <h3>Sincronizzazione automatica</h3>
+        <p>I dati passano dal registro degli educatori a Supabase (il database sicuro) in automatico ogni volta che si salva. Non serve fare nessuna operazione aggiuntiva. I genitori vedono i dati aggiornati entro pochi secondi.</p>
+      </div>
+    </section>
+
+    <!-- APPROVAZIONE -->
+    <section id="s-approvazione" class="sec">
+      <h2><em>7.</em> Approvare un accesso</h2>
+      <div class="sec-meta">Area Riservata Famiglie &middot; Flusso di gestione</div>
+      <div class="body">
+        <div class="badge admin">&#9881;&#65039; Pannello Admin</div>
+        <p>Quando una famiglia richiede l&rsquo;accesso all&rsquo;Area Riservata, la richiesta arriva nel pannello di amministrazione del sito. Solo l&rsquo;Educatore Gaggiano (o chi ha accesso admin) pu&ograve; approvarla.</p>
+
+        <h3>Il flusso completo</h3>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-t"><strong>La famiglia compila il modulo</strong> "Richiedi accesso" sul sito, inserendo nome dello studente, email e relazione (padre/madre)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-t"><strong>La richiesta arriva</strong> nel pannello admin del sito — visibile nella sezione "Famiglie in attesa"</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-t"><strong>L&rsquo;admin approva</strong> con un clic &mdash; il sistema crea automaticamente l&rsquo;account del genitore</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-t"><strong>Il genitore riceve un&rsquo;email</strong> con email e password temporanea per accedere</div></div>
+          <div class="step"><div class="step-n">5</div><div class="step-t"><strong>Al primo accesso</strong> il genitore cambia la password usando "Password dimenticata?"</div></div>
+        </div>
+
+        <h3>Cosa fare se un genitore non riesce ad accedere</h3>
+        <ul>
+          <li>Verificare che l&rsquo;email inserita al momento della richiesta sia corretta</li>
+          <li>Invitare il genitore a usare <strong>"Password dimenticata?"</strong> nella pagina di login — ricever&agrave; un link per reimpostare la password</li>
+          <li>Se il problema persiste, contattare l&rsquo;Educatore Gaggiano</li>
+        </ul>
+
+        <div class="note">&#128274; La sicurezza dell&rsquo;Area Riservata si basa su email + password. Ogni genitore vede solo i dati del proprio figlio &mdash; questa separazione &egrave; garantita tecnicamente dal database (Row Level Security).</div>
+      </div>
+    </section>
+
+    <!-- SITO PUBBLICO -->
+    <section id="s-sito" class="sec">
+      <h2><em>8.</em> Il sito <em>pubblico</em></h2>
+      <div class="sec-meta">Per le famiglie e i visitatori</div>
+      <div class="body">
+        <p>Il sito pubblico &egrave; la vetrina del Convitto verso l&rsquo;esterno. Come educatori, &egrave; utile conoscerlo per poter guidare le famiglie e i nuovi studenti.</p>
+
+        <h3>Sezioni da conoscere</h3>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#127981;</span>Modulistica digitale</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Sei moduli compilabili online: domanda di ammissione, allergie, autorizzazione uscite, lista corredo, semiconvitto, certificato frequenza. Quando una famiglia compila un modulo, i dati arrivano direttamente alla segreteria via email.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#128483;</span>Assistente virtuale</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>L&rsquo;icona in basso a destra del sito apre l&rsquo;assistente virtuale. Risponde automaticamente a domande su: rette, orari, corredo, allergie, DSA, iscrizioni, Area Riservata Famiglie, contatti. Funziona 24 ore su 24 anche quando la segreteria &egrave; chiusa.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#127350;</span>Traduzione in 5 lingue</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>In basso a sinistra c&rsquo;&egrave; il selettore di lingua: italiano, inglese, spagnolo, arabo, romeno. La traduzione &egrave; gestita con consenso esplicito GDPR. Utile per le famiglie straniere o di origine straniera che faticano con l&rsquo;italiano.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#127942;</span>Laboratorio Musicale</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Il Lab Musicale ha una sezione dedicata con la storia, il video del brano <em>La Solidariet&agrave;</em> (registrato in studio professionale nel 2019) e le pagine del vinile autoprodotto. Una finestra sul lavoro svolto negli anni che d&agrave; orgoglio e identit&agrave; alla comunit&agrave; del Convitto.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&#127757;</span>Community Alumni</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Gli ex-convittori possono registrarsi, lasciare un ricordo nel Muro dei Ricordi e apparire sulla mappa del mondo. Una sezione che crea senso di appartenenza e continuit&agrave; generazionale.</p></div></div>
+
+        <div class="pq"><p>Il sito &egrave; gi&agrave; il punto di riferimento digitale del Convitto. Il vostro lavoro quotidiano nel registro lo rende vivo e significativo per le famiglie.</p></div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="s-faq" class="sec">
+      <h2><em>9.</em> Domande frequenti</h2>
+      <div class="sec-meta">Chiarimenti pratici per gli educatori</div>
+      <div class="body">
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span>Se sbaglio a inserire una presenza, posso correggerla?</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>S&igrave;. Basta ritoccare la casella &mdash; se era verde diventa grigia (assente). Il sistema sovrascrive sempre il dato pi&ugrave; recente. Se si &egrave; fuori dall&rsquo;orario consentito, l&rsquo;Admin pu&ograve; sbloccare temporaneamente le caselle dalla Control Room.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span>Posso usare il registro da casa o da smartphone personale?</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>S&igrave;. Il registro &egrave; un&rsquo;applicazione web: funziona su qualsiasi browser (Chrome, Safari, Firefox), su qualsiasi dispositivo (smartphone, tablet, PC). Basta avere internet e conoscere l&rsquo;indirizzo.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span>Le famiglie vedono subito le note che inserisco?</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>S&igrave;, entro pochi secondi dal salvataggio. &Egrave; bene quindi prestare attenzione al tono delle note — sono messaggi formali, non appunti privati. Le note disciplinari sono visibili alle famiglie esattamente come le inserite.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span>Cosa succede se perdo la password del registro?</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Contattare l&rsquo;Educatore Gaggiano che resetter&agrave; la password dalla Control Room Admin. In alternativa, se si ricorda la password attuale, &egrave; possibile cambiarla autonomamente dalla sezione Utenti del pannello Admin.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span>Il registro funziona anche senza connessione internet?</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>No. Il registro richiede una connessione attiva per salvare i dati sul server. In caso di assenza di rete, un banner rosso avvisa immediatamente e blocca i salvataggi. I dati inseriti offline non vengono persi, ma vengono inviati non appena la connessione si ripristina.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span>Le famiglie possono scrivere agli educatori dall'Area Riservata?</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Al momento no &mdash; l&rsquo;Area Riservata &egrave; in sola lettura per le famiglie. Per comunicare, le famiglie usano i contatti istituzionali (email, telefono) indicati nel sito. Questa funzione &egrave; in valutazione per una versione futura.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span>Posso vedere cosa hanno inserito i colleghi dei turni precedenti?</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>S&igrave;. Le note, i colloqui e i semafori inseriti dai colleghi sono visibili a tutti gli educatori. Anche lo storico dei movimenti (entrate/uscite) &egrave; consultabile dalla scheda personale di ogni studente. Il registro &egrave; uno strumento collettivo di comunicazione interna.</p></div></div>
+
+        <div class="pq"><p>Per qualsiasi problema tecnico non risolto da questa guida: <strong style="color:var(--oro2)">michele.gaggiano@alberghierorieti.it</strong></p></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+const HASH = '2a5692276afa5f1881c92d71a7d76523842b01986d6b42ebf7baa1fa01c11934';
+
+async function tryLogin() {
+  const v = document.getElementById('pwd-in').value;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
+  const h = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  if (h === HASH) {
+    sessionStorage.setItem('ce','1');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dossier-wrap').style.display = 'block';
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+    document.getElementById('pwd-in').value = '';
+    document.getElementById('pwd-in').focus();
+  }
+}
+
+document.getElementById('pwd-in').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') tryLogin();
+});
+
+function show(id, el) {
+  document.querySelectorAll('.sec').forEach(function(s) { s.classList.remove('on'); });
+  document.querySelectorAll('.sb-lnk').forEach(function(l) { l.classList.remove('on'); });
+  document.getElementById('s-' + id).classList.add('on');
+  el.classList.add('on');
+  document.getElementById('sidebar').classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function logout() {
+  sessionStorage.removeItem('ce');
+  document.getElementById('dossier-wrap').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pwd-in').value = '';
+}
+
+function tog(btn) {
+  var item = btn.closest('.acc');
+  item.classList.toggle('open');
+  if (item.classList.contains('open')) {
+    setTimeout(function() {
+      var body = item.querySelector('.acc-body');
+      if (body) {
+        var rect = body.getBoundingClientRect();
+        if (rect.bottom > window.innerHeight) {
+          item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    }, 50);
+  }
+}
+
+if (sessionStorage.getItem('ce') === '1') {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dossier-wrap').style.display = 'block';
+} else {
+  window.addEventListener('load', function() {
+    document.getElementById('pwd-in').focus();
+  });
+}
+</script>
+</body>
+</html>
