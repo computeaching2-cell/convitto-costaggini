@@ -141,25 +141,6 @@ Ecco la versione aggiornata del codice, modificata esattamente secondo le tue in
     .tv-thumb-placeholder span { font-size: 1.5rem; opacity: .3; }
 
     /* Istruzioni aggiornamento */
-    .tv-guide {
-      background: var(--av); border-top: 1px solid var(--av3);
-      padding: 2.5rem 1.25rem;
-    }
-    .tv-guide-inner { max-width: 720px; margin: 0 auto; }
-    .tv-guide-step {
-      display: flex; gap: 1rem; align-items: flex-start;
-      padding: .85rem 0; border-bottom: 1px solid var(--av3);
-    }
-    .tv-guide-step:last-child { border-bottom: none; }
-    .tv-guide-num {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: var(--bosco); color: var(--oro2);
-      font-family: var(--fu); font-size: .65rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .tv-guide-text { font-family: var(--fu); font-size: .8rem; color: var(--txt2); line-height: 1.7; }
-    .tv-guide-text strong { color: var(--bosco); }
-    .tv-guide-text code { font-family: monospace; font-size: .75rem; background: rgba(44,62,45,.1); padding: .15rem .4rem; border-radius: 3px; color: var(--bosco2); }
   </style>
 </head>
 <body data-page="tour-virtuale">
@@ -203,34 +184,6 @@ Ecco la versione aggiornata del codice, modificata esattamente secondo le tue in
   <section style="background:#0a0f0a;padding:1rem 0">
     <div class="tv-thumbs" id="tv-thumbs">
       </div>
-  </section>
-
-  <section class="tv-guide">
-    <div class="tv-guide-inner">
-      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);margin-bottom:.75rem">— Per il Responsabile Técnico</p>
-      <h2 style="font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--bosco);margin-bottom:1.25rem">Come aggiungere le foto reali</h2>
-
-      <div class="tv-guide-step">
-        <div class="tv-guide-num">1</div>
-        <p class="tv-guide-text">Scatta le foto a 360° con l'app <strong>Google Street View</strong> (gratuita su Android e iPhone). Per ogni ambiente seleziona <strong>Fotocamera a 360°</strong> e segui i cerchi arancioni finché diventano tutti verdi.</p>
-      </div>
-      <div class="tv-guide-step">
-        <div class="tv-guide-num">2</div>
-        <p class="tv-guide-text">Trasferisci le foto sul computer. Ogni foto a 360° è un file <code>.jpg</code> nella cartella <strong>Street View</strong> della galleria del telefono.</p>
-      </div>
-      <div class="tv-guide-step">
-        <div class="tv-guide-num">3</div>
-        <p class="tv-guide-text">Crea la cartella <code>img/tour/</code> nel repository GitHub. Carica le foto rinominandole esattamente così: <code>ingresso.jpg</code> · <code>corridoi.jpg</code> · <code>sala-ricreativa.jpg</code> · <code>ufficio-educatori.jpg</code> · <code>camera.jpg</code> · <code>mensa.jpg</code> · <code>studio.jpg</code> · <code>musica.jpg</code> · <code>giardino.jpg</code></p>
-      </div>
-      <div class="tv-guide-step">
-        <div class="tv-guide-num">4</div>
-        <p class="tv-guide-text">Non serve modificare nessun codice — la pagina legge automaticamente le immagini dalla cartella <code>img/tour/</code> e attiva il viewer a 360°. Se l'immagine non esiste mostra il segnaposto grigio.</p>
-      </div>
-      <div class="tv-guide-step">
-        <div class="tv-guide-num">5</div>
-        <p class="tv-guide-text"><strong>Tip qualità:</strong> per un risultato migliore, prima di caricare passa le foto sull'app <strong>Lightroom Mobile</strong> (gratuita) e aumenta leggermente la nitidezza e la chiarezza — le foto a 360° tendono ad essere un po' morbide.</p>
-      </div>
-    </div>
   </section>
 
 </main>
