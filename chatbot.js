@@ -338,24 +338,9 @@ function build(){
   const s=document.createElement('style');s.textContent=CSS;document.head.appendChild(s);
 
 
-  // Usa il fab già creato da nav.js; lo crea solo se assente (pagine senza nav.js)
-  let fab = document.getElementById('cc-fab');
-  if (!fab) {
-    fab = document.createElement('button');
-    fab.id = 'cc-fab';
-    fab.style.cssText = 'position:fixed;bottom:1.5rem;right:1.25rem;z-index:8900;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.35);box-shadow:0 3px 12px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:#fff;';
-    fab.setAttribute('aria-label', 'Apri assistente virtuale');
-    fab.innerHTML = '🎓<span id="cc-badge" aria-hidden="true"></span>';
-    document.body.appendChild(fab);
-  } else {
-    fab.setAttribute('aria-haspopup', 'dialog');
-    if (!document.getElementById('cc-badge')) {
-      const badge = document.createElement('span');
-      badge.id = 'cc-badge'; badge.setAttribute('aria-hidden', 'true');
-      fab.appendChild(badge);
-    }
-  }
-  fab.onclick = toggle;
+  // Il fab è gestito da nav.js — aggancia solo il click
+  const fab = document.getElementById('cc-fab');
+  if (fab) fab.onclick = toggle;
 
 
   const panel=document.createElement('div');
