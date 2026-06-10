@@ -85,10 +85,11 @@
   <!-- Navigatore lettere -->
   <nav class="lt-nav-bar" aria-label="Scegli una lettera">
     <span style="font-family:var(--fu);font-size:.58rem;color:rgba(245,240,232,.3);letter-spacing:.1em;text-transform:uppercase">Voci dal Convitto:</span>
-    <button class="lt-nav-btn on" onclick="showLettera(0,this)">Un ex convittore</button>
-    <button class="lt-nav-btn" onclick="showLettera(1,this)">Una ex convittrice</button>
-    <button class="lt-nav-btn" onclick="showLettera(2,this)">Un genitore</button>
-    <button class="lt-nav-btn" onclick="showLettera(3,this)">Un educatore</button>
+    <button class="lt-nav-btn on" onclick="showLettera(0,this)">La Dirigenza</button>
+    <button class="lt-nav-btn" onclick="showLettera(1,this)">Un ex convittore</button>
+    <button class="lt-nav-btn" onclick="showLettera(2,this)">Una ex convittrice</button>
+    <button class="lt-nav-btn" onclick="showLettera(3,this)">Un genitore</button>
+    <button class="lt-nav-btn" onclick="showLettera(4,this)">Un educatore</button>
   </nav>
 
   <!-- LA LETTERA -->
@@ -114,6 +115,17 @@
 <script>
 const LETTERE = [
   {
+    contenuto: `<div style="text-align:center;padding:3rem 1rem">
+<p style="font-size:2.5rem;margin-bottom:1.25rem">✒️</p>
+<p style="font-family:var(--fd);font-size:1.2rem;font-style:italic;color:rgba(44,62,45,.45);line-height:1.9;max-width:480px;margin:0 auto">
+  La parola della Dirigenza<br>è in arrivo.<br><br>
+  <span style="font-size:.95rem;color:rgba(44,62,45,.3)">Un messaggio pensato con cura,<br>per chi sta valutando il Convitto<br>con la stessa cura.</span>
+</p>
+</div>`,
+    firma: '&nbsp;',
+    meta: 'Convitto "Costaggini" — Rieti'
+  },
+  {
     contenuto: `<p>Caro futuro convittore,</p>
 <p>la prima cosa che voglio dirti è che avevo paura. Non te lo diranno facilmente, ma ce l'hanno quasi tutti. Paura di stare lontano da casa, paura dei coinquilini, paura degli educatori, paura di non farcela a scuola senza i genitori che ti svegliano, ti preparano la colazione, ti chiedono come è andata.</p>
 <p>La prima settimana ho pianto ogni sera. La seconda ho pianto solo due volte. Alla terza settimana avevo già smesso — non perché stessi meglio, ma perché non ne sentivo più il bisogno.</p>
@@ -121,8 +133,8 @@ const LETTERE = [
 <p>Lo studio guidato all'inizio sembrava una tortura. Poi ho capito che era la cosa più utile della mia giornata. Arrivavo a scuola preparato — sempre. Mentre i miei amici pendolari si arrangiavano alle undici di sera staccando da WhatsApp, io avevo già finito i compiti alle sei e mezzo del pomeriggio.</p>
 <p>Cinque anni dopo, lavoro a Londra in un hotel a quattro stelle. I miei colleghi inglesi mi chiedono dove ho imparato a gestire la pressione. <em>«A Rieti»</em>, rispondo. Non capiscono. Va bene così.</p>
 <p>Vieni. Ne vale la pena.</p>`,
-    firma: 'Marco T.',
-    meta: 'Convittore 2012–2017 · Londra, Hotel manager'
+    firma: 'Simone A.',
+    meta: 'Convittore 2018–2023 · Roma, Chef'
   },
   {
     contenuto: `<p>Cara futura convittrice,</p>
@@ -147,14 +159,14 @@ const LETTERE = [
   },
   {
     contenuto: `<p>Caro ragazzo, cara ragazza,</p>
-<p>ho scelto questo lavoro trent'anni fa. Non tutti capiscono perché. "Stare in un convitto di notte — ma non ti pesa?" No. Non mi pesa.</p>
+<p>ho scelto questo lavoro tanti anni fa. Non tutti capiscono perché. "Stare in un convitto di notte — ma non ti pesa?" No. Non mi pesa.</p>
 <p>Mi pesa quando un ragazzo arriva in settembre chiuso come un riccio e ci vogliono tre mesi per fargli abbassare le difese. Mi pesa quando una ragazza non mangia e non sa spiegare perché. Mi pesa quando la domenica sera rientrano e si vede dalla faccia che il fine settimana a casa non è stato facile.</p>
 <p>Ma poi succede qualcosa. Sempre. Ogni anno, con ogni ragazzo.</p>
-<p>Succede la sera in cui bussa alla porta dell'ufficio alle undici e dice "posso parlarti un momento?" E parliamo. Non di voti, non di regole. Di quello che conta davvero.</p>
+<p>Succede la sera in cui bussa alla porta dell'ufficio alle undici e dice "posso parlarle un momento?" E parliamo. Non di voti, non di regole. Di quello che conta davvero.</p>
 <p><strong>Il Convitto non è un servizio. È una comunità.</strong> E le comunità si costruiscono lentamente, con fatica, con cura. Con la costanza di essere presenti — anche la domenica sera, anche quando piove, anche quando non ne avresti voglia.</p>
 <p>Se stai valutando il Convitto per tuo figlio o tua figlia — vieni a trovarci. Non per vedere le stanze o la mensa. Per vedere le persone che ci lavorano. Perché alla fine è da loro che dipende tutto.</p>`,
     firma: 'Un educatore del Convitto',
-    meta: 'Oltre trent\'anni di servizio'
+    meta: 'Oltre vent\'anni di servizio'
   }
 ];
 
