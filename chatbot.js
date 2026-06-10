@@ -8,8 +8,6 @@
 'use strict';
 
 const CSS=`
-#cc-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9000;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:2px solid rgba(184,146,42,.45);box-shadow:0 4px 20px rgba(0,0,0,.35);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;font-size:1.35rem;color:#fff;}
-#cc-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(0,0,0,.45);}
 #cc-badge{position:absolute;top:-3px;right:-3px;width:14px;height:14px;border-radius:50%;background:#B8922A;border:2px solid #fff;display:none;}
 #cc-badge.show{display:block;}
 #cc-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:8999;width:min(370px,calc(100vw - 2rem));height:min(520px,calc(100vh - 7rem));background:#fff;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.22);display:flex;flex-direction:column;transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .25s;overflow:hidden;}
@@ -318,13 +316,26 @@ function smartFallback(q){
 function build(){
   const s=document.createElement('style');s.textContent=CSS;document.head.appendChild(s);
 
-  const fab=document.createElement('button');
-  fab.id='cc-fab';
-  fab.setAttribute('aria-label','Apri assistente virtuale');
-  fab.setAttribute('aria-haspopup','dialog');
-  fab.innerHTML='🎓<span id="cc-badge" class="cc-badge" aria-hidden="true"></span>';
-  fab.onclick=toggle;
-  document.body.appendChild(fab);
+
+  // Usa il fab già creato da nav.js; lo crea solo se assente (pagine senza nav.js)
+  let fab = document.getElementById('cc-fab');
+  if (!fab) {
+    fab = document.createElement('button');
+    fab.id = 'cc-fab';
+    fab.style.cssText = 'position:fixed;bottom:1.5rem;right:1.25rem;z-index:8900;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#2C3E2D,#1a3a1b);border:1.5px solid rgba(184,146,42,.35);box-shadow:0 3px 12px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:#fff;';
+    fab.setAttribute('aria-label', 'Apri assistente virtuale');
+    fab.innerHTML = '🎓<span id="cc-badge" aria-hidden="true"></span>';
+    document.body.appendChild(fab);
+  } else {
+    fab.setAttribute('aria-haspopup', 'dialog');
+    if (!document.getElementById('cc-badge')) {
+      const badge = document.createElement('span');
+      badge.id = 'cc-badge'; badge.setAttribute('aria-hidden', 'true');
+      fab.appendChild(badge);
+    }
+  }
+  fab.onclick = toggle;
+
 
   const panel=document.createElement('div');
   panel.id='cc-panel';
