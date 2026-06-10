@@ -10,56 +10,11 @@
   <meta name="theme-color" content="#2C3E2D"/>
   <title>Tour Virtuale | Convitto "Costaggini" — Rieti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.css"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
   <link rel="stylesheet" href="style.css"/>
   <style>
     body { background: #0a0f0a; }
-
-    /* ── Stile pulsanti Pannellum — tema Convitto ── */
-    .pnlm-controls-container {
-      top: auto !important; bottom: 10px !important;
-      left: 10px !important; right: auto !important;
-    }
-    .pnlm-zoom-controls {
-      display: flex !important; flex-direction: column !important;
-      gap: 4px !important; margin-bottom: 6px !important;
-    }
-    .pnlm-pan-controls {
-      display: grid !important;
-      grid-template-columns: 30px 30px 30px !important;
-      grid-template-rows: 30px 30px 30px !important;
-      gap: 3px !important;
-    }
-    .pnlm-control {
-      position: static !important;
-      width: 30px !important; height: 30px !important;
-      background: rgba(26,46,27,.88) !important;
-      border: 1px solid rgba(184,146,42,.45) !important;
-      border-radius: 6px !important;
-      display: flex !important; align-items: center !important;
-      justify-content: center !important;
-      cursor: pointer !important;
-      color: #D4AA4A !important;
-      font-size: .85rem !important; font-weight: 700 !important;
-      font-family: sans-serif !important;
-      transition: background .15s !important;
-      background-image: none !important;
-    }
-    .pnlm-control:hover { background: rgba(44,62,45,1) !important; border-color: var(--oro2) !important; }
-    /* Sostituisce le icone con simboli di testo */
-    .pnlm-zoom-in  { font-size: 1.1rem !important; }
-    .pnlm-zoom-out { font-size: 1.1rem !important; }
-    .pnlm-pan-up    { grid-column: 2; grid-row: 1; }
-    .pnlm-pan-down  { grid-column: 2; grid-row: 3; }
-    .pnlm-pan-left  { grid-column: 1; grid-row: 2; }
-    .pnlm-pan-right { grid-column: 3; grid-row: 2; }
-    /* Cella centrale vuota */
-    .pnlm-pan-up::before, .pnlm-pan-down::before,
-    .pnlm-pan-left::before, .pnlm-pan-right::before,
-    .pnlm-zoom-in::before, .pnlm-zoom-out::before { display: none !important; }
 
     /* Hero */
     .tv-hero {
@@ -87,49 +42,34 @@
       background: transparent; transition: all .2s; white-space: nowrap;
     }
     .tv-room-btn:hover { border-color: var(--oro2); color: var(--oro2); }
-    .tv-room-btn.active {
-      background: var(--bosco); border-color: var(--oro);
-      color: var(--oro2);
-    }
+    .tv-room-btn.active { background: var(--bosco); border-color: var(--oro); color: var(--oro2); }
 
     /* Viewer */
     .tv-viewer-wrap {
       position: relative; width: 100%;
       height: 60vh; min-height: 320px; max-height: 680px;
-      background: #111;
+      background: #111; overflow: hidden;
     }
-    #panorama { width: 100%; height: 100%; }
+    #tv-canvas { width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+    #tv-canvas:active { cursor: grabbing; }
 
-    /* ══ FIX E OTTIMIZZAZIONE PULSANTI PANNELLUM ════ */
-    /* Forza la visibilità dei controlli nativi spesso nascosti dalle CDN */
-    .pnlm-control-bar {
-      display: block !important;
-      background: rgba(10, 15, 10, 0.75) !important;
-      border: 1px solid rgba(184, 146, 42, 0.3) !important;
-      border-radius: 4px !important;
+    /* Pulsanti controllo custom */
+    #tv-controls {
+      position: absolute; bottom: 12px; left: 12px; z-index: 10;
+      display: flex; flex-direction: column; gap: 6px;
     }
-    .pnlm-zoom-controls, .pnlm-fullscreen-toggle {
-      background: rgba(10, 15, 10, 0.75) !important;
-      border: 1px solid rgba(184, 146, 42, 0.3) !important;
+    .tv-ctrl-group { display: flex; flex-direction: column; gap: 3px; }
+    .tv-ctrl-row { display: flex; gap: 3px; justify-content: center; }
+    .tv-ctrl-btn {
+      width: 34px; height: 34px;
+      background: rgba(26,46,27,.9); border: 1px solid rgba(184,146,42,.45);
+      border-radius: 7px; color: #D4AA4A; font-size: .9rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s; user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .pnlm-zoom-in, .pnlm-zoom-out, .pnlm-fullscreen-toggle-button {
-      color: var(--oro2) !important;
-      font-weight: bold;
-    }
-    /* Genera i vettori di movimento se le icone di Pannellum falliscono il caricamento */
-    .pnlm-zoom-in::before { content: "+"; font-size: 1.2rem; line-height: 26px; }
-    .pnlm-zoom-out::before { content: "−"; font-size: 1.2rem; line-height: 26px; }
-
-    /* Info ambiente */
-    .tv-info {
-      background: linear-gradient(135deg, var(--bosco), #1a3a1b);
-      padding: 1.5rem 1.25rem; border-bottom: 1px solid rgba(184,146,42,.15);
-    }
-    .tv-info-wrap { max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; gap: 1.25rem; flex-wrap: wrap; }
-    .tv-info-icon { font-size: 2rem; flex-shrink: 0; }
-    .tv-info-text h2 { font-family: var(--fd); font-size: 1.4rem; font-weight: 300; color: #fff; margin-bottom: .25rem; }
-    .tv-info-text h2 em { font-style: italic; color: var(--oro3); }
-    .tv-info-text p { font-family: var(--fu); font-size: .8rem; color: rgba(245,240,232,.6); line-height: 1.75; margin: 0; }
+    .tv-ctrl-btn:hover, .tv-ctrl-btn:active { background: rgba(44,62,45,1); border-color: rgba(184,146,42,.9); }
+    .tv-ctrl-spacer { width: 34px; height: 34px; } /* cella vuota griglia pan */
 
     /* Placeholder */
     .tv-placeholder {
@@ -142,6 +82,17 @@
     .tv-placeholder h3 { font-family: var(--fd); font-size: 1.4rem; font-weight: 300; color: rgba(245,240,232,.6); margin-bottom: .5rem; }
     .tv-placeholder p { font-family: var(--fu); font-size: .75rem; color: rgba(245,240,232,.3); line-height: 1.7; max-width: 380px; }
     .tv-placeholder code { font-family: monospace; font-size: .75rem; background: rgba(255,255,255,.08); padding: .2rem .5rem; border-radius: 4px; color: var(--oro2); }
+
+    /* Info ambiente */
+    .tv-info {
+      background: linear-gradient(135deg, var(--bosco), #1a3a1b);
+      padding: 1.5rem 1.25rem; border-bottom: 1px solid rgba(184,146,42,.15);
+    }
+    .tv-info-wrap { max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; gap: 1.25rem; flex-wrap: wrap; }
+    .tv-info-icon { font-size: 2rem; flex-shrink: 0; }
+    .tv-info-text h2 { font-family: var(--fd); font-size: 1.4rem; font-weight: 300; color: #fff; margin-bottom: .25rem; }
+    .tv-info-text h2 em { font-style: italic; color: var(--oro3); }
+    .tv-info-text p { font-family: var(--fu); font-size: .8rem; color: rgba(245,240,232,.6); line-height: 1.75; margin: 0; }
 
     /* Griglia miniature */
     .tv-thumbs {
@@ -171,8 +122,6 @@
       text-align: center; padding: .5rem;
     }
     .tv-thumb-placeholder span { font-size: 1.5rem; opacity: .3; }
-
-    /* Istruzioni aggiornamento */
   </style>
 </head>
 <body data-page="tour-virtuale">
@@ -187,19 +136,38 @@
       </nav>
       <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">Esplora a 360°</p>
       <h1 style="font-family:var(--fd);font-size:clamp(1.8rem,6vw,3.2rem);font-weight:300;color:#fff;margin-bottom:.5rem">Il Convitto <em style="font-style:italic;color:var(--oro3)">da dentro</em></h1>
-      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:500px;margin:0 auto">Visita gli ambienti del Convitto prima ancora di arrivare. Usa il mouse o il dito per guardarti intorno a 360°.</p>
+      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:500px;margin:0 auto">Visita gli ambienti del Convitto prima ancora di arrivare. Trascina con il dito o il mouse per guardarti intorno a 360°.</p>
     </div>
   </div>
 
-  <div class="tv-rooms" id="tv-rooms" role="tablist" aria-label="Scegli l'ambiente">
-    </div>
+  <div class="tv-rooms" id="tv-rooms" role="tablist" aria-label="Scegli l'ambiente"></div>
 
   <div class="tv-viewer-wrap">
-    <div id="panorama"></div>
+    <canvas id="tv-canvas"></canvas>
+    <div id="tv-controls">
+      <!-- Pan su/giù/sx/dx -->
+      <div class="tv-ctrl-group">
+        <div class="tv-ctrl-row">
+          <div class="tv-ctrl-spacer"></div>
+          <button class="tv-ctrl-btn" id="btn-up"   aria-label="Guarda su">▲</button>
+          <div class="tv-ctrl-spacer"></div>
+        </div>
+        <div class="tv-ctrl-row">
+          <button class="tv-ctrl-btn" id="btn-left"  aria-label="Guarda a sinistra">◀</button>
+          <div class="tv-ctrl-spacer"></div>
+          <button class="tv-ctrl-btn" id="btn-right" aria-label="Guarda a destra">▶</button>
+        </div>
+        <div class="tv-ctrl-row">
+          <div class="tv-ctrl-spacer"></div>
+          <button class="tv-ctrl-btn" id="btn-down"  aria-label="Guarda giù">▼</button>
+          <div class="tv-ctrl-spacer"></div>
+        </div>
+      </div>
+    </div>
     <div class="tv-placeholder" id="tv-placeholder">
       <div class="tv-placeholder-icon">🏛️</div>
       <h3>Foto a 360° in arrivo</h3>
-      <p>Seleziona un ambiente qui sopra.<br>Le foto saranno disponibili dopo gli scatti con l'app Google Street View.<br>Sostituisci i file in <code>img/tour/</code> per attivare il viewer.</p>
+      <p>Seleziona un ambiente qui sopra.<br>Carica i file in <code>img/tour/</code> per attivare il viewer.</p>
     </div>
   </div>
 
@@ -214,212 +182,197 @@
   </div>
 
   <section style="background:#0a0f0a;padding:1rem 0">
-    <div class="tv-thumbs" id="tv-thumbs">
-      </div>
+    <div class="tv-thumbs" id="tv-thumbs"></div>
   </section>
 
 </main>
 <script src="nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ══ CONFIGURAZIONE AMBIENTI ══════════════════════════
+// ══ STANZE ═══════════════════════════════════════════
 const ROOMS = [
-  {
-    id: 'ingresso',
-    label: 'Ingresso',
-    icon: '🚪',
-    title: 'L\'<em>ingresso</em> del Convitto',
-    desc: 'Il primo spazio che ogni convittore attraversa. Accogliente, luminoso, punto di incontro tra il dentro e il fuori.',
-    img: 'img/tour/ingresso.jpg',
-    thumb: 'img/tour/ingresso.jpg',
-  },
-  {
-    id: 'corridoi',
-    label: 'Corridoi',
-    icon: '🏛️',
-    title: 'I <em>corridoi</em>',
-    desc: 'La spina dorsale del Convitto. I luoghi opera dove si incrociano migliaia di storie — di mattina di corsa, di sera con calma.',
-    img: 'img/tour/corridoi.jpg',
-    thumb: 'img/tour/corridoi.jpg',
-  },
-  {
-    id: 'sala-ricreativa',
-    label: 'Sala ricreativa',
-    icon: '🎮',
-    title: 'La <em>sala ricreativa</em>',
-    desc: 'Calciobalilla, ping pong, divani e vetrate sul verde. Lo spazio del gioco, del relax e dello stare insieme dopo lo studio.',
-    img: 'img/tour/sala-ricreativa.jpg',
-    thumb: 'img/tour/sala-ricreativa.jpg',
-  },
-  {
-    id: 'ufficio-educatori',
-    label: 'Ufficio educatori',
-    icon: '🖥️',
-    title: 'L\'<em>ufficio educatori</em>',
-    desc: 'Il cuore operativo del Convitto. Da qui gli educatori coordinano le attività, tengono i registri e — nelle giornate limpide — ammirano il Terminillo dalla terrazza.',
-    img: 'img/tour/ufficio-educatori.jpg',
-    thumb: 'img/tour/ufficio-educatori.jpg',
-  },
-  {
-    id: 'camera',
-    label: 'Camera tipo',
-    icon: '🛏️',
-    title: 'Una <em>camera tipo</em>',
-    desc: 'Spazio personale, sicuro e ordinato. Ogni convittore ha il suo posto — un angolo tutto suo in cui studiare, riposare, crescere.',
-    img: 'img/tour/camera.jpg',
-    thumb: 'img/tour/camera.jpg',
-  },
-  {
-    id: 'mensa',
-    label: 'Mensa',
-    icon: '🍽️',
-    title: 'La <em>mensa</em>',
-    desc: 'Ogni giorno, un menù cucinato internamente e concordato con la ASL. Un luogo di convivialità vera, presidiato dagli educatori.',
-    img: 'img/tour/mensa.jpg',
-    thumb: 'img/tour/mensa.jpg',
-  },
-  {
-    id: 'studio',
-    label: 'Sala studio',
-    icon: '📖',
-    title: 'La <em>sala studio</em>',
-    desc: 'Dalle 15:00 alle 17:15, studio guidato con gli educatori. Un ambiente silenzioso e strutturato, pensato per la concentrazione.',
-    img: 'img/tour/studio.jpg',
-    thumb: 'img/tour/studio.jpg',
-  },
-  {
-    id: 'musica',
-    label: 'Lab Musicale',
-    icon: '🎵',
-    title: 'Il <em>Laboratorio Musicale</em>',
-    desc: 'Fondato da Michele Gaggiano e Dino Barba. Chitarre, tastiere, percussioni — e la libertà di scoprire un talento che non si sapeva di avere.',
-    img: 'img/tour/musica.jpg',
-    thumb: 'img/tour/musica.jpg',
-  },
-  {
-    id: 'giardino',
-    label: 'Giardino',
-    icon: '🌿',
-    title: 'Il <em>giardino</em>',
-    desc: 'Lo spazio aperto del Convitto — con il Terminillo sullo sfondo nelle giornate limpide. Luogo di pausa, di chiacchiere, di aria fresca.',
-    img: 'img/tour/giardino.jpg',
-    thumb: 'img/tour/giardino.jpg',
-  },
+  { id:'ingresso',         label:'Ingresso',         icon:'🚪', title:'L\'<em>ingresso</em> del Convitto',    desc:'Il primo spazio che ogni convittore attraversa. Accogliente, luminoso, punto di incontro tra il dentro e il fuori.', img:'img/tour/ingresso.jpg', thumb:'img/tour/ingresso.jpg' },
+  { id:'corridoi',         label:'Corridoi',          icon:'🏛️', title:'I <em>corridoi</em>',                  desc:'La spina dorsale del Convitto. I luoghi dove si incrociano migliaia di storie — di mattina di corsa, di sera con calma.', img:'img/tour/corridoi.jpg', thumb:'img/tour/corridoi.jpg' },
+  { id:'sala-ricreativa',  label:'Sala ricreativa',   icon:'🎮', title:'La <em>sala ricreativa</em>',          desc:'Calciobalilla, ping pong, divani e vetrate sul verde. Lo spazio del gioco, del relax e dello stare insieme dopo lo studio.', img:'img/tour/sala-ricreativa.jpg', thumb:'img/tour/sala-ricreativa.jpg' },
+  { id:'ufficio-educatori',label:'Ufficio educatori', icon:'🖥️', title:'L\'<em>ufficio educatori</em>',        desc:'Il cuore operativo del Convitto. Da qui gli educatori coordinano le attività e — nelle giornate limpide — ammirano il Terminillo.', img:'img/tour/ufficio-educatori.jpg', thumb:'img/tour/ufficio-educatori.jpg' },
+  { id:'camera',           label:'Camera tipo',       icon:'🛏️', title:'Una <em>camera tipo</em>',             desc:'Spazio personale, sicuro e ordinato. Ogni convittore ha il suo posto — un angolo tutto suo.', img:'img/tour/camera.jpg', thumb:'img/tour/camera.jpg' },
+  { id:'mensa',            label:'Mensa',             icon:'🍽️', title:'La <em>mensa</em>',                    desc:'Ogni giorno, un menù cucinato internamente e concordato con la ASL. Un luogo di convivialità vera.', img:'img/tour/mensa.jpg', thumb:'img/tour/mensa.jpg' },
+  { id:'studio',           label:'Sala studio',       icon:'📖', title:'La <em>sala studio</em>',              desc:'Dalle 15:30 alle 17:15, studio guidato con gli educatori. Un ambiente silenzioso e strutturato.', img:'img/tour/studio.jpg', thumb:'img/tour/studio.jpg' },
+  { id:'musica',           label:'Lab Musicale',      icon:'🎵', title:'Il <em>Laboratorio Musicale</em>',     desc:'Fondato da Michele Gaggiano e Dino Barba. Chitarre, tastiere, percussioni — e la libertà di scoprire un talento.', img:'img/tour/musica.jpg', thumb:'img/tour/musica.jpg' },
+  { id:'giardino',         label:'Giardino',          icon:'🌿', title:'Il <em>giardino</em>',                 desc:'Lo spazio aperto del Convitto — con il Terminillo sullo sfondo. Luogo di pausa, di chiacchiere, di aria fresca.', img:'img/tour/giardino.jpg', thumb:'img/tour/giardino.jpg' },
 ];
 
-// ══ STATO ══════════════════════════════════════════
-let viewer = null;
-let currentRoom = null;
-let zoomInterval = null;
+// ══ THREE.JS VIEWER ═══════════════════════════════════
+const canvas   = document.getElementById('tv-canvas');
+const wrap     = canvas.closest('.tv-viewer-wrap');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+const scene    = new THREE.Scene();
+const camera   = new THREE.PerspectiveCamera(100, 1, 0.1, 1000); // FOV 100 = molto grandangolare
+camera.position.set(0, 0, 0.01);
 
-// ══ INIT ══════════════════════════════════════════
-function init() {
-  buildButtons();
-  buildThumbs();
-  selectRoom(ROOMS[0]);
+// Sfera interna
+const geometry = new THREE.SphereGeometry(500, 60, 40);
+geometry.scale(-1, 1, 1); // invertita — la texture è vista dall'interno
+const material = new THREE.MeshBasicMaterial({ color: 0x111111 });
+const sphere   = new THREE.Mesh(geometry, material);
+scene.add(sphere);
+
+const loader   = new THREE.TextureLoader();
+let raf        = null;
+let autoRot    = true;
+let isDragging = false;
+let lastX = 0, lastY = 0;
+let lon = 0, lat = 0;   // angolo di visione corrente
+let autoTimer  = null;
+
+function resize() {
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
 }
 
+function render() {
+  // Autorotazione
+  if (autoRot && !isDragging) lon += 0.04;
+
+  lat = Math.max(-85, Math.min(85, lat));
+  const phi   = THREE.MathUtils.degToRad(90 - lat);
+  const theta = THREE.MathUtils.degToRad(lon);
+  camera.lookAt(
+    500 * Math.sin(phi) * Math.cos(theta),
+    500 * Math.cos(phi),
+    500 * Math.sin(phi) * Math.sin(theta)
+  );
+  renderer.render(scene, camera);
+  raf = requestAnimationFrame(render);
+}
+
+// ── Carica immagine ──
+function loadPanorama(src) {
+  material.map = null; material.needsUpdate = true;
+  loader.load(src, function(tex) {
+    tex.minFilter = THREE.LinearFilter;
+    material.map  = tex;
+    material.color.set(0xffffff);
+    material.needsUpdate = true;
+    document.getElementById('tv-placeholder').style.display = 'none';
+    document.getElementById('tv-info').style.display = 'block';
+  }, undefined, function() {
+    // Immagine non trovata → mostra placeholder
+    document.getElementById('tv-placeholder').style.display = 'flex';
+    document.getElementById('tv-info').style.display = 'block';
+  });
+}
+
+// ── Drag mouse ──
+canvas.addEventListener('mousedown', e => {
+  isDragging = true; lastX = e.clientX; lastY = e.clientY;
+  autoRot = false; clearTimeout(autoTimer);
+});
+window.addEventListener('mouseup', () => {
+  isDragging = false;
+  autoTimer = setTimeout(() => { autoRot = true; }, 2000);
+});
+window.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  lon -= (e.clientX - lastX) * 0.2;
+  lat += (e.clientY - lastY) * 0.2;
+  lastX = e.clientX; lastY = e.clientY;
+});
+
+// ── Drag touch ──
+let t0 = null;
+canvas.addEventListener('touchstart', e => {
+  t0 = e.touches[0]; isDragging = true;
+  autoRot = false; clearTimeout(autoTimer);
+}, { passive: true });
+canvas.addEventListener('touchend', () => {
+  isDragging = false;
+  autoTimer = setTimeout(() => { autoRot = true; }, 2000);
+}, { passive: true });
+canvas.addEventListener('touchmove', e => {
+  if (!isDragging || !t0) return;
+  const t = e.touches[0];
+  lon -= (t.clientX - t0.clientX) * 0.2;
+  lat += (t.clientY - t0.clientY) * 0.2;
+  t0 = t;
+}, { passive: true });
+
+// ── Pulsanti freccia ──
+const PAN_SPEED = 3;
+const panMap = {
+  'btn-up':    () => { lat += PAN_SPEED; },
+  'btn-down':  () => { lat -= PAN_SPEED; },
+  'btn-left':  () => { lon -= PAN_SPEED; },
+  'btn-right': () => { lon += PAN_SPEED; },
+};
+let panInterval = null;
+Object.entries(panMap).forEach(([id, fn]) => {
+  const btn = document.getElementById(id);
+  const start = () => { autoRot = false; clearTimeout(autoTimer); fn(); panInterval = setInterval(fn, 60); };
+  const stop  = () => { clearInterval(panInterval); autoTimer = setTimeout(() => { autoRot = true; }, 2000); };
+  btn.addEventListener('mousedown',  start);
+  btn.addEventListener('touchstart', start, { passive: true });
+  btn.addEventListener('mouseup',    stop);
+  btn.addEventListener('touchend',   stop, { passive: true });
+  btn.addEventListener('mouseleave', stop);
+});
+
+// ── Seleziona stanza ──
+function selectRoom(room) {
+  document.querySelectorAll('.tv-room-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('btn-' + room.id);
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.tv-thumb').forEach(t => t.classList.remove('active'));
+  const th = document.getElementById('thumb-' + room.id);
+  if (th) th.classList.add('active');
+  document.getElementById('tv-icon').textContent  = room.icon;
+  document.getElementById('tv-title').innerHTML   = room.title;
+  document.getElementById('tv-desc').textContent  = room.desc;
+  // Reset angolo visione
+  lon = 0; lat = 0; autoRot = true;
+  document.getElementById('tv-placeholder').style.display = 'flex';
+  document.getElementById('tv-info').style.display = 'none';
+  loadPanorama(room.img);
+}
+
+// ── Build pulsanti stanza ──
 function buildButtons() {
   const wrap = document.getElementById('tv-rooms');
   ROOMS.forEach(r => {
     const btn = document.createElement('button');
-    btn.className = 'tv-room-btn';
-    btn.id = `btn-${r.id}`;
-    btn.textContent = `${r.icon} ${r.label}`;
-    btn.setAttribute('role', 'tab');
+    btn.className = 'tv-room-btn'; btn.id = 'btn-' + r.id;
+    btn.setAttribute('role','tab');
+    btn.textContent = r.icon + ' ' + r.label;
     btn.onclick = () => selectRoom(r);
     wrap.appendChild(btn);
   });
 }
 
+// ── Build miniature ──
 function buildThumbs() {
   const wrap = document.getElementById('tv-thumbs');
   ROOMS.forEach(r => {
     const div = document.createElement('div');
-    div.className = 'tv-thumb';
-    div.id = `thumb-${r.id}`;
-    div.setAttribute('role', 'button');
-    div.setAttribute('aria-label', r.label);
+    div.className = 'tv-thumb'; div.id = 'thumb-' + r.id;
+    div.setAttribute('role','button'); div.setAttribute('aria-label', r.label);
     div.onclick = () => selectRoom(r);
-
     const img = new Image();
-    img.onload = () => {
-      div.innerHTML = `<img src="${r.thumb}" alt="${r.label}" loading="lazy"/>
-        <div class="tv-thumb-label">${r.label}</div>`;
-    };
-    img.onerror = () => {
-      div.innerHTML = `<div class="tv-thumb-placeholder">
-        <span>${r.icon}</span>
-        <span>${r.label}</span>
-      </div>`;
-    };
+    img.onload  = () => { div.innerHTML = `<img src="${r.thumb}" alt="${r.label}" loading="lazy"/><div class="tv-thumb-label">${r.label}</div>`; };
+    img.onerror = () => { div.innerHTML = `<div class="tv-thumb-placeholder"><span>${r.icon}</span><span>${r.label}</span></div>`; };
     img.src = r.thumb;
     wrap.appendChild(div);
   });
 }
 
-function selectRoom(room) {
-  currentRoom = room;
-
-  document.querySelectorAll('.tv-room-btn').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById(`btn-${room.id}`);
-  if (btn) btn.classList.add('active');
-
-  document.querySelectorAll('.tv-thumb').forEach(t => t.classList.remove('active'));
-  const thumb = document.getElementById(`thumb-${room.id}`);
-  if (thumb) thumb.classList.add('active');
-
-  document.getElementById('tv-icon').textContent = room.icon;
-  document.getElementById('tv-title').innerHTML = room.title;
-  document.getElementById('tv-desc').textContent = room.desc;
-
-  const img = new Image();
-  img.onload = () => {
-    document.getElementById('tv-placeholder').style.display = 'none';
-    document.getElementById('tv-info').style.display = 'block';
-    loadPanorama(room.img);
-  };
-  img.onerror = () => {
-    if (viewer) { try { viewer.destroy(); } catch(e){} viewer = null; }
-    if (zoomInterval) { clearInterval(zoomInterval); }
-    document.getElementById('tv-placeholder').style.display = 'flex';
-    document.getElementById('tv-placeholder').innerHTML = `
-      <div class="tv-placeholder-icon">${room.icon}</div>
-      <h3>${room.label}</h3>
-      <p>La foto a 360° di questo ambiente non è ancora disponibile.<br>
-      Carica <code>img/tour/${room.id}.jpg</code> su GitHub per attivare il viewer.</p>`;
-    document.getElementById('tv-info').style.display = 'block';
-  };
-  img.src = room.img;
-}
-
-function loadPanorama(src) {
-  if (viewer) { try { viewer.destroy(); } catch(e){} viewer = null; }
-  if (zoomInterval) { clearInterval(zoomInterval); zoomInterval = null; }
-
-  viewer = pannellum.viewer('panorama', {
-    type: 'equirectangular',
-    panorama: src,
-    autoLoad: true,
-    autoRotate: -2,       // Rotazione nativa Pannellum — funziona sempre, anche su mobile
-    autoRotateInactivityDelay: 100, // Riparte quasi subito dopo inattività
-    compass: false,
-    showControls: true,
-    mouseZoom: false,
-    hfov: 150,
-    minHfov: 70,
-    maxHfov: 150,
-    strings: {
-      loadButtonLabel: 'Clicca per caricare il panorama',
-      loadingLabel: 'Caricamento…',
-      bylineLabel: '',
-      noPanoramaError: 'Immagine non disponibile',
-      fileAccessError: 'Immagine non trovata: %s',
-      withEvent: '',
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', init);
+// ── Avvio ──
+window.addEventListener('resize', resize);
+resize();
+render();
+buildButtons();
+buildThumbs();
+selectRoom(ROOMS[0]);
 </script>
 </body>
 </html>
