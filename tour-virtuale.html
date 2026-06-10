@@ -1,14 +1,3 @@
-Analizziamo la tua intuizione passo dopo passo: hai perfettamente ragione. Se vogliamo che l'effetto di allontanamento sia davvero d'impatto e "centrato", dobbiamo allargare la forbice tra il punto di partenza e il punto di arrivo, partendo ancora più da vicino per poi stabilizzarci su una visuale ottimale.
-
-Inoltre, per soddisfare le tue richieste, dobbiamo configurare tre aspetti precisi:
-
-1. **Effetto allontanamento più marcato:** Impostiamo la partenza (`hfov`) molto ravvicinata a `60` e l'arrivo automatico a `110`. In questo modo lo stacco visivo sarà netto e darà una vera sensazione di respiro quando la scena si apre.
-2. **Autorotazione immediata:** Pannellum, di base, attiva l'autorotazione solo dopo un ritardo di inattività (`autoRotateInactivityDelay`). Per farla partire **subito**, insieme allo zoom-out, forzeremo l'avvio della rotazione programmatica dentro l'evento `load`.
-3. **Pulsanti di spostamento mancanti:** Se i pulsanti nativi di Pannellum (le frecce di direzione e i tasti +/- dello zoom) non compaiono, la causa è quasi sempre legata a un conflitto di fogli di stile (CSS) o all'assenza delle icone grafiche nel pacchetto standard quando viene caricato via CDN. Risolviamo questo problema sovrascrivendo e forzando le classi CSS di Pannellum direttamente nella pagina, così da renderli visibili, eleganti e ottimizzati per il tocco su smartphone.
-
-Ecco la versione aggiornata del codice, modificata esattamente secondo le tue indicazioni.
-
-```html
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -368,18 +357,13 @@ function loadPanorama(src, autoRotate) {
     type: 'equirectangular',
     panorama: src,
     autoLoad: true,
-    // La rotazione automatica nativa viene lasciata attiva in background se l'utente non tocca nulla
-    autoRotate: autoRotate ? -1.5 : 0,
-    autoRotateInactivityDelay: 2000,
+    autoRotate: 0,           // Gestiamo la rotazione manualmente per controllo totale
     compass: false,
-    showControls: true,      // Mantiene attivi i controlli di default di Pannellum
+    showControls: true,
     mouseZoom: true,
-    
-    // 1. Zoom iniziale molto più ravvicinato per enfatizzare l'effetto allontanamento
-    hfov: 60,                
-    minHfov: 45,
-    maxHfov: 135,            // Massimo allontanamento consentito manualmente
-    
+    hfov: 120,               // Parte già lontano — visuale ampia dall'inizio
+    minHfov: 60,
+    maxHfov: 130,
     strings: {
       loadButtonLabel: 'Clicca per caricare il panorama',
       loadingLabel: 'Caricamento…',
@@ -391,24 +375,12 @@ function loadPanorama(src, autoRotate) {
   });
 
   viewer.on('load', function() {
-    const targetFov = 110;   // 2. Punto di arrivo ottimale più ampio (meno zoomato)
-    let currentFov = viewer.getHfov();
-
-    // Sincronizziamo lo zoom-out progressivo e forziamo il movimento orizzontale immediato
+    if (!autoRotate) return;
+    // Avvia subito la rotazione automatica fluida (nessun ritardo)
     zoomInterval = setInterval(function() {
-      if (currentFov < targetFov) {
-        currentFov += 0.5;   // Passo di allontanamento fluido
-        viewer.setHfov(currentFov);
-        
-        // 3. Spostamento orizzontale forzato durante lo zoom per avviare il movimento da subito
-        if (autoRotate) {
-          let currentYaw = viewer.getYaw();
-          viewer.setYaw(currentYaw - 0.05); 
-        }
-      } else {
-        clearInterval(zoomInterval);
-      }
-    }, 12);
+      if (!viewer) { clearInterval(zoomInterval); return; }
+      viewer.setYaw(viewer.getYaw() - 0.08); // velocità rotazione: regola qui (0.05 lento, 0.15 veloce)
+    }, 16); // ~60fps
   });
 }
 
@@ -416,5 +388,3 @@ document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
-
-```
