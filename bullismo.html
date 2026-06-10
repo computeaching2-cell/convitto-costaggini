@@ -2,8 +2,15 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="description" content="Bullismo e cyberbullismo al Convitto Costaggini di Rieti — come riconoscerli, cosa fare, chi contattare. Guida per genitori e studenti." />
+  <meta property="og:title" content="Bullismo e Cyberbullismo | Convitto &quot;Costaggini&quot; — Rieti"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Convitto Costaggini — Rieti"/>
+  <meta name="theme-color" content="#2C3E2D" />
   <title>Bullismo e Cyberbullismo | Convitto "Costaggini" — Rieti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -313,41 +320,7 @@
 </head>
 <body>
 
-<!-- SKIP NAV -->
-<a class="skip-link" href="#main-content">Salta al contenuto principale</a>
-
-<!-- NAVBAR (identica alle altre pagine del sito) -->
-<nav class="nav" id="top-nav" aria-label="Navigazione principale">
-  <a href="index.html" class="nav-brand">
-    <span class="brand-name">Convitto</span>
-    <span class="brand-sub">"Costaggini" — Rieti</span>
-  </a>
-  <button class="nav-tog" id="nav-tog" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-menu">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-menu" id="nav-menu" role="list">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="il-convitto.html">Il Convitto</a></li>
-    <li><a href="educatori.html">Educatori</a></li>
-    <li><a href="giornata-tipo.html">Giornata tipo</a></li>
-    <li><a href="ammissione.html">Ammissione</a></li>
-    <li><a href="regolamento.html">Regolamento</a></li>
-    <li><a href="contatti.html">Contatti</a></li>
-  </ul>
-</nav>
-
-<main id="main-content">
-
-  <!-- HERO -->
-  <header class="pg-hero">
-    <div class="pg-hero-inner">
-      <p class="pg-chip">Sicurezza e benessere</p>
-      <h1>Bullismo e<br><em>Cyberbullismo</em></h1>
-      <p>Una guida chiara per genitori e studenti: cosa sono, come riconoscerli, cosa fare se succede. Al Convitto Costaggini la sicurezza di ogni ragazzo è una priorità irrinunciabile.</p>
-    </div>
-  </header>
-
-  <div class="pg-body">
+<div class="pg-body">
 
     <!-- MESSAGGIO RASSICURANTE -->
     <div class="box-verde">
@@ -676,26 +649,9 @@
 
 </main>
 
-<!-- FOOTER (stesso delle altre pagine) -->
-<footer class="footer" role="contentinfo">
-  <div class="ft-inner">
-    <div class="ft-brand">
-      <span class="ft-name">Convitto "Costaggini"</span>
-      <span class="ft-sub">IPSSEOA "R. A. Costaggini" — Rieti</span>
-    </div>
-    <nav class="ft-links" aria-label="Link utili footer">
-      <a href="contatti.html">Contatti</a>
-      <a href="regolamento.html">Regolamento</a>
-      <a href="ammissione.html">Ammissione</a>
-      <a href="privacy.html">Privacy</a>
-    </nav>
-    <p class="ft-copy">© 2025 Convitto "Costaggini" — Rieti · Via dei Salici s.n.c., 02100 Rieti</p>
-  </div>
-</footer>
-
+<script src="nav.js"></script>
 <script src="chatbot.js" defer></script>
 <script>
-/* Accordion */
 function togAcc(btn) {
   const item = btn.closest('.acc-item');
   const wasOpen = item.classList.contains('open');
@@ -715,16 +671,6 @@ function togAcc(btn) {
   } else {
     btn.setAttribute('aria-expanded','false');
   }
-}
-
-/* Navbar mobile */
-const tog = document.getElementById('nav-tog');
-const menu = document.getElementById('nav-menu');
-if (tog && menu) {
-  tog.addEventListener('click', () => {
-    const open = menu.classList.toggle('open');
-    tog.setAttribute('aria-expanded', open);
-  });
 }
 </script>
 </body>
