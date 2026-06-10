@@ -81,6 +81,7 @@
         </button>
         <ul class="dd-menu" role="menu">
           <li><a href="scopri-talento.html" data-page="scopri-talento">🎮 Giochi &amp; Orientamento</a></li>
+          <li><a href="regolamento.html" data-page="regolamento">Regolamento di Convitto</a></li>
           <li><a href="ptof-guida.html" data-page="ptof-guida">Il PTOF spiegato</a></li>
           <li><a href="trasparenza.html" data-page="trasparenza">Amministrazione Trasparente</a></li>
           <li><a href="organizzazione.html" data-page="organizzazione">Organizzazione</a></li>
@@ -127,7 +128,7 @@
         <li><a href="genitori.html">👨‍👩‍👧 Per i Genitori</a></li>
         <li><a href="bullismo.html">🛡️ Bullismo e Cyberbullismo</a></li>
         <li><a href="contatti.html">Contattaci</a></li>
-        <li><a href="area-riservata.html" style="color:var(--oro2);font-weight:700;">🔐 Area Riservata Famiglie</a></li>
+        <li><a href="area-riservata.html" style="color:var(--oro2);font-weight:700;"> Area Riservata Famiglie</a></li>
       </ul>
     </li>
         <li><a href="regolamento.html">Regolamento di Convitto</a></li>
@@ -158,7 +159,7 @@
 
     <li><a href="area-riservata.html" style="color:var(--oro2);font-weight:700;display:flex;align-items:center;gap:.5rem;padding:.6rem 0;">
       <svg viewBox="0 0 24 24" width="15" height="15" style="fill:var(--oro2);flex-shrink:0"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-      🔐 Area Riservata Famiglie
+      Area Riservata Famiglie
     </a></li>
 
     <li><a href="#" id="drw-admin-btn" style="color:#D4AA4A;display:flex;align-items:center;gap:.5rem;">
