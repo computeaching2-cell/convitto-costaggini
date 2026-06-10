@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Tutto quello che devi sapere sul Convitto Costaggini di Rieti in 2 minuti — le domande più frequenti con risposte immediate."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>In 2 Minuti | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+
+    /* ── HERO ── */
+    .m2-hero {
+      background: linear-gradient(150deg, #060e06 0%, #1a2e1b 60%, #0a1409 100%);
+      padding: 5rem 1.25rem 3rem; position: relative; overflow: hidden;
+    }
+    .m2-hero::before {
+      content: ''; position: absolute; top: 0; left: -60%;
+      width: 50%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(184,146,42,.5), transparent);
+      animation: scan 5s ease-in-out infinite;
+    }
+    @keyframes scan { to { left: 150%; } }
+    .m2-timer {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--fu); font-size: .6rem; font-weight: 800;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--oro2); margin-bottom: .85rem;
+    }
+    .m2-timer::before { content: '⏱'; font-size: .9rem; }
+    .m2-hero h1 {
+      font-family: var(--fd);
+      font-size: clamp(2.2rem, 7vw, 4rem);
+      font-weight: 300; color: #fff; line-height: 1.05; margin-bottom: .6rem;
+    }
+    .m2-hero h1 em { font-style: italic; color: var(--oro3); }
+    .m2-hero p {
+      font-size: .95rem; color: rgba(245,240,232,.6);
+      line-height: 1.75; max-width: 520px; margin-bottom: 1.75rem;
+    }
+    .m2-progress {
+      display: flex; gap: .35rem; flex-wrap: wrap; max-width: 520px;
+    }
+    .m2-prog-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(184,146,42,.25); cursor: pointer;
+      transition: background .2s; border: none; padding: 0;
+    }
+    .m2-prog-dot.done { background: var(--oro); }
+
+    /* ── LAYOUT PRINCIPALE ── */
+    .m2-body { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+    @media(min-width:768px){ .m2-body { padding: 3rem 2rem 6rem; } }
+
+    /* ── SCHEDA DOMANDA ── */
+    .m2-card {
+      background: var(--av);
+      border: 1px solid var(--av3);
+      border-radius: 14px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    .m2-card:hover { border-color: rgba(184,146,42,.3); }
+    .m2-card.open { border-color: rgba(184,146,42,.45); }
+
+    .m2-q {
+      width: 100%; padding: 1.1rem 1.25rem;
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 1rem;
+      text-align: left; transition: background .15s;
+    }
+    .m2-q:hover { background: rgba(184,146,42,.04); }
+
+    .m2-num {
+      font-family: var(--fd); font-size: 1.3rem;
+      color: rgba(184,146,42,.4); flex-shrink: 0;
+      width: 28px; line-height: 1;
+    }
+    .m2-card.open .m2-num { color: var(--oro2); }
+
+    .m2-q-text {
+      flex: 1;
+      font-family: var(--fd); font-size: 1.1rem;
+      font-weight: 400; color: var(--txt);
+      line-height: 1.3;
+    }
+    .m2-card.open .m2-q-text { color: var(--oro3); }
+
+    .m2-arr {
+      width: 18px; height: 18px; fill: rgba(184,146,42,.4);
+      transition: transform .22s; flex-shrink: 0;
+    }
+    .m2-card.open .m2-arr { transform: rotate(180deg); fill: var(--oro2); }
+
+    .m2-a {
+      display: none;
+      padding: .25rem 1.25rem 1.35rem 4rem;
+    }
+    .m2-card.open .m2-a { display: block; }
+
+    .m2-a p {
+      font-family: var(--fd); font-size: 1.02rem;
+      color: var(--txt2); line-height: 1.85; margin-bottom: .7rem;
+    }
+    .m2-a p:last-child { margin-bottom: 0; }
+    .m2-a strong { color: var(--txt); font-weight: 600; }
+
+    /* Tag risposta rapida */
+    .m2-pill {
+      display: inline-block;
+      background: rgba(184,146,42,.1);
+      border: 1px solid rgba(184,146,42,.25);
+      border-radius: 20px;
+      font-family: var(--fu); font-size: .72rem; font-weight: 700;
+      color: var(--oro2); padding: .3rem .85rem;
+      margin-bottom: .75rem;
+    }
+
+    /* Link approfondimento */
+    .m2-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: var(--fu); font-size: .68rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--bosco); text-decoration: none;
+      border-bottom: 1.5px solid rgba(44,62,45,.3);
+      padding-bottom: .1rem;
+      transition: border-color .15s, color .15s;
+      margin-top: .5rem; margin-right: .85rem;
+    }
+    .m2-link:hover { color: var(--bosco2); border-bottom-color: var(--bosco); }
+    .m2-link::after { content: '→'; font-size: .75rem; }
+
+    /* ── SEZIONE KPI ── */
+    .m2-kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: .75rem; margin: 2rem 0;
+    }
+    .m2-kpi-c {
+      background: var(--bosco);
+      border: 1px solid rgba(184,146,42,.15);
+      border-radius: 10px; padding: 1rem .85rem; text-align: center;
+    }
+    .m2-kpi-v {
+      font-family: var(--fd); font-size: 2rem;
+      color: var(--oro2); line-height: 1; display: block;
+    }
+    .m2-kpi-l {
+      font-family: var(--fu); font-size: .55rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(245,240,232,.4); margin-top: .3rem; display: block;
+    }
+
+    /* ── SEZIONE FINALE ── */
+    .m2-cta {
+      background: var(--bosco);
+      border: 1px solid rgba(184,146,42,.2);
+      border-radius: 14px; padding: 2rem 1.5rem;
+      text-align: center; margin-top: 2.5rem;
+    }
+    .m2-cta h2 {
+      font-family: var(--fd); font-size: 1.6rem; font-weight: 300;
+      color: #fff; margin-bottom: .5rem;
+    }
+    .m2-cta h2 em { font-style: italic; color: var(--oro3); }
+    .m2-cta p {
+      font-family: var(--fd); font-size: .95rem;
+      color: rgba(245,240,232,.6); line-height: 1.75;
+      max-width: 480px; margin: 0 auto 1.5rem;
+    }
+    .m2-cta-links { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
+    .m2-cta-btn {
+      font-family: var(--fu); font-size: .65rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .8rem 1.5rem; border-radius: 40px; text-decoration: none;
+      transition: opacity .2s;
+    }
+    .m2-cta-btn:hover { opacity: .85; }
+    .m2-cta-btn.primary { background: linear-gradient(135deg,#B8922A,#D4AA4A); color: #0d1a0e; }
+    .m2-cta-btn.secondary { background: rgba(255,255,255,.07); color: var(--oro2); border: 1px solid rgba(184,146,42,.3); }
+
+    /* ── DIVISORE TEMATICO ── */
+    .m2-section-label {
+      font-family: var(--fu); font-size: .58rem; font-weight: 800;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--oro); margin: 2rem 0 .85rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid rgba(184,146,42,.12);
+      display: block;
+    }
+
+    @media(max-width:520px){
+      .m2-a { padding-left: 1.25rem; }
+      .m2-num { display: none; }
+    }
+  </style>
+</head>
+<body data-page="in-2-minuti">
+<main id="main">
+
+  <!-- HERO -->
+  <header class="m2-hero">
+    <div class="w" style="max-width:700px;position:relative;z-index:2">
+      <nav class="breadcrumb" style="margin-bottom:1.25rem">
+        <a href="index.html">Home</a><span>›</span>
+        <span aria-current="page">In 2 Minuti</span>
+      </nav>
+      <p class="m2-timer">Lettura rapida</p>
+      <h1>Tutto quello che vuoi sapere<br><em>in 2 minuti</em></h1>
+      <p>Hai fretta? Nessun problema. Qui trovi le risposte alle 10 domande che ogni genitore fa per prima. Niente fronzoli — solo fatti. Quando avrai tempo, esplora il resto del sito con calma.</p>
+    </div>
+  </header>
+
+  <!-- KPI STRIP -->
+  <section style="background:var(--bg,#0d1a0e);padding:1.5rem 1.25rem">
+    <div class="m2-kpi" style="max-width:900px;margin:0 auto">
+      <div class="m2-kpi-c"><span class="m2-kpi-v">H24</span><span class="m2-kpi-l">Educatori presenti</span></div>
+      <div class="m2-kpi-c"><span class="m2-kpi-v">4</span><span class="m2-kpi-l">Pasti al giorno</span></div>
+      <div class="m2-kpi-c"><span class="m2-kpi-v">dal '71</span><span class="m2-kpi-l">Anno di fondazione</span></div>
+      <div class="m2-kpi-c"><span class="m2-kpi-v">5</span><span class="m2-kpi-l">Indirizzi scolastici</span></div>
+      <div class="m2-kpi-c"><span class="m2-kpi-v">€0</span><span class="m2-kpi-l">Costo sito</span></div>
+    </div>
+  </section>
+
+  <!-- DOMANDE -->
+  <div class="m2-body">
+
+    <span class="m2-section-label">— Iscrizione e accesso</span>
+
+    <!-- 1 -->
+    <div class="m2-card" id="card-1">
+      <button class="m2-q" onclick="tog(1)" aria-expanded="false">
+        <span class="m2-num">1</span>
+        <span class="m2-q-text">Come si fa a iscrivere un figlio al Convitto?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 30 secondi</div>
+        <p>La procedura è in <strong>4 passi</strong>: ① iscrizione online all'IPSSEOA Costaggini tramite il portale MIUR (entro fine gennaio) ② compilazione del modulo di richiesta per il Convitto ③ consegna documentazione in segreteria e versamento quota ④ colloquio con il Dirigente e gli educatori.</p>
+        <p>Il posto non è automatico — viene assegnato in base alla disponibilità. Prima ci si muove, meglio è.</p>
+        <a href="ammissione.html" class="m2-link">Guida completa all'ammissione</a>
+        <a href="contatti.html" class="m2-link">Contattaci</a>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="m2-card" id="card-2">
+      <button class="m2-q" onclick="tog(2)" aria-expanded="false">
+        <span class="m2-num">2</span>
+        <span class="m2-q-text">Quanto costa stare in Convitto?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 20 secondi</div>
+        <p>Le rette sono deliberate ogni anno dal Consiglio d'Istituto e <strong>calibrate sull'ISEE familiare</strong>. Chi ha un ISEE basso paga meno — in alcuni casi anche zero. Sono previste riduzioni certificate e borse di studio regionali.</p>
+        <p>Il Convitto è una struttura pubblica statale: non è un collegio privato, i prezzi sono accessibili.</p>
+        <a href="ammissione.html#tariffe" class="m2-link">Tariffe aggiornate</a>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="m2-card" id="card-3">
+      <button class="m2-q" onclick="tog(3)" aria-expanded="false">
+        <span class="m2-num">3</span>
+        <span class="m2-q-text">Quando posso portarlo a casa? Può uscire?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 25 secondi</div>
+        <p>I convittori rientrano a casa <strong>ogni fine settimana</strong> (venerdì pomeriggio, rientro domenica sera o lunedì mattina). Per uscite autonome durante la settimana serve un'autorizzazione firmata dai genitori.</p>
+        <p>È possibile delegare persone di fiducia per il ritiro. Non è una prigione — è una casa con regole chiare.</p>
+        <a href="regolamento.html" class="m2-link">Regolamento uscite</a>
+        <a href="ammissione.html#moduli" class="m2-link">Modulo autorizzazione</a>
+      </div>
+    </div>
+
+    <span class="m2-section-label">— Vita quotidiana</span>
+
+    <!-- 4 -->
+    <div class="m2-card" id="card-4">
+      <button class="m2-q" onclick="tog(4)" aria-expanded="false">
+        <span class="m2-num">4</span>
+        <span class="m2-q-text">Come funziona la giornata?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 20 secondi</div>
+        <p>🌅 <strong>06:30</strong> Sveglia · <strong>07:00</strong> Colazione · <strong>08:00</strong> Scuola fino alle 14:00 · <strong>14:00</strong> Pranzo · <strong>15:30–17:15</strong> Studio guidato · <strong>17:15–19:15</strong> Tempo libero/sport/Lab Musicale · <strong>19:15</strong> Cena · <strong>22:30</strong> Luci spente.</p>
+        <a href="giornata-tipo.html" class="m2-link">Giornata tipo dettagliata</a>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="m2-card" id="card-5">
+      <button class="m2-q" onclick="tog(5)" aria-expanded="false">
+        <span class="m2-num">5</span>
+        <span class="m2-q-text">Chi c'è di notte? È al sicuro?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 15 secondi</div>
+        <p>Gli educatori sono presenti <strong>H24</strong> — inclusa la notte. Non sono sorveglianti: sono <strong>educatori di ruolo selezionati per concorso pubblico MIUR</strong>, con formazione psicopedagogica. In ogni turno c'è almeno un educatore sveglio e operativo.</p>
+        <p>Per qualsiasi malessere notturno c'è assistenza immediata.</p>
+        <a href="educatori.html" class="m2-link">Chi sono gli educatori</a>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="m2-card" id="card-6">
+      <button class="m2-q" onclick="tog(6)" aria-expanded="false">
+        <span class="m2-num">6</span>
+        <span class="m2-q-text">Cosa mangia? Ci sono allergie gestite?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 15 secondi</div>
+        <p><strong>Quattro pasti al giorno</strong> con prodotti locali a km zero del territorio reatino. I menù sono concordati con la ASL di Rieti.</p>
+        <p>Allergie, intolleranze e diete speciali (anche religiose o etiche) sono gestite con menù dedicati — basta segnalarle al momento dell'iscrizione con certificato del curante.</p>
+        <a href="ammissione.html#moduli" class="m2-link">Modulo allergie</a>
+      </div>
+    </div>
+
+    <span class="m2-section-label">— Preoccupazioni dei genitori</span>
+
+    <!-- 7 -->
+    <div class="m2-card" id="card-7">
+      <button class="m2-q" onclick="tog(7)" aria-expanded="false">
+        <span class="m2-num">7</span>
+        <span class="m2-q-text">E se non si ambienta? Se piange e vuole tornare a casa?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 25 secondi</div>
+        <p>È la preoccupazione più comune — ed è normalissima. I primi giorni gli educatori dedicano un'attenzione particolare ai nuovi: li presentano, li affiancano, li aiutano a costruire le prime amicizie.</p>
+        <p><strong>La maggior parte dei ragazzi, dopo due o tre settimane, dice di sentirsi "a casa".</strong> Il gruppo dei pari e la routine quotidiana sono i due alleati più potenti. Chi non ce la fa viene supportato e si trova una soluzione insieme alla famiglia — nessuno viene abbandonato.</p>
+        <a href="genitori.html" class="m2-link">Guida per i genitori</a>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="m2-card" id="card-8">
+      <button class="m2-q" onclick="tog(8)" aria-expanded="false">
+        <span class="m2-num">8</span>
+        <span class="m2-q-text">E se viene bullizzato? Come lo gestite?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 20 secondi</div>
+        <p>Politica <strong>zero tolerance</strong>. Il Convitto adotta il Codice Interno per la Prevenzione e il Contrasto al Bullismo e Cyberbullismo (Legge 71/2017). Gli educatori H24 intervengono immediatamente: ascolto, documentazione, comunicazione alle famiglie, percorso educativo.</p>
+        <p>La presenza continua degli educatori è la prevenzione più efficace che esista.</p>
+        <a href="bullismo.html" class="m2-link">Guida completa bullismo</a>
+      </div>
+    </div>
+
+    <span class="m2-section-label">— Crescita e futuro</span>
+
+    <!-- 9 -->
+    <div class="m2-card" id="card-9">
+      <button class="m2-q" onclick="tog(9)" aria-expanded="false">
+        <span class="m2-num">9</span>
+        <span class="m2-q-text">Riuscirà a studiare? Il Convitto aiuta con i compiti?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 20 secondi</div>
+        <p>Ogni pomeriggio dalle <strong>15:30 alle 17:15</strong> c'è lo studio guidato con gli educatori. Non è solo "fare i compiti" — è lavorare sul metodo, sull'autonomia, sull'abitudine allo studio strutturato.</p>
+        <p>Per difficoltà persistenti si attivano supporti aggiuntivi in accordo con la famiglia e il Consiglio di Classe. I DSA e i BES sono seguiti con piani personalizzati.</p>
+        <a href="giornata-tipo.html" class="m2-link">Studio guidato</a>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="m2-card" id="card-10">
+      <button class="m2-q" onclick="tog(10)" aria-expanded="false">
+        <span class="m2-num">10</span>
+        <span class="m2-q-text">Cosa ci guadagna mio figlio, oltre alla scuola?</span>
+        <svg class="m2-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="m2-a">
+        <div class="m2-pill">⏱ 30 secondi</div>
+        <p>Questa è la domanda giusta. Oltre alla scuola, al Convitto un ragazzo impara a:</p>
+        <p>🎵 <strong>Esprimersi</strong> — Laboratorio Musicale ogni giovedì, Teatro, Concerto-Saggio annuale<br>
+           ⚽ <strong>Stare con gli altri</strong> — sport, sala ricreativa, amicizie che durano tutta la vita<br>
+           🧭 <strong>Essere autonomo</strong> — camera ordinata, gestione del tempo, rispetto delle regole condivise<br>
+           🌍 <strong>Guardare lontano</strong> — stage, orientamento professionale, alumni in tutto il mondo</p>
+        <p>La maggior parte degli ex convittori dice che il Convitto è stata <em>l'esperienza formativa più importante della loro vita</em> — più della scuola stessa.</p>
+        <a href="comunita.html" class="m2-link">Alumni e community</a>
+        <a href="scopri-talento.html" class="m2-link">Scopri i percorsi</a>
+      </div>
+    </div>
+
+    <!-- CTA FINALE -->
+    <div class="m2-cta">
+      <h2>Hai ancora <em>domande?</em></h2>
+      <p>Hai letto tutto e vuoi sapere di più — oppure vuoi semplicemente parlare con qualcuno prima di decidere. Siamo qui.</p>
+      <div class="m2-cta-links">
+        <a href="contatti.html"     class="m2-cta-btn primary">Scrivici ora →</a>
+        <a href="tour-virtuale.html" class="m2-cta-btn secondary">Visita virtuale 360°</a>
+        <a href="ammissione.html"   class="m2-cta-btn secondary">Come iscriversi</a>
+        <a href="genitori.html"     class="m2-cta-btn secondary">Guida per i genitori</a>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+<script src="nav.js"></script>
+<script>
+function tog(n) {
+  const card = document.getElementById('card-' + n);
+  const btn  = card.querySelector('.m2-q');
+  const wasOpen = card.classList.contains('open');
+  // Chiude tutti
+  document.querySelectorAll('.m2-card').forEach(c => {
+    c.classList.remove('open');
+    c.querySelector('.m2-q').setAttribute('aria-expanded','false');
+  });
+  // Apre quello cliccato (se era chiuso)
+  if (!wasOpen) {
+    card.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    setTimeout(() => {
+      const rect = card.getBoundingClientRect();
+      if (rect.top < 80) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  }
+}
+</script>
+</body>
+</html>

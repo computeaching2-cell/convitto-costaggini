@@ -67,6 +67,7 @@
         </button>
         <ul class="dd-menu" role="menu">
           <li><a href="notizie.html" data-page="notizie">Ultime notizie</a></li>
+          <li><a href="in-2-minuti.html" data-page="in-2-minuti">⚡ In 2 Minuti</a></li>
           <li><a href="aggiornamenti.html" data-page="aggiornamenti">📢 Aggiornamenti</a></li>
           <li><a href="avvisi.html" data-page="avvisi">Avvisi &amp; circolari</a></li>
           <li><a href="calendario.html" data-page="calendario">Calendario eventi</a></li>
@@ -139,6 +140,7 @@
       <button class="drw-acc" aria-expanded="false">Novità <svg viewBox="0 0 24 24" class="drw-arrow"><path d="M7 10l5 5 5-5z"/></svg></button>
       <ul class="drw-sub">
         <li><a href="notizie.html">Ultime notizie</a></li>
+        <li><a href="in-2-minuti.html">⚡ In 2 Minuti</a></li>
         <li><a href="aggiornamenti.html">📢 Aggiornamenti</a></li>
         <li><a href="avvisi.html">Avvisi &amp; circolari</a></li>
         <li><a href="calendario.html">Calendario eventi</a></li>
