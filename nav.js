@@ -87,6 +87,18 @@
         </ul>
       </div>
 
+      <!-- 5. BENESSERE -->
+      <div class="dd-wrap">
+        <button class="dd-btn" aria-haspopup="true" aria-expanded="false">
+          Benessere <svg viewBox="0 0 24 24" class="dd-arrow"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+        <ul class="dd-menu" role="menu">
+          <li><a href="bullismo.html" data-page="bullismo">🛡️ Bullismo e Cyberbullismo</a></li>
+          <li><a href="regolamento.html" data-page="regolamento">Regolamento di Convitto</a></li>
+          <li><a href="genitori.html" data-page="genitori">👨‍👩‍👧 Per i Genitori</a></li>
+        </ul>
+      </div>
+
       <a href="area-riservata.html" style="margin-left:.3rem;background:rgba(44,62,45,.35);border:1px solid rgba(184,146,42,.5);border-radius:4px;color:#D4AA4A !important;font-size:.72rem !important;padding:.4rem .75rem !important;display:inline-flex;align-items:center;gap:.3rem;" title="Area riservata famiglie">
         <svg viewBox="0 0 24 24" width="13" height="13" style="fill:#D4AA4A" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
         Famiglie
@@ -128,6 +140,15 @@
         <li><a href="genitori.html">👨‍👩‍👧 Per i Genitori</a></li>
         <li><a href="contatti.html">Contattaci</a></li>
         <li><a href="area-riservata.html" style="color:var(--oro2);font-weight:700;">🔐 Area Riservata Famiglie</a></li>
+      </ul>
+    </li>
+
+    <li class="drw-group">
+      <button class="drw-acc" aria-expanded="false">Benessere <svg viewBox="0 0 24 24" class="drw-arrow"><path d="M7 10l5 5 5-5z"/></svg></button>
+      <ul class="drw-sub">
+        <li><a href="bullismo.html">🛡️ Bullismo e Cyberbullismo</a></li>
+        <li><a href="regolamento.html">Regolamento di Convitto</a></li>
+        <li><a href="genitori.html">👨‍👩‍👧 Per i Genitori</a></li>
       </ul>
     </li>
 
