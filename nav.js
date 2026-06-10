@@ -81,7 +81,6 @@
         <ul class="dd-menu" role="menu">
           <li><a href="scopri-talento.html" data-page="scopri-talento">🎮 Giochi &amp; Orientamento</a></li>
           <li><a href="ptof-guida.html" data-page="ptof-guida">Il PTOF spiegato</a></li>
-          <li><a href="regolamento.html" data-page="regolamento">Regolamento di Convitto</a></li>
           <li><a href="trasparenza.html" data-page="trasparenza">Amministrazione Trasparente</a></li>
           <li><a href="organizzazione.html" data-page="organizzazione">Organizzazione</a></li>
         </ul>
@@ -95,7 +94,6 @@
         <ul class="dd-menu" role="menu">
           <li><a href="bullismo.html" data-page="bullismo">🛡️ Bullismo e Cyberbullismo</a></li>
           <li><a href="regolamento.html" data-page="regolamento">Regolamento di Convitto</a></li>
-          <li><a href="genitori.html" data-page="genitori">👨‍👩‍👧 Per i Genitori</a></li>
         </ul>
       </div>
 
@@ -148,7 +146,6 @@
       <ul class="drw-sub">
         <li><a href="bullismo.html">🛡️ Bullismo e Cyberbullismo</a></li>
         <li><a href="regolamento.html">Regolamento di Convitto</a></li>
-        <li><a href="genitori.html">👨‍👩‍👧 Per i Genitori</a></li>
       </ul>
     </li>
 
@@ -168,7 +165,6 @@
       <ul class="drw-sub">
         <li><a href="scopri-talento.html">🎮 Giochi &amp; Orientamento</a></li>
         <li><a href="ptof-guida.html">Il PTOF spiegato</a></li>
-        <li><a href="regolamento.html">Regolamento di Convitto</a></li>
         <li><a href="trasparenza.html">Amministrazione Trasparente</a></li>
         <li><a href="organizzazione.html">Organizzazione</a></li>
       </ul>
