@@ -18,23 +18,48 @@
   <style>
     body { background: #0a0f0a; }
 
-    /* ── Forza visibilità pulsanti nativi Pannellum ── */
-    .pnlm-controls-container { display: block !important; opacity: 1 !important; visibility: visible !important; }
-    .pnlm-zoom-controls, .pnlm-pan-controls { display: block !important; }
-    .pnlm-control { display: flex !important; opacity: 1 !important; visibility: visible !important;
-      width: 36px !important; height: 36px !important;
-      background: rgba(44,62,45,.85) !important;
-      border: 1.5px solid rgba(184,146,42,.4) !important;
-      border-radius: 8px !important; margin: 3px !important;
-      cursor: pointer !important; align-items: center !important; justify-content: center !important; }
-    .pnlm-control:hover { background: rgba(44,62,45,1) !important; border-color: rgba(184,146,42,.8) !important; }
-    .pnlm-control svg, .pnlm-control img { width: 18px !important; height: 18px !important; filter: invert(1) !important; }
-    .pnlm-zoom-in::after  { content: '+'; color: #D4AA4A; font-size: 1.2rem; font-weight: 700; line-height: 1; }
-    .pnlm-zoom-out::after { content: '−'; color: #D4AA4A; font-size: 1.2rem; font-weight: 700; line-height: 1; }
-    .pnlm-pan-up::after    { content: '▲'; color: #D4AA4A; font-size: .7rem; }
-    .pnlm-pan-down::after  { content: '▼'; color: #D4AA4A; font-size: .7rem; }
-    .pnlm-pan-left::after  { content: '◀'; color: #D4AA4A; font-size: .7rem; }
-    .pnlm-pan-right::after { content: '▶'; color: #D4AA4A; font-size: .7rem; }
+    /* ── Stile pulsanti Pannellum — tema Convitto ── */
+    .pnlm-controls-container {
+      top: auto !important; bottom: 10px !important;
+      left: 10px !important; right: auto !important;
+    }
+    .pnlm-zoom-controls {
+      display: flex !important; flex-direction: column !important;
+      gap: 4px !important; margin-bottom: 6px !important;
+    }
+    .pnlm-pan-controls {
+      display: grid !important;
+      grid-template-columns: 30px 30px 30px !important;
+      grid-template-rows: 30px 30px 30px !important;
+      gap: 3px !important;
+    }
+    .pnlm-control {
+      position: static !important;
+      width: 30px !important; height: 30px !important;
+      background: rgba(26,46,27,.88) !important;
+      border: 1px solid rgba(184,146,42,.45) !important;
+      border-radius: 6px !important;
+      display: flex !important; align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      color: #D4AA4A !important;
+      font-size: .85rem !important; font-weight: 700 !important;
+      font-family: sans-serif !important;
+      transition: background .15s !important;
+      background-image: none !important;
+    }
+    .pnlm-control:hover { background: rgba(44,62,45,1) !important; border-color: var(--oro2) !important; }
+    /* Sostituisce le icone con simboli di testo */
+    .pnlm-zoom-in  { font-size: 1.1rem !important; }
+    .pnlm-zoom-out { font-size: 1.1rem !important; }
+    .pnlm-pan-up    { grid-column: 2; grid-row: 1; }
+    .pnlm-pan-down  { grid-column: 2; grid-row: 3; }
+    .pnlm-pan-left  { grid-column: 1; grid-row: 2; }
+    .pnlm-pan-right { grid-column: 3; grid-row: 2; }
+    /* Cella centrale vuota */
+    .pnlm-pan-up::before, .pnlm-pan-down::before,
+    .pnlm-pan-left::before, .pnlm-pan-right::before,
+    .pnlm-zoom-in::before, .pnlm-zoom-out::before { display: none !important; }
 
     /* Hero */
     .tv-hero {
