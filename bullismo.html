@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Bullismo e cyberbullismo al Convitto Costaggini di Rieti — come riconoscerli, cosa fare, chi contattare. Guida per genitori e studenti." />
+  <title>Bullismo e Cyberbullismo | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── PAGE HERO ── */
+    .pg-hero {
+      background: linear-gradient(160deg, #0a0f0a 0%, #1a2e1b 100%);
+      padding: 5rem 1.25rem 3rem;
+      border-bottom: 1px solid rgba(184,146,42,.12);
+      position: relative;
+      overflow: hidden;
+    }
+    .pg-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -60%;
+      width: 50%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(184,146,42,.4), transparent);
+      animation: scan 6s ease-in-out infinite;
+    }
+    @keyframes scan { to { left: 150%; } }
+    .pg-chip {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .63rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--oro2);
+      margin-bottom: .85rem;
+    }
+    .pg-chip::before { content: ''; width: 16px; height: 1px; background: var(--oro2); }
+    .pg-hero h1 {
+      font-family: var(--fd);
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 300; color: #fff;
+      line-height: 1.1; margin-bottom: .75rem;
+    }
+    .pg-hero h1 em { font-style: italic; color: var(--oro3); }
+    .pg-hero p {
+      font-size: .95rem; color: rgba(255,255,255,.68);
+      line-height: 1.75; max-width: 560px;
+    }
+    .pg-hero-inner { max-width: 780px; margin: 0 auto; position: relative; z-index: 2; }
+
+    /* ── LAYOUT ── */
+    .pg-body { max-width: 780px; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+    @media(min-width: 768px) { .pg-body { padding: 3.5rem 2rem 6rem; } .pg-hero { padding: 6rem 2rem 3.5rem; } }
+
+    /* ── CARD TEMA ── */
+    .tema-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    @media(min-width: 600px) { .tema-grid { grid-template-columns: 1fr 1fr; } }
+    .tema-card {
+      background: var(--av);
+      border: 1px solid var(--av3);
+      border-radius: 12px;
+      padding: 1.4rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .tema-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+    }
+    .tema-card.red::before  { background: #e74c3c; }
+    .tema-card.blue::before { background: #3b82f6; }
+    .tema-card.oro::before  { background: var(--oro); }
+    .tema-card.verde::before{ background: #22c55e; }
+    .tema-icon { font-size: 1.8rem; margin-bottom: .6rem; }
+    .tema-card h3 {
+      font-family: var(--fu);
+      font-size: .72rem; font-weight: 800;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--txt); margin-bottom: .5rem;
+    }
+    .tema-card p {
+      font-family: var(--fd);
+      font-size: .97rem; color: var(--txt2);
+      line-height: 1.7; margin: 0;
+    }
+
+    /* ── SEZIONI TESTO ── */
+    .sez { margin-bottom: 3rem; }
+    .sez-label {
+      font-family: var(--fu);
+      font-size: .58rem; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--oro2); margin-bottom: .5rem;
+      display: block;
+    }
+    .sez h2 {
+      font-family: var(--fd);
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 300; color: var(--txt);
+      line-height: 1.2; margin-bottom: 1.1rem;
+    }
+    .sez h2 em { font-style: italic; color: var(--oro3); }
+    .sez p {
+      font-family: var(--fd);
+      font-size: 1.02rem; color: var(--txt2);
+      line-height: 1.85; margin-bottom: .9rem;
+    }
+    .sez p strong { color: var(--txt); font-weight: 600; }
+    .sez-divider {
+      border: none;
+      border-top: 1px solid rgba(184,146,42,.1);
+      margin: 3rem 0;
+    }
+
+    /* ── LISTA SEGNALI ── */
+    .segnali-list { list-style: none; margin: 1rem 0 1.5rem; }
+    .segnali-list li {
+      font-family: var(--fd);
+      font-size: 1rem; color: var(--txt2);
+      line-height: 1.75;
+      padding: .4rem 0 .4rem 1.6rem;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .segnali-list li::before {
+      content: attr(data-icon);
+      position: absolute; left: 0;
+      font-size: .9rem;
+    }
+
+    /* ── ACCORDION ── */
+    .acc-wrap { margin: 1.25rem 0; }
+    .acc-item {
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+      margin-bottom: .5rem;
+      overflow: hidden;
+    }
+    .acc-btn {
+      width: 100%; padding: 1rem 1.2rem;
+      background: rgba(255,255,255,.02);
+      border: none; cursor: pointer;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      font-family: var(--fu); font-size: .84rem;
+      font-weight: 700; color: var(--txt);
+      text-align: left; transition: background .15s;
+    }
+    .acc-btn:hover { background: rgba(184,146,42,.05); }
+    .acc-btn .num {
+      font-family: var(--fd);
+      font-size: .9rem; color: var(--oro);
+      margin-right: .65rem; opacity: .7;
+    }
+    .acc-arr {
+      width: 18px; height: 18px;
+      fill: rgba(184,146,42,.35);
+      transition: transform .22s; flex-shrink: 0;
+    }
+    .acc-item.open .acc-arr { transform: rotate(180deg); }
+    .acc-body {
+      display: none;
+      padding: .25rem 1.2rem 1.1rem;
+      font-family: var(--fd);
+      font-size: .98rem; color: var(--txt2);
+      line-height: 1.8;
+    }
+    .acc-item.open .acc-body { display: block; }
+    .acc-body strong { color: var(--txt); font-weight: 600; }
+    .acc-body ul { list-style: none; margin: .5rem 0; }
+    .acc-body li { padding: .2rem 0 .2rem 1.2rem; position: relative; }
+    .acc-body li::before { content: '·'; position: absolute; left: .2rem; color: var(--oro); }
+
+    /* ── BOX EMERGENZA ── */
+    .box-sos {
+      background: linear-gradient(135deg, rgba(231,76,60,.08), rgba(231,76,60,.03));
+      border: 1.5px solid rgba(231,76,60,.3);
+      border-radius: 12px;
+      padding: 1.5rem 1.4rem;
+      margin: 2rem 0;
+    }
+    .box-sos-head {
+      display: flex; align-items: center; gap: .75rem;
+      margin-bottom: .9rem;
+    }
+    .box-sos-icon { font-size: 1.6rem; }
+    .box-sos h3 {
+      font-family: var(--fu);
+      font-size: .72rem; font-weight: 800;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: #e74c3c; margin: 0;
+    }
+    .box-sos p {
+      font-family: var(--fd);
+      font-size: .98rem; color: var(--txt2);
+      line-height: 1.75; margin-bottom: .6rem;
+    }
+    .box-sos p:last-child { margin-bottom: 0; }
+    .box-sos a { color: var(--oro2); font-weight: 700; text-decoration: none; border-bottom: 1px solid rgba(184,146,42,.35); }
+    .box-sos a:hover { border-bottom-color: var(--oro2); }
+
+    /* ── BOX RASSICURAZIONE ── */
+    .box-verde {
+      background: linear-gradient(135deg, rgba(34,197,94,.07), rgba(34,197,94,.02));
+      border: 1.5px solid rgba(34,197,94,.25);
+      border-radius: 12px;
+      padding: 1.5rem 1.4rem;
+      margin: 2rem 0;
+    }
+    .box-verde p {
+      font-family: var(--fd);
+      font-size: 1.02rem; color: var(--txt2);
+      line-height: 1.8; margin: 0;
+    }
+    .box-verde p + p { margin-top: .75rem; }
+    .box-verde strong { color: var(--txt); }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: .75rem; margin: 1.25rem 0; }
+    .step { display: flex; gap: 1rem; align-items: flex-start; }
+    .step-n {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--bosco);
+      border: 1.5px solid rgba(184,146,42,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--fd); font-size: .85rem; color: var(--oro2);
+      margin-top: .1rem;
+    }
+    .step-t {
+      font-family: var(--fd);
+      font-size: 1rem; color: var(--txt2);
+      line-height: 1.75; padding-top: .06rem;
+    }
+    .step-t strong { color: var(--txt); }
+
+    /* ── CITAZIONE ── */
+    .blockquote {
+      border-left: 3px solid var(--oro);
+      padding: .85rem 1.3rem;
+      margin: 1.75rem 0;
+      background: rgba(184,146,42,.04);
+      border-radius: 0 8px 8px 0;
+    }
+    .blockquote p {
+      font-family: var(--fd);
+      font-size: 1.08rem; font-style: italic;
+      color: rgba(245,240,232,.78);
+      margin: 0; line-height: 1.75;
+    }
+
+    /* ── LINK DOC ── */
+    .doc-link {
+      display: flex; align-items: center; gap: .85rem;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(184,146,42,.15);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      text-decoration: none;
+      transition: background .15s, border-color .15s;
+      margin: 1rem 0;
+    }
+    .doc-link:hover { background: rgba(184,146,42,.06); border-color: rgba(184,146,42,.35); }
+    .doc-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .doc-info { flex: 1; }
+    .doc-title {
+      font-family: var(--fu); font-size: .82rem;
+      font-weight: 700; color: var(--txt);
+      display: block; margin-bottom: .15rem;
+    }
+    .doc-sub {
+      font-family: var(--fu); font-size: .67rem;
+      color: var(--txt3);
+    }
+    .doc-arr { color: var(--oro2); font-size: 1rem; }
+
+    /* ── NUMERI UTILI ── */
+    .numeri-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .75rem;
+      margin: 1.5rem 0;
+    }
+    @media(min-width: 500px) { .numeri-grid { grid-template-columns: 1fr 1fr; } }
+    .numero-card {
+      background: var(--av);
+      border: 1px solid var(--av3);
+      border-radius: 10px;
+      padding: 1.1rem;
+      display: flex; align-items: center; gap: .85rem;
+    }
+    .numero-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .numero-label {
+      font-family: var(--fu);
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--txt3); display: block; margin-bottom: .2rem;
+    }
+    .numero-val {
+      font-family: var(--fd);
+      font-size: 1.05rem; font-weight: 600;
+      color: var(--oro2);
+    }
+    .numero-val a { color: var(--oro2); text-decoration: none; }
+
+  </style>
+</head>
+<body>
+
+<!-- SKIP NAV -->
+<a class="skip-link" href="#main-content">Salta al contenuto principale</a>
+
+<!-- NAVBAR (identica alle altre pagine del sito) -->
+<nav class="nav" id="top-nav" aria-label="Navigazione principale">
+  <a href="index.html" class="nav-brand">
+    <span class="brand-name">Convitto</span>
+    <span class="brand-sub">"Costaggini" — Rieti</span>
+  </a>
+  <button class="nav-tog" id="nav-tog" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-menu" id="nav-menu" role="list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="il-convitto.html">Il Convitto</a></li>
+    <li><a href="educatori.html">Educatori</a></li>
+    <li><a href="giornata-tipo.html">Giornata tipo</a></li>
+    <li><a href="ammissione.html">Ammissione</a></li>
+    <li><a href="regolamento.html">Regolamento</a></li>
+    <li><a href="contatti.html">Contatti</a></li>
+  </ul>
+</nav>
+
+<main id="main-content">
+
+  <!-- HERO -->
+  <header class="pg-hero">
+    <div class="pg-hero-inner">
+      <p class="pg-chip">Sicurezza e benessere</p>
+      <h1>Bullismo e<br><em>Cyberbullismo</em></h1>
+      <p>Una guida chiara per genitori e studenti: cosa sono, come riconoscerli, cosa fare se succede. Al Convitto Costaggini la sicurezza di ogni ragazzo è una priorità irrinunciabile.</p>
+    </div>
+  </header>
+
+  <div class="pg-body">
+
+    <!-- MESSAGGIO RASSICURANTE -->
+    <div class="box-verde">
+      <p><strong>Se tuo figlio o tua figlia vive al Convitto, non è solo.</strong> Gli educatori sono presenti H24 — di giorno, di sera e di notte. Ogni ragazzo ha sempre un adulto vicino a cui rivolgersi, in qualsiasi momento.</p>
+      <p>Questa pagina non parla di un problema che esiste al Convitto Costaggini: parla di come lo preveniamo e di cosa facciamo se dovesse presentarsi. La trasparenza è il primo strumento di protezione.</p>
+    </div>
+
+    <hr class="sez-divider">
+
+    <!-- CHE COSA SONO -->
+    <section class="sez">
+      <span class="sez-label">Capire il fenomeno</span>
+      <h2>Che cosa sono il bullismo<br><em>e il cyberbullismo?</em></h2>
+      <p>Il <strong>bullismo</strong> è un comportamento aggressivo, intenzionale e ripetuto nel tempo, in cui una persona (o un gruppo) esercita un potere su un'altra che fatica a difendersi. Non è un litigio normale tra ragazzi — si distingue per la <strong>ripetizione</strong>, lo <strong>squilibrio di potere</strong> e l'<strong>intenzionalità</strong>.</p>
+      <p>Il <strong>cyberbullismo</strong> è la stessa dinamica che si sposta online — messaggi offensivi, esclusione da gruppi, pubblicazione di foto o video senza consenso, diffamazione sui social.</p>
+
+      <div class="tema-grid">
+        <div class="tema-card red">
+          <div class="tema-icon">👊</div>
+          <h3>Bullismo fisico</h3>
+          <p>Spinte, colpi, sottrazione o danneggiamento di oggetti personali.</p>
+        </div>
+        <div class="tema-card blue">
+          <div class="tema-icon">💬</div>
+          <h3>Bullismo verbale</h3>
+          <p>Insulti, prese in giro ripetute, minacce, offese su aspetto fisico o origini.</p>
+        </div>
+        <div class="tema-card oro">
+          <div class="tema-icon">🫥</div>
+          <h3>Bullismo sociale</h3>
+          <p>Esclusione dal gruppo, isolamento, diffusione di voci false per danneggiare.</p>
+        </div>
+        <div class="tema-card verde">
+          <div class="tema-icon">📱</div>
+          <h3>Cyberbullismo</h3>
+          <p>Messaggi offensivi, foto o video condivisi senza consenso, hate online.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="sez-divider">
+
+    <!-- SEGNALI DA RICONOSCERE -->
+    <section class="sez">
+      <span class="sez-label">Per i genitori</span>
+      <h2>Come capire se qualcosa<br><em>non va</em></h2>
+      <p>I ragazzi spesso non parlano spontaneamente. Ci sono però segnali che possono indicare che sta vivendo una situazione di disagio. Non significano automaticamente bullismo — ma meritano attenzione e una conversazione aperta.</p>
+
+      <div class="acc-wrap">
+        <div class="acc-item">
+          <button class="acc-btn" onclick="togAcc(this)" aria-expanded="false">
+            <span><span class="num">01</span>Segnali emotivi e comportamentali</span>
+            <svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <div class="acc-body">
+            <ul>
+              <li>Sembra triste, ansioso o arrabbiato senza una ragione chiara, soprattutto prima di tornare in struttura</li>
+              <li>Ha cambiamenti improvvisi di umore, irritabilità o chiusura</li>
+              <li>Dice di sentirsi solo o che "non ha amici" al Convitto</li>
+              <li>Mostra segni di bassa autostima, piange spesso o si svaluta</li>
+              <li>Ha difficoltà a dormire o incubi ricorrenti</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" onclick="togAcc(this)" aria-expanded="false">
+            <span><span class="num">02</span>Segnali fisici e pratici</span>
+            <svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <div class="acc-body">
+            <ul>
+              <li>Porta a casa oggetti danneggiati o racconta che gli mancano cose</li>
+              <li>Ha lividi o graffi che non sa spiegare o minimizza</li>
+              <li>Lamenta spesso mal di pancia o mal di testa, soprattutto in certi giorni</li>
+              <li>Ha peggiorato improvvisamente i risultati scolastici</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" onclick="togAcc(this)" aria-expanded="false">
+            <span><span class="num">03</span>Segnali legati al telefono e ai social</span>
+            <svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <div class="acc-body">
+            <ul>
+              <li>Smette di usare il telefono o i social quando era abituato a farlo</li>
+              <li>Appare turbato dopo aver guardato il telefono</li>
+              <li>Non vuole mostrarti messaggi o notifiche</li>
+              <li>Racconta di essere stato escluso da gruppi WhatsApp o chat di classe</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" onclick="togAcc(this)" aria-expanded="false">
+            <span><span class="num">04</span>Segnali che riguardano il Convitto in particolare</span>
+            <svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <div class="acc-body">
+            <ul>
+              <li>Non vuole più tornare in struttura dopo il weekend</li>
+              <li>Non parla mai dei compagni di camera o li cita sempre in modo negativo</li>
+              <li>Chiede di essere ritirato senza una ragione scolastica</li>
+              <li>Mangia poco o salta i pasti (che in Convitto sono un momento sociale importante)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="blockquote">
+        <p>Se hai un dubbio, chiedi. Non servono prove certe per parlare con un educatore. Bastano una sensazione, una preoccupazione, una domanda.</p>
+      </div>
+    </section>
+
+    <hr class="sez-divider">
+
+    <!-- COSA FACCIAMO NOI -->
+    <section class="sez">
+      <span class="sez-label">Come funziona al Convitto</span>
+      <h2>La nostra risposta:<br><em>prevenzione e azione</em></h2>
+      <p>Il Convitto Costaggini adotta il <strong>Codice Interno per la Prevenzione e il Contrasto del Bullismo e del Cyberbullismo</strong> dell'IPSSEOA "R. A. Costaggini", in conformità alla <strong>Legge 71/2017</strong> e alle linee guida ministeriali.</p>
+      <p>Non si tratta di un documento rimasto in un cassetto: è il riferimento pratico con cui gli educatori operano ogni giorno.</p>
+
+      <div class="acc-wrap">
+        <div class="acc-item">
+          <button class="acc-btn" onclick="togAcc(this)" aria-expanded="false">
+            <span><span class="num">🛡️</span>Cosa facciamo per prevenire</span>
+            <svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <div class="acc-body">
+            <ul>
+              <li><strong>Presenza H24:</strong> un educatore è sempre presente, in ogni turno inclusa la notte. Non esiste un momento in cui un ragazzo è lasciato senza un adulto di riferimento.</li>
+              <li><strong>Clima di gruppo:</strong> le attività collettive (pomeriggio libero, cena, Lab Musicale, studio guidato) sono momenti presidiati in cui gli educatori osservano le dinamiche relazionali.</li>
+              <li><strong>Registro delle osservazioni:</strong> gli educatori registrano quotidianamente segnali di disagio, cambiamenti di comportamento, tensioni tra ragazzi.</li>
+              <li><strong>Formazione del personale:</strong> gli educatori sono formati per riconoscere i segnali precoci e per intervenire con metodi non punitivi ma trasformativi.</li>
+              <li><strong>Regolamento chiaro:</strong> il Regolamento del Convitto definisce i comportamenti vietati e le relative conseguenze, che i ragazzi conoscono dall'ammissione.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" onclick="togAcc(this)" aria-expanded="false">
+            <span><span class="num">⚡</span>Cosa facciamo quando succede</span>
+            <svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <div class="acc-body">
+            <p>Quando un episodio viene segnalato o osservato direttamente:</p>
+            <div class="steps" style="margin-top:.75rem">
+              <div class="step">
+                <div class="step-n">1</div>
+                <div class="step-t"><strong>Ascolto immediato</strong> — la vittima viene ascoltata in privato dall'educatore di turno, in un luogo sicuro.</div>
+              </div>
+              <div class="step">
+                <div class="step-n">2</div>
+                <div class="step-t"><strong>Documentazione</strong> — l'episodio viene registrato nel sistema interno con data, orario e dettagli.</div>
+              </div>
+              <div class="step">
+                <div class="step-n">3</div>
+                <div class="step-t"><strong>Comunicazione alle famiglie</strong> — entrambe le famiglie (vittima e autore) vengono contattate tempestivamente.</div>
+              </div>
+              <div class="step">
+                <div class="step-n">4</div>
+                <div class="step-t"><strong>Coinvolgimento della dirigenza</strong> — il Dirigente Scolastico e il Referente Antibullismo dell'istituto vengono informati.</div>
+              </div>
+              <div class="step">
+                <div class="step-n">5</div>
+                <div class="step-t"><strong>Intervento educativo</strong> — colloqui individuali, eventuale mediazione, misure disciplinari proporzionate e percorso di recupero relazionale.</div>
+              </div>
+              <div class="step">
+                <div class="step-n">6</div>
+                <div class="step-t"><strong>Monitoraggio</strong> — la situazione viene seguita nel tempo per verificare che la soluzione sia stabile.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" onclick="togAcc(this)" aria-expanded="false">
+            <span><span class="num">📱</span>Cyberbullismo: il caso specifico</span>
+            <svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <div class="acc-body">
+            <p>Il cyberbullismo avviene spesso fuori dalla struttura ma impatta la vita in Convitto. Il nostro approccio:</p>
+            <ul>
+              <li>Il ragazzo vittima di cyberbullismo può segnalarlo a qualsiasi educatore anche mostrando screenshot o messaggi</li>
+              <li>Gli screenshot vengono conservati come documentazione prima di essere cancellati dai dispositivi</li>
+              <li>In caso di reato (stalking, diffamazione, revenge porn) viene coinvolto il Dirigente per eventuale denuncia alle autorità</li>
+              <li>Il numero di riferimento nazionale è il <strong>114</strong> (Emergenza Infanzia) e il <strong>19696</strong> (Polizia Postale)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="sez-divider">
+
+    <!-- COSA FARE SE SUCCEDE -->
+    <section class="sez">
+      <span class="sez-label">Guida pratica</span>
+      <h2>Cosa fare<br><em>se tuo figlio viene bullizzato</em></h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div class="step-t"><strong>Ascoltalo senza giudicare</strong> — prima di tutto, lascia che tuo figlio parli. Evita frasi come "non ti preoccupare" o "reagisci" che minimizzano il vissuto.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div class="step-t"><strong>Credigi</strong> — i ragazzi che segnalano bullismo raramente esagerano. Il fatto che te lo dica è già un atto di coraggio.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div class="step-t"><strong>Non intervenire direttamente con l'altro ragazzo o la sua famiglia</strong> — il confronto diretto tra famiglie peggiora quasi sempre la situazione. Passa sempre attraverso gli educatori.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">4</div>
+          <div class="step-t"><strong>Contatta subito un educatore</strong> — puoi chiamare il Convitto in qualsiasi momento, anche di notte. Gli educatori sono lì per questo.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">5</div>
+          <div class="step-t"><strong>Se è cyberbullismo, salva i messaggi</strong> — screenshot di tutto prima che vengano cancellati. Non rispondere ai messaggi offensivi.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">6</div>
+          <div class="step-t"><strong>Chiedi un incontro formale</strong> — hai il diritto di richiedere un colloquio con il Referente Antibullismo dell'istituto e con la dirigenza scolastica.</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="sez-divider">
+
+    <!-- SE TUO FIGLIO È IL BULLO -->
+    <section class="sez">
+      <span class="sez-label">Anche questa è una situazione da affrontare</span>
+      <h2>E se tuo figlio fosse<br><em>il bullo?</em></h2>
+      <p>È una delle situazioni più difficili da accettare per un genitore. Ma riconoscerla è il primo passo per aiutare davvero tuo figlio.</p>
+      <p>I ragazzi che mettono in atto comportamenti di bullismo spesso vivono a loro volta situazioni di disagio — difficoltà a gestire le emozioni, bisogno di controllo, bassa empatia in quella fase di crescita, o problemi che non riescono a esprimere diversamente.</p>
+      <p><strong>Non è una condanna.</strong> Con il giusto intervento educativo — che al Convitto affrontiamo senza stigmatizzare — è possibile lavorare sulla consapevolezza e cambiare il comportamento.</p>
+      <p>Se ricevi una segnalazione dagli educatori su comportamenti di tuo figlio, ti chiediamo di accoglierla con apertura e di collaborare al percorso che verrà proposto. L'obiettivo è la crescita di tutti i ragazzi coinvolti.</p>
+    </section>
+
+    <hr class="sez-divider">
+
+    <!-- BOX CONTATTI URGENTI -->
+    <div class="box-sos">
+      <div class="box-sos-head">
+        <div class="box-sos-icon">🚨</div>
+        <h3>Contattaci — anche adesso</h3>
+      </div>
+      <p>Se hai una preoccupazione urgente su tuo figlio, non aspettare il giorno dopo. Gli educatori sono presenti H24 e possono essere raggiunti in qualsiasi momento.</p>
+      <p>📞 <strong>Convitto Costaggini:</strong> <a href="tel:+390746201113">0746 201113</a><br>
+         ✉️ <strong>Email:</strong> <a href="mailto:convitto@alberghierorieti.it">convitto@alberghierorieti.it</a><br>
+         📋 <strong>Modulo di contatto:</strong> <a href="contatti.html">Scrivi qui →</a></p>
+    </div>
+
+    <!-- NUMERI UTILI -->
+    <section class="sez">
+      <span class="sez-label">Risorse esterne</span>
+      <h2>Numeri utili<br><em>a livello nazionale</em></h2>
+      <p>In caso di situazioni gravi o se hai bisogno di un supporto esterno alla scuola:</p>
+
+      <div class="numeri-grid">
+        <div class="numero-card">
+          <div class="numero-icon">📞</div>
+          <div>
+            <span class="numero-label">Emergenza Infanzia</span>
+            <span class="numero-val"><a href="tel:114">114</a></span>
+          </div>
+        </div>
+        <div class="numero-card">
+          <div class="numero-icon">🚔</div>
+          <div>
+            <span class="numero-label">Polizia Postale</span>
+            <span class="numero-val"><a href="tel:19696">19696</a></span>
+          </div>
+        </div>
+        <div class="numero-card">
+          <div class="numero-icon">🆘</div>
+          <div>
+            <span class="numero-label">Telefono Azzurro</span>
+            <span class="numero-val"><a href="tel:19696">19696</a></span>
+          </div>
+        </div>
+        <div class="numero-card">
+          <div class="numero-icon">🌐</div>
+          <div>
+            <span class="numero-label">MIUR — Linee guida</span>
+            <span class="numero-val"><a href="https://www.istruzione.it/bullismo-e-cyberbullismo/" target="_blank" rel="noopener">istruzione.it →</a></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCUMENTO UFFICIALE -->
+    <section class="sez">
+      <span class="sez-label">Documentazione ufficiale</span>
+      <h2>Il documento<br><em>dell'istituto</em></h2>
+      <p>Il Codice Interno per la Prevenzione e il Contrasto del Bullismo e del Cyberbullismo è un documento pubblico, adottato dall'IPSSEOA "R. A. Costaggini" e disponibile nella sezione Regolamenti del sito scolastico.</p>
+
+      <a class="doc-link" href="https://www.alberghierorieti.edu.it/download/80/regolamento-scuola/9319/definitivo-codice-interno-per-la-prevenzione-e-il-contrasto-del-bullismo-e-del-cyberbullismo-2.pdf" target="_blank" rel="noopener">
+        <span class="doc-icon">📄</span>
+        <span class="doc-info">
+          <span class="doc-title">Codice Interno Prevenzione e Contrasto Bullismo e Cyberbullismo</span>
+          <span class="doc-sub">IPSSEOA "R. A. Costaggini" — Rieti · PDF</span>
+        </span>
+        <span class="doc-arr">↗</span>
+      </a>
+
+      <a class="doc-link" href="regolamento.html">
+        <span class="doc-icon">📜</span>
+        <span class="doc-info">
+          <span class="doc-title">Regolamento del Convitto</span>
+          <span class="doc-sub">35 articoli · Versione 30 gennaio 2025</span>
+        </span>
+        <span class="doc-arr">→</span>
+      </a>
+    </section>
+
+    <div class="blockquote">
+      <p>Il Convitto è il posto dove tuo figlio cresce, dorme, mangia e si fa amici per la vita. Vogliamo che sia anche il posto dove si sente al sicuro — sempre.</p>
+    </div>
+
+  </div><!-- fine pg-body -->
+
+</main>
+
+<!-- FOOTER (stesso delle altre pagine) -->
+<footer class="footer" role="contentinfo">
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <span class="ft-name">Convitto "Costaggini"</span>
+      <span class="ft-sub">IPSSEOA "R. A. Costaggini" — Rieti</span>
+    </div>
+    <nav class="ft-links" aria-label="Link utili footer">
+      <a href="contatti.html">Contatti</a>
+      <a href="regolamento.html">Regolamento</a>
+      <a href="ammissione.html">Ammissione</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <p class="ft-copy">© 2025 Convitto "Costaggini" — Rieti · Via dei Salici s.n.c., 02100 Rieti</p>
+  </div>
+</footer>
+
+<script src="chatbot.js" defer></script>
+<script>
+/* Accordion */
+function togAcc(btn) {
+  const item = btn.closest('.acc-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) {
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    setTimeout(() => {
+      const body = item.querySelector('.acc-body');
+      if (body) {
+        const rect = body.getBoundingClientRect();
+        if (rect.bottom > window.innerHeight) {
+          item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    }, 50);
+  } else {
+    btn.setAttribute('aria-expanded','false');
+  }
+}
+
+/* Navbar mobile */
+const tog = document.getElementById('nav-tog');
+const menu = document.getElementById('nav-menu');
+if (tog && menu) {
+  tog.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    tog.setAttribute('aria-expanded', open);
+  });
+}
+</script>
+</body>
+</html>
