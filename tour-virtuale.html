@@ -18,6 +18,24 @@
   <style>
     body { background: #0a0f0a; }
 
+    /* ── Forza visibilità pulsanti nativi Pannellum ── */
+    .pnlm-controls-container { display: block !important; opacity: 1 !important; visibility: visible !important; }
+    .pnlm-zoom-controls, .pnlm-pan-controls { display: block !important; }
+    .pnlm-control { display: flex !important; opacity: 1 !important; visibility: visible !important;
+      width: 36px !important; height: 36px !important;
+      background: rgba(44,62,45,.85) !important;
+      border: 1.5px solid rgba(184,146,42,.4) !important;
+      border-radius: 8px !important; margin: 3px !important;
+      cursor: pointer !important; align-items: center !important; justify-content: center !important; }
+    .pnlm-control:hover { background: rgba(44,62,45,1) !important; border-color: rgba(184,146,42,.8) !important; }
+    .pnlm-control svg, .pnlm-control img { width: 18px !important; height: 18px !important; filter: invert(1) !important; }
+    .pnlm-zoom-in::after  { content: '+'; color: #D4AA4A; font-size: 1.2rem; font-weight: 700; line-height: 1; }
+    .pnlm-zoom-out::after { content: '−'; color: #D4AA4A; font-size: 1.2rem; font-weight: 700; line-height: 1; }
+    .pnlm-pan-up::after    { content: '▲'; color: #D4AA4A; font-size: .7rem; }
+    .pnlm-pan-down::after  { content: '▼'; color: #D4AA4A; font-size: .7rem; }
+    .pnlm-pan-left::after  { content: '◀'; color: #D4AA4A; font-size: .7rem; }
+    .pnlm-pan-right::after { content: '▶'; color: #D4AA4A; font-size: .7rem; }
+
     /* Hero */
     .tv-hero {
       background: linear-gradient(160deg, #0a0f0a, var(--bosco));
@@ -272,7 +290,7 @@ let zoomInterval = null;
 function init() {
   buildButtons();
   buildThumbs();
-  selectRoom(ROOMS[0], true);  // true = autorotazione attiva al caricamento
+  selectRoom(ROOMS[0]);
 }
 
 function buildButtons() {
@@ -283,7 +301,7 @@ function buildButtons() {
     btn.id = `btn-${r.id}`;
     btn.textContent = `${r.icon} ${r.label}`;
     btn.setAttribute('role', 'tab');
-    btn.onclick = () => selectRoom(r, true);
+    btn.onclick = () => selectRoom(r);
     wrap.appendChild(btn);
   });
 }
@@ -296,7 +314,7 @@ function buildThumbs() {
     div.id = `thumb-${r.id}`;
     div.setAttribute('role', 'button');
     div.setAttribute('aria-label', r.label);
-    div.onclick = () => selectRoom(r, true);
+    div.onclick = () => selectRoom(r);
 
     const img = new Image();
     img.onload = () => {
@@ -314,7 +332,7 @@ function buildThumbs() {
   });
 }
 
-function selectRoom(room, autoPlay) {
+function selectRoom(room) {
   currentRoom = room;
 
   document.querySelectorAll('.tv-room-btn').forEach(b => b.classList.remove('active'));
@@ -333,7 +351,7 @@ function selectRoom(room, autoPlay) {
   img.onload = () => {
     document.getElementById('tv-placeholder').style.display = 'none';
     document.getElementById('tv-info').style.display = 'block';
-    loadPanorama(room.img, autoPlay);
+    loadPanorama(room.img);
   };
   img.onerror = () => {
     if (viewer) { try { viewer.destroy(); } catch(e){} viewer = null; }
@@ -349,21 +367,22 @@ function selectRoom(room, autoPlay) {
   img.src = room.img;
 }
 
-function loadPanorama(src, autoRotate) {
-  if (viewer) { try { viewer.destroy(); } catch(e){} }
-  if (zoomInterval) { clearInterval(zoomInterval); }
+function loadPanorama(src) {
+  if (viewer) { try { viewer.destroy(); } catch(e){} viewer = null; }
+  if (zoomInterval) { clearInterval(zoomInterval); zoomInterval = null; }
 
   viewer = pannellum.viewer('panorama', {
     type: 'equirectangular',
     panorama: src,
     autoLoad: true,
-    autoRotate: 0,        // Rotazione gestita manualmente sotto
+    autoRotate: -2,       // Rotazione nativa Pannellum — funziona sempre, anche su mobile
+    autoRotateInactivityDelay: 100, // Riparte quasi subito dopo inattività
     compass: false,
     showControls: true,
-    mouseZoom: false,     // Disabilita zoom con rotella/pinch — elimina l'effetto improvviso
-    hfov: 150,            // Massimo allontanamento possibile — visuale grandangolare
-    minHfov: 70,          // Limite minimo zoom-in manuale
-    maxHfov: 150,         // Non può andare oltre il punto di partenza
+    mouseZoom: false,
+    hfov: 150,
+    minHfov: 70,
+    maxHfov: 150,
     strings: {
       loadButtonLabel: 'Clicca per caricare il panorama',
       loadingLabel: 'Caricamento…',
@@ -372,37 +391,6 @@ function loadPanorama(src, autoRotate) {
       fileAccessError: 'Immagine non trovata: %s',
       withEvent: '',
     }
-  });
-
-  // Funzione di rotazione — richiamata da evento E da fallback timeout
-  function avviaRotazione() {
-    if (zoomInterval) return;
-    zoomInterval = setInterval(function() {
-      if (!viewer) { clearInterval(zoomInterval); zoomInterval = null; return; }
-      try { viewer.setYaw(viewer.getYaw() - 0.06); } catch(e) {}
-    }, 16);
-  }
-
-  // Sistema primario: evento nativo Pannellum
-  viewer.on('load', avviaRotazione);
-
-  // Sistema di riserva: parte dopo 800ms anche se l'evento non scatta (mobile, CDN)
-  setTimeout(avviaRotazione, 800);
-
-  // Ferma al tocco, riprende dopo 1.5s di inattività
-  const el = document.getElementById('panorama');
-  let dragTimer;
-  ['mousedown','touchstart','pointerdown'].forEach(function(ev) {
-    el.addEventListener(ev, function() {
-      clearInterval(zoomInterval); zoomInterval = null;
-      clearTimeout(dragTimer);
-    }, { passive: true });
-  });
-  ['mouseup','touchend','pointerup'].forEach(function(ev) {
-    el.addEventListener(ev, function() {
-      clearTimeout(dragTimer);
-      dragTimer = setTimeout(avviaRotazione, 1500);
-    }, { passive: true });
   });
 }
 
