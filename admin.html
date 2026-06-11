@@ -214,7 +214,8 @@ function admConfirm(opts) {
     <div class="login-logo">🛡️</div>
     <h1>Pannello <em>Admin</em></h1>
     <p>Convitto "Costaggini" — Rieti</p>
-    <input type="password" id="pwd" placeholder="Password" autocomplete="new-password" value="" autofocus/>
+    <input type="email" id="eml" placeholder="Email" autocomplete="username" autofocus/>
+    <input type="password" id="pwd" placeholder="Password" autocomplete="current-password" value=""/>
     <button class="btn-accedi" onclick="doLogin()">Accedi →</button>
     <p id="login-err">Password errata. Riprova.</p>
     <a href="index.html"
@@ -1197,30 +1198,43 @@ async function aiAvviso() {
 
 // ═══ LOGIN / LOGOUT / NAVIGAZIONE ═══
 async function doLogin() {
-  const pwd = document.getElementById('pwd').value;
-  const err = document.getElementById('login-err');
+  const email = document.getElementById('eml').value.trim();
+  const pwd   = document.getElementById('pwd').value;
+  const err   = document.getElementById('login-err');
   err.style.display = 'none';
   try {
-    const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
-    const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-    if (hash === PWD_HASH) {
-      sessionStorage.setItem('adm_auth', '1');
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('adm-wrap').style.display     = 'block';
-      await initNotizie();
-      await loadAvvisi();
-      await famLoad('in_attesa');
-    } else {
-      err.style.display = 'block';
-      document.getElementById('pwd').value = '';
-      document.getElementById('pwd').focus();
-    }
-  } catch(e) {
-    err.textContent = 'Errore: ' + e.message;
+    // 1) login su Supabase Auth
+    const r = await fetch(`${SB_N}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'apikey': SB_PUB, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pwd })
+    });
+    if (!r.ok) throw new Error('Credenziali non valide');
+    const data  = await r.json();
+    const token = data.access_token;
+
+    // 2) verifica che l'utente sia un amministratore
+    const chk = await fetch(`${SB_N}/rest/v1/rpc/is_admin`, {
+      method: 'POST',
+      headers: { 'apikey': SB_PUB, 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: '{}'
+    });
+    if ((await chk.json()) !== true) throw new Error('Utente non autorizzato');
+
+    // 3) sessione valida → apri il pannello (come prima)
+    sessionStorage.setItem('sb_token', token);
+    sessionStorage.setItem('adm_auth', '1');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('adm-wrap').style.display     = 'block';
+    await initNotizie();
+    await loadAvvisi();
+    await famLoad('in_attesa');
+  } catch (e) {
+    err.textContent = 'Accesso negato. ' + (e.message || '');
     err.style.display = 'block';
+    document.getElementById('pwd').value = '';
   }
 }
-
 // Consente login anche con Invio
 document.addEventListener('DOMContentLoaded', () => {
   const pwd = document.getElementById('pwd');
