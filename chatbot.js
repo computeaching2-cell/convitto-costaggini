@@ -241,11 +241,50 @@ const KB=[
   {k:['patto educativo','patto di corresponsabilità','firmare','accordo','impegno'],
    r:'Prima dell'inizio dell'anno scolastico, le famiglie partecipano a un <strong>colloquio con il Dirigente e gli educatori</strong> durante il quale viene presentato il Regolamento e firmato il Patto Educativo di Corresponsabilità.'},
 
+
+  // ── IN 2 MINUTI ──
+  {k:['fretta','ho fretta','sintesi','riassunto','in breve','veloce','essenziale',
+      'cosa devo sapere','in poche parole','subito','due minuti','2 minuti',
+      'informazioni principali','info base','non ho tempo'],
+   r:'Perfetto — ho la pagina giusta per te: <strong>In 2 Minuti</strong>, le 10 domande che ogni genitore fa per prima con risposte immediate. Niente fronzoli, solo fatti.<br><br>⚡ <a href="in-2-minuti.html">Vai a "In 2 Minuti" →</a>'},
+
+  // ── LETTERA / TESTIMONIANZE ──
+  {k:['testimonianza','lettera','chi è passato','ex convittore','ex convittrice',
+      'esperienze','cosa dicono','opinioni','recensioni','come si trovano',
+      'chi ha frequentato','parola di chi','storie vere'],
+   r:'Sul sito ci sono lettere vere scritte da chi è già passato dal Convitto: un ex convittore, una ex convittrice, un genitore, un educatore e — a breve — la Dirigenza.<br><br>💌 <a href="lettera.html">Leggi le lettere →</a>'},
+
+  // ── VINILE + SOLIDARIETÀ ──
+  {k:['vinile','disco','la solidarietà','solidarieta','brano','canzone',
+      'registrazione','studio di registrazione','album','produzione musicale',
+      'musica prodotta','2019','hanno registrato'],
+   r:'Nel 2019 il Laboratorio Musicale ha registrato il brano <em>"La Solidarietà"</em> in uno studio professionale — scritto collettivamente dai ragazzi e pubblicato su <strong>vinile autoprodotto</strong>. Una delle cose più belle mai fatte al Convitto.<br><br>🎶 <a href="solidarieta.html">Guarda il video →</a><br>💿 <a href="vinile.html">Il Vinile del Convitto →</a>'},
+
+  // ── PER I GENITORI ──
+  {k:['guida genitori','informazioni per genitori','cosa devono sapere i genitori',
+      'per i genitori','area genitori','sezione genitori','genitori.html'],
+   r:'C'è una sezione dedicata interamente ai genitori: risponde alle domande più frequenti, spiega cosa garantisce il Convitto e raccoglie le testimonianze di chi ha già vissuto questa esperienza.<br><br>👨‍👩‍👧 <a href="genitori.html">Guida per i genitori →</a>'},
+
+  // ── LABORATORIO TEATRALE ──
+  {k:['teatro','laboratorio teatrale','recitazione','spettacolo','palco',
+      'teatrale','recitare','attori','commedia'],
+   r:'Al Convitto è attivo un <strong>Laboratorio Teatrale</strong> che affianca il Laboratorio Musicale. Offre ai ragazzi uno spazio per esprimersi attraverso la recitazione, la voce e il corpo — sviluppando fiducia in sé stessi e capacità relazionali. A fine anno gli spettacoli sono aperti alle famiglie.<br><br>🎭 <a href="giornata-tipo.html">Attività e pomeriggio →</a>'},
+
+  // ── MAPPA / ALUMNI NEL MONDO ──
+  {k:['mappa alumni','dove sono finiti','nel mondo','ex convittori nel mondo',
+      'carriere','lavoro dopo','successi','londra','hanno fatto'],
+   r:'Gli alumni del Convitto Costaggini lavorano in tutto il mondo — hotel a Londra, ristoranti a Roma, strutture in Europa e oltre. C'è una mappa interattiva che mostra dove sono finiti.<br><br>🌍 <a href="mondo.html">Mappa degli alumni →</a><br>🎓 <a href="comunita.html">La community →</a>'},
+
+  // ── MURO DEI RICORDI ──
+  {k:['ricordi','muro dei ricordi','lasciare un messaggio','memoria',
+      'ricordo del convitto','cosa lasciare'],
+   r:'Il <strong>Muro dei Ricordi</strong> è lo spazio dove chi è passato dal Convitto lascia un segno — un momento, un odore, una frase sentita nel corridoio.<br><br>🕯️ <a href="ricordi.html">Lascia un ricordo →</a>'},
+
 ];
 
 // ── SUGGERIMENTI CONTESTUALI ──────────────────────────────────────────────
 // Cambiano in base all'ultimo argomento discusso
-const SUGS_DEFAULT=['Come ci si iscrive?','Quanto costa la retta?','Orari della giornata','Chi sono gli educatori?','C\'è il bullismo?'];
+const SUGS_DEFAULT=['Ho fretta — dammi l\'essenziale','Come ci si iscrive?','Quanto costa?','C\'è il bullismo?','Lettera di un ex convittore'];
 const SUGS_MAP={
   iscri:    ['Quanto costa la retta?','Cosa devo portare?','Come si fa la domanda?'],
   retta:    ['Ci sono agevolazioni ISEE?','Come ci si iscrive?','Borsa di studio?'],
@@ -253,6 +292,9 @@ const SUGS_MAP={
   camera:   ['C\'è il Wi-Fi?','Posso vedere le camere?','Posso cambiare camera?'],
   musica:   ['Chi sono gli educatori?','Cosa si fa nel pomeriggio?','Gli alumni?'],
   bullismo: ['Come segnalo un caso?','Chi contatto di notte?','C\'è sicurezza H24?'],
+  fretta:   ['Come ci si iscrive?','Quanto costa?','Chi vigila di notte?'],
+  lettera:  ['Lettera del genitore?','Lettera dell\'educatore?','La community degli ex?'],
+  vinile:   ['Il Lab Musicale?','Chi è Michele Gaggiano?','La community degli alumni?'],
   educatori:['Chi vigila di notte?','Come ci si iscrive?','Il progetto educativo?'],
   alumni:   ['Il Lab Musicale?','Il vinile del Convitto?','La community degli ex?'],
 };
@@ -308,7 +350,7 @@ function match(q){
 // ── SUGGERIMENTI CONTESTUALI ──────────────────────────────────────────────
 function getSugs(firstKey){
   if(!firstKey)return SUGS_DEFAULT;
-  const fk=firstKey.toLowerCase();
+  const fk=firstKey.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   for(const[cat,sugs] of Object.entries(SUGS_MAP)){
     if(fk.includes(cat))return sugs;
   }
