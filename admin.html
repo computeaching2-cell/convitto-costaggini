@@ -734,7 +734,7 @@ async function famLoad(stato) {
   lista.innerHTML = '<p style="color:var(--txt2);font-size:.85rem;font-style:italic">Caricamento…</p>';
   try {
     const resp = await fetch(SB_N + '/rest/v1/richieste_accesso?stato=eq.' + stato + '&order=created_at.desc', {
-      headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+      headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + (sessionStorage.getItem('sb_token') || '') }
     });
     const data = await resp.json();
     if (!data.length) {
