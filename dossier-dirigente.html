@@ -258,7 +258,7 @@ function toggleViewer(id, pdfPath) {
         <h1>Il sito web del Convitto<br><em>Costaggini</em></h1>
         <p style="font-family:var(--fd);font-size:1.05rem;font-style:italic;color:var(--txt2);max-width:500px;margin:.7rem 0 0;line-height:1.75">Un&rsquo;infrastruttura digitale completa, gratuita e funzionante &mdash; in attesa di diventare ufficialmente istituzionale.</p>
         <p style="font-family:var(--fu);font-size:.68rem;color:var(--txt3);max-width:560px;margin:.75rem 0 0;line-height:1.7">Il sito &egrave; ospitato su <strong style="color:var(--txt2)">GitHub Pages</strong> &mdash; la stessa infrastruttura usata da <strong style="color:var(--txt2)">Developers Italia</strong> (il portale ufficiale dello sviluppo digitale della PA italiana), <strong style="color:var(--txt2)">Design Italia</strong> (le linee guida AgID per i siti pubblici), <strong style="color:var(--txt2)">GOV.UK</strong> (il portale del governo britannico) e <strong style="color:var(--txt2)">code.gov</strong> (il catalogo open source del governo degli Stati Uniti). Scegliere GitHub non &egrave; una scorciatoia: &egrave; la scelta delle migliori amministrazioni pubbliche al mondo.</p>
-        <div class="hero-meta" style="margin-top:.75rem">Educatore Michele Gaggiano<span style="color:var(--oro2);margin:0 .35rem">&middot;</span>29 Maggio 2026</div>
+        <div class="hero-meta" style="margin-top:.75rem">Preparato dall&rsquo;Educatore M. Gaggiano</div>
         <div class="kpi-strip">
           <div class="kpi-c"><div class="kpi-v">55+</div><div class="kpi-l">pagine</div></div>
           <div class="kpi-c"><div class="kpi-v">&euro;&thinsp;0</div><div class="kpi-l">costo annuo</div></div>
@@ -476,7 +476,7 @@ function toggleViewer(id, pdfPath) {
             <p><strong>Chi:</strong> DS con SPID + Gaggiano. <strong>Quando:</strong> dopo attivazione dominio. <strong>Tempo:</strong> 15 min.</p>
             <div class="steps">
               <div class="step"><div class="step-n">1</div><div class="step-t">Aprire <a class="lnk" href="https://form.agid.gov.it" target="_blank">form.agid.gov.it</a> &mdash; autenticarsi con SPID del Dirigente</div></div>
-              <div class="step"><div class="step-n">2</div><div class="step-t">Inserire URL: convitto.alberghierorieti.edu.it &mdash; Stato: Conforme</div></div>
+              <div class="step"><div class="step-n">2</div><div class="step-t">Inserire URL: convitto.alberghierorieti.edu.it &mdash; Stato: Parzialmente conforme (bonifica di accessibilit&agrave; in fase di implementazione)</div></div>
               <div class="step"><div class="step-n">3</div><div class="step-t">Copiare i testi dalla sezione &ldquo;Dichiarazione AGID&rdquo; di questo dossier</div></div>
               <div class="step"><div class="step-n">4</div><div class="step-t">Inviare il link risultante a Gaggiano (viene inserito automaticamente nel footer)</div></div>
             </div>
@@ -570,7 +570,7 @@ function toggleViewer(id, pdfPath) {
         <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">A</span>Dati dell&rsquo;ente</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
           <div class="acc-body"><ul><li><strong>Nome:</strong> IPSSEOA &ldquo;R. A. Costaggini&rdquo; &mdash; Convitto annesso</li><li><strong>C.F.:</strong> 80008130579 &middot; <strong>Cod. mecc.:</strong> RIRH010007</li><li><strong>URL:</strong> convitto.alberghierorieti.edu.it</li><li><strong>Dirigente:</strong> Prof. Giovanni Luca Barbonetti (in reggenza)</li></ul></div></div>
         <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">B</span>Stato &rarr; CONFORME</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
-          <div class="acc-body"><p>Selezionare <strong>CONFORME</strong>. Verificato tramite autovalutazione del Responsabile Tecnico su tutte le 55+ pagine, WCAG 2.1 livello AA.</p></div></div>
+          <div class="acc-body"><p>Finch&eacute; la bonifica di accessibilit&agrave; &egrave; <strong>in fase di implementazione</strong>, selezionare <strong>PARZIALMENTE CONFORME</strong> ed elencare le non conformit&agrave; note &mdash; contrasto del colore oro su bianco, etichette di alcuni campi dei moduli, gerarchia dei titoli, skip-link &mdash; indicandole come in corso di risoluzione. Lo stato <strong>CONFORME</strong> potr&agrave; essere selezionato soltanto dopo aver completato e verificato la bonifica su tutte le pagine (WCAG 2.1 livello AA).</p></div></div>
         <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">C&ndash;G</span>Tecnologie, metodo, feedback, procedure</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
           <div class="acc-body">
             <p><strong>C &mdash; Tecnologie:</strong> HTML5 semantico, CSS3, JavaScript vanilla ES6+, Leaflet.js, Pannellum, Supabase SDK. Nessun CMS, nessun tracker, nessun cookie di profilazione.</p>
@@ -603,7 +603,7 @@ function toggleViewer(id, pdfPath) {
           <iframe id="iframe-guida" src="" title="Guida all'uso del Sito"></iframe>
         </div>
         <h3>Accesso al pannello admin</h3>
-        <p>URL sito + <code>/admin.html</code>. Blocco automatico dopo 3 tentativi errati (60 secondi).</p>
+        <p>URL sito + <code>/admin.html</code>. Accesso protetto da autenticazione reale (Supabase Auth) con verifica del ruolo di amministratore. Non condividere le credenziali.</p>
         <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&middot;</span>Tab Notizie e Avvisi</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
           <div class="acc-body"><p>Gestisce le notizie (notizie.html) e gli avvisi (avvisi.html). Cliccare &ldquo;+ Nuova&rdquo;, compilare e salvare. I contenuti appaiono immediatamente sul sito.</p></div></div>
         <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">&middot;</span>Tab Famiglie &mdash; approvazione accessi</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
@@ -1068,5 +1068,56 @@ if (sessionStorage.getItem('da') === '1') {
   });
 }
 </script>
+<script>
+/* ── Disabilitazione temporanea accesso ai documenti ──
+   I documenti allegati (Word/PDF/Visualizza) sono in aggiornamento:
+   pulsanti resi non funzionanti e visualizzatori azzerati. */
+(function () {
+  // 1) Azzera l'apertura dei visualizzatori inline
+  try { window.toggleViewer = function () { return false; }; } catch (e) {}
+
+  function disattiva() {
+    var btns = document.querySelectorAll('.dl-btn');
+    btns.forEach(function (el) {
+      el.classList.add('dl-disabled');
+      el.setAttribute('aria-disabled', 'true');
+      el.setAttribute('title', 'Documento in aggiornamento \u2014 temporaneamente non disponibile');
+      // Link Word/PDF: togli il download e blocca il clic
+      if (el.tagName === 'A') { el.removeAttribute('href'); el.removeAttribute('download'); }
+      // Bottoni Visualizza: rimuovi l'azione
+      el.removeAttribute('onclick');
+      el.addEventListener('click', function (ev) { ev.preventDefault(); ev.stopPropagation(); }, true);
+    });
+    // Assicura che eventuali visualizzatori restino chiusi e vuoti
+    document.querySelectorAll('.doc-viewer').forEach(function (v) { v.style.display = 'none'; });
+    document.querySelectorAll('.doc-viewer iframe').forEach(function (f) { f.src = ''; });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', disattiva);
+  } else {
+    disattiva();
+  }
+})();
+</script>
+<style>
+/* Aspetto dei pulsanti documento disabilitati */
+.dl-btn.dl-disabled {
+  opacity: .45;
+  filter: grayscale(1);
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+.dl-btns::after {
+  content: "Documenti in aggiornamento \2014 temporaneamente non disponibili";
+  display: block;
+  width: 100%;
+  margin-top: .5rem;
+  font-family: var(--fu);
+  font-size: .62rem;
+  font-style: italic;
+  color: #8b7a5a;
+}
+</style>
 </body>
 </html>
