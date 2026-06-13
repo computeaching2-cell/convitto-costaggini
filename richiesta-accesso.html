@@ -224,7 +224,7 @@
       <div id="form-contenuto">
         <h2 class="form-titolo">I suoi dati</h2>
         <p class="form-sub">
-          Inserisca i dati del proprio figlio/a, la sua email e la password che desidera utilizzare per accedere. 
+          Inserisca i dati del proprio figlio/a e la sua email. Dopo la verifica riceverà le credenziali di accesso all'indirizzo email indicato.
           La richiesta verrà verificata dalla segreteria prima dell'attivazione.
         </p>
 
@@ -257,35 +257,6 @@
 
         <hr class="divider">
 
-        <!-- PASSWORD -->
-        <div class="campo-gruppo">
-          <label for="password">Password desiderata</label>
-          <div class="pwd-wrap">
-            <input type="password" id="password" placeholder="Scegliere una password sicura"
-                   autocomplete="new-password" oninput="verificaPassword()">
-            <button class="pwd-occhio" type="button" onclick="mostraPassword('password', this)" aria-label="Mostra password">👁️</button>
-          </div>
-          <ul class="requisiti" id="requisiti">
-            <li id="req-len">Almeno 8 caratteri</li>
-            <li id="req-mai">Almeno una lettera maiuscola</li>
-            <li id="req-num">Almeno un numero</li>
-            <li id="req-spe">Almeno un carattere speciale (!@#$%...)</li>
-          </ul>
-        </div>
-
-        <!-- CONFERMA PASSWORD -->
-        <div class="campo-gruppo">
-          <label for="conferma">Conferma password</label>
-          <div class="pwd-wrap">
-            <input type="password" id="conferma" placeholder="Ripetere la password"
-                   autocomplete="new-password" oninput="verificaConferma()">
-            <button class="pwd-occhio" type="button" onclick="mostraPassword('conferma', this)" aria-label="Mostra password">👁️</button>
-          </div>
-          <div class="aiuto" id="msg-conferma"></div>
-        </div>
-
-        <hr class="divider">
-
         <!-- PRIVACY -->
         <div class="privacy-acc">
           <button type="button" class="privacy-acc-btn" onclick="togglePrivacy(this)" aria-expanded="false">
@@ -294,7 +265,7 @@
           </button>
           <div class="privacy-acc-body" id="privacy-body" hidden>
             <p><strong>Titolare del trattamento:</strong> IPSSEOA "R. A. Costaggini" — Via Salaria s.n.c., 02100 Rieti (RI) — rirh010007@istruzione.it</p>
-            <p><strong>Finalità:</strong> I dati raccolti (nome dello studente, relazione, indirizzo email e password) sono trattati esclusivamente per l'attivazione e la gestione dell'accesso all'Area Riservata Famiglie del Convitto annesso, che consente ai genitori di consultare presenze, valutazioni e comunicazioni relative al proprio figlio/a.</p>
+            <p><strong>Finalità:</strong> I dati raccolti (nome dello studente, relazione e indirizzo email) sono trattati esclusivamente per l'attivazione e la gestione dell'accesso all'Area Riservata Famiglie del Convitto annesso, che consente ai genitori di consultare presenze, valutazioni e comunicazioni relative al proprio figlio/a.</p>
             <p><strong>Base giuridica:</strong> Consenso dell'interessato (art. 6(1)(a) GDPR) per la creazione dell'account; esecuzione del rapporto contrattuale di convitto (art. 6(1)(b) GDPR) per i dati convittuali visualizzati.</p>
             <p><strong>Conservazione:</strong> I dati sono conservati per la durata del rapporto di convitto e cancellati su richiesta o alla conclusione del rapporto scolastico.</p>
             <p><strong>Responsabile del trattamento (hosting):</strong> Supabase Inc. — server in Europa (Francoforte) — con garanzie GDPR (Clausole Contrattuali Standard).</p>
@@ -381,8 +352,6 @@ async function inviaRichiesta() {
   const nomeStudente = document.getElementById('nome-studente').value.trim();
   const relazione    = document.getElementById('relazione').value;
   const email        = document.getElementById('email').value.trim().toLowerCase();
-  const password     = document.getElementById('password').value;
-  const conferma     = document.getElementById('conferma').value;
   const privacy      = document.getElementById('privacy').checked;
   const msgEl        = document.getElementById('msg-esito');
   const btn          = document.getElementById('btn-invia');
@@ -394,8 +363,6 @@ async function inviaRichiesta() {
   if (!nomeStudente) return mostraMsg('Inserire il nome e cognome dello studente.', 'err');
   if (!relazione)    return mostraMsg('Selezionare la relazione con lo studente.', 'err');
   if (!email || !email.includes('@')) return mostraMsg('Inserire un indirizzo email valido.', 'err');
-  if (!passwordValida()) return mostraMsg('La password non soddisfa tutti i requisiti indicati.', 'err');
-  if (password !== conferma) return mostraMsg('Le due password non coincidono.', 'err');
   if (!privacy) return mostraMsg('È necessario accettare l\'informativa sulla privacy per procedere.', 'err');
 
   btn.disabled = true;
@@ -416,7 +383,6 @@ async function inviaRichiesta() {
           nome_studente:  nomeStudente,
           email_genitore: email,
           relazione:      relazione,
-          password_hash:  password,
           stato:          'in_attesa'
         })
       }
