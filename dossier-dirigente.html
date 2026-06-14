@@ -227,6 +227,7 @@ function toggleViewer(id, pdfPath) {
     <div class="sb-nav">
       <div class="sb-cat">Introduzione</div>
       <div class="sb-lnk on" onclick="show('intro',this)"><span class="n">&middot;</span>Panoramica</div>
+      <div class="sb-lnk" onclick="show('cosa-resta',this)"><span class="n">&#9733;</span>Cosa resta da fare</div>
       <div class="sb-lnk" onclick="show('numeri',this)"><span class="n">&middot;</span>Il sito in numeri</div>
       <div class="sb-sep"></div>
       <div class="sb-cat">Documenti</div>
@@ -250,6 +251,30 @@ function toggleViewer(id, pdfPath) {
   </nav>
 
   <main id="main">
+
+    <!-- COSA RESTA DA FARE -->
+    <section id="s-cosa-resta" class="sec">
+      <h2>Cosa resta <em>da fare</em></h2>
+      <div class="sec-meta">Guida operativa passo per passo &middot; 14 Giugno 2026</div>
+      <div class="body">
+        <p style="font-family:var(--fu);font-size:.82rem;color:var(--txt2);line-height:1.75;max-width:660px;margin-bottom:1.5rem">Elenco, in ordine cronologico e in linguaggio semplice, di tutte le attivit&agrave; che restano da svolgere per portare il sito alla pubblicazione definitiva e alla piena regolarit&agrave;. La sicurezza dei dati e l&rsquo;accessibilit&agrave; sono gi&agrave; state completate, verificate e pubblicate. Il documento &egrave; disponibile in formato Word (modificabile), PDF (da stampare o inviare) e consultabile direttamente qui sotto.</p>
+        <div class="dl-box">
+          <div><div class="dl-title">Che cosa resta da fare &mdash; guida operativa passo per passo</div><div class="dl-sub">Documento aggiornato &middot; 14 giugno 2026</div></div>
+          <div class="dl-btns dl-keep-row">
+            <a class="dl-btn word dl-keep" href="dossier-docs/Cosa-resta-da-fare-sito-Convitto.docx" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>Word</a>
+            <a class="dl-btn pdf dl-keep" href="dossier-docs/Cosa-resta-da-fare-sito-Convitto.pdf" download><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>PDF</a>
+            <button class="dl-btn view dl-keep" onclick="toggleViewer('viewer-resta', 'dossier-docs/Cosa-resta-da-fare-sito-Convitto.pdf')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor;margin-right:4px"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>Visualizza</button>
+          </div>
+        </div>
+        <div class="doc-viewer dv-keep" id="viewer-resta">
+          <div class="doc-viewer-bar">
+            <span>&#128196; Cosa resta da fare</span>
+            <button class="doc-viewer-close" onclick="toggleViewer('viewer-resta', '')">&#10005; Chiudi</button>
+          </div>
+          <iframe id="iframe-resta" src="" title="Cosa resta da fare — guida operativa"></iframe>
+        </div>
+      </div>
+    </section>
 
     <!-- INTRO -->
     <section id="s-intro" class="sec on">
@@ -685,7 +710,8 @@ function toggleViewer(id, pdfPath) {
         <table class="tbl">
           <thead><tr><th>#</th><th>Azione</th><th>Chi</th><th>Tempi</th><th>Priorit&agrave;</th></tr></thead>
           <tbody>
-            <tr><td><strong>1</strong></td><td>Email ad Argo per dominio DNS</td><td>DS Barbonetti</td><td>10 min</td><td class="no">Immediato</td></tr>
+            <tr><td><strong>0</strong></td><td>Trasferimento repository all&rsquo;account istituzionale <strong>convitto-costaggini</strong></td><td>DS + Gaggiano</td><td>20 min</td><td class="no">Prima del go-live</td></tr>
+            <tr><td><strong>1</strong></td><td>Email ad Argo per dominio DNS</td><td>DS Barbonetti</td><td>10 min</td><td>Dopo il trasferimento</td></tr>
             <tr><td>2</td><td>Attivazione dominio su GitHub Pages</td><td>Gaggiano</td><td>5 min</td><td>Dopo risposta Argo</td></tr>
             <tr><td>3</td><td>Dichiarazione accessibilit&agrave; AGID</td><td>DS + Gaggiano</td><td>15 min</td><td>Entro 30gg dal go-live</td></tr>
             <tr><td>4</td><td>Voce Registro Trattamenti GDPR</td><td>Segreteria</td><td>5 min</td><td>Entro 30gg dal go-live</td></tr>
@@ -712,7 +738,7 @@ Chiedo la cortese configurazione del seguente sottodominio sul dominio istituzio
 
 • Sottodominio richiesto: convitto.alberghierorieti.edu.it
 • Tipo record DNS: CNAME
-• Valore: computeaching2-cell.github.io
+• Valore: convitto-costaggini.github.io
 
 Il referente tecnico per eventuali chiarimenti è l'Educatore Michele Gaggiano
 (michele.gaggiano@alberghierorieti.it — tel. 0746 296862).
@@ -723,7 +749,7 @@ Prof. Giovanni Luca Barbonetti — Dirigente Scolastico (reggenza)
 IPSSEOA "R. A. Costaggini" — Rieti
 Tel. 0746 201113 — rirh010007@istruzione.it — PEC: rirh010007@pec.istruzione.it
           </div>
-          <p style="font-family:'Source Sans 3',sans-serif;font-size:.78rem;color:#8b7a5a;margin:.75rem 0 0;line-height:1.5">⚠️ La richiesta deve essere inviata dal DS Barbonetti (o per suo conto dalla segreteria). Argo risponde di norma entro 2–3 giorni lavorativi. Alla conferma, comunicare immediatamente all'Educatore Gaggiano che provvederà all'attivazione su GitHub Pages in poche ore.</p>
+          <p style="font-family:'Source Sans 3',sans-serif;font-size:.78rem;color:#8b7a5a;margin:.75rem 0 0;line-height:1.5">⚠️ Prerequisito: occorre prima trasferire il repository sul nuovo account istituzionale convitto-costaggini, in modo che il valore CNAME comunicato sia quello definitivo. La richiesta deve essere inviata dal DS Barbonetti (o per suo conto dalla segreteria). Argo risponde di norma entro 2–3 giorni lavorativi. Alla conferma, comunicare immediatamente all'Educatore Gaggiano che provvederà all'attivazione su GitHub Pages in poche ore.</p>
         </div>
 
         
@@ -882,7 +908,8 @@ Tel. 0746 201113 — rirh010007@istruzione.it — PEC: rirh010007@pec.istruzione
         <table class="tbl">
           <thead><tr><th>#</th><th>Azione</th><th>Chi</th><th>Tempi</th><th>Priorit&agrave;</th></tr></thead>
           <tbody>
-            <tr><td><strong>1</strong></td><td>Email ad Argo per dominio DNS</td><td>DS Barbonetti</td><td>10 min</td><td class="no">Immediato</td></tr>
+            <tr><td><strong>0</strong></td><td>Trasferimento repository all&rsquo;account istituzionale <strong>convitto-costaggini</strong></td><td>DS + Gaggiano</td><td>20 min</td><td class="no">Prima del go-live</td></tr>
+            <tr><td><strong>1</strong></td><td>Email ad Argo per dominio DNS</td><td>DS Barbonetti</td><td>10 min</td><td>Dopo il trasferimento</td></tr>
             <tr><td>2</td><td>Attivazione dominio su GitHub Pages</td><td>Gaggiano</td><td>5 min</td><td>Dopo risposta Argo</td></tr>
             <tr><td>3</td><td>Dichiarazione accessibilit&agrave; AGID</td><td>DS + Gaggiano</td><td>15 min</td><td>Entro 30gg dal go-live</td></tr>
             <tr><td>4</td><td>Voce Registro Trattamenti GDPR</td><td>Segreteria</td><td>5 min</td><td>Entro 30gg dal go-live</td></tr>
@@ -909,7 +936,7 @@ Chiedo la cortese configurazione del seguente sottodominio sul dominio istituzio
 
 • Sottodominio richiesto: convitto.alberghierorieti.edu.it
 • Tipo record DNS: CNAME
-• Valore: computeaching2-cell.github.io
+• Valore: convitto-costaggini.github.io
 
 Il referente tecnico per eventuali chiarimenti è l'Educatore Michele Gaggiano
 (michele.gaggiano@alberghierorieti.it — tel. 0746 296862).
@@ -920,7 +947,7 @@ Prof. Giovanni Luca Barbonetti — Dirigente Scolastico (reggenza)
 IPSSEOA "R. A. Costaggini" — Rieti
 Tel. 0746 201113 — rirh010007@istruzione.it — PEC: rirh010007@pec.istruzione.it
           </div>
-          <p style="font-family:'Source Sans 3',sans-serif;font-size:.78rem;color:#8b7a5a;margin:.75rem 0 0;line-height:1.5">⚠️ La richiesta deve essere inviata dal DS Barbonetti (o per suo conto dalla segreteria). Argo risponde di norma entro 2–3 giorni lavorativi. Alla conferma, comunicare immediatamente all'Educatore Gaggiano che provvederà all'attivazione su GitHub Pages in poche ore.</p>
+          <p style="font-family:'Source Sans 3',sans-serif;font-size:.78rem;color:#8b7a5a;margin:.75rem 0 0;line-height:1.5">⚠️ Prerequisito: occorre prima trasferire il repository sul nuovo account istituzionale convitto-costaggini, in modo che il valore CNAME comunicato sia quello definitivo. La richiesta deve essere inviata dal DS Barbonetti (o per suo conto dalla segreteria). Argo risponde di norma entro 2–3 giorni lavorativi. Alla conferma, comunicare immediatamente all'Educatore Gaggiano che provvederà all'attivazione su GitHub Pages in poche ore.</p>
         </div>
 
 
@@ -1073,11 +1100,11 @@ if (sessionStorage.getItem('da') === '1') {
    I documenti allegati (Word/PDF/Visualizza) sono in aggiornamento:
    pulsanti resi non funzionanti e visualizzatori azzerati. */
 (function () {
-  // 1) Azzera l'apertura dei visualizzatori inline
-  try { window.toggleViewer = function () { return false; }; } catch (e) {}
+  // toggleViewer resta attivo: il nuovo documento (.dl-keep) deve poter aprire il visualizzatore.
+  // I pulsanti dei documenti datati vengono comunque neutralizzati qui sotto (onclick rimosso).
 
   function disattiva() {
-    var btns = document.querySelectorAll('.dl-btn');
+    var btns = document.querySelectorAll('.dl-btn:not(.dl-keep)');
     btns.forEach(function (el) {
       el.classList.add('dl-disabled');
       el.setAttribute('aria-disabled', 'true');
@@ -1089,8 +1116,8 @@ if (sessionStorage.getItem('da') === '1') {
       el.addEventListener('click', function (ev) { ev.preventDefault(); ev.stopPropagation(); }, true);
     });
     // Assicura che eventuali visualizzatori restino chiusi e vuoti
-    document.querySelectorAll('.doc-viewer').forEach(function (v) { v.style.display = 'none'; });
-    document.querySelectorAll('.doc-viewer iframe').forEach(function (f) { f.src = ''; });
+    document.querySelectorAll('.doc-viewer:not(.dv-keep)').forEach(function (v) { v.style.display = 'none'; });
+    document.querySelectorAll('.doc-viewer:not(.dv-keep) iframe').forEach(function (f) { f.src = ''; });
   }
 
   if (document.readyState === 'loading') {
@@ -1108,7 +1135,7 @@ if (sessionStorage.getItem('da') === '1') {
   cursor: not-allowed !important;
   pointer-events: none;
 }
-.dl-btns::after {
+.dl-btns:not(.dl-keep-row)::after {
   content: "Documenti in aggiornamento \2014 temporaneamente non disponibili";
   display: block;
   width: 100%;
