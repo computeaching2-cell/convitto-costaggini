@@ -40,8 +40,6 @@
           <li><a href="educatori.html" data-page="educatori">Gli Educatori</a></li>
           <li><a href="giornata-tipo.html" data-page="giornata-tipo">Una giornata tipo</a></li>
           <li><a href="laboratorio-musicale.html" data-page="laboratorio-musicale">♪ Laboratorio Musicale</a></li>
-          <li><a href="vinile.html" data-page="vinile">🎶 Il Vinile del Convitto</a></li>
-          <li><a href="solidarieta.html" data-page="solidarieta">❤️ La Solidarietà</a></li>
           <li><a href="comunita.html" data-page="comunita">🌟 La nostra Comunità</a></li>
         </ul>
       </div>
@@ -117,8 +115,6 @@
         <li><a href="educatori.html">Gli Educatori</a></li>
         <li><a href="giornata-tipo.html">Una giornata tipo</a></li>
         <li><a href="laboratorio-musicale.html">♪ Laboratorio Musicale</a></li>
-        <li><a href="vinile.html">🎶 Il Vinile del Convitto</a></li>
-        <li><a href="solidarieta.html">❤️ La Solidarietà</a></li>
         <li><a href="comunita.html">🌟 La nostra Comunità</a></li>
       </ul>
     </li>
@@ -263,16 +259,7 @@
   /* ── Inserimento nel DOM ── */
   document.body.insertAdjacentHTML('afterbegin', headerHTML);
 
-  /* ── Skip link accessibilità ── */
-  const skipCSS = document.createElement('style');
-  skipCSS.textContent = '#skip-link{position:absolute;top:-40px;left:1rem;z-index:99999;background:var(--bosco,#2C3E2D);color:#fff;padding:.5rem 1rem;border-radius:0 0 6px 6px;font-family:sans-serif;font-size:.85rem;text-decoration:none;transition:top .15s;}#skip-link:focus{top:0;}';
-  document.head.appendChild(skipCSS);
-  const skipLink = document.createElement('a');
-  skipLink.id = 'skip-link';
-  skipLink.href = '#main';
-  skipLink.textContent = 'Salta al contenuto principale';
-  skipLink.setAttribute('tabindex','0');
-  document.body.insertBefore(skipLink, document.body.firstChild);
+  /* Skip-link: già incluso in headerHTML come <a class="skip" href="#main">, stilizzato da .skip in style.css. Primo elemento del body → primo nell'ordine di Tab. */
 
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 
