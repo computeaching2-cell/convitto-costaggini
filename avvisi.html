@@ -24,7 +24,7 @@
     border-left: 3px solid #c0392b; border-radius: 6px;
     padding: .85rem 1rem; margin-bottom: 1.25rem;
   }
-  .urgenti-box h4 {
+  .urgenti-box h2 {
     font-family: var(--fu); font-size: .68rem; font-weight: 700;
     letter-spacing: .1em; text-transform: uppercase;
     color: #c0392b; margin-bottom: .5rem;
@@ -718,7 +718,7 @@ function renderLista() {
   // urgenti
   const urg = arts.filter(a => a.cat === 'urgente');
   const uc = document.getElementById('urgenti-container');
-  uc.innerHTML = urg.length ? `<div class="urgenti-box"><h4>⚠ Comunicazioni urgenti</h4><ul>${urg.map(a=>`<li><a href="#" data-id="${a.id}">${a.titolo}</a></li>`).join('')}</ul></div>` : '';
+  uc.innerHTML = urg.length ? `<div class="urgenti-box"><h2>⚠ Comunicazioni urgenti</h2><ul>${urg.map(a=>`<li><a href="#" data-id="${a.id}">${a.titolo}</a></li>`).join('')}</ul></div>` : '';
   uc.querySelectorAll('a[data-id]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); apri(a.dataset.id); }));
 }
 

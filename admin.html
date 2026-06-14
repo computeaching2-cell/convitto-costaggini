@@ -216,6 +216,19 @@
   .adm-hdr { padding: .8rem 1rem; }
   .main-tab { padding: .8rem 1rem; font-size: .68rem; }
 }  
+    /* ── Ottimizzazione mobile (≤640px) ── */
+    @media (max-width: 640px) {
+      .adm-hdr { padding: .75rem .9rem; }
+      .adm-hdr-brand h1 { font-size: 1.05rem; }
+      .main-tabs { padding: 0 .75rem; }
+      .main-tab { padding: .8rem .8rem; font-size: .64rem; letter-spacing: .05em; }
+      .adm-body { padding: .85rem; gap: 1rem; }
+      .adm-card, .list-wrap { padding: 1rem; }
+      .fg-row2 { grid-template-columns: 1fr; }
+      .adm-notice { margin: .85rem; padding: .75rem 1rem; }
+      .fam-card { padding: .9rem; }
+      .fam-info { grid-template-columns: 1fr; }
+    }
 </style>
 <script>
 function admConfirm(opts) {
@@ -547,7 +560,6 @@ window.addEventListener('DOMContentLoaded', function() {
   if (pwd) { pwd.value = ''; pwd.focus(); }
 });
 
-const PWD_HASH = '4d7f432968e1da3b3d6d7dec2f99f4d0b65b3751eeec4d1ea36d45d7bcda288b'; // password hashata SHA-256
 // ═══ NOTIZIE — SUPABASE ═══
 const SB_N = 'https://sawclsysqnjsvbobioqo.supabase.co';
 const SB_PUB = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTM3NjksImV4cCI6MjA5NDc4OTc2OX0.vS-hoxI2YUlxCWIdDzARqqpGzmXTDi8hq1AVU2jdhZ0';
@@ -1304,6 +1316,7 @@ function switchTab(nome, btn) {
   if (nome === 'mappa')   loadPins();
   if (nome === 'openday') odLoad('nuova');
   if (nome === 'lab')     labLoad();
+  if (nome === 'famiglie') famLoad('in_attesa');
 }
 
 
