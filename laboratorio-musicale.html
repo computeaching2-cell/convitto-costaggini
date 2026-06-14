@@ -953,16 +953,16 @@
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem">
         <div>
-          <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+          <label for="lab-nome" style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
                          text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Nome *</label>
-          <input type="text" name="nome" required placeholder="Nome"
+          <input type="text" id="lab-nome" name="nome" required placeholder="Nome"
                  style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
                          font-family:var(--fu);font-size:15px;box-sizing:border-box"/>
         </div>
         <div>
-          <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+          <label for="lab-cognome" style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
                          text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Cognome *</label>
-          <input type="text" name="cognome" required placeholder="Cognome"
+          <input type="text" id="lab-cognome" name="cognome" required placeholder="Cognome"
                  style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
                          font-family:var(--fu);font-size:15px;box-sizing:border-box"/>
         </div>
@@ -970,9 +970,9 @@
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem">
         <div>
-          <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+          <label for="lab-classe" style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
                          text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Classe *</label>
-          <select name="classe" required
+          <select id="lab-classe" name="classe" required
                   style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
                           font-family:var(--fu);font-size:15px;box-sizing:border-box;background:#faf7f0">
             <option value="">— Seleziona —</option>
@@ -981,18 +981,18 @@
           </select>
         </div>
         <div>
-          <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+          <label for="lab-email" style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
                          text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Email di contatto *</label>
-          <input type="email" name="email" required placeholder="tua@email.it"
+          <input type="email" id="lab-email" name="email" required placeholder="tua@email.it"
                  style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
                          font-family:var(--fu);font-size:15px;box-sizing:border-box"/>
         </div>
       </div>
 
       <div style="margin-bottom:.85rem">
-        <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+        <label for="lab-esperienza" style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
                        text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Esperienza musicale pregressa</label>
-        <select name="esperienza"
+        <select id="lab-esperienza" name="esperienza"
                 style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
                         font-family:var(--fu);font-size:15px;box-sizing:border-box;background:#faf7f0">
           <option value="nessuna">Nessuna — parto da zero</option>
@@ -1003,9 +1003,9 @@
       </div>
 
       <div style="margin-bottom:.85rem">
-        <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+        <label for="lab-strumento" style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
                        text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Strumento che suoni (o vorresti imparare)</label>
-        <select name="strumento"
+        <select id="lab-strumento" name="strumento"
                 style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
                         font-family:var(--fu);font-size:15px;box-sizing:border-box;background:#faf7f0">
           <option value="">— Seleziona —</option>
@@ -1020,9 +1020,9 @@
       </div>
 
       <div style="margin-bottom:.85rem">
-        <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+        <label for="lab-interesse" style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
                        text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Cosa ti interessa approfondire?</label>
-        <select name="interesse"
+        <select id="lab-interesse" name="interesse"
                 style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
                         font-family:var(--fu);font-size:15px;box-sizing:border-box;background:#faf7f0">
           <option value="">— Seleziona —</option>
@@ -1037,9 +1037,9 @@
       </div>
 
       <div style="margin-bottom:1.25rem">
-        <label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
+        <label for="lab-note" style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.12em;
                        text-transform:uppercase;color:#6b5a2a;display:block;margin-bottom:.3rem">Note libere (opzionale)</label>
-        <textarea name="note" rows="3" placeholder="Raccontaci qualcosa di te e della tua passione per la musica…"
+        <textarea id="lab-note" name="note" rows="3" placeholder="Raccontaci qualcosa di te e della tua passione per la musica…"
                   style="width:100%;padding:.65rem .9rem;border:1.5px solid #d4c9a8;border-radius:6px;
                           font-family:var(--fu);font-size:15px;box-sizing:border-box;resize:vertical"></textarea>
       </div>

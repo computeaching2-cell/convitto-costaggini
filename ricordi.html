@@ -155,22 +155,22 @@
       <button class="mr-modal-close" onclick="closeModal()">✕</button>
     </div>
     <form class="mr-form" onsubmit="submitRicordo(event)">
-      <label class="mr-label">Il tuo ricordo *</label>
+      <label class="mr-label" for="mr-testo">Il tuo ricordo *</label>
       <textarea class="mr-textarea" id="mr-testo" maxlength="280" placeholder="Un momento, una frase, un'emozione. Anche solo una riga." required oninput="updateCount()"></textarea>
       <p class="mr-charcount"><span id="mr-chars">0</span>/280 caratteri</p>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
         <div>
-          <label class="mr-label">Il tuo nome *</label>
+          <label class="mr-label" for="mr-nome">Il tuo nome *</label>
           <input type="text" class="mr-input" id="mr-nome" placeholder="Come vuoi firmare" required/>
         </div>
         <div>
-          <label class="mr-label">Anni al Convitto</label>
+          <label class="mr-label" for="mr-anni">Anni al Convitto</label>
           <input type="text" class="mr-input" id="mr-anni" placeholder="es. 2008–2013"/>
         </div>
       </div>
 
-      <label class="mr-label">Dove sei adesso?</label>
+      <label class="mr-label" for="mr-dove">Dove sei adesso?</label>
       <input type="text" class="mr-input" id="mr-dove" placeholder="es. Roma · Chef · Milano · Ingegnere… (opzionale)"/>
 
       <div id="mr-success-box" class="mr-success">
