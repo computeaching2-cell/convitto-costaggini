@@ -163,6 +163,13 @@
           <div class="tv-ctrl-spacer"></div>
         </div>
       </div>
+      <!-- Zoom -->
+      <div class="tv-ctrl-group" style="margin-top:6px">
+        <div class="tv-ctrl-row">
+          <button class="tv-ctrl-btn" id="btn-zoom-out" aria-label="Allontana per vedere tutto l'ambiente">−</button>
+          <button class="tv-ctrl-btn" id="btn-zoom-in"  aria-label="Avvicina">+</button>
+        </div>
+      </div>
     </div>
     <div class="tv-placeholder" id="tv-placeholder">
       <div class="tv-placeholder-icon">🏛️</div>
@@ -225,14 +232,22 @@ let lastX = 0, lastY = 0;
 let lon = 0, lat = 0;   // angolo di visione corrente
 let autoTimer  = null;
 
-const H_FOV = 75; // campo visivo ORIZZONTALE in gradi (come Pannellum) — costante a prescindere dalla forma del riquadro
+let H_FOV = 75;                 // campo visivo ORIZZONTALE in gradi (come Pannellum); modificabile con lo zoom
+const FOV_MIN = 55, FOV_MAX = 100;
+function applyFov() {
+  const hfov = THREE.MathUtils.degToRad(H_FOV);
+  camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(hfov / 2) / camera.aspect));
+  camera.updateProjectionMatrix();
+}
 function resize() {
   const w = wrap.clientWidth, h = wrap.clientHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
-  const hfov = THREE.MathUtils.degToRad(H_FOV);
-  camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(hfov / 2) / camera.aspect));
-  camera.updateProjectionMatrix();
+  applyFov();
+}
+function zoom(delta) {
+  H_FOV = Math.max(FOV_MIN, Math.min(FOV_MAX, H_FOV + delta));
+  applyFov();
 }
 
 function render() {
@@ -321,6 +336,10 @@ Object.entries(panMap).forEach(([id, fn]) => {
   btn.addEventListener('touchend',   stop, { passive: true });
   btn.addEventListener('mouseleave', stop);
 });
+
+// ── Zoom (allontana/avvicina) ──
+document.getElementById('btn-zoom-out').addEventListener('click', () => { autoRot = false; clearTimeout(autoTimer); zoom(+6); autoTimer = setTimeout(() => { autoRot = true; }, 2000); });
+document.getElementById('btn-zoom-in').addEventListener('click',  () => { autoRot = false; clearTimeout(autoTimer); zoom(-6); autoTimer = setTimeout(() => { autoRot = true; }, 2000); });
 
 // ── Seleziona stanza ──
 function selectRoom(room) {

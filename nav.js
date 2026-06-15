@@ -560,11 +560,42 @@
     btn.onclick=e=>{e.stopPropagation();menu.classList.toggle('open');};
     document.addEventListener('click',()=>menu.classList.remove('open'));
 
+    function trConsent(onYes){
+      const ov=document.createElement('div');
+      ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-labelledby','tr-dlg-t');
+      ov.style.cssText="position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(12,20,13,.55);opacity:0;transition:opacity .2s ease;font-family:'Source Sans 3',system-ui,sans-serif";
+      ov.innerHTML=
+        '<div style="max-width:430px;width:100%;background:#FDFAF5;border:1px solid rgba(184,146,42,.35);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;transform:translateY(8px);transition:transform .2s ease">'
+        +'<div style="background:linear-gradient(135deg,#2C3E2D,#1a3a1b);color:#fff;padding:1rem 1.25rem;display:flex;align-items:center;gap:.6rem">'
+          +'<span style="font-size:1.25rem" aria-hidden="true">🌐</span>'
+          +'<span id="tr-dlg-t" style="font-family:\'Cormorant Garamond\',serif;font-size:1.25rem;font-weight:400">Traduzione automatica</span>'
+        +'</div>'
+        +'<div style="padding:1.1rem 1.25rem;color:#1A1A18;font-size:.9rem;line-height:1.6">La traduzione utilizza il servizio Google Translate: il testo delle pagine verr\u00e0 elaborato dai server di Google. Vuoi continuare?</div>'
+        +'<div style="display:flex;justify-content:flex-end;gap:.6rem;padding:0 1.25rem 1.2rem">'
+          +'<button id="tr-no" style="font-family:inherit;font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border-radius:30px;cursor:pointer;border:1.5px solid #2C3E2D;background:transparent;color:#2C3E2D">Annulla</button>'
+          +'<button id="tr-yes" style="font-family:inherit;font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.2rem;border-radius:30px;cursor:pointer;border:none;background:linear-gradient(135deg,#B8922A,#D4AA4A);color:#2C3E2D">Continua</button>'
+        +'</div>'
+        +'</div>';
+      document.body.appendChild(ov);
+      requestAnimationFrame(()=>{ov.style.opacity='1';ov.firstChild.style.transform='translateY(0)';});
+      const close=()=>{ov.style.opacity='0';setTimeout(()=>ov.remove(),200);document.removeEventListener('keydown',onKey);};
+      const yes=()=>{close();onYes();};
+      function onKey(e){if(e.key==='Escape')close();else if(e.key==='Enter')yes();}
+      ov.querySelector('#tr-no').onclick=close;
+      ov.querySelector('#tr-yes').onclick=yes;
+      ov.addEventListener('click',e=>{if(e.target===ov)close();});
+      document.addEventListener('keydown',onKey);
+      setTimeout(()=>ov.querySelector('#tr-yes').focus(),50);
+    }
+
     function selectLang(l){
       if (l.code !== 'it' && !sessionStorage.getItem('tr_consent')) {
-        if (!confirm('La traduzione automatica utilizza il servizio Google Translate. Il testo delle pagine verrà elaborato da server Google. Continuare?')) return;
-        sessionStorage.setItem('tr_consent','1');
+        trConsent(function(){ sessionStorage.setItem('tr_consent','1'); doSelectLang(l); });
+        return;
       }
+      doSelectLang(l);
+    }
+    function doSelectLang(l){
       btn.innerHTML='🌐 '+l.code.toUpperCase();
       menu.querySelectorAll('.tr-opt').forEach((o,i)=>o.classList.toggle('act',LANGS[i].code===l.code));
       if(l.code==='it'){
