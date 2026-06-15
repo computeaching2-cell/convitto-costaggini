@@ -177,7 +177,7 @@ a { color: inherit; }
 ═══════════════════════════════════════════════════ */
 .page-hero {
   background: var(--bosco);
-  padding: 2.5rem 1rem 2.25rem;
+  padding: 3.5rem 1rem 3rem;
   position: relative; overflow: hidden;
 }
 .page-hero::before {
@@ -209,8 +209,8 @@ a { color: inherit; }
   background: linear-gradient(90deg, var(--oro), var(--oro2));
   margin-bottom: 1rem; border-radius: 2px;
 }
-@media(min-width:768px) { .page-hero { padding: 3.5rem 1.5rem 3rem; } }
-@media(min-width:1024px) { .page-hero { padding: 4.5rem 2rem 3.5rem; } }
+@media(min-width:768px) { .page-hero { padding: 5rem 1.5rem 4rem; } }
+@media(min-width:1024px) { .page-hero { padding: 6rem 2rem 5rem; } }
 
 /* ═══════════════════════════════════════════════════
    LAYOUT COMMONS
@@ -324,7 +324,7 @@ p:last-child { margin-bottom: 0; }
    FOOTER
 ═══════════════════════════════════════════════════ */
 footer {
-  background: var(--bosco); color: rgba(245,240,232,.58);
+  background: #0F1410; color: rgba(245,240,232,.58);
   padding: 2.5rem 1rem 1.25rem;
 }
 .fw { max-width: 1320px; margin: 0 auto; }
