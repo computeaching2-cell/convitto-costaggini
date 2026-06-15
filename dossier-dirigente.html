@@ -207,7 +207,7 @@ function toggleViewer(id, pdfPath) {
   <div class="ls-logo">Convitto<br><em style="font-style:italic">"Costaggini"</em></div>
   <div class="ls-sub">IPSSEOA &middot; Rieti</div>
   <div class="ls-line"></div>
-  <p class="ls-note">Dossier riservato &mdash; Dirigente Prof. Barbonetti &middot; 29 Maggio 2026</p>
+  <p class="ls-note">Dossier riservato &mdash; Dirigente Prof. Barbonetti &middot; 15 Giugno 2026</p>
   <input type="password" id="pwd-in" placeholder="password di accesso" autocomplete="new-password" value=""/>
   <button id="login-btn" onclick="tryLogin()">Accedi al dossier &rarr;</button>
   <p id="login-err">Password non corretta. Riprovare.</p>
@@ -240,6 +240,9 @@ function toggleViewer(id, pdfPath) {
       <div class="sb-cat">Approfondimenti</div>
       <div class="sb-lnk" onclick="show('confronto',this)"><span class="n">&middot;</span>Confronto nazionale</div>
       <div class="sb-lnk" onclick="show('argo',this)"><span class="n">&middot;</span>Accesso Argo educatori</div>
+      <div class="sb-sep"></div>
+      <div class="sb-cat">&#128274; Sicurezza della rete</div>
+      <div class="sb-lnk" onclick="show('firewall',this)"><span class="n">&#9888;</span>Firewall e tutela dei minori</div>
       <div class="sb-sep"></div>
       <div class="sb-cat">⚡ Adempimenti pendenti</div>
       <div class="sb-lnk" onclick="show('adempimenti-sito',this)"><span class="n">A</span>Go-live sito + email Argo</div>
@@ -355,7 +358,7 @@ function toggleViewer(id, pdfPath) {
       <div class="body">
         <div class="kgrid">
           <div class="kcard hi"><div class="v">55+</div><div class="l">Pagine</div><div class="s">tematiche, collegate</div></div>
-          <div class="kcard hi"><div class="v">&euro;&thinsp;0</div><div class="l">Costo annuo</div><div class="s">hosting, DB, email</div></div>
+          <div class="kcard hi"><div class="v">&euro;&thinsp;0</div><div class="l">Costo annuo</div><div class="s">oggi &middot; su piani gratuiti</div></div>
           <div class="kcard"><div class="v">6</div><div class="l">Quiz</div><div class="s">interattivi orientamento</div></div>
           <div class="kcard"><div class="v">40+</div><div class="l">FAQ chatbot</div><div class="s">locale, nessuna API</div></div>
           <div class="kcard"><div class="v">5</div><div class="l">Lingue</div><div class="s">it &middot; en &middot; es &middot; ar &middot; ro</div></div>
@@ -377,6 +380,27 @@ function toggleViewer(id, pdfPath) {
           </tbody>
         </table>
         <div class="pq"><p>Il Convitto Costaggini non &egrave; semplicemente meglio della media &mdash; ha funzionalit&agrave; che nessuno dei convitti analizzati ha implementato, a costo zero.</p></div>
+
+        <h3>Sostenibilit&agrave; nel tempo e scenari di crescita</h3>
+        <p>Il costo attuale &egrave; effettivamente nullo perch&eacute; sia l&rsquo;hosting (GitHub Pages) sia la base dati dell&rsquo;area riservata (Supabase) operano entro i rispettivi <strong>piani gratuiti</strong>. &Egrave; corretto, per&ograve;, dichiarare con trasparenza che tali piani prevedono soglie d&rsquo;uso oltre le quali, in caso di crescita significativa del traffico o dei dati, potrebbe rendersi opportuno un <strong>canone minimo</strong>. Alla dimensione attuale dell&rsquo;utenza (circa 120 famiglie e il personale) tali soglie sono ampiamente lontane: l&rsquo;informazione &egrave; fornita a titolo prudenziale e di programmazione di bilancio.</p>
+        <table class="tbl">
+          <thead><tr><th>Piattaforma</th><th>Piano gratuito &mdash; soglie</th><th>Punto di attenzione</th><th>Eventuale canone</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>GitHub Pages</strong><br><span style="color:var(--txt3);font-size:.92em">hosting del sito</span></td>
+              <td>1 GB di spazio &middot; 100 GB di traffico al mese</td>
+              <td>Soglia di traffico molto elevata: per un sito statico con questa utenza &egrave; in pratica irraggiungibile. Eventuali picchi sono gestibili anteponendo una CDN gratuita (es. Cloudflare).</td>
+              <td class="ok">Verosimilmente nessuno</td>
+            </tr>
+            <tr>
+              <td><strong>Supabase</strong><br><span style="color:var(--txt3);font-size:.92em">area riservata / dati</span></td>
+              <td>500 MB di database &middot; 5 GB di traffico dati al mese &middot; 50.000 utenti al mese &middot; <span class="warn">sospensione dopo 7 giorni di inattivit&agrave;</span> <span style="color:var(--txt3)">(gi&agrave; prevenuta dal keep-alive)</span></td>
+              <td>La sospensione per inattivit&agrave; &egrave; gi&agrave; prevenuta da una routine automatica di mantenimento attivo (<em>keep-alive</em>), senza costi. Resta da monitorare la crescita dei dati dell&rsquo;area famiglie rispetto ai limiti del piano gratuito.</td>
+              <td class="warn">~ &euro;&thinsp;23&ndash;25 / mese<br><span style="font-size:.9em">piano Pro, solo se necessario</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note"><strong>In sintesi:</strong> oggi il costo &egrave; pari a zero e tale dovrebbe restare a lungo. La sospensione per inattivit&agrave; &mdash; di norma la prima ragione per passare a un piano a pagamento &mdash; &egrave; gi&agrave; neutralizzata, senza costi, da una routine automatica di mantenimento attivo. L&rsquo;unica voce realisticamente prevedibile resta quindi il piano Pro di Supabase (circa &euro;&thinsp;25 al mese, &asymp; &euro;&thinsp;300 l&rsquo;anno), utile solo qualora i dati o il traffico superino i limiti gratuiti o si desiderino backup giornalieri automatici. Si suggerisce di <strong>prevederla come voce eventuale a bilancio</strong>, da attivare solo se e quando i volumi lo richiederanno. GitHub Pages, per la natura statica del sito, non comporta verosimilmente alcun costo.<br><br><em>I valori di soglia qui indicati sono verificati a giugno 2026: poich&eacute; le piattaforme possono modificarli nel tempo, se ne raccomanda la riverifica al momento dell&rsquo;eventuale attivazione del canone.</em></div>
       </div>
     </section>
 
@@ -1024,6 +1048,77 @@ Tel. 0746 201113 — rirh010007@istruzione.it — PEC: rirh010007@pec.istruzione
           </tbody>
         </table>
         <div class="pq"><p>Totale stimato per tutti gli adempimenti: meno di 2 ore. Due obiettivi che il Convitto Costaggini merita da tempo.</p></div>
+      </div>
+    </section>
+
+    <!-- FIREWALL / SICUREZZA RETE -->
+    <section id="s-firewall" class="sec">
+      <h2>Sicurezza della rete e tutela dei <em>minori</em></h2>
+      <div class="sec-meta">Disamina tecnica &middot; Argomento cruciale &middot; Giugno 2026</div>
+      <div class="body">
+
+        <div style="margin:0 0 1.75rem;padding:1rem 1.3rem;background:rgba(184,146,42,.06);border:1.5px solid rgba(184,146,42,.28);border-left-width:3px;border-radius:0 var(--r) var(--r) 0">
+          <div style="font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:.4rem">Premessa &middot; Una criticit&agrave; gi&agrave; rappresentata</div>
+          <p style="margin:0;font-family:var(--fd);font-size:1.02rem;font-style:italic;color:rgba(245,240,232,.82);line-height:1.8">Si ritiene doveroso evidenziare che quanto qui formalizzato non costituisce una segnalazione nuova: la criticit&agrave; era gi&agrave; stata rappresentata <strong style="font-style:normal;color:var(--txt)">per le vie brevi, in pi&ugrave; occasioni e da tempo, alle precedenti dirigenze</strong>. La presente trattazione intende darne finalmente evidenza documentale e sistematica, affinch&eacute; la questione sia valutata nelle sedi proprie.</p>
+        </div>
+
+        <p>Il Convitto ospita un&rsquo;utenza di circa <strong>120 convittori, in larga maggioranza minori</strong>, e vede in servizio contemporaneo, ogni giorno, circa <strong>20 unit&agrave;</strong> tra personale educativo e di supporto. Tutti accedono alla rete dati attraverso un&rsquo;<strong>unica infrastruttura condivisa</strong>, senza separazione strutturale tra il traffico dei minori e quello del personale, n&eacute; un sistema di filtraggio dei contenuti certificato e adeguato all&rsquo;et&agrave; dell&rsquo;utenza prevalente.</p>
+
+        <div class="kgrid">
+          <div class="kcard hi"><div class="v">120</div><div class="l">Convittori</div><div class="s">in maggioranza minori</div></div>
+          <div class="kcard"><div class="v">20</div><div class="l">Personale / die</div><div class="s">in servizio contemporaneo</div></div>
+          <div class="kcard"><div class="v" style="color:#f87171">1</div><div class="l">Rete unica</div><div class="s">nessuna segmentazione</div></div>
+          <div class="kcard"><div class="v" style="color:#f87171">0</div><div class="l">Filtri certificati</div><div class="s">attivi sulla navigazione</div></div>
+        </div>
+
+        <h3>Quadro normativo e profili di responsabilit&agrave;</h3>
+        <p>La materia non &egrave; rimessa alla discrezionalit&agrave; organizzativa: &egrave; presidiata da obblighi precisi che gravano sull&rsquo;istituzione e, in concreto, sul Dirigente Scolastico quale legale rappresentante.</p>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">01</span>Il Dirigente quale titolare del trattamento</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>L&rsquo;istituzione scolastica &egrave; titolare del trattamento dei dati personali e il Dirigente Scolastico, in qualit&agrave; di legale rappresentante, assume in concreto le decisioni sulle attivit&agrave; e modalit&agrave; del trattamento. Il Regolamento (UE) 2016/679 (artt. 24 e 32) impone al titolare misure tecniche e organizzative <em>adeguate</em> a un livello di sicurezza commisurato al rischio: una rete usata quotidianamente da circa 120 minori rappresenta, sotto questo profilo, un rischio elevato.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">02</span>Tutela rafforzata dei minori</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Il GDPR (considerando 38 e art. 8) e il vademecum del Garante <em>&ldquo;La scuola a prova di privacy&rdquo;</em>, aggiornato nel 2025, riconoscono ai minori una protezione specifica nei contesti educativi e digitali, richiamando l&rsquo;istituzione a un dovere attivo di prevenzione dei rischi connessi alla navigazione.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">03</span>Misure Minime di Sicurezza ICT obbligatorie</span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Le scuole, in quanto pubbliche amministrazioni ai sensi dell&rsquo;art. 1, comma 2, del D.Lgs. 165/2001, sono soggette alle &ldquo;Misure Minime di Sicurezza ICT per le PA&rdquo; di cui alla <strong>Circolare AgID n. 2/2017</strong> (in attuazione della Direttiva PCM 1&deg; agosto 2015, nel quadro dell&rsquo;art. 17 del CAD). Tra i controlli rientra la protezione perimetrale della rete; l&rsquo;attuazione e la relativa attestazione, mediante il &ldquo;Modulo di implementazione&rdquo;, competono al dirigente responsabile.</p></div></div>
+
+        <div class="acc"><button class="acc-btn" onclick="tog(this)"><span><span class="an">04</span>Dovere di vigilanza &mdash; <em>culpa in vigilando</em></span><svg class="acc-arr" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="acc-body"><p>Il dovere di vigilanza sui minori affidati (art. 2048 c.c.), tradizionalmente riferito alla dimensione fisica, si estende oggi all&rsquo;ambiente digitale: la mancata predisposizione di filtri adeguati pu&ograve; integrare profili di <em>culpa in vigilando</em> in caso di accesso dei minori a contenuti illeciti o nocivi.</p></div></div>
+
+        <h3>Criticit&agrave; della configurazione attuale</h3>
+        <ul>
+          <li>I minori possono accedere a contenuti non filtrati o inadeguati.</li>
+          <li>Il traffico amministrativo e i dati di servizio del personale transitano sullo stesso segmento dei dispositivi dei convittori, con rischi di interferenza ed esposizione.</li>
+          <li>Non esiste un tracciamento ordinato e conforme degli accessi.</li>
+          <li>Non &egrave; disponibile alcuna attestazione di conformit&agrave; opponibile in sede di controllo o di contenzioso.</li>
+        </ul>
+
+        <h3>Proposta &mdash; incarico a ditta esterna qualificata</h3>
+        <p>Trattandosi di interventi che impegnano la responsabilit&agrave; dell&rsquo;istituzione e richiedono competenze specialistiche non interne, si propone di affidare a una <strong>ditta esterna qualificata</strong> la progettazione, l&rsquo;implementazione e la <strong>certificazione (attestazione di conformit&agrave;)</strong> di un sistema cos&igrave; articolato:</p>
+        <ul>
+          <li><strong>Firewall perimetrale di nuova generazione (NGFW/UTM)</strong> con <em>content filtering</em>, <em>intrusion prevention</em>, anti-malware e registrazione degli eventi.</li>
+          <li><strong>Segmentazione della rete</strong> mediante VLAN e/o SSID distinti, con isolamento tra due ambiti: rete del personale educativo/amministrativo e rete dei convittori.</li>
+          <li><strong>Profili di filtraggio differenziati</strong>, pi&ugrave; restrittivi sulla rete dei minori (blocco di categorie a rischio: pornografia, gioco d&rsquo;azzardo, violenza, autolesionismo, sostanze).</li>
+          <li><strong>Autenticazione distinta</strong> all&rsquo;accesso (es. <em>captive portal</em> con credenziali) per discriminare l&rsquo;utenza &ldquo;educatore/personale&rdquo; da quella &ldquo;convittore&rdquo;.</li>
+          <li><strong>Gestione e conservazione dei log</strong> nel rispetto dei principi di minimizzazione e limitazione della conservazione.</li>
+        </ul>
+
+        <h3>Performance di rete e dimensionamento della banda</h3>
+        <p>Aspetto operativo da chiarire <strong>espressamente con la ditta in sede di capitolato</strong>: l&rsquo;introduzione di un firewall con ispezione del traffico e filtraggio dei contenuti pu&ograve; comportare un <strong>rallentamento della navigazione</strong>, tanto pi&ugrave; sensibile quanto maggiore &egrave; il numero di dispositivi connessi contemporaneamente (qui, potenzialmente, oltre un centinaio). &Egrave; pertanto opportuno chiedere alla ditta:</p>
+        <ul>
+          <li>Se l&rsquo;attuale ampiezza di banda sia sufficiente a sostenere il carico aggiuntivo dell&rsquo;ispezione, ovvero se sia necessario un <strong>potenziamento della connettivit&agrave;</strong> (maggiore larghezza di banda).</li>
+          <li>Quale sia il <strong>dimensionamento (throughput) dell&rsquo;apparato</strong> con tutte le funzioni di sicurezza attive, rapportato al numero di utenti previsto.</li>
+          <li>Quali garanzie di <strong>continuit&agrave; e qualit&agrave; del servizio</strong> siano assicurate negli orari di maggior utilizzo.</li>
+        </ul>
+        <div class="note">L&rsquo;adeguamento in sicurezza non deve tradursi in un peggioramento dell&rsquo;esperienza d&rsquo;uso: il punto va definito in fase di offerta, valutando insieme firewall e banda come elementi di un unico dimensionamento.</div>
+
+        <h3>Cautele giuridiche nella separazione del traffico del personale</h3>
+        <p>La separazione delle reti e l&rsquo;eventuale registrazione del traffico del personale vanno impostate con attenzione, per evitare che si configurino come <strong>controllo a distanza dei lavoratori</strong>: l&rsquo;art. 4 della L. 300/1970 (Statuto dei Lavoratori) subordina l&rsquo;uso di strumenti da cui derivi tale possibilit&agrave; ad accordo sindacale o autorizzazione dell&rsquo;Ispettorato del Lavoro, oltre alla preventiva informativa. La finalit&agrave; della separazione resta la sicurezza e la tutela dei minori, non la sorveglianza del personale.</p>
+        <p>Si raccomanda inoltre, stante il monitoraggio sistematico di un&rsquo;utenza minorile, di valutare con il Responsabile della Protezione dei Dati (RPD/DPO) una <strong>valutazione d&rsquo;impatto (DPIA, art. 35 GDPR)</strong> e di predisporre l&rsquo;<strong>informativa</strong> agli interessati e, per i convittori minori, agli esercenti la responsabilit&agrave; genitoriale.</p>
+
+        <div class="pq"><p>L&rsquo;intervento consentirebbe di adempiere agli obblighi di sicurezza, rafforzare la tutela dei minori affidati e ridurre i profili di responsabilit&agrave; connessi all&rsquo;attuale configurazione. La questione, gi&agrave; rappresentata informalmente nel tempo, merita oggi una valutazione formale.</p></div>
+
       </div>
     </section>
 
