@@ -567,6 +567,9 @@ const SB_PUB = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 // Le operazioni admin passano per le policy RLS is_admin() come utente authenticated.
 const SB_TOKEN = () => sessionStorage.getItem('sb_token');
 
+// Segreto condiviso per le chiamate POST al GAS (deve combaciare con la Script Property MAIL_TOKEN sul GAS)
+const GAS_TOKEN = 'mT7k-Qx2Rv9LpAe4Wn6Zb8Hs3Yd5Fg1Uc0Jq';
+
 let editNotiziaId = null;
 
 async function initNotizie() {
@@ -846,7 +849,7 @@ async function famAzione(id, nuovoStato) {
 
 
     // Delega al GAS: crea account Supabase Auth + invia email con credenziali
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbyuZZTry0o7OQhnx0-LxTolWHOtfR3FumqISF3aD2ML36OHK5P7V_ZfQNZLzz663m7rIg/exec';
+    const GAS_URL = 'https://script.google.com/a/macros/alberghierorieti.it/s/AKfycbxRt-dmvNX8xTVLTsh2Vnu8usHij2ZYvuREaLmqx6AdnP9Yz3SHFZ8JAbRAs2df5PS9_g/exec';
 
     let gasOk = false;
     let gasMsg = '';
@@ -854,6 +857,7 @@ async function famAzione(id, nuovoStato) {
       const gasResp = await fetch(GAS_URL, {
         method: 'POST',
         body: JSON.stringify({
+          token:         GAS_TOKEN,
           action:        'creaAccountEInvia',
           email:         email,
           nome_studente: nomeStud,
