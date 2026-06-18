@@ -502,7 +502,7 @@
   async function caricaPresenze() {
     const dal = new Date(); dal.setDate(dal.getDate()-30);
     const { data } = await sb.from('famiglie_presenze').select('*')
-      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
+      .ilike('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
       .order('data', { ascending: false });
     const el = document.getElementById('cont-presenze');
     if (!data?.length) { el.innerHTML = vuoto('🍽️','Nessuna presenza registrata.'); return; }
@@ -519,7 +519,7 @@
   async function caricaSemafori() {
     const dal = new Date(); dal.setDate(dal.getDate()-30);
     const { data } = await sb.from('famiglie_semafori').select('*')
-      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
+      .ilike('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
       .order('data', { ascending: false });
     const el = document.getElementById('cont-semafori');
     if (!data?.length) { el.innerHTML = vuoto('🚦','Nessuna valutazione registrata.'); return; }
@@ -543,7 +543,7 @@
   async function caricaNote() {
     const dal = new Date(); dal.setDate(dal.getDate()-30);
     const { data } = await sb.from('famiglie_note').select('*')
-      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
+      .ilike('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
       .order('data', { ascending: false });
     const el = document.getElementById('cont-note');
     const filtrate = (data||[]).filter(r => r.testo?.trim() && !r.testo.includes('TEST_CONNESSIONE'));
@@ -561,7 +561,7 @@
 
   async function caricaColloqui() {
     const { data } = await sb.from('famiglie_colloqui').select('*')
-      .eq('nome_studente', nomeStudente).order('data', { ascending: false }).limit(50);
+      .ilike('nome_studente', nomeStudente).order('data', { ascending: false }).limit(50);
     const el = document.getElementById('cont-colloqui');
     if (!data?.length) { el.innerHTML = vuoto('🗣️','Nessun colloquio registrato.'); return; }
     el.innerHTML = data.map(r => {
@@ -575,7 +575,7 @@
 
   async function caricaRelazioni() {
     const { data } = await sb.from('famiglie_relazioni').select('*')
-      .eq('nome_studente', nomeStudente).order('data_invio', { ascending: false }).limit(20);
+      .ilike('nome_studente', nomeStudente).order('data_invio', { ascending: false }).limit(20);
     const el = document.getElementById('cont-relazioni');
     if (!data?.length) { el.innerHTML = vuoto('📄','Nessuna comunicazione formale.'); return; }
     el.innerHTML = data.map((r,i) =>
