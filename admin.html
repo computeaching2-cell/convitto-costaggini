@@ -265,6 +265,34 @@ function admConfirm(opts) {
 <input type="password" id="pwd" placeholder="Password" autocomplete="current-password" value=""/>
     <button class="btn-accedi" onclick="doLogin()">Accedi →</button>
     <p id="login-err">Password errata. Riprova.</p>
+    <a id="link-recovery" onclick="mostraRecuperoAdmin()"
+       style="display:inline-block;margin-top:1rem;font-family:var(--fu);font-size:.8rem;
+              font-weight:700;color:#2C3E2D;text-decoration:none;cursor:pointer">
+      Password dimenticata?
+    </a>
+
+    <!-- richiesta link di reset -->
+    <div id="rec-richiesta" style="display:none;margin-top:1rem;text-align:left">
+      <p style="font-size:.82rem;color:#555;line-height:1.6;margin-bottom:.6rem">
+        Inserisci la tua email amministratore: ti invieremo un link per reimpostare la password.
+      </p>
+      <input type="email" id="rec-eml" placeholder="Email amministratore"
+             autocomplete="email" style="margin-bottom:.5rem"/>
+      <button class="btn-accedi" onclick="adminRecover()">Invia link di reset</button>
+      <p id="rec-msg" style="display:none;font-size:.82rem;margin-top:.6rem;line-height:1.5"></p>
+      <a onclick="nascondiRecuperoAdmin()" style="display:inline-block;margin-top:.6rem;font-size:.78rem;color:#888;cursor:pointer">← Torna al login</a>
+    </div>
+
+    <!-- impostazione nuova password (dopo click sul link dell'email) -->
+    <div id="rec-nuova" style="display:none;margin-top:1rem;text-align:left">
+      <p style="font-size:.82rem;color:#555;line-height:1.6;margin-bottom:.6rem">
+        Scegli la nuova password amministratore (almeno 8 caratteri).
+      </p>
+      <input type="password" id="rec-p1" placeholder="Nuova password" autocomplete="new-password" style="margin-bottom:.5rem"/>
+      <input type="password" id="rec-p2" placeholder="Conferma password" autocomplete="new-password" style="margin-bottom:.5rem"/>
+      <button class="btn-accedi" onclick="adminSetNewPwd()">Salva nuova password</button>
+      <p id="rec-nuova-msg" style="display:none;font-size:.82rem;margin-top:.6rem;line-height:1.5"></p>
+    </div>
     <a href="index.html"
        style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1.25rem;
               font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
@@ -562,10 +590,95 @@ window.addEventListener('DOMContentLoaded', function() {
 
 // ═══ NOTIZIE — SUPABASE ═══
 const SB_N = 'https://sawclsysqnjsvbobioqo.supabase.co';
-const SB_PUB = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTM3NjksImV4cCI6MjA5NDc4OTc2OX0.vS-hoxI2YUlxCWIdDzARqqpGzmXTDi8hq1AVU2jdhZ0';
+const SB_PUB = 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ';
 // Token di sessione dell'amministratore loggato (sostituisce il service_role, che NON deve stare nel client).
 // Le operazioni admin passano per le policy RLS is_admin() come utente authenticated.
 const SB_TOKEN = () => sessionStorage.getItem('sb_token');
+
+// ───────── RECUPERO PASSWORD ADMIN ─────────
+// Il link di reset riporta su QUESTA pagina (non sull'area famiglie):
+// usiamo l'URL di admin.html come redirect, che deve essere fra i
+// "Redirect URLs" autorizzati in Supabase (Authentication → URL Configuration).
+const ADMIN_URL = window.location.origin + window.location.pathname;
+
+function mostraRecuperoAdmin() {
+  document.getElementById('rec-richiesta').style.display = 'block';
+  document.getElementById('link-recovery').style.display = 'none';
+  const e = document.getElementById('eml').value.trim();
+  if (e) document.getElementById('rec-eml').value = e;
+}
+function nascondiRecuperoAdmin() {
+  document.getElementById('rec-richiesta').style.display = 'none';
+  document.getElementById('link-recovery').style.display = 'inline-block';
+}
+function recMsg(id, testo, ok) {
+  const el = document.getElementById(id);
+  el.textContent = testo;
+  el.style.color = ok ? '#15803d' : '#b91c1c';
+  el.style.display = 'block';
+}
+
+async function adminRecover() {
+  const email = document.getElementById('rec-eml').value.trim().toLowerCase();
+  if (!email) return recMsg('rec-msg', 'Inserire l\'email.', false);
+  try {
+    const r = await fetch(`${SB_N}/auth/v1/recover?redirect_to=${encodeURIComponent(ADMIN_URL)}`, {
+      method: 'POST',
+      headers: { 'apikey': SB_PUB, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    recMsg('rec-msg', 'Link inviato a ' + email + '. Aprilo da questo stesso browser: tornerai qui per impostare la nuova password.', true);
+  } catch (e) {
+    recMsg('rec-msg', 'Errore nell\'invio (' + e.message + '). Riprova.', false);
+  }
+}
+
+async function adminSetNewPwd() {
+  const p1 = document.getElementById('rec-p1').value;
+  const p2 = document.getElementById('rec-p2').value;
+  if (!p1 || p1.length < 8) return recMsg('rec-nuova-msg', 'La password deve avere almeno 8 caratteri.', false);
+  if (p1 !== p2)            return recMsg('rec-nuova-msg', 'Le due password non coincidono.', false);
+  const tok = sessionStorage.getItem('rec_access_token');
+  if (!tok) return recMsg('rec-nuova-msg', 'Link scaduto o non valido. Richiedi un nuovo link.', false);
+  try {
+    const r = await fetch(`${SB_N}/auth/v1/user`, {
+      method: 'PUT',
+      headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + tok, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: p1 })
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    sessionStorage.removeItem('rec_access_token');
+    recMsg('rec-nuova-msg', 'Password aggiornata. Ora accedi qui sopra con la nuova password.', true);
+    setTimeout(() => {
+      document.getElementById('rec-nuova').style.display = 'none';
+      document.getElementById('link-recovery').style.display = 'inline-block';
+      history.replaceState(null, '', ADMIN_URL);
+    }, 2500);
+  } catch (e) {
+    recMsg('rec-nuova-msg', 'Errore nel salvataggio (' + e.message + '). Richiedi un nuovo link.', false);
+  }
+}
+
+// All'apertura: se l'URL contiene un token di recovery, mostra i campi "nuova password"
+(function rilevaRecovery() {
+  const h = window.location.hash || '';
+  if (h.indexOf('type=recovery') > -1 && h.indexOf('access_token=') > -1) {
+    const params = new URLSearchParams(h.replace(/^#/, ''));
+    const at = params.get('access_token');
+    if (at) {
+      sessionStorage.setItem('rec_access_token', at);
+      window.__recoveryInCorso = true;
+      window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('adm-wrap').style.display = 'none';
+        document.getElementById('link-recovery').style.display = 'none';
+        document.getElementById('rec-nuova').style.display = 'block';
+      });
+    }
+  }
+})();
+// ───────── fine recupero password ─────────
 
 // Segreto condiviso per le chiamate POST al GAS (deve combaciare con la Script Property MAIL_TOKEN sul GAS)
 const GAS_TOKEN = 'mT7k-Qx2Rv9LpAe4Wn6Zb8Hs3Yd5Fg1Uc0Jq';
@@ -1293,7 +1406,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (pwd) pwd.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
   // Se già autenticato in questa sessione, salta il login
-  if (sessionStorage.getItem('adm_auth') === '1') {
+  if (!window.__recoveryInCorso && sessionStorage.getItem('adm_auth') === '1') {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('adm-wrap').style.display     = 'block';
     initNotizie();
