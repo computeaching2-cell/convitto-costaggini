@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════
 
 const SUPABASE_URL  = 'https://sawclsysqnjsvbobioqo.supabase.co';
-const SUPABASE_PUB = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhd2Nsc3lzcW5qc3Zib2Jpb3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTM3NjksImV4cCI6MjA5NDc4OTc2OX0.vS-hoxI2YUlxCWIdDzARqqpGzmXTDi8hq1AVU2jdhZ0';
+const SUPABASE_PUB = 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ';
 
 // Client leggero senza libreria esterna — usa fetch direttamente
 const sb = {
