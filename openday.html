@@ -358,7 +358,7 @@
         <div class="od-form rv">
           <p style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:1.25rem">Modulo di richiesta visita</p>
 
-          <form name="richiesta-visita" netlify netlify-honeypot="bot-field" method="POST" action="/grazie.html">
+          <form name="richiesta-visita">
             <input type="hidden" name="form-name" value="richiesta-visita"/>
             <p style="display:none"><label>Non compilare: <input name="bot-field"/></label></p>
 
@@ -573,6 +573,43 @@ const obs = new IntersectionObserver(es=>es.forEach(e=>{
 }),{threshold:.08});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
+
+/* invio prenotazione visita via backend email */
+(function(){
+  const CONTACT_GAS = 'https://script.google.com/macros/s/AKfycbyvBE8bV6Ent-pyuXFP0_LWjKwGo_z2SGf58JRttvIYcj4U6CS-g0nvLBIU-ZM7S25w/exec';
+  const f = document.querySelector('form[name="richiesta-visita"]');
+  if (!f) return;
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    let ok = true;
+    f.querySelectorAll('[required]').forEach(el => { el.style.borderColor=''; if(!el.value.trim()){ ok=false; el.style.borderColor='#dc2626'; } });
+    if(!ok) return;
+    const g = id => (document.getElementById(id)?.value || '').trim();
+    const corpo =
+`PRENOTAZIONE VISITA / OPEN DAY
+==============================
+Nome: ${g('vis-nome')}
+Email: ${g('vis-email')}
+Telefono: ${g('vis-tel') || '—'}
+Data preferita: ${g('vis-data') || '—'}
+Partecipanti: ${g('vis-persone') || '—'}
+
+Note / domande:
+${g('vis-note') || '—'}`;
+    const payload = {
+      nome: g('vis-nome'),
+      email: g('vis-email'),
+      telefono: g('vis-tel'),
+      oggetto: 'Prenotazione Open Day — ' + g('vis-nome'),
+      messaggio: corpo,
+      privacy: true
+    };
+    const btn = f.querySelector('button[type=submit]');
+    if (btn) { btn.disabled = true; btn.textContent = 'Invio…'; }
+    fetch(CONTACT_GAS, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) })
+      .finally(() => { window.location = 'grazie.html'; });
+  });
+})();
 </script>
 </body>
 </html>
