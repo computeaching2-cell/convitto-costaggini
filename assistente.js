@@ -148,7 +148,7 @@ const KB=[
   {k:['alumni','ex convittor','ex student','diplomati','community'],
    r:'Community degli <em>Alumni</em>: <a href="comunita.html">La nostra Comunità →</a><br>Se sei ex convittore: <a href="iscriviti-alumni.html">Unisciti →</a>'},
   // ── SALUTO ──
-  {k:['ciao','salve','buongiorno','buonasera','hey','help','aiuto','cosa sai','cosa puoi'],
+  {k:['ciao','salve','buongiorno','buonasera','hey','help','aiuto','grazie','prego','cosa sai','cosa puoi'],
    r:'Ciao! 👋 Sono l\'assistente del Convitto "Costaggini" di Rieti. Posso aiutarti su: iscrizioni, orari, contatti, rette, camere, servizi e vita convittuale. Cosa ti serve?'},
 ];
 
@@ -170,11 +170,44 @@ let IDF={};        // peso "rarità" di ogni token (token raro = più informativ
 function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 
 const STOPQ=new Set('di a da in con su per tra fra il lo la le un uno una del dello della dei degli delle al allo alla come dove quando quanto quale quali questo questa che chi cui non sono vorrei voglio posso cosa piu meno mio mia miei fare avere essere ci si mi ti ho hai abbiamo avete hanno'.split(/\s+/));
-function toks(s){const o=[];for(const w of norm(s).split(/[^a-z0-9]+/)){if(w.length>=3&&!STOPQ.has(w))o.push(w);}return o;}
+function toks(s){let n=norm(s).replace(/wi[\s-]?fi/g,"wifi");const o=[];for(const w of n.split(/[^a-z0-9]+/)){if(w.length>=3&&!STOPQ.has(w))o.push(w);}return o;}
 
-// Sinonimi: espandono la domanda dell'utente verso i termini usati nel sito.
-const SYN={costo:['prezzo','retta','tariffa','pagamento','quota'],prezzo:['costo','retta','tariffa'],pagare:['retta','costo','pagamento'],mensa:['cucina','cibo','pasti','ristorazione'],cibo:['mensa','cucina','pasti'],dormire:['camera','stanza','alloggio','letto'],stanza:['camera','alloggio'],telefono:['numero','contatto','recapito'],orari:['orario','giornata','programma'],iscrizione:['ammissione','iscriversi','domanda'],iscriversi:['ammissione','iscrizione'],ammissione:['iscrizione'],vacanze:['calendario','festivita','chiusura'],festa:['calendario','festivita'],uscire:['uscita','permesso','autonoma'],aiuto:['supporto','sostegno'],disabile:['dsa','bes','sostegno','inclusione'],internet:['wifi','rete','connessione'],musica:['laboratorio','strumento','chitarra'],storia:['fondazione','anniversario'],genitore:['famiglia','famiglie','genitori'],studente:['convittore','ragazzo','alunno']};
-function expand(tk){const out=new Set(tk);for(const t of tk){const s=SYN[t];if(s)for(const x of s)out.add(x);}return [...out];}
+// Sinonimi per TEMA: ogni gruppo collega tra loro i modi diversi di dire la
+// stessa cosa, così la domanda dell'utente raggiunge le pagine anche quando
+// usano parole diverse (es. "guida rapida" → pagina "In 2 Minuti").
+const SYNG=[
+  ['costo','costi','prezzo','prezzi','retta','rette','tariffa','tariffe','pagamento','quota','isee','spesa','spese','pagare'],
+  ['mensa','cibo','cibi','cucina','mangiare','pasto','pasti','menu','colazione','pranzo','cena','merenda','vitto','ristorazione','alimentazione'],
+  ['allergia','allergie','intolleranza','intolleranze','dieta','diete','celiaco','celiachia','vegetariano','vegano'],
+  ['dormire','camera','camere','stanza','stanze','alloggio','letto','pernottare','residenziale','convitto'],
+  ['telefono','numero','recapito','chiamare','telefonare','email','contattare'],
+  ['orario','orari','giornata','sveglia','routine'],
+  ['iscrizione','iscrizioni','iscriversi','ammissione','ammissioni','iscritto','graduatoria','registrarsi'],
+  ['guida','guide','panoramica','introduzione','sintesi','riepilogo','riassunto','breve','rapido','rapida','veloce','minuti','fretta','faq'],
+  ['uscita','uscite','uscire','permesso','permessi','rientro','rientri','weekend','venerdi','delega','delegare','prelevare','ritiro'],
+  ['educatore','educatori','personale','staff','sorveglianza','tutor','equipe'],
+  ['regolamento','regola','regole','norma','norme','divieto','divieti','disciplina','sanzioni'],
+  ['musica','musicale','strumento','strumenti','chitarra','vinile','coro','canto','suonare'],
+  ['sport','sportiva','sportive','palestra','calcio','allenamento'],
+  ['studio','studiare','compiti','doposcuola','ripetizioni'],
+  ['wifi','internet','connessione','smartphone','cellulare','telefonino'],
+  ['salute','medico','medica','infermeria','malessere','farmaco','farmaci','sanitaria'],
+  ['dsa','bes','sostegno','inclusione','disabilita','disabile'],
+  ['bullismo','bullo','bulli','prepotenza','prepotenze','cyberbullismo'],
+  ['storia','fondazione','anniversario','origini','tradizione'],
+  ['provenienza','regioni','territorio','provincia','province'],
+  ['corredo','valigia','biancheria','vestiti','abbigliamento','lenzuola','pigiama'],
+  ['solidarieta','volontariato'],
+  ['genitore','genitori','famiglia','famiglie'],
+  ['openday','visita','visitare'],
+  ['calendario','vacanze','festivita','feste','ferie','natale'],
+  ['semiconvitto','semiconvittore','diurno'],
+  ['talento','talenti','orientamento','attitudine'],
+  ['lettera','testimonianza'],
+];
+const SYNIDX={};
+for(const g of SYNG)for(const w of g){if(!SYNIDX[w])SYNIDX[w]=new Set();for(const x of g)if(x!==w)SYNIDX[w].add(x);}
+function expand(tk){const out=new Set(tk);for(const t of tk){const g=SYNIDX[t];if(g)for(const x of g)out.add(x);}return [...out];}
 
 // Distanza di Levenshtein "<=1" (tollera un refuso). True se a e b differiscono
 // per al più un carattere (sostituzione, inserimento o cancellazione).
@@ -226,18 +259,29 @@ function scoreKB(qNorm,qtok,entry){
 // Punteggio di una pagina: per ogni token della domanda prendo il miglior
 // match nel titolo/intestazioni (peso pieno) o nel corpo (peso ridotto),
 // moltiplicato per la rarità (IDF) del token. Titolo/heading contano doppio.
-function scorePage(qtok,p){
-  let s=0;
-  for(const q of qtok){
+function scorePage(qbase,qsyn,qNorm,p){
+  let s=0,tw=0,phr=false;
+  for(const ph of p._aphr){if(ph&&qNorm.includes(ph)){phr=true;s+=3.2;break;}}
+  for(const q of qbase){
     let ti=0,he=0,bo=0;
-    for(const t of p._title){const h=tokHit(q,t);if(h>ti)ti=h;}
-    for(const t of p._head){const h=tokHit(q,t);if(h>he)he=h;}
-    for(const t of p.tokens){const h=tokHit(q,t);if(h>bo)bo=h;}
+    for(const w of p._tital){const h=tokHit(q,w);if(h>ti)ti=h;}
+    for(const w of p._head){const h=tokHit(q,w);if(h>he)he=h;}
+    for(const w of p.tokens){const h=tokHit(q,w);if(h>bo)bo=h;}
     const idf=IDF[q]||1.2;
-    const contrib=Math.max(ti*1,he*.7,bo*.45)*idf;
-    if(contrib>0)s+=contrib;
+    const full=Math.max(ti*1,he*.7,bo*.45)*idf;
+    if(full>0)s+=full;
+    if(ti>=.8)tw++;            // parola della domanda intercettata dal TITOLO/alias
   }
-  return s;
+  for(const q of qsyn){
+    let ti=0,he=0,bo=0;
+    for(const w of p._tital){const h=tokHit(q,w);if(h>ti)ti=h;}
+    for(const w of p._head){const h=tokHit(q,w);if(h>he)he=h;}
+    for(const w of p.tokens){const h=tokHit(q,w);if(h>bo)bo=h;}
+    const idf=IDF[q]||1.2;
+    const full=Math.max(ti*1,he*.7,bo*.45)*idf*.5;
+    if(full>0)s+=full;
+  }
+  return {s,tw,phr};
 }
 
 function pageCard(p){
@@ -246,33 +290,42 @@ function pageCard(p){
 
 function match(q){
   const qNorm=norm(q);
-  const qtok=expand(toks(q));
+  const qbase=toks(q);
+  const qsyn=expand(qbase).filter(x=>!qbase.includes(x));
 
-  // 1) KB curata: se intercetta un intento, risponde lei (autorevole).
   let kbBest=null,kbTop=0;
-  for(const e of KB){const s=scoreKB(qNorm,qtok,e);if(s>kbTop){kbTop=s;kbBest=e;}}
+  for(const e of KB){const sc=scoreKB(qNorm,qbase,e);if(sc>kbTop){kbTop=sc;kbBest=e;}}
+
+  let ranked=[];
+  if(qbase.length&&INDEX.length){
+    ranked=INDEX.map(p=>{const r=scorePage(qbase,qsyn,qNorm,p);return{p,s:r.s,tw:r.tw,phr:r.phr};}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s);
+  }
+  const top=ranked[0];
+
+  // L'utente ha NOMINATO una pagina (frase-alias, o titolo che intercetta >=2
+  // parole della domanda): la pagina vince anche sulla KB. Gli intenti "a
+  // parola singola" (es. bullismo, contatti) restano invece alla KB curata.
+  const named=ranked.filter(x=>(x.phr||x.tw>=2)&&x.s>=1.8).sort((a,b)=>b.s-a.s)[0];
+  if(named)return cardWith(named,ranked);
+
+  // KB autorevole se ha intercettato un intento.
   if(kbBest&&kbTop>=1)return kbBest.r;
 
-  // 2) Indice del sito: classifico le pagine.
-  if(qtok.length&&INDEX.length){
-    const ranked=INDEX.map(p=>({p,s:scorePage(qtok,p)})).filter(x=>x.s>0).sort((a,b)=>b.s-a.s);
-    if(ranked.length){
-      const top=ranked[0];
-      // Risposta diretta se la pagina migliore è robusta e stacca le altre.
-      const strong=top.s>=2.4||(top.s>=1.5&&(!ranked[1]||top.s>=ranked[1].s*1.5));
-      if(strong){
-        let html=pageCard(top.p);
-        const more=ranked.slice(1,3).filter(x=>x.s>=top.s*.5);
-        if(more.length)html+='<br><br>Forse \u00E8 utile anche: '+more.map(x=>'<a href="'+x.p.url+'">'+x.p.title+'</a>').join(' \u00B7 ');
-        return html;
-      }
-      // Bassa confidenza: propongo le pagine più vicine come chip.
-      const sug=ranked.slice(0,3);
-      return 'Non sono sicuro della risposta esatta. Forse cercavi una di queste pagine?<br><div class="cc-sugs" style="padding:.5rem 0 0">'+
-        sug.map(x=>'<a class="cc-sug" href="'+x.p.url+'">'+x.p.title+'</a>').join('')+'</div>';
-    }
+  // Indice: risposta diretta se robusta, altrimenti chip.
+  if(top){
+    const strong=top.s>=1.9||(top.s>=1.2&&(!ranked[1]||top.s>=ranked[1].s*1.5));
+    if(strong)return cardWith(top,ranked);
+    const sug=ranked.slice(0,3);
+    return 'Non sono sicuro della risposta esatta. Forse cercavi una di queste pagine?<br><div class="cc-sugs" style="padding:.5rem 0 0">'+
+      sug.map(x=>'<a class="cc-sug" href="'+x.p.url+'">'+x.p.title+'</a>').join('')+'</div>';
   }
   return null;
+}
+function cardWith(top,ranked){
+  let html=pageCard(top.p);
+  const more=ranked.filter(x=>x!==top&&x.s>=top.s*.5).slice(0,2);
+  if(more.length)html+='<br><br>Forse \u00E8 utile anche: '+more.map(x=>'<a href="'+x.p.url+'">'+x.p.title+'</a>').join(' \u00B7 ');
+  return html;
 }
 
 function fallback(){return'Non ho trovato una risposta precisa. Puoi scriverci dal <a href="contatti.html">modulo di contatto \u2192</a> e ti risponderemo direttamente.';}
@@ -282,7 +335,12 @@ function loadIndex(){
   fetch('kb-index.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{
     if(!j||!j.voci)return;
     INDEX=j.voci;
-    for(const p of INDEX){p._title=[...new Set(toks(p.title||''))];p._head=[...new Set(toks((p.headings||[]).join(' ')))];}
+    for(const p of INDEX){
+      const al=p.aliases||[];
+      p._tital=[...new Set(toks((p.title||'')+' '+al.join(' ')))];
+      p._head=[...new Set(toks((p.headings||[]).join(' ')))];
+      p._aphr=al.map(a=>norm(a)).filter(a=>a.includes(' '));
+    }
     const df={},N=INDEX.length;
     for(const p of INDEX){for(const t of new Set(p.tokens))df[t]=(df[t]||0)+1;}
     for(const t in df)IDF[t]=Math.log(1+N/df[t]);
