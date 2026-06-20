@@ -87,6 +87,15 @@
     .ext-frame{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
     @media(max-width:700px){ .ext-box{ width:96vw; } }
   </style>
+  <style>
+    /* Collegamenti rapidi nell'hero verde */
+    .hero-jump { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.35rem; }
+    .hero-jump a { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--fu); font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--av,#F5F0E8); text-decoration:none; border:1px solid rgba(184,146,42,.6); background:rgba(255,255,255,.06); padding:.55rem 1rem; border-radius:40px; min-height:40px; transition:var(--ease); }
+    .hero-jump a:hover, .hero-jump a:focus-visible { background:var(--oro,#B8922A); border-color:var(--oro,#B8922A); color:var(--bosco,#2C3E2D); }
+    .hero-jump a .hj-ico { font-size:.9rem; line-height:1; }
+    /* margine di scroll: l'ancora non finisce sotto l'header fisso */
+    #comunicati, #eventi { scroll-margin-top: 90px; }
+  </style>
 </head>
 <body data-page="notizie">
 <main id="main">
@@ -97,6 +106,10 @@
       <div class="gold-bar"></div>
       <h1>Notizie ed <em>eventi</em></h1>
       <p class="sub">Tutte le novità dal Convitto "Costaggini": successi degli studenti, eventi, comunicati e aggiornamenti istituzionali.</p>
+      <nav class="hero-jump" aria-label="Vai a una sezione della pagina">
+        <a href="#comunicati"><span class="hj-ico" aria-hidden="true">📋</span> Comunicati ufficiali</a>
+        <a href="#eventi"><span class="hj-ico" aria-hidden="true">🗓️</span> Prossimi eventi</a>
+      </nav>
     </div>
   </div>
 
@@ -119,7 +132,7 @@
   </section>
 
   <!-- COMUNICATI UFFICIALI -->
-  <section style="background:var(--av2)">
+  <section id="comunicati" style="background:var(--av2)">
     <div class="w">
       <p class="lbl">Atti e comunicati</p>
       <h2>Comunicati <em>ufficiali</em></h2>
@@ -131,7 +144,7 @@
   </section>
 
   <!-- PROSSIMI EVENTI -->
-  <section style="background:var(--av)">
+  <section id="eventi" style="background:var(--av)">
     <div class="w">
       <p class="lbl">Agenda</p>
       <h2>Prossimi <em>eventi</em></h2>
