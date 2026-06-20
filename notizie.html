@@ -60,6 +60,18 @@
     @media(min-width:640px){ .events-grid { grid-template-columns: 1fr 1fr; } }
     @media(min-width:1024px){ .events-grid { grid-template-columns: repeat(3,1fr); } }
   @media(min-width:560px){.news-grid{grid-template-columns:1fr 1fr}}</style>
+  <style>
+    .com-acc{ border:1px solid var(--av3,#E2D8C2); border-radius:8px; margin-bottom:.55rem; background:#fff; overflow:hidden; }
+    .com-acc summary{ list-style:none; cursor:pointer; display:flex; align-items:center; gap:.7rem; padding:.7rem .9rem; }
+    .com-acc summary::-webkit-details-marker{ display:none; }
+    .com-acc summary:hover{ background:var(--av,#F5F0E8); }
+    .com-acc .com-date{ font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--oro-testo,#886813); background:var(--av2,#F3ECDD); padding:.22rem .5rem; border-radius:5px; white-space:nowrap; }
+    .com-acc .com-title{ flex:1; font-weight:700; color:var(--bosco,#2C3E2D); font-size:.9rem; line-height:1.35; }
+    .com-acc .com-chev{ color:var(--oro,#B8922A); font-size:1.25rem; transition:transform .2s ease; }
+    .com-acc[open] .com-chev{ transform:rotate(90deg); }
+    .com-acc-body{ padding:0 .9rem .85rem; font-size:.86rem; line-height:1.65; color:var(--txt2,#6b6353); }
+    .com-acc-meta{ margin-top:.55rem; font-family:var(--fu); font-size:.68rem; font-style:italic; color:var(--txt2,#6b6353); }
+  </style>
 </head>
 <body data-page="notizie">
 <main id="main">
@@ -167,17 +179,32 @@ function fmtBadge(iso){
   if(isNaN(d)) return {day:'TBD', mon:''};
   return {day:String(d.getDate()).padStart(2,'0'), mon: MESI3[d.getMonth()]+' '+d.getFullYear()};
 }
+function comEscape(t){ return (t||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function comLinkify(t){
+  return comEscape(t)
+    .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener" style="color:var(--oro-testo,#886813);font-weight:600;word-break:break-word">$1</a>')
+    .replace(/\n/g, '<br>');
+}
 async function caricaComunicati(){
   const box = document.getElementById('comunicati-list');
   try{
     const r = await fetch(SB_URL_N+'/rest/v1/avvisi?order=pinned.desc,created_at.desc', {headers:{'apikey':SB_ANON_N,'Authorization':'Bearer '+SB_ANON_N}});
     const data = await r.json();
-    if(!Array.isArray(data) || !data.length){ box.innerHTML=''; return; }
-    box.innerHTML = data.slice(0,8).map(a=>{
+    if(!Array.isArray(data) || !data.length){
+      box.innerHTML = '<p style="font-family:var(--fu);font-size:.82rem;color:var(--txt2);padding:.5rem 0">Nessun comunicato pubblicato al momento.</p>';
+      return;
+    }
+    box.innerHTML = data.slice(0,12).map((a,i)=>{
       const x = fmtBadge(a.data);
       const badge = a.data ? (x.mon||x.day) : (a.categoria||'');
       const pin = a.pinned ? '📌 ' : '';
-      return `<div class="com-row"><span class="com-date">${badge}</span><span class="com-title">${pin}${a.titolo||''}</span><span class="com-arrow">›</span></div>`;
+      const meta = [a.autore||'', a.categoria||''].filter(Boolean).join(' · ');
+      const aperto = (a.pinned || i===0) ? ' open' : '';
+      const corpo = a.testo ? comLinkify(a.testo) : '<em style="color:var(--txt2)">(nessun testo)</em>';
+      return `<details class="com-acc"${aperto}>
+        <summary><span class="com-date">${badge}</span><span class="com-title">${pin}${comEscape(a.titolo||'')}</span><span class="com-chev">›</span></summary>
+        <div class="com-acc-body">${corpo}${meta?`<div class="com-acc-meta">${comEscape(meta)}</div>`:''}</div>
+      </details>`;
     }).join('');
   }catch(e){ box.innerHTML=''; }
 }
