@@ -7,7 +7,6 @@
   --bosco2: #3D5C3E;
   --bosco3: #4A6E4B;
   --oro:    #B8922A;
-  --oro-testo: #886813; /* oro accessibile per testo su sfondo chiaro: contrasto 5.2:1 su bianco, 4.6:1 su crema (WCAG AA) */
   --oro2:   #D4AA4A;
   --oro3:   #EDD98A;
   --av:     #F5F0E8;
@@ -294,7 +293,7 @@ p:last-child { margin-bottom: 0; }
 .irow:last-child { border-bottom: none; }
 .iico { width: 34px; height: 34px; border-radius: 50%; background: var(--bosco); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .iico svg { width: 15px; height: 15px; fill: var(--oro2); }
-.itxt label { display: block; font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--oro-testo); margin-bottom: .1rem; }
+.itxt label { display: block; font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--oro); margin-bottom: .1rem; }
 .itxt p, .itxt a { font-size: .86rem; color: var(--txt); line-height: 1.5; text-decoration: none; margin-bottom: 0; }
 .itxt a { color: var(--bosco2); }
 
@@ -311,7 +310,7 @@ p:last-child { margin-bottom: 0; }
 .dico { width: 32px; height: 32px; border-radius: 3px; background: var(--bosco); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .dico svg { width: 15px; height: 15px; fill: var(--oro2); }
 .dinf { flex: 1; min-width: 0; }
-.dinf h3, .dinf h4 { font-size: .83rem; font-weight: 700; color: var(--bosco); }
+.dinf h4 { font-size: .83rem; font-weight: 700; color: var(--bosco); }
 .dinf span { font-size: .7rem; color: #666; }
 .darr { font-size: 1rem; color: var(--bosco2); flex-shrink: 0; }
 

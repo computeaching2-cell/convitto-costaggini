@@ -322,7 +322,7 @@ function admConfirm(opts) {
         🏠 Home
       </a>
       <a href="notizie.html" target="_blank">↗ Notizie</a>
-      <a href="avvisi.html" target="_blank">↗ Avvisi</a>
+      <a href="calendario.html" target="_blank">↗ Calendario</a>
       <button class="btn-logout" onclick="logout()">Esci</button>
     </div>
   </header>
@@ -330,7 +330,8 @@ function admConfirm(opts) {
   <!-- TAB -->
   <div class="main-tabs">
     <button class="main-tab on" onclick="switchTab('notizie',this)">📰 Notizie</button>
-    <button class="main-tab" onclick="switchTab('avvisi',this)">📋 Avvisi & Comunicati</button>
+    <button class="main-tab" onclick="switchTab('avvisi',this)">📋 Comunicati</button>
+    <button class="main-tab" onclick="switchTab('eventi',this)">🗓️ Eventi</button>
     <button class="main-tab" onclick="switchTab('ricordi',this)">💬 Ricordi</button>
       <button class="main-tab" onclick="switchTab('mappa',this)">🗺️ Mappa — Pin in attesa</button>
     <button class="main-tab" onclick="switchTab('alumni',this)">👥 <em>Alumni</em> — Schede in attesa</button>
@@ -350,14 +351,6 @@ function admConfirm(opts) {
       <!-- FORM NOTIZIE -->
       <div class="adm-card">
         <h2 id="n-form-title">+ Nuova <em>notizia</em></h2>
-        <div class="ai-box">
-          <h4>⚡ AI — genera il testo automaticamente</h4>
-          <div class="ai-row">
-            <input type="text" class="ai-input" id="n-ai-prompt" placeholder="Es: inaugurazione palestra, ottobre 2025"/>
-            <button class="btn-ai" onclick="aiNotizia()">Genera</button>
-          </div>
-          <div class="ai-stato" id="n-ai-stato">Descrivi la notizia — l'AI scrive per te.</div>
-        </div>
         <div class="fg"><label>Titolo *</label><input type="text" id="n-titolo" placeholder="Es: Inaugurazione nuova palestra"/></div>
         <div class="fg-row2">
           <div class="fg"><label>Data</label><input type="text" id="n-data" placeholder="Es: Ottobre 2025"/></div>
@@ -408,14 +401,6 @@ function admConfirm(opts) {
       <!-- FORM AVVISI -->
       <div class="adm-card">
         <h2 id="a-form-title">+ Nuovo <em>avviso</em></h2>
-        <div class="ai-box">
-          <h4>⚡ AI — genera il testo automaticamente</h4>
-          <div class="ai-row">
-            <input type="text" class="ai-input" id="a-ai-prompt" placeholder="Es: chiusura mensa venerdì per pulizie"/>
-            <button class="btn-ai" onclick="aiAvviso()">Genera</button>
-          </div>
-          <div class="ai-stato" id="a-ai-stato">Descrivi l'avviso — l'AI scrive per te.</div>
-        </div>
         <div class="fg-row2">
           <div class="fg"><label>Categoria</label>
             <select id="a-cat">
@@ -449,6 +434,49 @@ function admConfirm(opts) {
         <div id="a-list"></div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB — EVENTI
+  ══════════════════════════════════ -->
+  <div class="tab-section" id="tab-eventi">
+    <div class="adm-body">
+      <div class="adm-card">
+        <h2 id="e-form-title">+ Nuovo <em>evento</em></h2>
+        <div class="fg-row2">
+          <div class="fg"><label>Data</label><input type="date" id="e-data" style="font-size:15px"/></div>
+          <div class="fg"><label>Categoria</label>
+            <select id="e-cat">
+              <option value="istituzionale">Istituzionale</option>
+              <option value="openday">Open Day</option>
+              <option value="festa">Festa</option>
+              <option value="musica">Musica</option>
+              <option value="sport">Sport</option>
+              <option value="uscita">Uscita</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg"><label>Titolo *</label><input type="text" id="e-titolo" placeholder="Es: Open Day autunnale — Porte aperte"/></div>
+        <div class="fg"><label>Luogo</label><input type="text" id="e-luogo" placeholder="Es: Convitto Costaggini — Rieti"/></div>
+        <div class="fg"><label>Descrizione</label><textarea id="e-testo" rows="4" placeholder="Dettagli dell'evento…"></textarea></div>
+        <div class="fg"><label>Orario / nota</label><input type="text" id="e-nota" placeholder="Es: Tutto il giorno · Prenotazione consigliata"/></div>
+        <div class="fg"><label>Link (facoltativo)</label><input type="text" id="e-link" placeholder="https://… oppure openday.html"/></div>
+        <div class="fg">
+          <label class="fg-check"><input type="checkbox" id="e-pinned"/> 📌 Metti in evidenza</label>
+        </div>
+        <input type="hidden" id="e-edit-id"/>
+        <div class="form-btns">
+          <button class="btn-pubblica" id="e-btn-salva" onclick="salvaEvento()">📌 Pubblica</button>
+          <button class="btn-annulla" onclick="resetEvento()">Annulla</button>
+          <span class="ok-msg" id="e-ok">✅ Pubblicato!</span>
+        </div>
+      </div>
+      <div class="list-wrap">
+        <h2>Eventi in calendario <em>— gestisci</em></h2>
+        <p class="list-count" id="e-count"></p>
+        <div id="e-list"></div>
+      </div>
     </div>
   </div>
 
@@ -893,6 +921,103 @@ function resetAvviso() {
   document.getElementById('a-form-title').innerHTML = '+ Nuovo <em>avviso</em>';
 }
 
+// ═══ EVENTI — SUPABASE ═══
+let editEventoId = null;
+async function loadEventi() {
+  const list = document.getElementById('e-list');
+  list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Caricamento...</p>';
+  try {
+    const resp = await fetch(SB_N + '/rest/v1/eventi?order=data.asc', {
+      headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+    });
+    const data = await resp.json();
+    document.getElementById('e-count').textContent = data.length + ' eventi in calendario';
+    if (!data.length) { list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Nessun evento.</p>'; return; }
+    list.innerHTML = data.map(e => `
+      <div class="el-item" data-id="${e.id}">
+        <div class="el-top">
+          <span class="el-cat">${e.categoria || ''}</span>
+          <div>
+            <div class="el-titolo">${e.titolo || ''}${e.pinned ? '<span class="badge-pin">📌 PIN</span>' : ''}</div>
+            <div class="el-meta">${e.data || 'data da definire'}${e.luogo ? ' · ' + e.luogo : ''}</div>
+          </div>
+        </div>
+        <div class="el-actions">
+          <button class="btn-ed edit" onclick="editEvento('${e.id}')">✏️ Modifica</button>
+          <button class="btn-ed del"  onclick="deleteEvento('${e.id}')">🗑️ Elimina</button>
+        </div>
+      </div>`).join('');
+  } catch(err) {
+    list.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + err.message + '</p>';
+  }
+}
+async function salvaEvento() {
+  const titolo = document.getElementById('e-titolo').value.trim();
+  const dataev = document.getElementById('e-data').value.trim();
+  const cat    = document.getElementById('e-cat').value;
+  const luogo  = document.getElementById('e-luogo').value.trim();
+  const testo  = document.getElementById('e-testo').value.trim();
+  const nota   = document.getElementById('e-nota').value.trim();
+  const link   = document.getElementById('e-link').value.trim();
+  const pinned = document.getElementById('e-pinned').checked;
+  if (!titolo) { alert('Inserire il titolo.'); return; }
+  const payload = { titolo, data: dataev || null, categoria: cat, luogo, descrizione: testo, nota, link, pinned };
+  let url = SB_N + '/rest/v1/eventi';
+  let method = 'POST';
+  if (editEventoId) { url += '?id=eq.' + editEventoId; method = 'PATCH'; }
+  const resp = await fetch(url, {
+    method,
+    headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_TOKEN(), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify(payload)
+  });
+  if (resp.ok || resp.status === 201) {
+    resetEvento();
+    await loadEventi();
+    document.getElementById('e-ok').style.display = 'inline';
+    setTimeout(() => { document.getElementById('e-ok').style.display = 'none'; }, 3000);
+  } else {
+    alert('Errore salvataggio: ' + resp.status);
+  }
+}
+async function editEvento(id) {
+  const resp = await fetch(SB_N + '/rest/v1/eventi?id=eq.' + id, {
+    headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+  });
+  const data = await resp.json();
+  if (!data.length) return;
+  const e = data[0];
+  document.getElementById('e-titolo').value = e.titolo || '';
+  document.getElementById('e-data').value   = e.data || '';
+  document.getElementById('e-cat').value    = e.categoria || 'istituzionale';
+  document.getElementById('e-luogo').value  = e.luogo || '';
+  document.getElementById('e-testo').value  = e.descrizione || '';
+  document.getElementById('e-nota').value   = e.nota || '';
+  document.getElementById('e-link').value   = e.link || '';
+  document.getElementById('e-pinned').checked = !!e.pinned;
+  editEventoId = id;
+  document.getElementById('e-btn-salva').textContent = '💾 Aggiorna evento';
+  document.getElementById('e-form-title').innerHTML = 'Modifica <em>evento</em>';
+  document.querySelector('#tab-eventi .adm-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+async function deleteEvento(id) {
+  if (!await admConfirm({icon:'🗑️',title:'Elimina evento',message:'Questa operazione è irreversibile.',confirmText:'Elimina',type:'danger'})) return;
+  await fetch(SB_N + '/rest/v1/eventi?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_TOKEN() }
+  });
+  await loadEventi();
+}
+function resetEvento() {
+  ['e-titolo','e-data','e-luogo','e-testo','e-nota','e-link'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  const cat = document.getElementById('e-cat'); if (cat) cat.value = 'istituzionale';
+  const pinned = document.getElementById('e-pinned'); if (pinned) pinned.checked = false;
+  editEventoId = null;
+  document.getElementById('e-btn-salva').textContent = '📌 Pubblica';
+  document.getElementById('e-form-title').innerHTML = '+ Nuovo <em>evento</em>';
+}
+
 // ═══ FAMIGLIE ═══
 async function famLoad(stato) {
   const lista = document.getElementById('fam-lista');
@@ -1302,65 +1427,6 @@ async function sbFetch(endpoint) {
 }
 
 // ═══ AI — genera testo notizie e avvisi ═══
-async function aiNotizia() {
-  const prompt = document.getElementById('n-ai-prompt').value.trim();
-  if (!prompt) { alert('Descrivi brevemente la notizia.'); return; }
-  const stato = document.getElementById('n-ai-stato');
-  stato.textContent = '⏳ Generazione in corso…';
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 500,
-        messages: [{
-          role: 'user',
-          content: 'Scrivi una breve notizia istituzionale in italiano per il sito del Convitto "Costaggini" di Rieti (scuola alberghiera con convitto). Tono professionale ma caldo. Titolo e testo separati. Argomento: ' + prompt
-        }]
-      })
-    });
-    const data = await resp.json();
-    const testo = data.content?.[0]?.text || '';
-    // Separa titolo e testo: prima riga come titolo
-    const righe = testo.split('\n').filter(r => r.trim());
-    document.getElementById('n-titolo').value = righe[0].replace(/^[#*\s]+/, '').trim();
-    document.getElementById('n-testo').value  = righe.slice(1).join('\n').trim();
-    stato.textContent = '✅ Testo generato — controlla e pubblica.';
-  } catch(e) {
-    stato.textContent = '❌ Errore: ' + e.message;
-  }
-}
-
-async function aiAvviso() {
-  const prompt = document.getElementById('a-ai-prompt').value.trim();
-  if (!prompt) { alert('Descrivi brevemente l\'avviso.'); return; }
-  const stato = document.getElementById('a-ai-stato');
-  stato.textContent = '⏳ Generazione in corso…';
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 400,
-        messages: [{
-          role: 'user',
-          content: 'Scrivi un avviso ufficiale breve in italiano per il Convitto "Costaggini" di Rieti. Tono istituzionale, diretto. Solo titolo e testo (separati da riga vuota). Argomento: ' + prompt
-        }]
-      })
-    });
-    const data = await resp.json();
-    const testo = data.content?.[0]?.text || '';
-    const righe = testo.split('\n').filter(r => r.trim());
-    document.getElementById('a-titolo').value = righe[0].replace(/^[#*\s]+/, '').trim();
-    document.getElementById('a-testo').value  = righe.slice(1).join('\n').trim();
-    stato.textContent = '✅ Testo generato — controlla e pubblica.';
-  } catch(e) {
-    stato.textContent = '❌ Errore: ' + e.message;
-  }
-}
-
 // ═══ LOGIN / LOGOUT / NAVIGAZIONE ═══
 async function doLogin() {
   const email = document.getElementById('eml').value.trim();
@@ -1436,6 +1502,7 @@ function switchTab(nome, btn) {
   if (nome === 'openday') odLoad('nuova');
   if (nome === 'lab')     labLoad();
   if (nome === 'famiglie') famLoad('in_attesa');
+  if (nome === 'eventi') loadEventi();
 }
 
 

@@ -227,7 +227,7 @@
       <!-- Ricerca live -->
       <div class="faq-search-wrap rv">
         <span class="faq-search-icon">🔍</span>
-        <input class="faq-search" id="faqSearch" type="search" aria-label="Cerca nelle domande frequenti" placeholder="Es: quanto costa, posso chiamare, cosa si mangia..." autocomplete="off" oninput="filterFAQ()"/>
+        <input class="faq-search" id="faqSearch" type="search" placeholder="Es: quanto costa, posso chiamare, cosa si mangia..." autocomplete="off" oninput="filterFAQ()"/>
       </div>
       <p class="faq-count" id="faqCount"></p>
 
@@ -358,7 +358,8 @@
         <div class="od-form rv">
           <p style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:1.25rem">Modulo di richiesta visita</p>
 
-          <form name="richiesta-visita" id="form-openday" novalidate onsubmit="prenotaVisita();return false;">
+          <form name="richiesta-visita" netlify netlify-honeypot="bot-field" method="POST" action="/grazie.html">
+            <input type="hidden" name="form-name" value="richiesta-visita"/>
             <p style="display:none"><label>Non compilare: <input name="bot-field"/></label></p>
 
           <!-- Layout 3+3 orizzontale -->
@@ -402,7 +403,7 @@
 
           <!-- Pulsante centrato -->
           <div style="text-align:center;margin-top:1.5rem">
-            <button type="button" onclick="prenotaVisita()" style="padding:.9rem 3rem;background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--bosco);border:none;border-radius:40px;font-family:var(--fu);font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s"
+            <button type="submit" style="padding:.9rem 3rem;background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--bosco);border:none;border-radius:40px;font-family:var(--fu);font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s"
               onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(184,146,42,.5)'"
               onmouseout="this.style.transform='';this.style.boxShadow=''">
               Invia richiesta visita →
@@ -551,78 +552,19 @@ window.addEventListener('load', () => {
 // ═══════════════════════════════════════════════════
 // PRENOTAZIONE VISITA
 // ═══════════════════════════════════════════════════
-async function prenotaVisita() {
-  const nome    = document.getElementById('vis-nome').value.trim();
-  const email   = document.getElementById('vis-email').value.trim();
-  const tel     = document.getElementById('vis-tel').value.trim();
-  const datap   = document.getElementById('vis-data').value.trim();
-  const persone = document.getElementById('vis-persone').value;
-  const note    = document.getElementById('vis-note').value.trim();
+function prenotaVisita() {
+  const nome  = document.getElementById('vis-nome').value.trim();
+  const email = document.getElementById('vis-email').value.trim();
+  if (!nome || !email) { alert('Inserisci nome ed email per procedere.'); return; }
 
-  if (!nome || !email) {
-    alert('Inserisci almeno nome ed email per procedere.');
-    return;
-  }
+  // Apri il mailto precompilato
+  const note = document.getElementById('vis-note').value.trim();
+  const data = document.getElementById('vis-data').value.trim();
+  const tel  = document.getElementById('vis-tel').value.trim();
+  const body = encodeURIComponent(`Richiesta visita guidata al Convitto Costaggini\n\nNome: ${nome}\nEmail: ${email}\nTelefono: ${tel}\nPreferenza: ${data}\n\nNote: ${note}`);
+  window.location.href = `mailto:convitto@alberghierorieti.it?subject=Richiesta%20visita%20guidata&body=${body}`;
 
-  const btn = document.querySelector('#form-openday button[type=submit]');
-  const origText = btn ? btn.textContent : '';
-  if (btn) { btn.disabled = true; btn.textContent = 'Invio in corso…'; }
-
-  try {
-    const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/prenotazioni_openday', {
-      method: 'POST',
-      headers: {
-        'apikey':        'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ',
-        'Authorization': 'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ',
-        'Content-Type':  'application/json',
-        'Prefer':        'return=minimal'
-      },
-      body: JSON.stringify({
-        nome,
-        email,
-        telefono:  tel  || null,
-        data_pref: datap || null,
-        persone:   persone || null,
-        note:      note  || null
-      })
-    });
-
-    if (!resp.ok) {
-      const err = await resp.text();
-      throw new Error('HTTP ' + resp.status + ': ' + err);
-    }
-
-    // Svuota il form
-    ['vis-nome','vis-email','vis-tel','vis-data','vis-note'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.value = '';
-    });
-    const sel = document.getElementById('vis-persone');
-    if (sel) sel.selectedIndex = 0;
-
-    // Overlay di conferma
-    const ov = document.createElement('div');
-    ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(10,20,10,.88);display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px)';
-    ov.innerHTML = `
-      <div style="background:#fff;border-radius:16px;padding:2.5rem 2rem;max-width:420px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)">
-        <div style="font-size:3rem;margin-bottom:1rem">✅</div>
-        <h2 style="font-family:var(--fd);font-size:1.8rem;color:var(--bosco);margin-bottom:.75rem;font-weight:300">Richiesta ricevuta!</h2>
-        <p style="font-size:.9rem;color:#555;line-height:1.75;margin-bottom:1.75rem">
-          Grazie per il suo interesse. La segreteria del Convitto la contatterà entro 2 giorni lavorativi per confermare la data della visita.
-        </p>
-        <button onclick="this.closest('div[style*=fixed]').remove();document.body.style.overflow=''"
-          style="background:var(--bosco);color:#fff;border:none;cursor:pointer;font-family:var(--fu);font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 2rem;border-radius:8px">
-          Chiudi
-        </button>
-      </div>`;
-    document.body.appendChild(ov);
-    document.body.style.overflow = 'hidden';
-
-  } catch(e) {
-    alert('Errore durante l\'invio. Riprova o contatti direttamente convitto@alberghierorieti.it\n(' + e.message + ')');
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = origText; }
-  }
+  document.getElementById('vis-ok').style.display = 'block';
 }
 
 // IntersectionObserver .rv
