@@ -72,6 +72,21 @@
     .com-acc-body{ padding:0 .9rem .85rem; font-size:.86rem; line-height:1.65; color:var(--txt2,#6b6353); }
     .com-acc-meta{ margin-top:.55rem; font-family:var(--fu); font-size:.68rem; font-style:italic; color:var(--txt2,#6b6353); }
   </style>
+  <style>
+    .ext-modal{ position:fixed; inset:0; z-index:9600; display:none; }
+    .ext-modal.on{ display:block; }
+    .ext-backdrop{ position:absolute; inset:0; background:rgba(12,20,13,.74); }
+    .ext-box{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(980px,94vw); max-height:92vh; background:#0c140d; border:1px solid rgba(184,146,42,.35); border-radius:12px; overflow:hidden; box-shadow:0 24px 70px rgba(0,0,0,.55); display:flex; flex-direction:column; }
+    .ext-bar{ display:flex; align-items:center; gap:.6rem; padding:.55rem .85rem; border-bottom:1px solid rgba(184,146,42,.22); }
+    .ext-title{ flex:1; color:#fff; font-family:var(--fu); font-size:.78rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .ext-open{ color:#D4AA4A; font-family:var(--fu); font-size:.62rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; white-space:nowrap; border:1px solid rgba(184,146,42,.4); padding:.32rem .6rem; border-radius:6px; }
+    .ext-open:hover{ background:rgba(184,146,42,.16); }
+    .ext-x{ background:none; border:none; color:#fff; font-size:1.15rem; line-height:1; cursor:pointer; padding:.2rem .45rem; }
+    .ext-x:hover{ color:#D4AA4A; }
+    .ext-frame-wrap{ position:relative; width:100%; aspect-ratio:16/9; background:#000; }
+    .ext-frame{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+    @media(max-width:700px){ .ext-box{ width:96vw; } }
+  </style>
 </head>
 <body data-page="notizie">
 <main id="main">
@@ -111,7 +126,7 @@
       <div class="comunicati-list" id="comunicati-list">
         <p style="font-family:var(--fu);font-size:.82rem;color:var(--txt2);padding:.5rem 0">Caricamento comunicati…</p>
       </div>
-      <a class="com-row rv" href="https://www.alberghierorieti.edu.it/tutte-le-circolari/" target="_blank" rel="noopener" style="margin-top:.6rem"><span class="com-date">Sito</span><span class="com-title">→ Consulta tutte le circolari ufficiali dell'istituto</span><span class="com-arrow">›</span></a>
+      <a class="com-row rv" href="https://www.alberghierorieti.edu.it/tutte-le-circolari/" data-ext style="margin-top:.6rem"><span class="com-date">Sito</span><span class="com-title">→ Consulta tutte le circolari ufficiali dell'istituto</span><span class="com-arrow">›</span></a>
     </div>
   </section>
 
@@ -153,10 +168,10 @@ function renderNotizie(filtro) {
   }
   const cat_colors = { eventi:'#1a4a7a', successi:'#1d6f42', pnrr:'#ea580c', 'vita al convitto':'#6b21a8' };
   grid.innerHTML = filtered.map((n, i) => {
-    const featured = i === 0 ? ' featured' : '';
+    const featured = ''; // tutte le notizie alla stessa dimensione
     const img = n.immagine ? `<img src="${n.immagine}" alt="${n.titolo}" loading="${i===0?'eager':'lazy'}"/>` : '';
     const cs = cat_colors[n.categoria] ? `background:${cat_colors[n.categoria]};color:#fff` : '';
-    const lnk = n.link ? `<a href="${n.link}" ${n.link.startsWith('http')?'target="_blank" rel="noopener"':''} class="ac-link">${n.link_testo||'Leggi →'}</a>` : '';
+    const lnk = n.link ? `<a href="${n.link}" ${n.link.startsWith('http')?'data-ext':''} class="ac-link">${n.link_testo||'Leggi →'}</a>` : '';
     return `<article class="article-card${featured}" data-cat="${n.categoria||''}">${img}<div class="ac-body"><div class="ac-meta"><span class="ac-date">${n.data_pub||''}</span><span class="ac-cat" style="${cs}">${n.categoria||''}</span></div><h3>${n.titolo}</h3><p>${n.testo||''}</p>${lnk}</div></article>`;
   }).join('');
 }
@@ -182,7 +197,7 @@ function fmtBadge(iso){
 function comEscape(t){ return (t||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 function comLinkify(t){
   return comEscape(t)
-    .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener" style="color:var(--oro-testo,#886813);font-weight:600;word-break:break-word">$1</a>')
+    .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" data-ext style="color:var(--oro-testo,#886813);font-weight:600;word-break:break-word">$1</a>')
     .replace(/\n/g, '<br>');
 }
 async function caricaComunicati(){
@@ -221,15 +236,66 @@ async function caricaEventi(){
     grid.innerHTML = lista.map((e,i)=>{
       const b = fmtBadge(e.data);
       const where = [e.luogo?('📍 '+e.luogo):'', e.nota||''].filter(Boolean).join(' · ');
-      const titolo = e.link ? `<a href="${e.link}" ${e.link.startsWith('http')?'target="_blank" rel="noopener"':''}>${e.titolo||''}</a>` : (e.titolo||'');
+      const titolo = e.link ? `<a href="${e.link}" ${e.link.startsWith('http')?'data-ext':''}>${e.titolo||''}</a>` : (e.titolo||'');
       const dcl = i%3===1?' d1':(i%3===2?' d2':'');
       return `<div class="ev-card${dcl}"><div class="ev-date"><span class="day">${b.day}</span><span class="mon">${b.mon}</span></div><div class="ev-body"><h3>${titolo}</h3>${e.descrizione?`<p>${e.descrizione}</p>`:''}${where?`<p class="ev-where">${where}</p>`:''}</div></div>`;
     }).join('');
   }catch(e){ grid.innerHTML=''; }
 }
+// ── Link esterni dentro il sito (finestra interna + player YouTube) ──
+function ytEmbed(url){
+  let m;
+  if((m = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/))) return 'https://www.youtube.com/embed/' + m[1] + '?rel=0';
+  if((m = url.match(/vimeo\.com\/(\d+)/))) return 'https://player.vimeo.com/video/' + m[1];
+  return null;
+}
+function openExt(url, titolo){
+  const modal = document.getElementById('ext-modal');
+  const frame = document.getElementById('ext-frame');
+  const wrap  = document.getElementById('ext-frame-wrap');
+  const emb   = ytEmbed(url);
+  if(emb){ wrap.style.aspectRatio = '16/9'; wrap.style.height = ''; }
+  else   { wrap.style.aspectRatio = 'auto'; wrap.style.height = '78vh'; }
+  frame.src = emb || url;
+  document.getElementById('ext-title').textContent = titolo || 'Anteprima';
+  document.getElementById('ext-open').href = url;
+  modal.classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function closeExt(){
+  const modal = document.getElementById('ext-modal');
+  if(!modal) return;
+  modal.classList.remove('on');
+  document.getElementById('ext-frame').src = 'about:blank';
+  document.body.style.overflow = '';
+}
+document.addEventListener('click', function(e){
+  const a = e.target.closest ? e.target.closest('a[data-ext]') : null;
+  if(!a) return;
+  const href = a.getAttribute('href') || '';
+  if(/^https?:\/\//i.test(href)){
+    e.preventDefault();
+    openExt(href, (a.textContent || '').trim());
+  }
+});
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeExt(); });
+
 caricaComunicati();
 caricaEventi();
 caricaNotizie();
 </script>
+<div id="ext-modal" class="ext-modal" role="dialog" aria-modal="true" aria-label="Anteprima contenuto">
+  <div class="ext-backdrop" onclick="closeExt()"></div>
+  <div class="ext-box">
+    <div class="ext-bar">
+      <span id="ext-title" class="ext-title">Anteprima</span>
+      <a id="ext-open" class="ext-open" href="#" target="_blank" rel="noopener" data-noext>apri in nuova scheda ↗</a>
+      <button class="ext-x" type="button" onclick="closeExt()" aria-label="Chiudi">✕</button>
+    </div>
+    <div id="ext-frame-wrap" class="ext-frame-wrap">
+      <iframe id="ext-frame" class="ext-frame" src="about:blank" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
 </body>
 </html>
