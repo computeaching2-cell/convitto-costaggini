@@ -63,7 +63,14 @@
     .form-msg { display: none; padding: 1rem 1.25rem; border-radius: 4px; font-size: .88rem; font-weight: 600; margin-top: .75rem; }
     .form-msg.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
     .form-msg.error   { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-  @media(min-width:560px){.cnt-grid{grid-template-columns:1fr 1fr}}</style>
+  @media(min-width:560px){.cnt-grid{grid-template-columns:1fr 1fr}}
+    /* Button di salto nella hero (stesso pattern di Notizie) */
+    .hero-jump { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.35rem; }
+    .hero-jump a { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--fu); font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--av,#F5F0E8); text-decoration:none; border:1px solid rgba(184,146,42,.6); background:rgba(255,255,255,.06); padding:.55rem 1rem; border-radius:40px; min-height:40px; transition:var(--ease); }
+    .hero-jump a:hover, .hero-jump a:focus-visible { background:var(--oro,#B8922A); border-color:var(--oro,#B8922A); color:var(--bosco,#2C3E2D); }
+    .hero-jump a .hj-ico { font-size:.9rem; line-height:1; }
+    /* l'ancora non finisce sotto l'header fisso */
+    #orari, #dove-siamo { scroll-margin-top: 90px; }</style>
 </head>
 <body data-page="contatti">
 <main id="main">
@@ -74,6 +81,10 @@
       <div class="gold-bar"></div>
       <h1>Contatti e <em>informazioni</em></h1>
       <p class="sub">Il nostro staff è disponibile per rispondere a qualsiasi domanda sul Convitto "Costaggini". Scrivici, chiamaci o vieni a trovarci a Rieti.</p>
+      <nav class="hero-jump" aria-label="Vai a una sezione della pagina">
+        <a href="#orari"><span class="hj-ico" aria-hidden="true">🕒</span> Orari</a>
+        <a href="#dove-siamo"><span class="hj-ico" aria-hidden="true">📍</span> Dove siamo</a>
+      </nav>
     </div>
   </div>
 </div>
@@ -166,7 +177,7 @@
   </section>
 
   <!-- ORARI SPORTELLO -->
-  <div class="orari-strip">
+  <div class="orari-strip" id="orari">
     <div class="w">
       <p class="lbl">Orari</p>
       <h2>Orari dello <em>sportello</em></h2>
