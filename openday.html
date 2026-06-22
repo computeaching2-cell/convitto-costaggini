@@ -597,9 +597,13 @@ Partecipanti: ${g('vis-persone') || '—'}
 Note / domande:
 ${g('vis-note') || '—'}`;
     const payload = {
+      tipo: 'openday',
       nome: g('vis-nome'),
       email: g('vis-email'),
       telefono: g('vis-tel'),
+      data_preferita: g('vis-data'),
+      persone: g('vis-persone'),
+      note: g('vis-note'),
       oggetto: 'Prenotazione Open Day — ' + g('vis-nome'),
       messaggio: corpo,
       privacy: true
