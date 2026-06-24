@@ -544,27 +544,27 @@
     
     const el = document.getElementById('cont-note');
     
-    // Filtra le righe escludendo i test di connessione ed eliminando i testi vuoti
+    // Filtra escludendo i test di connessione
     const filtrate = (data || []).filter(r => r.testo?.trim() && !r.testo.includes('TEST_CONNESSIONE'));
 
     if (!filtrate.length) { el.innerHTML = vuoto('📝','Nessuna nota registrata.'); return; }
     
     el.innerHTML = filtrate.map(r => {
-      // Il testo si trova sempre nel campo "testo" inviato dal tuo .gs
       const testoNota = r.testo.trim();
       
-      // Una nota è disciplinare se il campo 'tipo' contiene 'DISC' o se il testo contiene stringhe disciplinari
-      const disc = (r.tipo === 'DISC');
+      // Controllo robusto: è disciplinare se il tipo è DISC o se il testo lo indica
+      const disc = (r.tipo === 'DISC' || r.tipo === 'DISCIPLINARE');
       
-      return `<div class="card-dato ${disc?'rosso':''}">
-        <div class="card-meta"><span class="card-data">${fmt(r.data)}</span>
-        <span class="card-tag ${disc?'tag-disc':'tag-gen'}">${disc?'Disciplinare':'Generale'}</span></div>
+      return `<div class="card-dato ${disc ? 'rosso' : ''}">
+        <div class="card-meta">
+          <span class="card-data">${fmt(r.data)}</span>
+          <span class="card-tag ${disc ? 'tag-disc' : 'tag-gen'}">${disc ? 'Disciplinare' : 'Generale'}</span>
+        </div>
         <div class="card-testo">${san(testoNota)}</div>
-        ${r.operatore?`<div class="card-firma">Educatore: ${r.operatore}</div>`:''}
+        ${r.operatore ? `<div class="card-firma">Educatore: ${r.operatore}</div>` : ''}
       </div>`;
     }).join('');
   }
-
   async function caricaColloqui() {
     const { data } = await sb.from('famiglie_colloqui').select('*')
       .eq('nome_studente', nomeStudente).order('data', { ascending: false }).limit(50);
