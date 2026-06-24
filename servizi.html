@@ -34,6 +34,18 @@
     .orari-table tr:last-child td { border-bottom: none; }
     .orari-table tr:nth-child(even) td { background: var(--av2); }
   @media(min-width:560px){.srv-grid{grid-template-columns:1fr 1fr}}</style>
+  <style>
+    /* Collegamenti rapidi nell'hero */
+    .hero-jump { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.35rem; }
+    .hero-jump a { display:inline-flex; align-items:center; justify-content:center; gap:.45rem; font-family:var(--fu); font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--av,#F5F0E8); text-decoration:none; border:1px solid rgba(184,146,42,.6); background:rgba(255,255,255,.06); padding:.55rem 1rem; border-radius:40px; min-height:40px; transition:var(--ease); }
+    .hero-jump a:hover, .hero-jump a:focus-visible { background:var(--oro,#B8922A); border-color:var(--oro,#B8922A); color:var(--bosco,#2C3E2D); }
+    .hero-jump a .hj-ico { font-size:.9rem; line-height:1; }
+    @media(max-width:560px){
+      .hero-jump { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; }
+      .hero-jump a { padding:.55rem .5rem; }
+    }
+    #ristorazione, #alloggi, #studio, #sport, #tecnologia, #musica, #salute, #orari { scroll-margin-top: 90px; }
+  </style>
 </head>
 <body data-page="servizi">
 <main id="main">
@@ -44,6 +56,17 @@
       <div class="gold-bar"></div>
       <h1>I nostri <em>Servizi</em></h1>
       <p class="sub">Dal vitto all'alloggio, dalla biblioteca ai laboratori: ogni spazio del Convitto "Costaggini" è progettato per sostenere la crescita dello studente.</p>
+      <nav class="hero-jump" aria-label="Vai a una sezione della pagina">
+        <a href="#ristorazione"><span class="hj-ico" aria-hidden="true">🍽️</span> Ristorazione</a>
+        <a href="#alloggi"><span class="hj-ico" aria-hidden="true">🛏️</span> Alloggi</a>
+        <a href="#studio"><span class="hj-ico" aria-hidden="true">📚</span> Studio</a>
+        <a href="#sport"><span class="hj-ico" aria-hidden="true">⚽</span> Sport</a>
+        <a href="#tecnologia"><span class="hj-ico" aria-hidden="true">📶</span> Tecnologia</a>
+        <a href="#musica"><span class="hj-ico" aria-hidden="true">🎵</span> Musica</a>
+        <a href="#salute"><span class="hj-ico" aria-hidden="true">🩺</span> Salute</a>
+        <a href="#orari"><span class="hj-ico" aria-hidden="true">🕐</span> Orari</a>
+      </nav>
+
     </div>
   </div>
 
@@ -69,7 +92,7 @@
       </div>
 
       <!-- ALLOGGI -->
-      <div class="svc-block rev rv">
+      <div id="alloggi" class="svc-block rev rv">
         <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=900&q=80" alt="Camera del convitto" loading="lazy"/>
         <div>
           <p class="lbl">Servizio 02</p>
@@ -87,7 +110,7 @@
       </div>
 
       <!-- STUDIO GUIDATO -->
-      <div class="svc-block rv">
+      <div id="studio" class="svc-block rv">
         <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80" alt="Studio guidato al Convitto Costaggini" loading="lazy"/>
         <div>
           <p class="lbl">Servizio 03</p>
@@ -106,7 +129,7 @@
       </div>
 
       <!-- SPORT -->
-      <div class="svc-block rev rv">
+      <div id="sport" class="svc-block rev rv">
         <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80" alt="Palestra del convitto" loading="lazy"/>
         <div>
           <p class="lbl">Servizio 04</p>
@@ -125,7 +148,7 @@
       </div>
 
       <!-- TECNOLOGIA -->
-      <div class="svc-block rv">
+      <div id="tecnologia" class="svc-block rv">
         <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&q=80" alt="Laboratorio multimediale" loading="lazy"/>
         <div>
           <p class="lbl">Servizio 05</p>
@@ -144,7 +167,7 @@
       </div>
 
       <!-- LABORATORIO MUSICALE -->
-      <div class="svc-block rev rv">
+      <div id="musica" class="svc-block rev rv">
         <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=900&q=80" alt="Laboratorio musicale del Convitto Costaggini" loading="lazy"/>
         <div>
           <p class="lbl">Servizio 06 · Fiore all'occhiello</p>
@@ -164,7 +187,7 @@
       </div>
 
       <!-- SALUTE -->
-      <div class="svc-block rev rv">
+      <div id="salute" class="svc-block rev rv">
         <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80" alt="Infermeria del convitto" loading="lazy"/>
         <div>
           <p class="lbl">Servizio 07</p>
@@ -198,7 +221,7 @@
   </section>
 
   <!-- ORARI RIEPILOGO -->
-  <section style="background:var(--av2)">
+  <section id="orari" style="background:var(--av2)">
     <div class="w">
       <p class="lbl">Riepilogo orari</p>
       <h2>Orari dei <em>servizi principali</em></h2>
