@@ -321,23 +321,7 @@
       </div></div>
     </div>
     <div id="cont-semafori"><div class="loader"><div class="spinner"></div></div></div>
-  </div>
-  <div class="tab-cont" id="tab-note">
-    <div class="banner-info">Note degli educatori degli ultimi 30 giorni.</div>
-    <div id="cont-note"><div class="loader"><div class="spinner"></div></div></div>
-  </div>
-  <div class="tab-cont" id="tab-colloqui">
-    <div class="banner-info">Registro comunicazioni con famiglia e docenti.</div>
-    <div id="cont-colloqui"><div class="loader"><div class="spinner"></div></div></div>
-  </div>
-  <div class="tab-cont" id="tab-relazioni">
-    <div class="banner-info">Comunicazioni formali degli educatori.</div>
-    <div id="cont-relazioni"><div class="loader"><div class="spinner"></div></div></div>
-  </div>
-
-</div>
-
-<script>
+  </div><script>
   const { createClient } = supabase;
   const sb = createClient(
     'https://sawclsysqnjsvbobioqo.supabase.co',
@@ -386,12 +370,10 @@
     btn.disabled = true; btn.textContent = 'Accesso in corso...';
 
     const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
-
     if (error) {
       mostraMsg('Credenziali non valide. Verificare email e password.', 'err');
       btn.disabled = false; btn.textContent = 'Accedi';
-      return;
-    }
+      return;    }
 
     // Login ok → invia OTP via email
     emailUtente = email;
@@ -559,15 +541,28 @@
     const { data } = await sb.from('famiglie_note').select('*')
       .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
       .order('data', { ascending: false });
+    
     const el = document.getElementById('cont-note');
-    const filtrate = (data||[]).filter(r => r.testo?.trim() && !r.testo.includes('TEST_CONNESSIONE'));
+    
+    // Tolleranza per intercettare sia il campo "testo" che "note_disciplinari" (o "note_discilinari")
+    const filtrate = (data || []).filter(r => {
+      const testoValido = (r.testo?.trim() || r.note_disciplinari?.trim() || r.note_discilinari?.trim() || '');
+      return testoValido && !testoValido.includes('TEST_CONNESSIONE');
+    });
+
     if (!filtrate.length) { el.innerHTML = vuoto('📝','Nessuna nota registrata.'); return; }
+    
     el.innerHTML = filtrate.map(r => {
-      const disc = r.tipo==='DISC';
+      // Determina il testo effettivo della nota estraendo da più chiavi possibili per sicurezza
+      const testoNota = r.testo?.trim() || r.note_disciplinari?.trim() || r.note_discilinari?.trim() || '';
+      
+      // Viene considerata disciplinare se il tipo è 'DISC' o se proviene da colonne disciplinari specifiche
+      const disc = (r.tipo === 'DISC') || !!r.note_disciplinari || !!r.note_discilinari;
+      
       return `<div class="card-dato ${disc?'rosso':''}">
         <div class="card-meta"><span class="card-data">${fmt(r.data)}</span>
         <span class="card-tag ${disc?'tag-disc':'tag-gen'}">${disc?'Disciplinare':'Generale'}</span></div>
-        <div class="card-testo">${san(r.testo)}</div>
+        <div class="card-testo">${san(testoNota)}</div>
         ${r.operatore?`<div class="card-firma">Educatore: ${r.operatore}</div>`:''}
       </div>`;
     }).join('');
@@ -604,5 +599,20 @@
     ).join('');
   }
 </script>
+  <div class="tab-cont" id="tab-note">
+    <div class="banner-info">Note degli educatori degli ultimi 30 giorni.</div>
+    <div id="cont-note"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+  <div class="tab-cont" id="tab-colloqui">
+    <div class="banner-info">Registro comunicazioni con famiglia e docenti.</div>
+    <div id="cont-colloqui"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+  <div class="tab-cont" id="tab-relazioni">
+    <div class="banner-info">Comunicazioni formali degli educatori.</div>
+    <div id="cont-relazioni"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+
+</div>
+
 </body>
 </html>
