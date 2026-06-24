@@ -92,6 +92,20 @@
     </div>
   </div>
 
+  <!-- ── AVVISO ISCRIZIONI MINISTERIALI ── -->
+  <section style="background:var(--bco)">
+    <div class="w">
+      <div role="note" style="display:flex;gap:1rem;align-items:flex-start;background:#fff8e1;border:1px solid var(--oro,#B8922A);border-left:5px solid var(--oro,#B8922A);border-radius:10px;padding:1.3rem 1.5rem;max-width:840px;margin:0 auto">
+        <span aria-hidden="true" style="font-size:1.5rem;line-height:1.3">📌</span>
+        <div>
+          <p style="font-family:var(--fu);font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro-testo,#886813);margin:0 0 .45rem">Come e quando ci si iscrive</p>
+          <p style="margin:0 0 .6rem;font-size:.93rem;line-height:1.7;color:var(--bosco,#2C3E2D)">L'iscrizione vera e propria si effettua nel periodo <strong>dicembre&ndash;febbraio</strong>, entro le finestre di date stabilite ogni anno dal Ministero. Va presentata <strong>esclusivamente</strong> attraverso l'apposito portale ministeriale <em>Iscrizioni on line</em>: <a href="https://www.istruzione.it/iscrizionionline/" target="_blank" rel="noopener" style="color:var(--bosco2,#3a5a3c);font-weight:700">www.istruzione.it/iscrizionionline</a>.</p>
+          <p style="margin:0;font-size:.88rem;line-height:1.65;color:var(--txt2,#6b6353)">I moduli presenti in questa pagina sono utilizzabili per le richieste che dovessero sorgere <strong>al di fuori</strong> di tale finestra temporale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── INFOGRAFICA 4 PASSI ── -->
   <section style="background:linear-gradient(135deg,var(--bosco),#1a2e1b);padding:4rem 1.25rem">
     <div class="w" style="text-align:center">
@@ -446,7 +460,7 @@
               <div><label style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bosco2);display:block;margin-bottom:.3rem">Email per la conferma</label><input type="email" id="cert-email" placeholder="es. mario.rossi@email.it" style="width:100%;padding:.6rem .85rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box"/></div>
               <div style="display:flex;gap:.75rem;flex-wrap:wrap">
                 <button onclick="stampaCert()" style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:linear-gradient(135deg,var(--bosco),#1a3a1b);color:#fff;border:none;border-radius:8px;cursor:pointer">🖨️ Stampa richiesta</button>
-                <a href="mailto:rirh010007@istruzione.it?subject=Richiesta certificato di frequenza Convitto" style="display:inline-flex;align-items:center;font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:transparent;color:var(--bosco2);border:1.5px solid var(--av3);border-radius:8px;text-decoration:none">📧 Invia per email</a>
+                <button type="button" onclick="inviaCertEmail()" style="display:inline-flex;align-items:center;font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.25rem;background:transparent;color:var(--bosco2);border:1.5px solid var(--av3);border-radius:8px;text-decoration:none;cursor:pointer">📧 Invia per email</button>
               </div>
             </div>
           </div>
@@ -706,6 +720,42 @@ function resetAllergie() {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
+}
+
+// ── INVIO RICHIESTA CERTIFICATO VIA EMAIL ──────────
+function inviaCertEmail() {
+  const g = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  const nome = g('cert-nome'), classe = g('cert-classe'), as = g('cert-as'),
+        copie = g('cert-copie'), uso = g('cert-uso'),
+        rich = g('cert-richiedente'), email = g('cert-email');
+
+  // controllo dei campi obbligatori
+  const mancanti = [];
+  if (!nome) mancanti.push('Cognome e nome del convittore');
+  if (!as)   mancanti.push('Anno scolastico');
+  if (!rich) mancanti.push('Nome e cognome del richiedente');
+  if (mancanti.length) {
+    alert('Per inviare la richiesta, compila prima questi campi:\n\n• ' + mancanti.join('\n• '));
+    return;
+  }
+
+  const dest = 'rirh010007@istruzione.it,convitto@alberghierorieti.it';
+  const subject = 'Richiesta certificato di frequenza Convitto — ' + nome;
+  const corpo =
+    'Spett.le Segreteria / Convitto "Costaggini",\n\n' +
+    'con la presente si richiede il rilascio del certificato di frequenza del Convitto per il seguente convittore:\n\n' +
+    '• Cognome e nome: ' + nome + '\n' +
+    '• Classe: ' + (classe || '—') + '\n' +
+    '• Anno scolastico: ' + as + '\n' +
+    '• Numero di copie richieste: ' + (copie || '1') + '\n' +
+    '• Finalità del certificato: ' + (uso || '—') + '\n\n' +
+    'Richiedente (genitore o studente maggiorenne): ' + rich + '\n' +
+    'Email per la conferma: ' + (email || '—') + '\n\n' +
+    'Cordiali saluti,\n' + rich;
+
+  window.location.href = 'mailto:' + dest +
+    '?subject=' + encodeURIComponent(subject) +
+    '&body=' + encodeURIComponent(corpo);
 }
 
 // FAQ accordion esistente
