@@ -536,35 +536,49 @@
     ).join('');
   }
 
-  async function caricaNote() {
-    const dal = new Date(); dal.setDate(dal.getDate()-30);
-    const { data } = await sb.from('famiglie_note').select('*')
-      .eq('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
-      .order('data', { ascending: false });
-    
-    const el = document.getElementById('cont-note');
-    
-    // Filtra escludendo i test di connessione
-    const filtrate = (data || []).filter(r => r.testo?.trim() && !r.testo.includes('TEST_CONNESSIONE'));
+async function caricaNote() {
+  // Inizio anno scolastico corrente (1° settembre)
+  const oggi = new Date();
+  const annoScol = (oggi.getMonth() >= 8) ? oggi.getFullYear() : oggi.getFullYear() - 1;
+  const inizioAnno = `${annoScol}-09-01`;
 
-    if (!filtrate.length) { el.innerHTML = vuoto('📝','Nessuna nota registrata.'); return; }
+  // Soglia 30 giorni, solo per le note GENERICHE
+  const d30 = new Date(); d30.setDate(d30.getDate() - 30);
+  const soglia30 = d30.toISOString().split('T')[0];
+
+  // Una sola query: tutte le note dell'anno scolastico (filtro fine lato client)
+  const { data } = await sb.from('famiglie_note').select('*')
+    .ilike('nome_studente', nomeStudente)
+    .gte('data', inizioAnno)
+    .order('data', { ascending: false });
+
+  const el = document.getElementById('cont-note');
+
+  const filtrate = (data || []).filter(r => {
+    if (!r.testo?.trim()) return false;
+    if (r.testo.includes('TEST_CONNESSIONE')) return false;
+    const disc = (r.tipo === 'DISC' || r.tipo === 'DISCIPLINARE');
+    const dataNota = String(r.data).substring(0, 10);
+    // Disciplinari: tutto l'anno · Generiche: solo ultimi 30 giorni
+    return disc ? true : (dataNota >= soglia30);
+  });
+
+  if (!filtrate.length) { el.innerHTML = vuoto('📝', 'Nessuna nota registrata.'); return; }
+
+  el.innerHTML = filtrate.map(r => {
+    const testoNota = r.testo.trim();
+    const disc = (r.tipo === 'DISC' || r.tipo === 'DISCIPLINARE');
+    return `<div class="card-dato ${disc ? 'rosso' : ''}">
+      <div class="card-meta">
+        <span class="card-data">${fmt(r.data)}</span>
+        <span class="card-tag ${disc ? 'tag-disc' : 'tag-gen'}">${disc ? 'Disciplinare' : 'Generale'}</span>
+      </div>
+      <div class="card-testo">${san(testoNota)}</div>
+      ${r.operatore ? `<div class="card-firma">Educatore: ${r.operatore}</div>` : ''}
+    </div>`;
+  }).join('');
+}
     
-    el.innerHTML = filtrate.map(r => {
-      const testoNota = r.testo.trim();
-      
-      // Controllo robusto: è disciplinare se il tipo è DISC o se il testo lo indica
-      const disc = (r.tipo === 'DISC' || r.tipo === 'DISCIPLINARE');
-      
-      return `<div class="card-dato ${disc ? 'rosso' : ''}">
-        <div class="card-meta">
-          <span class="card-data">${fmt(r.data)}</span>
-          <span class="card-tag ${disc ? 'tag-disc' : 'tag-gen'}">${disc ? 'Disciplinare' : 'Generale'}</span>
-        </div>
-        <div class="card-testo">${san(testoNota)}</div>
-        ${r.operatore ? `<div class="card-firma">Educatore: ${r.operatore}</div>` : ''}
-      </div>`;
-    }).join('');
-  }
   async function caricaColloqui() {
     const { data } = await sb.from('famiglie_colloqui').select('*')
       .eq('nome_studente', nomeStudente).order('data', { ascending: false }).limit(50);
