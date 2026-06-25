@@ -400,11 +400,7 @@
       btn.disabled = false; btn.textContent = 'Accedi';
       return;    }
 
-    // Login ok → invia OTP via email
-    emailUtente = email;
-    await inviaOtpEmail(email);
-    document.getElementById('otp-email-label').textContent = email;
-    mostraSchermata('otp');
+    // Login ok → la dashboard parte automaticamente dall'evento SIGNED_IN
     btn.disabled = false; btn.textContent = 'Accedi';
   }
 
