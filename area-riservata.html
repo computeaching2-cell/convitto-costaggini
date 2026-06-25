@@ -362,8 +362,6 @@
 
     sb.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') { mostraSchermata('nuova-password'); return; }
-      if (inRecovery) return; // durante il recovery ignora SIGNED_IN, resta sul reset
-      if (event === 'SIGNED_IN' && session) avviaDashboard(session.user.email);
       if (event === 'SIGNED_OUT') mostraAuth();
     });
   });
@@ -400,8 +398,9 @@
       btn.disabled = false; btn.textContent = 'Accedi';
       return;    }
 
-    // Login ok → la dashboard parte automaticamente dall'evento SIGNED_IN
+    // Login ok → avvio la dashboard direttamente (non dipendo dall'evento)
     btn.disabled = false; btn.textContent = 'Accedi';
+    await avviaDashboard(email);
   }
 
   // ── OTP ──
