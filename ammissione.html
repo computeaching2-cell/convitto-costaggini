@@ -215,7 +215,7 @@
   <!-- PROCEDURA -->
   <section id="procedura" style="background:var(--bco)">
     <div class="w" style="display:grid;gap:4rem" id="proc-grid">
-      <div>
+      <div id="proc-intro">
         <p class="lbl">Come iscriversi</p>
         <h2>Le fasi dell'<em>iscrizione</em></h2>
         <p class="lead">L'iscrizione al Convitto avviene tramite procedura online sul portale del Ministero dell'Istruzione e del Merito, integrata da documentazione cartacea da consegnare in segreteria.</p>
@@ -232,7 +232,7 @@
       </nav>
     </div>
   </section>
-  <style>#proc-grid { grid-template-columns: 1fr; } @media(min-width:900px){ #proc-grid { grid-template-columns: 1fr 1.2fr; align-items: start; } }</style>
+  <style>#proc-grid { grid-template-columns: 1fr; } @media(min-width:900px){ #proc-grid { grid-template-columns: 1fr 1.2fr; align-items: start; } #proc-intro { position: sticky; top: 90px; align-self: start; } }</style>
 
   <!-- TARIFFE -->
   <section id="tariffe" style="background:var(--av)">
@@ -768,15 +768,6 @@ document.querySelectorAll('.faq-btn').forEach(btn => {
     if (!open) { body.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
   });
 });
-</script>
-<script>
-  document.querySelectorAll('.faq-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const body = btn.nextElementSibling;
-      const open = body.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open);
-    });
-  });
 </script>
 </body>
 </html>
