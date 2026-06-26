@@ -151,12 +151,44 @@
     .card-testo { font-size: .92rem; color: var(--testo); line-height: 1.6; white-space: pre-wrap; }
     .card-firma { font-size: .76rem; color: #94a3b8; margin-top: 6px; }
 
-    .sem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    /* ── SINTESI COMPORTAMENTO ── */
+    .sem-sintesi {
+      background: #fff; border-radius: var(--radius); padding: 16px 18px;
+      margin-bottom: 14px; box-shadow: 0 2px 8px rgba(44,62,45,.08);
+      border-left: 4px solid var(--oro);
+    }
+    .sem-sintesi.positiva { border-left-color: #22c55e; background: #f4fcf6; }
+    .sem-sintesi .titolo-sintesi {
+      font-family: var(--fd); font-size: 1.15rem; color: var(--bosco);
+      margin-bottom: 4px;
+    }
+    .sem-sintesi .frase-sintesi { font-size: .86rem; color: var(--txt2); line-height: 1.5; }
+    .sem-totali {
+      display: flex; justify-content: center; gap: 22px; margin-top: 12px;
+      padding-top: 12px; border-top: 1px solid var(--panna-s);
+    }
+    .sem-totale { text-align: center; }
+    .sem-totale .num { font-size: 1.7rem; font-weight: 800; line-height: 1; }
+    .sem-totale .num.v { color: #16a34a; }
+    .sem-totale .num.g { color: #ca8a04; }
+    .sem-totale .num.r { color: #dc2626; }
+    .sem-totale .lbl { font-size: .72rem; color: var(--txt2); font-weight: 700; margin-top: 4px; }
+    .sem-periodo-label {
+      font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--bosco); text-align: center; margin: 4px 0 10px;
+    }
+
+    .sem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
     .sem-box { background: #fff; border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: 0 2px 8px rgba(44,62,45,.08); }
     .sem-box h3 { font-size: .75rem; font-weight: 800; color: var(--txt2); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
     .sem-pallini { font-size: 1.8rem; display: flex; justify-content: space-around; margin-bottom: 6px; }
     .sem-pallino { display: flex; flex-direction: column; align-items: center; gap: 2px; }
     .sem-pallino span { font-size: .72rem; color: var(--txt2); font-weight: 700; }
+    .sem-anno {
+      font-size: .8rem; color: var(--txt2); text-align: center;
+      margin-bottom: 18px; line-height: 1.5;
+    }
+    .sem-anno strong { color: var(--bosco); }
 
     .presenze-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
     .pres-card { background: #fff; border-radius: var(--radius); padding: 14px 16px; box-shadow: 0 2px 8px rgba(44,62,45,.08); }
@@ -324,6 +356,19 @@
   </div>
   <div class="tab-cont" id="tab-semafori">
     <div class="banner-info">🟢 Positivo · 🟡 Migliorabile · 🔴 Da migliorare</div>
+
+    <!-- Sintesi del mese: frase gentile + totali complessivi -->
+    <div id="sem-sintesi" class="sem-sintesi" style="display:none;">
+      <div class="titolo-sintesi" id="sem-sintesi-titolo"></div>
+      <div class="frase-sintesi" id="sem-sintesi-frase"></div>
+      <div class="sem-totali">
+        <div class="sem-totale"><div class="num v" id="tot-mese-v">0</div><div class="lbl">Positivi</div></div>
+        <div class="sem-totale"><div class="num g" id="tot-mese-g">0</div><div class="lbl">Migliorabili</div></div>
+        <div class="sem-totale"><div class="num r" id="tot-mese-r">0</div><div class="lbl">Da migliorare</div></div>
+      </div>
+    </div>
+
+    <div class="sem-periodo-label">Ultimi 30 giorni, per ambito</div>
     <div class="sem-grid">
       <div class="sem-box"><h3>🛏️ Camera</h3><div class="sem-pallini">
         <div class="sem-pallino">🟢<span id="c-cam-v">0</span></div>
@@ -336,8 +381,31 @@
         <div class="sem-pallino">🔴<span id="c-stu-r">0</span></div>
       </div></div>
     </div>
+
+    <!-- Riepilogo dell'intero anno scolastico -->
+    <div class="sem-anno" id="sem-anno" style="display:none;">
+      Nell'intero anno scolastico: <strong id="anno-v">0</strong> 🟢 ·
+      <strong id="anno-g">0</strong> 🟡 · <strong id="anno-r">0</strong> 🔴
+    </div>
+
     <div id="cont-semafori"><div class="loader"><div class="spinner"></div></div></div>
-  </div><script>
+  </div>
+  <div class="tab-cont" id="tab-note">
+    <div class="banner-info">Note degli educatori degli ultimi 30 giorni.</div>
+    <div id="cont-note"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+  <div class="tab-cont" id="tab-colloqui">
+    <div class="banner-info">Registro comunicazioni con famiglia e docenti.</div>
+    <div id="cont-colloqui"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+  <div class="tab-cont" id="tab-relazioni">
+    <div class="banner-info">Comunicazioni formali degli educatori.</div>
+    <div id="cont-relazioni"><div class="loader"><div class="spinner"></div></div></div>
+  </div>
+
+</div>
+
+<script>
   const { createClient } = supabase;
   const sb = createClient(
     'https://sawclsysqnjsvbobioqo.supabase.co',
@@ -559,27 +627,101 @@
   }
 
   async function caricaSemafori() {
-    const dal = new Date(); dal.setDate(dal.getDate()-30);
+    // Inizio anno scolastico corrente (1° settembre): scarico TUTTO l'anno una volta sola
+    const oggi = new Date();
+    const annoScol = (oggi.getMonth() >= 8) ? oggi.getFullYear() : oggi.getFullYear() - 1;
+    const inizioAnno = `${annoScol}-09-01`;
+
+    // Soglia 30 giorni per la vista "mese"
+    const d30 = new Date(); d30.setDate(d30.getDate() - 30);
+    const soglia30 = d30.toISOString().split('T')[0];
+
     const { data } = await sb.from('famiglie_semafori').select('*')
-      .ilike('nome_studente', nomeStudente).gte('data', dal.toISOString().split('T')[0])
+      .ilike('nome_studente', nomeStudente)
+      .gte('data', inizioAnno)
       .order('data', { ascending: false });
+
     const el = document.getElementById('cont-semafori');
     if (!data?.length) { el.innerHTML = vuoto('🚦','Nessuna valutazione registrata.'); return; }
-    const cnt = { Camera:{'🟢':0,'🟡':0,'🔴':0}, Studio:{'🟢':0,'🟡':0,'🔴':0} };
-    data.forEach(r => { if(cnt[r.tipo]?.[r.colore]!==undefined) cnt[r.tipo][r.colore]++; });
+
+    // Conteggi: per ambito (mese), totali mese, totali anno
+    const cntMese = { Camera:{'🟢':0,'🟡':0,'🔴':0}, Studio:{'🟢':0,'🟡':0,'🔴':0} };
+    const totMese = {'🟢':0,'🟡':0,'🔴':0};
+    const totAnno = {'🟢':0,'🟡':0,'🔴':0};
+
+    data.forEach(r => {
+      const col = r.colore;
+      if (totAnno[col] === undefined) return;     // ignora valori non riconosciuti
+      totAnno[col]++;
+      const dataRiga = String(r.data).substring(0,10);
+      if (dataRiga >= soglia30) {
+        totMese[col]++;
+        if (cntMese[r.tipo]) cntMese[r.tipo][col]++;
+      }
+    });
+
+    // Spaccato per ambito (ultimi 30 giorni)
     ['cam','stu'].forEach((k,i) => {
       const tipo = ['Camera','Studio'][i];
-      document.getElementById(`c-${k}-v`).textContent = cnt[tipo]['🟢'];
-      document.getElementById(`c-${k}-g`).textContent = cnt[tipo]['🟡'];
-      document.getElementById(`c-${k}-r`).textContent = cnt[tipo]['🔴'];
+      document.getElementById(`c-${k}-v`).textContent = cntMese[tipo]['🟢'];
+      document.getElementById(`c-${k}-g`).textContent = cntMese[tipo]['🟡'];
+      document.getElementById(`c-${k}-r`).textContent = cntMese[tipo]['🔴'];
     });
+
+    // Totali del mese
+    document.getElementById('tot-mese-v').textContent = totMese['🟢'];
+    document.getElementById('tot-mese-g').textContent = totMese['🟡'];
+    document.getElementById('tot-mese-r').textContent = totMese['🔴'];
+
+    // Riga di sintesi gentile
+    const sintesi = document.getElementById('sem-sintesi');
+    const tit = document.getElementById('sem-sintesi-titolo');
+    const fra = document.getElementById('sem-sintesi-frase');
+    const totMeseN = totMese['🟢'] + totMese['🟡'] + totMese['🔴'];
+
+    if (totMeseN === 0) {
+      // Nessuna valutazione nell'ultimo mese, ma ci sono dati nell'anno
+      sintesi.style.display = 'block';
+      sintesi.classList.remove('positiva');
+      tit.textContent = 'Nessuna valutazione nell\'ultimo mese';
+      fra.textContent = 'In questo periodo non sono state registrate valutazioni di comportamento. Qui sotto trovi il riepilogo dell\'intero anno.';
+    } else {
+      sintesi.style.display = 'block';
+      const prevalgonoVerdi = (totMese['🟢'] >= totMese['🟡'] + totMese['🔴']) && totMese['🟢'] > 0;
+      if (prevalgonoVerdi) {
+        sintesi.classList.add('positiva');
+        tit.textContent = '👍 Andamento positivo';
+        fra.textContent = 'Nell\'ultimo mese prevalgono le valutazioni positive. Un bel segnale di impegno e collaborazione.';
+      } else {
+        sintesi.classList.remove('positiva');
+        tit.textContent = 'Riepilogo dell\'ultimo mese';
+        fra.textContent = 'Di seguito le valutazioni di comportamento registrate, suddivise per ambito.';
+      }
+    }
+
+    // Riepilogo dell'intero anno
+    const annoBox = document.getElementById('sem-anno');
+    const totAnnoN = totAnno['🟢'] + totAnno['🟡'] + totAnno['🔴'];
+    if (totAnnoN > 0) {
+      annoBox.style.display = 'block';
+      document.getElementById('anno-v').textContent = totAnno['🟢'];
+      document.getElementById('anno-g').textContent = totAnno['🟡'];
+      document.getElementById('anno-r').textContent = totAnno['🔴'];
+    }
+
+    // Elenco cronologico: solo gli ultimi 30 giorni (coerente con lo spaccato per ambito)
     const cls = {'🟢':'verde','🟡':'giallo','🔴':'rosso'};
-    el.innerHTML = data.map(r =>
-      `<div class="card-dato ${cls[r.colore]||''}">
-         <div class="card-meta"><span class="card-data">${fmt(r.data)}</span>
-         <span style="font-size:.82rem;font-weight:700;color:var(--txt2);">${r.tipo}</span></div>
-         <div style="font-size:1.4rem;">${r.colore}</div></div>`
-    ).join('');
+    const recenti = data.filter(r => String(r.data).substring(0,10) >= soglia30);
+    if (recenti.length) {
+      el.innerHTML = recenti.map(r =>
+        `<div class="card-dato ${cls[r.colore]||''}">
+           <div class="card-meta"><span class="card-data">${fmt(r.data)}</span>
+           <span style="font-size:.82rem;font-weight:700;color:var(--txt2);">${r.tipo}</span></div>
+           <div style="font-size:1.4rem;">${r.colore}</div></div>`
+      ).join('');
+    } else {
+      el.innerHTML = vuoto('🗓️','Nessuna valutazione negli ultimi 30 giorni. Più in alto il riepilogo dell\'anno.');
+    }
   }
 
 async function caricaNote() {
@@ -624,7 +766,7 @@ async function caricaNote() {
     </div>`;
   }).join('');
 }
-    
+
   async function caricaColloqui() {
     const { data } = await sb.from('famiglie_colloqui').select('*')
       .ilike('nome_studente', nomeStudente).order('data', { ascending: false }).limit(50);
@@ -656,20 +798,6 @@ async function caricaNote() {
     ).join('');
   }
 </script>
-  <div class="tab-cont" id="tab-note">
-    <div class="banner-info">Note degli educatori degli ultimi 30 giorni.</div>
-    <div id="cont-note"><div class="loader"><div class="spinner"></div></div></div>
-  </div>
-  <div class="tab-cont" id="tab-colloqui">
-    <div class="banner-info">Registro comunicazioni con famiglia e docenti.</div>
-    <div id="cont-colloqui"><div class="loader"><div class="spinner"></div></div></div>
-  </div>
-  <div class="tab-cont" id="tab-relazioni">
-    <div class="banner-info">Comunicazioni formali degli educatori.</div>
-    <div id="cont-relazioni"><div class="loader"><div class="spinner"></div></div></div>
-  </div>
-
-</div>
 
 </body>
 </html>
