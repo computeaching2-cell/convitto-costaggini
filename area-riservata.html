@@ -217,6 +217,20 @@
       .sem-grid { grid-template-columns: 1fr; }
       .otp-input { width: 42px; height: 50px; font-size: 1.3rem; }
     }
+
+    /* ── Fix overflow orizzontale tab Comportamento (mobile) + guard globale ── */
+    html, body { overflow-x: hidden; }
+    /* la riga dei 3 totali non sborda piu': i figli si restringono e, se serve, vanno a capo */
+    .sem-totali { flex-wrap: wrap; }
+    .sem-totale { min-width: 0; }
+    /* card e box non escono mai dal contenitore */
+    .sem-sintesi, .sem-box, .card-dato, .pres-card, .rel-card { min-width: 0; max-width: 100%; }
+    .sem-grid, .presenze-grid { min-width: 0; }
+    /* testi lunghi (firme, oggetti, email) spezzano invece di allargare */
+    .card-testo, .rel-body, .card-data, .sem-anno { overflow-wrap: anywhere; }
+    @media (max-width: 480px) {
+      .sem-totali { gap: 10px 16px; }
+    }
   </style>
 </head>
 <body>
@@ -797,23 +811,6 @@ async function caricaNote() {
       </div>`
     ).join('');
   }
-  /* ── Fix overflow orizzontale tab Comportamento (mobile) + guard globale ── */
-html, body { overflow-x: hidden; }
-
-/* la riga dei 3 totali non sborda più: i figli si restringono e, se serve, vanno a capo */
-.sem-totali { flex-wrap: wrap; }
-.sem-totale { min-width: 0; }
-
-/* card e box non escono mai dal contenitore */
-.sem-sintesi, .sem-box, .card-dato, .pres-card, .rel-card { min-width: 0; max-width: 100%; }
-.sem-grid, .presenze-grid { min-width: 0; }
-
-/* testi lunghi (firme, oggetti, email) spezzano invece di allargare */
-.card-testo, .rel-body, .card-data, .sem-anno { overflow-wrap: anywhere; }
-
-@media (max-width: 480px) {
-  .sem-totali { gap: 10px 16px; }
-}
 </script>
 
 </body>
