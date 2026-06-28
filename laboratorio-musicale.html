@@ -35,7 +35,7 @@
       position: absolute; inset: 0;
       background:
         linear-gradient(180deg, rgba(10,15,10,.72) 0%, rgba(10,15,10,.55) 50%, rgba(10,15,10,.92) 100%),
-        url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1600&q=80') center/cover no-repeat;
+        url('img/strumenti-collage.svg') center/cover no-repeat;
     }
     /* Pentagramma animato in sfondo */
     .mus-lines {
@@ -622,17 +622,19 @@
           </div>
         </div>
 
-        <!-- Video segnaposto 2 — da sostituire -->
+        <!-- Video — Jingle Bell Rock, Festa di Natale -->
         <div class="video-card rv d1">
-          <div class="video-wrap" style="display:flex;align-items:center;justify-content:center;background:var(--bosco)">
-            <div style="text-align:center;padding:2rem">
-              <svg viewBox="0 0 24 24" width="48" height="48" style="fill:rgba(184,146,42,.4);margin-bottom:.75rem"><path d="M8 5v14l11-7z"/></svg>
-              <p style="font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.3)">Video da aggiungere</p>
-            </div>
+          <div class="video-wrap">
+            <video controls preload="metadata" playsinline
+                   poster="img/jingle-bell-rock-poster.jpg"
+                   style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;background:#0a0f0a">
+              <source src="video/jingle-bell-rock-2024.mp4" type="video/mp4"/>
+              Il tuo browser non supporta la riproduzione video.
+            </video>
           </div>
           <div class="video-info">
-            <p class="vid-tag">Concerto · In arrivo</p>
-            <h3>Esibizione del laboratorio — da inserire</h3>
+            <p class="vid-tag">Concerto · Festa di Natale</p>
+            <h3>Jingle Bell Rock — Laboratorio Musicale</h3>
           </div>
         </div>
 
