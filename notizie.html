@@ -6,7 +6,7 @@
   <meta http-equiv="Expires" content="0"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="description" content="Tutte le notizie, eventi e comunicati del Convitto Costaggini di Rieti." />
-  <meta property="og:title" content="Notizie — Convitto "Costaggini" Rieti"/>
+  <meta property="og:title" content="Notizie — Convitto 'Costaggini' Rieti"/>
   <meta property="og:description" content="Ultime notizie ed eventi dall'IPSSEOA Costaggini di Rieti."/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Convitto Costaggini — Rieti"/>
@@ -113,7 +113,6 @@
     </div>
   </div>
 
-  <!-- IN EVIDENZA + NOTIZIE -->
   <section style="background:var(--bco)">
     <div class="w">
       <p class="lbl">In primo piano</p>
@@ -131,7 +130,6 @@
     </div>
   </section>
 
-  <!-- COMUNICATI UFFICIALI -->
   <section id="comunicati" style="background:var(--av2)">
     <div class="w">
       <p class="lbl">Atti e comunicati</p>
@@ -143,7 +141,6 @@
     </div>
   </section>
 
-  <!-- PROSSIMI EVENTI -->
   <section id="eventi" style="background:var(--av)">
     <div class="w">
       <p class="lbl">Agenda</p>
@@ -287,8 +284,16 @@ document.addEventListener('click', function(e){
   if(!a) return;
   const href = a.getAttribute('href') || '';
   if(/^https?:\/\//i.test(href)){
-    e.preventDefault();
-    openExt(href, (a.textContent || '').trim());
+    // SE IL LINK È UN VIDEO (YOUTUBE o VIMEO), USA LA FINESTRA INTERNA MODALE
+    if (ytEmbed(href)) {
+      e.preventDefault();
+      openExt(href, (a.textContent || '').trim());
+    } else {
+      // PER TUTTI GLI ALTRI COLLEGAMENTI ESTERNI (INCLUSO IL SITO DELLA SCUOLA)
+      // APRIRE DIRETTAMENTE IN NUOVA SCHEDA PER MASSIMA RESPONSIVITÀ SU SMARTPHONE
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+    }
   }
 });
 document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeExt(); });
