@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#2C3E2D">
+<link rel="stylesheet" href="style.css">
 <style>
   /* ===== Sezione "Come arrivare" — autosufficiente =====
      Per integrarla nel sito: mantieni questo <style> e tutto ciò che
@@ -63,7 +65,7 @@
       radial-gradient(90% 70% at -10% 110%, rgba(184,146,42,.10), transparent 55%);
     pointer-events: none;
   }
-  .ca-hero .ca-wrap { position: relative; }
+  .ca-hero .ca-wrap { position: relative; z-index: 2; }
   .ca-hero-brand {
     font-size: .74rem; letter-spacing: .26em; text-transform: uppercase;
     font-weight: 600; color: var(--oro-soft);
@@ -197,20 +199,45 @@
     font-size: .82rem; color: rgba(246,242,232,.62); max-width: 70ch;
   }
 
+  /* ---------- vivacità minima nell'hero ---------- */
+  .ca-sparks { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+  .ca-spark {
+    position: absolute; bottom: -10px; width: 5px; height: 5px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(237,217,138,.95), rgba(184,146,42,.55) 60%, transparent 72%);
+    opacity: 0; animation: caFloat linear infinite; will-change: transform, opacity;
+  }
+  @keyframes caFloat {
+    0%   { transform: translateY(0) scale(.9);   opacity: 0; }
+    15%  { opacity: .55; }
+    85%  { opacity: .3; }
+    100% { transform: translateY(-78vh) scale(1.05); opacity: 0; }
+  }
+
   /* ---------- reveal on scroll ---------- */
   .ca-reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
   .ca-reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
     .ca-reveal { opacity: 1; transform: none; transition: none; }
     .ca-btn, .ca-btn .arr { transition: none; }
+    .ca-sparks { display: none; }
   }
 </style>
 </head>
 <body data-page="come-arrivare">
-<main class="ca">
+<main id="main" class="ca">
 
   <!-- HERO -->
   <header class="ca-hero">
+    <div class="ca-sparks" aria-hidden="true">
+      <span class="ca-spark" style="left:6%;animation-duration:11s;animation-delay:0s"></span>
+      <span class="ca-spark" style="left:18%;animation-duration:13s;animation-delay:3s"></span>
+      <span class="ca-spark" style="left:31%;animation-duration:9.5s;animation-delay:1.4s"></span>
+      <span class="ca-spark" style="left:46%;animation-duration:12s;animation-delay:4.2s"></span>
+      <span class="ca-spark" style="left:59%;animation-duration:10.5s;animation-delay:2.1s"></span>
+      <span class="ca-spark" style="left:72%;animation-duration:13.5s;animation-delay:5s"></span>
+      <span class="ca-spark" style="left:84%;animation-duration:9s;animation-delay:1s"></span>
+      <span class="ca-spark" style="left:93%;animation-duration:12.5s;animation-delay:3.6s"></span>
+    </div>
     <div class="ca-wrap">
       <p class="ca-hero-brand">Convitto «Costaggini» · Rieti</p>
       <h1>Dalla <em>Salaria</em>,<br>fino a noi.</h1>
@@ -340,5 +367,6 @@
     els.forEach(function (el) { io.observe(el); });
   })();
 </script>
+<script src="nav.js"></script>
 </body>
 </html>
