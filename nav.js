@@ -58,6 +58,7 @@
           <li><a href="orientamento.html" data-page="orientamento">🗓 Orientamento &amp; Open Day</a></li>
           <li><a href="genitori.html" data-page="genitori">👨‍👩‍👧 Per i Genitori</a></li>
           <li><a href="bullismo.html" data-page="bullismo">🛡️ Bullismo e Cyberbullismo</a></li>
+          <li><a href="come-arrivare.html" data-page="come-arrivare">🚌 Come arrivare</a></li>
           <li><a href="contatti.html" data-page="contatti">Contattaci</a></li>
         </ul>
       </div>
@@ -130,6 +131,7 @@
         <li><a href="orientamento.html">🗓 Orientamento &amp; Open Day</a></li>
         <li><a href="genitori.html">👨‍👩‍👧 Per i Genitori</a></li>
         <li><a href="bullismo.html">🛡️ Bullismo e Cyberbullismo</a></li>
+        <li><a href="come-arrivare.html">🚌 Come arrivare</a></li>
         <li><a href="contatti.html">Contattaci</a></li>
         <li><a href="area-riservata.html" style="color:var(--oro2);font-weight:700;"> Area Riservata Famiglie</a></li>
       </ul>
@@ -209,7 +211,8 @@
           <li><a href="domanda-ammissione.html">📋 Domanda online</a></li>
           <li><a href="ammissione.html#tariffe">Tariffe e rette</a></li>
           <li><a href="scopri-talento.html">✨ Scopri il tuo Talento</a></li>
-          <li><a href="contatti.html">Contattaci</a></li>
+          <li><a href="come-arrivare.html">🚌 Come arrivare</a></li>
+        <li><a href="contatti.html">Contattaci</a></li>
         </ul></div>
 
         <div class="fc"><h4>Contatti Uffici</h4><ul>

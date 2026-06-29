@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Come arrivare al Convitto · Convitto "Costaggini" Rieti</title>
+<meta name="description" content="Come raggiungere il Convitto «Costaggini» di Rieti da Roma e dalla Salaria: autobus Cotral, treno e auto, con orari e biglietti.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== Sezione "Come arrivare" — autosufficiente =====
+     Per integrarla nel sito: mantieni questo <style> e tutto ciò che
+     sta dentro <main class="ca">. Header e footer globali (shared.js /
+     nav.js) avvolgeranno la pagina come per le altre sezioni. */
+
+  .ca {
+    --bosco: #2C3E2D;
+    --bosco-deep: #1E2A1F;
+    --oro: #B8922A;
+    --oro-soft: #CDAB52;
+    --avorio: #F6F2E8;
+    --avorio-2: #EDE6D5;
+    --inchiostro: #23281D;
+    --muschio: #5E6B53;
+    --linea: rgba(184,146,42,.35);
+
+    font-family: "Source Sans 3", system-ui, sans-serif;
+    color: var(--inchiostro);
+    background: var(--avorio);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .ca *, .ca *::before, .ca *::after { box-sizing: border-box; }
+  .ca img { max-width: 100%; display: block; }
+  .ca a { color: inherit; }
+
+  .ca-wrap { width: min(1080px, 92vw); margin-inline: auto; }
+
+  .ca-eyebrow {
+    font-size: .74rem; letter-spacing: .26em; text-transform: uppercase;
+    font-weight: 600; color: var(--oro);
+  }
+  .ca h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600; line-height: 1.08;
+    font-size: clamp(1.9rem, 1rem + 3vw, 3rem);
+    margin: .35rem 0 0; color: var(--bosco);
+  }
+  .ca h2 em { font-style: italic; color: var(--oro); }
+
+  /* ---------- HERO ---------- */
+  .ca-hero {
+    position: relative; overflow: hidden;
+    background: var(--bosco-deep);
+    color: var(--avorio);
+    padding: clamp(3.5rem, 2rem + 9vw, 7rem) 0 clamp(3rem, 2rem + 6vw, 5.5rem);
+  }
+  .ca-hero::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(120% 80% at 85% -10%, rgba(184,146,42,.20), transparent 55%),
+      radial-gradient(90% 70% at -10% 110%, rgba(184,146,42,.10), transparent 55%);
+    pointer-events: none;
+  }
+  .ca-hero .ca-wrap { position: relative; }
+  .ca-hero-brand {
+    font-size: .74rem; letter-spacing: .26em; text-transform: uppercase;
+    font-weight: 600; color: var(--oro-soft);
+  }
+  .ca-hero h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600; line-height: 1.02;
+    font-size: clamp(2.7rem, 1.4rem + 6vw, 5.4rem);
+    margin: .8rem 0 0; letter-spacing: -.01em;
+  }
+  .ca-hero h1 em { font-style: italic; color: var(--oro-soft); }
+  .ca-hero p.lead {
+    max-width: 46ch; margin: 1.4rem 0 0;
+    font-size: clamp(1.02rem, .95rem + .4vw, 1.2rem);
+    color: rgba(246,242,232,.84);
+  }
+  .ca-rule { width: 64px; height: 2px; background: var(--oro); margin: 2rem 0 0; border: 0; }
+
+  .ca-facts {
+    margin: 2.2rem 0 0; padding: 0; list-style: none;
+    display: flex; flex-wrap: wrap; gap: 1.6rem 2.6rem;
+  }
+  .ca-facts li { min-width: 0; }
+  .ca-facts .n {
+    font-family: "Cormorant Garamond", serif; font-weight: 600;
+    font-size: 1.85rem; color: var(--avorio); line-height: 1;
+  }
+  .ca-facts .l {
+    display: block; margin-top: .25rem;
+    font-size: .82rem; letter-spacing: .04em; color: rgba(246,242,232,.7);
+  }
+
+  /* ---------- SPINA DELLA SALARIA ---------- */
+  .ca-salaria { padding: clamp(3.2rem, 2rem + 6vw, 5.5rem) 0 clamp(2.6rem, 2rem + 4vw, 4rem); }
+  .ca-salaria .intro { max-width: 56ch; }
+  .ca-salaria .intro p { color: var(--muschio); margin: .9rem 0 0; }
+
+  .ca-route { margin: 2.8rem 0 0; position: relative; padding-left: 30px; }
+  .ca-route::before {
+    content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: linear-gradient(var(--oro), var(--linea) 92%, transparent);
+  }
+  .ca-stop { position: relative; padding: 0 0 1.9rem; }
+  .ca-stop:last-child { padding-bottom: 0; }
+  .ca-stop::before {
+    content: ""; position: absolute; left: -26px; top: 4px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--avorio); border: 2px solid var(--oro);
+  }
+  .ca-stop .place {
+    font-family: "Cormorant Garamond", serif; font-weight: 600;
+    font-size: 1.3rem; color: var(--bosco); line-height: 1.1;
+  }
+  .ca-stop .meta { font-size: .9rem; color: var(--muschio); margin-top: .1rem; }
+  .ca-stop.is-end::before {
+    background: var(--oro); box-shadow: 0 0 0 4px rgba(184,146,42,.18);
+    width: 13px; height: 13px; left: -27px;
+  }
+  .ca-stop.is-end .place { color: var(--oro); }
+  .ca-stop.is-mid::before { width: 9px; height: 9px; left: -25px; opacity: .85; }
+  .ca-stop.is-mid .place { font-size: 1.08rem; color: #6E7A60; }
+
+  /* ---------- MODALITÀ ---------- */
+  .ca-modes { padding: clamp(2.4rem, 2rem + 3vw, 3.5rem) 0 clamp(3.2rem, 2rem + 6vw, 5rem); }
+  .ca-grid { margin: 2.4rem 0 0; display: grid; gap: 1.2rem; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 860px) { .ca-grid { grid-template-columns: 1fr; } }
+
+  .ca-card {
+    background: #fff; border: 1px solid var(--avorio-2);
+    border-radius: 4px; padding: 1.7rem 1.6rem 1.6rem;
+    display: flex; flex-direction: column; min-width: 0;
+  }
+  .ca-card.featured { border-color: var(--oro); box-shadow: 0 14px 36px -22px rgba(44,62,45,.5); }
+  .ca-tag {
+    align-self: flex-start; font-size: .68rem; letter-spacing: .14em;
+    text-transform: uppercase; font-weight: 700; color: var(--bosco);
+    background: rgba(184,146,42,.16); padding: .26rem .6rem; border-radius: 2px;
+  }
+  .ca-tag.muted { color: var(--muschio); background: var(--avorio-2); }
+  .ca-card h3 {
+    font-family: "Cormorant Garamond", serif; font-weight: 600;
+    font-size: 1.85rem; color: var(--bosco); margin: .9rem 0 0; line-height: 1;
+  }
+  .ca-time {
+    margin-top: .35rem; font-size: .95rem; font-weight: 600; color: var(--oro);
+    letter-spacing: .01em;
+  }
+  .ca-card p.body { margin: .85rem 0 1.2rem; color: var(--inchiostro); font-size: .96rem; }
+  .ca-actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: .55rem; }
+
+  .ca-btn {
+    display: inline-flex; align-items: center; gap: .45rem;
+    font-family: "Source Sans 3", sans-serif; font-weight: 600; font-size: .9rem;
+    text-decoration: none; padding: .6rem .95rem; border-radius: 3px;
+    border: 1px solid var(--bosco); color: var(--bosco); background: transparent;
+    transition: background .18s ease, color .18s ease, transform .18s ease;
+  }
+  .ca-btn .arr { transition: transform .18s ease; }
+  .ca-btn:hover { background: var(--bosco); color: var(--avorio); }
+  .ca-btn:hover .arr { transform: translateX(2px); }
+  .ca-btn.primary { background: var(--oro); border-color: var(--oro); color: #fff; }
+  .ca-btn.primary:hover { background: #A37F1E; border-color: #A37F1E; }
+  .ca a:focus-visible, .ca-btn:focus-visible {
+    outline: 2px solid var(--oro); outline-offset: 3px; border-radius: 3px;
+  }
+
+  /* ---------- PRATICA / CONTATTI ---------- */
+  .ca-foot { background: var(--bosco); color: var(--avorio); padding: clamp(2.6rem, 2rem + 4vw, 4rem) 0; }
+  .ca-foot .ca-eyebrow { color: var(--oro-soft); }
+  .ca-foot h2 { color: var(--avorio); }
+  .ca-foot-grid {
+    margin: 2rem 0 0; display: grid; gap: 1.6rem 2.4rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 720px) { .ca-foot-grid { grid-template-columns: 1fr; } }
+  .ca-foot dt {
+    font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--oro-soft); font-weight: 600;
+  }
+  .ca-foot dd { margin: .4rem 0 0; font-size: 1.04rem; }
+  .ca-foot dd a { text-decoration: none; border-bottom: 1px solid rgba(205,171,82,.45); }
+  .ca-foot dd a:hover { border-color: var(--oro-soft); }
+  .ca-foot .map-btn { margin-top: 1.6rem; }
+  .ca-foot .ca-btn { border-color: var(--oro-soft); color: var(--avorio); }
+  .ca-foot .ca-btn:hover { background: var(--oro); border-color: var(--oro); color: #fff; }
+
+  .ca-note {
+    border-top: 1px solid rgba(246,242,232,.16);
+    margin-top: 2.4rem; padding-top: 1.3rem;
+    font-size: .82rem; color: rgba(246,242,232,.62); max-width: 70ch;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .ca-reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .ca-reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .ca-reveal { opacity: 1; transform: none; transition: none; }
+    .ca-btn, .ca-btn .arr { transition: none; }
+  }
+</style>
+</head>
+<body data-page="come-arrivare">
+<main class="ca">
+
+  <!-- HERO -->
+  <header class="ca-hero">
+    <div class="ca-wrap">
+      <p class="ca-hero-brand">Convitto «Costaggini» · Rieti</p>
+      <h1>Dalla <em>Salaria</em>,<br>fino a noi.</h1>
+      <p class="lead">Rieti è il centro geografico d'Italia, e la strada che la lega a Roma è la stessa di sempre: la Via Salaria. Il Convitto affaccia proprio su questa via — e su questa via arriva anche il capolinea dell'autobus.</p>
+      <hr class="ca-rule">
+      <ul class="ca-facts">
+        <li><span class="n">≈ 1h&nbsp;40</span><span class="l">in autobus da Roma Tiburtina</span></li>
+        <li><span class="n">Via Salaria</span><span class="l">capolinea bus a pochi minuti dal Convitto</span></li>
+        <li><span class="n">~80 km</span><span class="l">da Roma lungo la Salaria</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- SPINA DELLA SALARIA -->
+  <section class="ca-salaria">
+    <div class="ca-wrap">
+      <div class="intro ca-reveal">
+        <p class="ca-eyebrow">Il corridoio</p>
+        <h2>Una sola strada, da Roma a Rieti</h2>
+        <p>La linea Cotral risale tutta la Salaria. Chi vive lungo il corridoio — l'hinterland romano e la Sabina — non deve passare per Roma: sale direttamente da una delle fermate intermedie.</p>
+      </div>
+
+      <ol class="ca-route ca-reveal">
+        <li class="ca-stop">
+          <div class="place">Roma · Stazione Tiburtina</div>
+          <div class="meta">Capolinea e interscambio metro B / treni · partenza della linea</div>
+        </li>
+        <li class="ca-stop is-mid"><div class="place">Settebagni</div><div class="meta">uscita G.R.A. / Salaria</div></li>
+        <li class="ca-stop is-mid"><div class="place">Passo Corese · Fara in Sabina</div><div class="meta">bassa Sabina</div></li>
+        <li class="ca-stop is-mid"><div class="place">Poggio Mirteto Scalo</div><div class="meta">Sabina centrale</div></li>
+        <li class="ca-stop is-mid"><div class="place">Osteria Nuova · Poggio S. Lorenzo</div><div class="meta">alta Salaria</div></li>
+        <li class="ca-stop is-end">
+          <div class="place">Rieti · Via Salaria</div>
+          <div class="meta">capolinea sulla stessa via del Convitto</div>
+        </li>
+      </ol>
+      <p class="ca-eyebrow" style="margin-top:1.6rem; color:var(--muschio); letter-spacing:.06em; text-transform:none; font-weight:500;">Fermate indicative del corridoio. L'elenco completo è negli orari ufficiali Cotral.</p>
+    </div>
+  </section>
+
+  <!-- MODALITÀ -->
+  <section class="ca-modes">
+    <div class="ca-wrap">
+      <p class="ca-eyebrow ca-reveal">Tre modi per raggiungerci</p>
+      <h2 class="ca-reveal">Scegli come arrivare</h2>
+
+      <div class="ca-grid">
+
+        <!-- AUTOBUS -->
+        <article class="ca-card featured ca-reveal">
+          <span class="ca-tag">Consigliato</span>
+          <h3>In autobus</h3>
+          <div class="ca-time">≈ 1h 40 · diretto</div>
+          <p class="body">Linea Cotral da <strong>Roma Tiburtina</strong> fino al capolinea su <strong>Via Salaria</strong>, a pochi minuti dal Convitto. Corse frequenti dalle prime ore del mattino fino a sera (circa 05:00–23:15). Si può salire anche dalle fermate lungo la Salaria.</p>
+          <div class="ca-actions">
+            <a class="ca-btn primary" href="https://cotralspa.it/ricerca-orari/" target="_blank" rel="noopener">Orari aggiornati <span class="arr">→</span></a>
+            <a class="ca-btn" href="https://cotralspa.it/" target="_blank" rel="noopener">Biglietti e app <span class="arr">→</span></a>
+          </div>
+        </article>
+
+        <!-- TRENO -->
+        <article class="ca-card ca-reveal">
+          <span class="ca-tag muted">Alternativa</span>
+          <h3>In treno</h3>
+          <div class="ca-time">≈ 2h – 2h 30</div>
+          <p class="body">La stazione di Rieti è sulla linea Terni–L'Aquila: da Roma si viaggia di norma con <strong>cambio a Terni</strong>. Soluzione più lenta ma panoramica, comoda soprattutto per chi arriva dal versante umbro.</p>
+          <div class="ca-actions">
+            <a class="ca-btn primary" href="https://www.trenitalia.com/" target="_blank" rel="noopener">Orari e biglietti <span class="arr">→</span></a>
+          </div>
+        </article>
+
+        <!-- AUTO -->
+        <article class="ca-card ca-reveal">
+          <span class="ca-tag muted">In autonomia</span>
+          <h3>In auto</h3>
+          <div class="ca-time">≈ 1h 15 · ~80 km</div>
+          <p class="body">Autostrada <strong>A1</strong> fino all'uscita <strong>Fiano Romano</strong>, poi <strong>SS4 Via Salaria</strong> fino a Rieti. In alternativa, la Salaria per tutto il percorso. Parcheggi nei pressi dell'istituto.</p>
+          <div class="ca-actions">
+            <a class="ca-btn primary" href="https://www.google.com/maps/dir/?api=1&destination=Via+Salaria,+02100+Rieti+RI" target="_blank" rel="noopener">Apri nel navigatore <span class="arr">→</span></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PRATICA / CONTATTI -->
+  <section class="ca-foot">
+    <div class="ca-wrap">
+      <p class="ca-eyebrow">Quando arrivi</p>
+      <h2>Il Convitto, in pratica</h2>
+      <dl class="ca-foot-grid ca-reveal">
+        <div>
+          <dt>Indirizzo</dt>
+          <dd>Via Salaria s.n.c.<br>02100 Rieti (RI)</dd>
+        </div>
+        <div>
+          <dt>Telefono Convitto</dt>
+          <dd><a href="tel:+390746296862">0746 296862</a></dd>
+        </div>
+        <div>
+          <dt>Email</dt>
+          <dd><a href="mailto:convitto@alberghierorieti.it">convitto@alberghierorieti.it</a></dd>
+        </div>
+      </dl>
+      <div class="map-btn">
+        <a class="ca-btn" href="https://www.google.com/maps/search/?api=1&query=Convitto+IPSSEOA+Costaggini+Via+Salaria+Rieti" target="_blank" rel="noopener">Apri la mappa <span class="arr">→</span></a>
+      </div>
+      <p class="ca-note">Le durate sono indicative e gli orari possono variare per giorno, stagione e festività. Verifica sempre le partenze del giorno sui siti ufficiali degli operatori prima di metterti in viaggio.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    var els = document.querySelectorAll('.ca-reveal');
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+</body>
+</html>
