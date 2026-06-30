@@ -6,7 +6,7 @@
   <meta http-equiv="Pragma" content="no-cache"/>
   <meta http-equiv="Expires" content="0"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <meta name="description" content="Gli ambienti del Convitto Costaggini di Rieti in foto panoramiche: ingresso, corridoi, sala ricreativa, ufficio educatori e altri spazi. Il Convitto visto da dentro."/>
+  <meta name="description" content="Gli ambienti del Convitto Costaggini di Rieti in foto: l'ingresso, i corridoi, la sala ricreativa e l'ufficio educatori. Il Convitto visto da dentro."/>
   <meta name="theme-color" content="#2C3E2D"/>
   <title>Tour Virtuale | Convitto "Costaggini" — Rieti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -38,7 +38,7 @@
 
     /* Galleria ambienti */
     .amb-wrap { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.25rem 1rem; display: flex; flex-direction: column; gap: 2.75rem; }
-    .amb { display: block; margin: 0; }
+    .amb { display: block; }
     .amb-img {
       display: block; position: relative; border-radius: 12px; overflow: hidden;
       border: 1px solid rgba(184,146,42,.18); background: #111;
@@ -54,24 +54,11 @@
     }
     .amb-img:hover::after { opacity: 1; }
     .amb-img:focus-visible { outline: 3px solid var(--oro); outline-offset: 3px; }
-
-    /* Segnaposto "foto in arrivo" */
-    .amb-soon {
-      display: flex; align-items: center; justify-content: center;
-      min-height: 170px; aspect-ratio: 16/5;
-      background: repeating-linear-gradient(135deg, #121a12, #121a12 14px, #0f160f 14px, #0f160f 28px);
-      border: 1px dashed rgba(184,146,42,.3);
-    }
-    .amb-soon-in { display: flex; flex-direction: column; align-items: center; gap: .5rem; text-align: center; }
-    .amb-soon-icon { font-size: 2.4rem; opacity: .55; }
-    .amb-soon-label { font-family: var(--fu); font-size: .62rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: rgba(245,240,232,.45); }
-
     .amb-cap { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem .25rem 0; }
     .amb-icon { font-size: 1.7rem; flex-shrink: 0; line-height: 1.4; }
     .amb-cap h2 { font-family: var(--fd); font-size: 1.45rem; font-weight: 300; color: #fff; margin: 0 0 .3rem; }
     .amb-cap h2 em { font-style: italic; color: var(--oro3); }
     .amb-cap p { font-family: var(--fu); font-size: .85rem; color: rgba(245,240,232,.6); line-height: 1.75; margin: 0; }
-    .amb.is-soon .amb-cap h2, .amb.is-soon .amb-cap p { opacity: .65; }
 
     /* Chiusura */
     .amb-end { text-align: center; padding: 1.5rem 1.25rem 3.5rem; max-width: 620px; margin: 0 auto; }
@@ -100,11 +87,65 @@
       </nav>
       <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">Gli ambienti</p>
       <h1 style="font-family:var(--fd);font-size:clamp(1.8rem,6vw,3.2rem);font-weight:300;color:#fff;margin-bottom:.5rem">Il Convitto <em style="font-style:italic;color:var(--oro3)">da dentro</em></h1>
-      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:520px;margin:0 auto">Una passeggiata per gli spazi reali del Convitto, in foto panoramiche. Tocca un'immagine per vederla intera.</p>
+      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:520px;margin:0 auto">Una passeggiata per gli spazi reali del Convitto. Tocca un'immagine per vederla intera.</p>
     </div>
   </div>
 
-  <div class="amb-wrap" id="amb-wrap"></div>
+  <div class="amb-wrap">
+
+    <figure class="amb">
+      <a class="amb-img" href="img/tour/ingresso.jpg" target="_blank" rel="noopener" aria-label="Apri la foto dell'ingresso a tutta dimensione">
+        <img src="img/tour/ingresso.jpg" alt="L'ingresso del Convitto Costaggini" loading="lazy"/>
+      </a>
+      <figcaption class="amb-cap">
+        <span class="amb-icon" aria-hidden="true">🚪</span>
+        <div>
+          <h2>L'<em>ingresso</em> del Convitto</h2>
+          <p>Il primo spazio che ogni convittore attraversa. Accogliente, luminoso, punto di incontro tra il dentro e il fuori.</p>
+        </div>
+      </figcaption>
+    </figure>
+
+    <figure class="amb">
+      <a class="amb-img" href="img/tour/corridoi.jpg" target="_blank" rel="noopener" aria-label="Apri la foto dei corridoi a tutta dimensione">
+        <img src="img/tour/corridoi.jpg" alt="I corridoi del Convitto" loading="lazy"/>
+      </a>
+      <figcaption class="amb-cap">
+        <span class="amb-icon" aria-hidden="true">🏛️</span>
+        <div>
+          <h2>I <em>corridoi</em></h2>
+          <p>La spina dorsale del Convitto. I luoghi dove si incrociano migliaia di storie — di mattina di corsa, di sera con calma.</p>
+        </div>
+      </figcaption>
+    </figure>
+
+    <figure class="amb">
+      <a class="amb-img" href="img/tour/sala-ricreativa.jpg" target="_blank" rel="noopener" aria-label="Apri la foto della sala ricreativa a tutta dimensione">
+        <img src="img/tour/sala-ricreativa.jpg" alt="La sala ricreativa del Convitto" loading="lazy"/>
+      </a>
+      <figcaption class="amb-cap">
+        <span class="amb-icon" aria-hidden="true">🎮</span>
+        <div>
+          <h2>La <em>sala ricreativa</em></h2>
+          <p>Calciobalilla, ping pong, divani e vetrate sul verde. Lo spazio del gioco, del relax e dello stare insieme dopo lo studio.</p>
+        </div>
+      </figcaption>
+    </figure>
+
+    <figure class="amb">
+      <a class="amb-img" href="img/tour/ufficio-educatori.jpg" target="_blank" rel="noopener" aria-label="Apri la foto dell'ufficio educatori a tutta dimensione">
+        <img src="img/tour/ufficio-educatori.jpg" alt="L'ufficio degli educatori" loading="lazy"/>
+      </a>
+      <figcaption class="amb-cap">
+        <span class="amb-icon" aria-hidden="true">🖥️</span>
+        <div>
+          <h2>L'<em>ufficio educatori</em></h2>
+          <p>Il cuore operativo del Convitto. Da qui gli educatori coordinano le attività e — nelle giornate limpide — ammirano il Terminillo.</p>
+        </div>
+      </figcaption>
+    </figure>
+
+  </div>
 
   <div class="amb-end">
     <p>Le foto raccontano una parte. Il resto si sente solo venendo a trovarci.</p>
@@ -116,56 +157,5 @@
 
 </main>
 <script src="nav.js"></script>
-<script>
-// Ambienti del Convitto. Ognuno cerca la sua foto in img/tour/<id>.jpg:
-// se c'è, viene mostrata; se manca, compare il segnaposto "Foto in arrivo".
-// Per aggiungere una foto basta caricarla con il nome giusto — appare da sola.
-const AMBIENTI = [
-  { id:'ingresso',         icon:'🚪',  titolo:'L\'<em>ingresso</em> del Convitto', alt:'L\'ingresso del Convitto Costaggini', desc:'Il primo spazio che ogni convittore attraversa. Accogliente, luminoso, punto di incontro tra il dentro e il fuori.' },
-  { id:'corridoi',         icon:'🏛️', titolo:'I <em>corridoi</em>',               alt:'I corridoi del Convitto',            desc:'La spina dorsale del Convitto. I luoghi dove si incrociano migliaia di storie — di mattina di corsa, di sera con calma.' },
-  { id:'sala-ricreativa',  icon:'🎮',  titolo:'La <em>sala ricreativa</em>',       alt:'La sala ricreativa',                 desc:'Calciobalilla, ping pong, divani e vetrate sul verde. Lo spazio del gioco, del relax e dello stare insieme dopo lo studio.' },
-  { id:'ufficio-educatori',icon:'🖥️', titolo:'L\'<em>ufficio educatori</em>',     alt:'L\'ufficio degli educatori',         desc:'Il cuore operativo del Convitto. Da qui gli educatori coordinano le attività e — nelle giornate limpide — ammirano il Terminillo.' },
-  { id:'camera',           icon:'🛏️', titolo:'Una <em>camera tipo</em>',          alt:'Una camera tipo',                    desc:'Spazio personale, sicuro e ordinato. Ogni convittore ha il suo posto — un angolo tutto suo.' },
-  { id:'mensa',            icon:'🍽️', titolo:'La <em>mensa</em>',                 alt:'La mensa del Convitto',              desc:'Ogni giorno, un menù cucinato internamente e concordato con la ASL. Un luogo di convivialità vera.' },
-  { id:'studio',           icon:'📖',  titolo:'La <em>sala studio</em>',           alt:'La sala studio',                     desc:'Dalle 15:30 alle 17:15, studio guidato con gli educatori. Un ambiente silenzioso e strutturato.' },
-  { id:'musica',           icon:'🎵',  titolo:'Il <em>Laboratorio Musicale</em>',  alt:'Il Laboratorio Musicale',            desc:'Fondato da Michele Gaggiano e Dino Barba. Chitarre, tastiere, percussioni — e la libertà di scoprire un talento.' },
-  { id:'giardino',         icon:'🌿',  titolo:'Il <em>giardino</em>',             alt:'Il giardino del Convitto',           desc:'Lo spazio aperto del Convitto — con il Terminillo sullo sfondo. Luogo di pausa, di chiacchiere, di aria fresca.' },
-];
-
-(function () {
-  const wrap = document.getElementById('amb-wrap');
-  if (!wrap) return;
-
-  AMBIENTI.forEach(function (a) {
-    const fig = document.createElement('figure');
-    fig.className = 'amb';
-    wrap.appendChild(fig); // appeso subito, così l'ordine resta corretto
-
-    const cap =
-      '<figcaption class="amb-cap">' +
-        '<span class="amb-icon" aria-hidden="true">' + a.icon + '</span>' +
-        '<div><h2>' + a.titolo + '</h2><p>' + a.desc + '</p></div>' +
-      '</figcaption>';
-
-    const src = 'img/tour/' + a.id + '.jpg';
-    const probe = new Image();
-    probe.onload = function () {
-      fig.innerHTML =
-        '<a class="amb-img" href="' + src + '" target="_blank" rel="noopener" aria-label="Apri la foto: ' + a.alt + '">' +
-          '<img src="' + src + '" alt="' + a.alt + '" loading="lazy"/>' +
-        '</a>' + cap;
-    };
-    probe.onerror = function () {
-      fig.classList.add('is-soon');
-      fig.innerHTML =
-        '<div class="amb-img amb-soon">' +
-          '<div class="amb-soon-in"><span class="amb-soon-icon" aria-hidden="true">' + a.icon + '</span>' +
-          '<span class="amb-soon-label">Foto in arrivo</span></div>' +
-        '</div>' + cap;
-    };
-    probe.src = src;
-  });
-})();
-</script>
 </body>
 </html>

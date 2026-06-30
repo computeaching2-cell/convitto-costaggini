@@ -228,6 +228,13 @@ function alumniNoContact(e) {
 (async function() {
   const grid = document.getElementById('alumni-community-grid');
   if (!grid) return;
+  // Se supabase.js non è caricato (es. pagina aperta da sola in anteprima),
+  // mostra lo stato vuoto in silenzio: niente errore in console.
+  if (typeof sb === 'undefined') {
+    const emptyMsg = document.getElementById('alumni-empty-msg');
+    if (emptyMsg) emptyMsg.style.display = 'block';
+    return;
+  }
   try {
     const approved = await sb.select('alumni_pubblici', '');
     if (!approved || !approved.length) {
