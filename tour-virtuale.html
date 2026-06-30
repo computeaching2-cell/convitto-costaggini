@@ -6,7 +6,7 @@
   <meta http-equiv="Pragma" content="no-cache"/>
   <meta http-equiv="Expires" content="0"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <meta name="description" content="Gli ambienti del Convitto Costaggini di Rieti in foto: l'ingresso, i corridoi, la sala ricreativa e l'ufficio educatori. Il Convitto visto da dentro."/>
+  <meta name="description" content="Tour virtuale a 360° del Convitto Costaggini di Rieti — esplora gli ambienti prima di arrivare."/>
   <meta name="theme-color" content="#2C3E2D"/>
   <title>Tour Virtuale | Convitto "Costaggini" — Rieti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -26,8 +26,104 @@
       background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(184,146,42,.1), transparent);
       pointer-events: none;
     }
+
+    /* Selettore ambienti */
+    .tv-rooms {
+      display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center;
+      padding: 1.25rem; background: rgba(0,0,0,.3);
+      border-bottom: 1px solid rgba(184,146,42,.12);
+      position: sticky; top: 56px; z-index: 40;
+    }
+    .tv-room-btn {
+      font-family: var(--fu); font-size: .62rem; font-weight: 800;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .5rem 1rem; border-radius: 20px; cursor: pointer;
+      border: 1.5px solid rgba(184,146,42,.25); color: rgba(245,240,232,.5);
+      background: transparent; transition: all .2s; white-space: nowrap;
+    }
+    .tv-room-btn:hover { border-color: var(--oro2); color: var(--oro2); }
+    .tv-room-btn.active { background: var(--bosco); border-color: var(--oro); color: var(--oro2); }
+
+    /* Viewer */
+    .tv-viewer-wrap {
+      position: relative; width: 100%;
+      height: 60vh; min-height: 320px; max-height: 680px;
+      background: #111; overflow: hidden;
+    }
+    #tv-canvas { width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+    #tv-canvas:active { cursor: grabbing; }
+
+    /* Pulsanti controllo custom */
+    #tv-controls {
+      position: absolute; bottom: 12px; left: 12px; z-index: 10;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .tv-ctrl-group { display: flex; flex-direction: column; gap: 3px; }
+    .tv-ctrl-row { display: flex; gap: 3px; justify-content: center; }
+    .tv-ctrl-btn {
+      width: 34px; height: 34px;
+      background: rgba(26,46,27,.9); border: 1px solid rgba(184,146,42,.45);
+      border-radius: 7px; color: #D4AA4A; font-size: .9rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s; user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tv-ctrl-btn:hover, .tv-ctrl-btn:active { background: rgba(44,62,45,1); border-color: rgba(184,146,42,.9); }
+    .tv-ctrl-spacer { width: 34px; height: 34px; } /* cella vuota griglia pan */
+
+    /* Placeholder */
+    .tv-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #111a11, #1a1a1a);
+      color: rgba(245,240,232,.4); text-align: center; padding: 2rem;
+    }
+    .tv-placeholder-icon { font-size: 4rem; margin-bottom: 1rem; opacity: .4; }
+    .tv-placeholder h2 { font-family: var(--fd); font-size: 1.4rem; font-weight: 300; color: rgba(245,240,232,.6); margin-bottom: .5rem; }
+    .tv-placeholder p { font-family: var(--fu); font-size: .75rem; color: rgba(245,240,232,.3); line-height: 1.7; max-width: 380px; }
+    .tv-placeholder code { font-family: monospace; font-size: .75rem; background: rgba(255,255,255,.08); padding: .2rem .5rem; border-radius: 4px; color: var(--oro2); }
+
+    /* Info ambiente */
+    .tv-info {
+      background: linear-gradient(135deg, var(--bosco), #1a3a1b);
+      padding: 1.5rem 1.25rem; border-bottom: 1px solid rgba(184,146,42,.15);
+    }
+    .tv-info-wrap { max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; gap: 1.25rem; flex-wrap: wrap; }
+    .tv-info-icon { font-size: 2rem; flex-shrink: 0; }
+    .tv-info-text h2 { font-family: var(--fd); font-size: 1.4rem; font-weight: 300; color: #fff; margin-bottom: .25rem; }
+    .tv-info-text h2 em { font-style: italic; color: var(--oro3); }
+    .tv-info-text p { font-family: var(--fu); font-size: .8rem; color: rgba(245,240,232,.6); line-height: 1.75; margin: 0; }
+
+    /* Griglia miniature */
+    .tv-thumbs {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: .75rem;
+      padding: 1.5rem 1.25rem; max-width: 960px; margin: 0 auto;
+    }
+    @media(max-width:480px){ .tv-thumbs { grid-template-columns: repeat(2, 1fr); } }
+    .tv-thumb {
+      border-radius: 8px; overflow: hidden; cursor: pointer;
+      border: 2px solid transparent; transition: all .2s; aspect-ratio: 4/3;
+      background: #1a1a1a; position: relative;
+    }
+    .tv-thumb:hover { border-color: var(--oro2); transform: translateY(-2px); }
+    .tv-thumb.active { border-color: var(--oro); }
+    .tv-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tv-thumb-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,.8));
+      padding: .4rem .5rem;
+      font-family: var(--fu); font-size: .58rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase; color: #fff;
+    }
+    .tv-thumb-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: .35rem;
+      font-family: var(--fu); font-size: .6rem; color: rgba(245,240,232,.25);
+      text-align: center; padding: .5rem;
+    }
+    .tv-thumb-placeholder span { font-size: 1.5rem; opacity: .3; }
     .tv-hero .breadcrumb {
-      display: flex; align-items: center; gap: .4rem; justify-content: center;
+      display: flex; align-items: center; gap: .4rem;
       font-family: var(--fu); font-size: .72rem; font-weight: 600;
       letter-spacing: .1em; text-transform: uppercase;
       color: rgba(245,240,232,.70);
@@ -35,44 +131,6 @@
     .tv-hero .breadcrumb a { color: #D4AA4A; text-decoration: none; }
     .tv-hero .breadcrumb a:hover { color: var(--oro3); }
     .tv-hero .breadcrumb span { color: rgba(245,240,232,.60); }
-
-    /* Galleria ambienti */
-    .amb-wrap { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.25rem 1rem; display: flex; flex-direction: column; gap: 2.75rem; }
-    .amb { display: block; }
-    .amb-img {
-      display: block; position: relative; border-radius: 12px; overflow: hidden;
-      border: 1px solid rgba(184,146,42,.18); background: #111;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-    .amb-img img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
-    .amb-img:hover img { transform: scale(1.02); }
-    .amb-img::after {
-      content: '⤢ Ingrandisci'; position: absolute; top: 12px; right: 12px;
-      font-family: var(--fu); font-size: .58rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
-      color: #fff; background: rgba(10,15,10,.6); border: 1px solid rgba(184,146,42,.4);
-      padding: .35rem .65rem; border-radius: 20px; opacity: 0; transition: opacity .25s; pointer-events: none;
-    }
-    .amb-img:hover::after { opacity: 1; }
-    .amb-img:focus-visible { outline: 3px solid var(--oro); outline-offset: 3px; }
-    .amb-cap { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem .25rem 0; }
-    .amb-icon { font-size: 1.7rem; flex-shrink: 0; line-height: 1.4; }
-    .amb-cap h2 { font-family: var(--fd); font-size: 1.45rem; font-weight: 300; color: #fff; margin: 0 0 .3rem; }
-    .amb-cap h2 em { font-style: italic; color: var(--oro3); }
-    .amb-cap p { font-family: var(--fu); font-size: .85rem; color: rgba(245,240,232,.6); line-height: 1.75; margin: 0; }
-
-    /* Chiusura */
-    .amb-end { text-align: center; padding: 1.5rem 1.25rem 3.5rem; max-width: 620px; margin: 0 auto; }
-    .amb-end p { font-family: var(--fd); font-style: italic; font-size: 1.15rem; color: rgba(245,240,232,.7); line-height: 1.6; margin: 0 0 1.5rem; }
-    .amb-end .btns { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; }
-    .amb-end a.btn-line {
-      display: inline-block; font-family: var(--fu); font-size: .7rem; font-weight: 800;
-      letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
-      padding: .8rem 1.6rem; border-radius: 40px; transition: all .2s;
-    }
-    .amb-end a.btn-fill { background: linear-gradient(135deg, #B8922A, #D4AA4A); color: #1a2e1b; }
-    .amb-end a.btn-fill:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(184,146,42,.35); }
-    .amb-end a.btn-ghost { border: 1.5px solid rgba(184,146,42,.45); color: var(--oro2); }
-    .amb-end a.btn-ghost:hover { border-color: var(--oro2); color: var(--oro3); }
   </style>
 </head>
 <body data-page="tour-virtuale">
@@ -80,82 +138,274 @@
 
   <div class="tv-hero">
     <div class="w" style="position:relative;z-index:1">
-      <nav class="breadcrumb" style="margin-bottom:1.25rem">
+      <nav class="breadcrumb" style="justify-content:center;margin-bottom:1.25rem">
         <a href="index.html">Home</a><span>›</span>
         <a href="servizi.html">Servizi</a><span>›</span>
-        <span aria-current="page">Il Convitto da dentro</span>
+        <span aria-current="page">Tour Virtuale</span>
       </nav>
-      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">Gli ambienti</p>
+      <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.5rem">Esplora a 360°</p>
       <h1 style="font-family:var(--fd);font-size:clamp(1.8rem,6vw,3.2rem);font-weight:300;color:#fff;margin-bottom:.5rem">Il Convitto <em style="font-style:italic;color:var(--oro3)">da dentro</em></h1>
-      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:520px;margin:0 auto">Una passeggiata per gli spazi reali del Convitto. Tocca un'immagine per vederla intera.</p>
+      <p style="color:rgba(245,240,232,.5);font-size:.85rem;max-width:500px;margin:0 auto">Visita gli ambienti del Convitto prima ancora di arrivare. Trascina con il dito o il mouse per guardarti intorno a 360°.</p>
     </div>
   </div>
 
-  <div class="amb-wrap">
+  <div class="tv-rooms" id="tv-rooms" role="tablist" aria-label="Scegli l'ambiente"></div>
 
-    <figure class="amb">
-      <a class="amb-img" href="img/tour/ingresso.jpg" target="_blank" rel="noopener" aria-label="Apri la foto dell'ingresso a tutta dimensione">
-        <img src="img/tour/ingresso.jpg" alt="L'ingresso del Convitto Costaggini" loading="lazy"/>
-      </a>
-      <figcaption class="amb-cap">
-        <span class="amb-icon" aria-hidden="true">🚪</span>
-        <div>
-          <h2>L'<em>ingresso</em> del Convitto</h2>
-          <p>Il primo spazio che ogni convittore attraversa. Accogliente, luminoso, punto di incontro tra il dentro e il fuori.</p>
+  <div class="tv-viewer-wrap">
+    <canvas id="tv-canvas"></canvas>
+    <div id="tv-controls">
+      <!-- Pan su/giù/sx/dx -->
+      <div class="tv-ctrl-group">
+        <div class="tv-ctrl-row">
+          <div class="tv-ctrl-spacer"></div>
+          <button class="tv-ctrl-btn" id="btn-up"   aria-label="Guarda su">▲</button>
+          <div class="tv-ctrl-spacer"></div>
         </div>
-      </figcaption>
-    </figure>
-
-    <figure class="amb">
-      <a class="amb-img" href="img/tour/corridoi.jpg" target="_blank" rel="noopener" aria-label="Apri la foto dei corridoi a tutta dimensione">
-        <img src="img/tour/corridoi.jpg" alt="I corridoi del Convitto" loading="lazy"/>
-      </a>
-      <figcaption class="amb-cap">
-        <span class="amb-icon" aria-hidden="true">🏛️</span>
-        <div>
-          <h2>I <em>corridoi</em></h2>
-          <p>La spina dorsale del Convitto. I luoghi dove si incrociano migliaia di storie — di mattina di corsa, di sera con calma.</p>
+        <div class="tv-ctrl-row">
+          <button class="tv-ctrl-btn" id="btn-left"  aria-label="Guarda a sinistra">◀</button>
+          <div class="tv-ctrl-spacer"></div>
+          <button class="tv-ctrl-btn" id="btn-right" aria-label="Guarda a destra">▶</button>
         </div>
-      </figcaption>
-    </figure>
-
-    <figure class="amb">
-      <a class="amb-img" href="img/tour/sala-ricreativa.jpg" target="_blank" rel="noopener" aria-label="Apri la foto della sala ricreativa a tutta dimensione">
-        <img src="img/tour/sala-ricreativa.jpg" alt="La sala ricreativa del Convitto" loading="lazy"/>
-      </a>
-      <figcaption class="amb-cap">
-        <span class="amb-icon" aria-hidden="true">🎮</span>
-        <div>
-          <h2>La <em>sala ricreativa</em></h2>
-          <p>Calciobalilla, ping pong, divani e vetrate sul verde. Lo spazio del gioco, del relax e dello stare insieme dopo lo studio.</p>
+        <div class="tv-ctrl-row">
+          <div class="tv-ctrl-spacer"></div>
+          <button class="tv-ctrl-btn" id="btn-down"  aria-label="Guarda giù">▼</button>
+          <div class="tv-ctrl-spacer"></div>
         </div>
-      </figcaption>
-    </figure>
-
-    <figure class="amb">
-      <a class="amb-img" href="img/tour/ufficio-educatori.jpg" target="_blank" rel="noopener" aria-label="Apri la foto dell'ufficio educatori a tutta dimensione">
-        <img src="img/tour/ufficio-educatori.jpg" alt="L'ufficio degli educatori" loading="lazy"/>
-      </a>
-      <figcaption class="amb-cap">
-        <span class="amb-icon" aria-hidden="true">🖥️</span>
-        <div>
-          <h2>L'<em>ufficio educatori</em></h2>
-          <p>Il cuore operativo del Convitto. Da qui gli educatori coordinano le attività e — nelle giornate limpide — ammirano il Terminillo.</p>
+      </div>
+      <!-- Zoom -->
+      <div class="tv-ctrl-group" style="margin-top:6px">
+        <div class="tv-ctrl-row">
+          <button class="tv-ctrl-btn" id="btn-zoom-out" aria-label="Allontana per vedere tutto l'ambiente">−</button>
+          <button class="tv-ctrl-btn" id="btn-zoom-in"  aria-label="Avvicina">+</button>
         </div>
-      </figcaption>
-    </figure>
-
-  </div>
-
-  <div class="amb-end">
-    <p>Le foto raccontano una parte. Il resto si sente solo venendo a trovarci.</p>
-    <div class="btns">
-      <a class="btn-line btn-fill" href="orientamento.html">Prenota una visita</a>
-      <a class="btn-line btn-ghost" href="come-arrivare.html">Come arrivare</a>
+      </div>
+    </div>
+    <div class="tv-placeholder" id="tv-placeholder">
+      <div class="tv-placeholder-icon">🏛️</div>
+      <h2>Foto a 360° in arrivo</h2>
+      <p>Seleziona un ambiente qui sopra.<br>Carica i file in <code>img/tour/</code> per attivare il viewer.</p>
     </div>
   </div>
+
+  <div class="tv-info" id="tv-info" style="display:none">
+    <div class="tv-info-wrap">
+      <div class="tv-info-icon" id="tv-icon"></div>
+      <div class="tv-info-text">
+        <h2 id="tv-title"></h2>
+        <p id="tv-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <section style="background:#0a0f0a;padding:1rem 0">
+    <div class="tv-thumbs" id="tv-thumbs"></div>
+  </section>
 
 </main>
 <script src="nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ══ STANZE ═══════════════════════════════════════════
+const ROOMS = [
+  { id:'ingresso',         label:'Ingresso',         icon:'🚪', title:'L\'<em>ingresso</em> del Convitto',    desc:'Il primo spazio che ogni convittore attraversa. Accogliente, luminoso, punto di incontro tra il dentro e il fuori.', img:'img/tour/ingresso.jpg', thumb:'img/tour/ingresso.jpg' },
+  { id:'corridoi',         label:'Corridoi',          icon:'🏛️', title:'I <em>corridoi</em>',                  desc:'La spina dorsale del Convitto. I luoghi dove si incrociano migliaia di storie — di mattina di corsa, di sera con calma.', img:'img/tour/corridoi.jpg', thumb:'img/tour/corridoi.jpg' },
+  { id:'sala-ricreativa',  label:'Sala ricreativa',   icon:'🎮', title:'La <em>sala ricreativa</em>',          desc:'Calciobalilla, ping pong, divani e vetrate sul verde. Lo spazio del gioco, del relax e dello stare insieme dopo lo studio.', img:'img/tour/sala-ricreativa.jpg', thumb:'img/tour/sala-ricreativa.jpg' },
+  { id:'ufficio-educatori',label:'Ufficio educatori', icon:'🖥️', title:'L\'<em>ufficio educatori</em>',        desc:'Il cuore operativo del Convitto. Da qui gli educatori coordinano le attività e — nelle giornate limpide — ammirano il Terminillo.', img:'img/tour/ufficio-educatori.jpg', thumb:'img/tour/ufficio-educatori.jpg' },
+  { id:'camera',           label:'Camera tipo',       icon:'🛏️', title:'Una <em>camera tipo</em>',             desc:'Spazio personale, sicuro e ordinato. Ogni convittore ha il suo posto — un angolo tutto suo.', img:'img/tour/camera.jpg', thumb:'img/tour/camera.jpg' },
+  { id:'mensa',            label:'Mensa',             icon:'🍽️', title:'La <em>mensa</em>',                    desc:'Ogni giorno, un menù cucinato internamente e concordato con la ASL. Un luogo di convivialità vera.', img:'img/tour/mensa.jpg', thumb:'img/tour/mensa.jpg' },
+  { id:'studio',           label:'Sala studio',       icon:'📖', title:'La <em>sala studio</em>',              desc:'Dalle 15:30 alle 17:15, studio guidato con gli educatori. Un ambiente silenzioso e strutturato.', img:'img/tour/studio.jpg', thumb:'img/tour/studio.jpg' },
+  { id:'musica',           label:'Lab Musicale',      icon:'🎵', title:'Il <em>Laboratorio Musicale</em>',     desc:'Fondato da Michele Gaggiano e Dino Barba. Chitarre, tastiere, percussioni — e la libertà di scoprire un talento.', img:'img/tour/musica.jpg', thumb:'img/tour/musica.jpg' },
+  { id:'giardino',         label:'Giardino',          icon:'🌿', title:'Il <em>giardino</em>',                 desc:'Lo spazio aperto del Convitto — con il Terminillo sullo sfondo. Luogo di pausa, di chiacchiere, di aria fresca.', img:'img/tour/giardino.jpg', thumb:'img/tour/giardino.jpg' },
+];
+
+// ══ THREE.JS VIEWER ═══════════════════════════════════
+const canvas   = document.getElementById('tv-canvas');
+const wrap     = canvas.closest('.tv-viewer-wrap');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+const scene    = new THREE.Scene();
+const camera   = new THREE.PerspectiveCamera(70, 1, 0.1, 1000); // FOV verticale: ricalcolato in resize() da H_FOV orizzontale
+camera.position.set(0, 0, 0.01);
+
+// Sfera interna
+const geometry = new THREE.SphereGeometry(500, 60, 40);
+geometry.scale(-1, 1, 1); // invertita — la texture è vista dall'interno
+const material = new THREE.MeshBasicMaterial({ color: 0x111111 });
+const sphere   = new THREE.Mesh(geometry, material);
+scene.add(sphere);
+
+const loader   = new THREE.TextureLoader();
+let raf        = null;
+let autoRot    = true;
+let isDragging = false;
+let lastX = 0, lastY = 0;
+let lon = 0, lat = 0;   // angolo di visione corrente
+let autoTimer  = null;
+
+let H_FOV = 75;                 // campo visivo ORIZZONTALE in gradi (come Pannellum); modificabile con lo zoom
+const FOV_MIN = 55, FOV_MAX = 100;
+function applyFov() {
+  const hfov = THREE.MathUtils.degToRad(H_FOV);
+  camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(hfov / 2) / camera.aspect));
+  camera.updateProjectionMatrix();
+}
+function resize() {
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); // nitidezza su schermi HiDPI/retina
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  applyFov();
+}
+function zoom(delta) {
+  H_FOV = Math.max(FOV_MIN, Math.min(FOV_MAX, H_FOV + delta));
+  applyFov();
+}
+
+function render() {
+  // Autorotazione
+  if (autoRot && !isDragging) lon += 0.04;
+
+  lat = Math.max(-85, Math.min(85, lat));
+  const phi   = THREE.MathUtils.degToRad(90 - lat);
+  const theta = THREE.MathUtils.degToRad(lon);
+  camera.lookAt(
+    500 * Math.sin(phi) * Math.cos(theta),
+    500 * Math.cos(phi),
+    500 * Math.sin(phi) * Math.sin(theta)
+  );
+  renderer.render(scene, camera);
+  raf = requestAnimationFrame(render);
+}
+
+// ── Carica immagine ──
+function loadPanorama(src) {
+  material.map = null; material.needsUpdate = true;
+  loader.load(src, function(tex) {
+    tex.minFilter = THREE.LinearFilter;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy(); // texture nitida anche guardando le pareti di sbieco
+    material.map  = tex;
+    material.color.set(0xffffff);
+    material.needsUpdate = true;
+    document.getElementById('tv-placeholder').style.display = 'none';
+    document.getElementById('tv-info').style.display = 'block';
+  }, undefined, function() {
+    // Immagine non trovata → mostra placeholder
+    document.getElementById('tv-placeholder').style.display = 'flex';
+    document.getElementById('tv-info').style.display = 'block';
+  });
+}
+
+// ── Drag mouse ──
+canvas.addEventListener('mousedown', e => {
+  isDragging = true; lastX = e.clientX; lastY = e.clientY;
+  autoRot = false; clearTimeout(autoTimer);
+});
+window.addEventListener('mouseup', () => {
+  isDragging = false;
+  autoTimer = setTimeout(() => { autoRot = true; }, 2000);
+});
+window.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  lon -= (e.clientX - lastX) * 0.2;
+  lat += (e.clientY - lastY) * 0.2;
+  lastX = e.clientX; lastY = e.clientY;
+});
+
+// ── Drag touch ──
+let t0 = null;
+canvas.addEventListener('touchstart', e => {
+  t0 = e.touches[0]; isDragging = true;
+  autoRot = false; clearTimeout(autoTimer);
+}, { passive: true });
+canvas.addEventListener('touchend', () => {
+  isDragging = false;
+  autoTimer = setTimeout(() => { autoRot = true; }, 2000);
+}, { passive: true });
+canvas.addEventListener('touchmove', e => {
+  if (!isDragging || !t0) return;
+  const t = e.touches[0];
+  lon -= (t.clientX - t0.clientX) * 0.2;
+  lat += (t.clientY - t0.clientY) * 0.2;
+  t0 = t;
+}, { passive: true });
+
+// ── Pulsanti freccia ──
+const PAN_SPEED = 3;
+const panMap = {
+  'btn-up':    () => { lat += PAN_SPEED; },
+  'btn-down':  () => { lat -= PAN_SPEED; },
+  'btn-left':  () => { lon -= PAN_SPEED; },
+  'btn-right': () => { lon += PAN_SPEED; },
+};
+let panInterval = null;
+Object.entries(panMap).forEach(([id, fn]) => {
+  const btn = document.getElementById(id);
+  const start = () => { autoRot = false; clearTimeout(autoTimer); fn(); panInterval = setInterval(fn, 60); };
+  const stop  = () => { clearInterval(panInterval); autoTimer = setTimeout(() => { autoRot = true; }, 2000); };
+  btn.addEventListener('mousedown',  start);
+  btn.addEventListener('touchstart', start, { passive: true });
+  btn.addEventListener('mouseup',    stop);
+  btn.addEventListener('touchend',   stop, { passive: true });
+  btn.addEventListener('mouseleave', stop);
+});
+
+// ── Zoom (allontana/avvicina) ──
+document.getElementById('btn-zoom-out').addEventListener('click', () => { autoRot = false; clearTimeout(autoTimer); zoom(+6); autoTimer = setTimeout(() => { autoRot = true; }, 2000); });
+document.getElementById('btn-zoom-in').addEventListener('click',  () => { autoRot = false; clearTimeout(autoTimer); zoom(-6); autoTimer = setTimeout(() => { autoRot = true; }, 2000); });
+
+// ── Seleziona stanza ──
+function selectRoom(room) {
+  document.querySelectorAll('.tv-room-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('btn-' + room.id);
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.tv-thumb').forEach(t => t.classList.remove('active'));
+  const th = document.getElementById('thumb-' + room.id);
+  if (th) th.classList.add('active');
+  document.getElementById('tv-icon').textContent  = room.icon;
+  document.getElementById('tv-title').innerHTML   = room.title;
+  document.getElementById('tv-desc').textContent  = room.desc;
+  // Reset angolo visione
+  lon = 0; lat = 0; autoRot = true;
+  document.getElementById('tv-placeholder').style.display = 'flex';
+  document.getElementById('tv-info').style.display = 'none';
+  loadPanorama(room.img);
+}
+
+// ── Build pulsanti stanza ──
+function buildButtons() {
+  const wrap = document.getElementById('tv-rooms');
+  ROOMS.forEach(r => {
+    const btn = document.createElement('button');
+    btn.className = 'tv-room-btn'; btn.id = 'btn-' + r.id;
+    btn.setAttribute('role','tab');
+    btn.textContent = r.icon + ' ' + r.label;
+    btn.onclick = () => selectRoom(r);
+    wrap.appendChild(btn);
+  });
+}
+
+// ── Build miniature ──
+function buildThumbs() {
+  const wrap = document.getElementById('tv-thumbs');
+  ROOMS.forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'tv-thumb'; div.id = 'thumb-' + r.id;
+    div.setAttribute('role','button'); div.setAttribute('aria-label', r.label);
+    div.onclick = () => selectRoom(r);
+    const img = new Image();
+    img.onload  = () => { div.innerHTML = `<img src="${r.thumb}" alt="${r.label}" loading="lazy"/><div class="tv-thumb-label">${r.label}</div>`; };
+    img.onerror = () => { div.innerHTML = `<div class="tv-thumb-placeholder"><span>${r.icon}</span><span>${r.label}</span></div>`; };
+    img.src = r.thumb;
+    wrap.appendChild(div);
+  });
+}
+
+// ── Avvio ──
+window.addEventListener('resize', resize);
+resize();
+render();
+buildButtons();
+buildThumbs();
+selectRoom(ROOMS[0]);
+</script>
 </body>
 </html>
