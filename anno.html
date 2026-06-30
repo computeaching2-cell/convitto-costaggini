@@ -72,7 +72,7 @@
   <!-- HERO -->
   <section class="an-hero">
     <div class="w">
-      <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">— A.S. 2025/2026</p>
+      <p id="an-as" style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">— A.S. 2026/2027</p>
       <h1>L'anno<br><em>al Convitto</em></h1>
       <p style="color:rgba(245,240,232,.6);max-width:480px;margin:.75rem auto 0;font-size:.9rem;line-height:1.8">Dove siamo nell'anno scolastico. Cosa abbiamo già vissuto. Cosa ci aspetta ancora.</p>
     </div>
@@ -117,17 +117,23 @@
 <script>
 // Tappe dell'anno scolastico
 const TAPPE = [
-  { data:'2025-09-15', icon:'🎒', titolo:'Inizio anno scolastico',      desc:'Rientro dei convittori, accoglienza dei nuovi iscritti, prime settimane di orientamento e conoscenza.',                  badge:'Completato' },
-  { data:'2025-10-01', icon:'🎵', titolo:'Iscrizioni Laboratorio Musicale', desc:'Apertura delle iscrizioni al Laboratorio Musicale per l\'a.s. 2025/2026. Tutti i convittori possono aderire.',          badge:'Completato' },
-  { data:'2025-11-10', icon:'📋', titolo:'Pagellino del 1° quadrimestre', desc:'Prima valutazione intermedia. Gli educatori monitorano l\'andamento con i docenti e contattano le famiglie se necessario.', badge:'Completato' },
-  { data:'2025-12-20', icon:'🎄', titolo:'Festa di Natale del Convitto',  desc:'Il tradizionale concerto natalizio del Laboratorio Musicale. Cena di fine anno, saluti, partenza per le vacanze.',        badge:'Completato' },
-  { data:'2026-01-07', icon:'📚', titolo:'Rientro e 2° quadrimestre',     desc:'Rientro dopo le vacanze natalizie. Inizio del secondo quadrimestre con intensificazione dei ritmi di studio.',             badge:'In corso' },
-  { data:'2026-02-15', icon:'📊', titolo:'Pagelle 1° quadrimestre',       desc:'Consegna ufficiale delle valutazioni del primo quadrimestre. Colloqui con le famiglie.',                                    badge:'Prossimo' },
-  { data:'2026-04-01', icon:'🌍', titolo:'Erasmus e PCTO',                desc:'Partenza dei gruppi per i percorsi Erasmus+ e inizio degli stage in azienda (PCTO) per le classi del triennio.',           badge:'Prossimo' },
-  { data:'2026-05-15', icon:'📝', titolo:'Pagellino del 2° quadrimestre', desc:'Seconda valutazione intermedia prima degli scrutini finali. Ultimi interventi di supporto agli studenti in difficoltà.',     badge:'Prossimo' },
-  { data:'2026-06-01', icon:'🎓', titolo:'Esami di maturità',             desc:'Inizio degli esami di Stato per le classi quinte. Il Convitto garantisce l\'assistenza agli studenti durante tutto il periodo.', badge:'Prossimo' },
-  { data:'2026-06-20', icon:'☀️', titolo:'Fine anno scolastico',          desc:'Saluti, cerimonia degli esami, chiusura del Convitto per l\'estate. Arrivederci a settembre.',                               badge:'Prossimo' },
+  { data:'2026-09-15', icon:'🎒', titolo:'Inizio anno scolastico',      desc:'Rientro dei convittori, accoglienza dei nuovi iscritti, prime settimane di orientamento e conoscenza.' },
+  { data:'2026-10-01', icon:'🎵', titolo:'Iscrizioni Laboratorio Musicale', desc:'Apertura delle iscrizioni al Laboratorio Musicale. Tutti i convittori possono aderire.' },
+  { data:'2026-11-10', icon:'📋', titolo:'Pagellino del 1° quadrimestre', desc:'Prima valutazione intermedia. Gli educatori monitorano l\'andamento con i docenti e contattano le famiglie se necessario.' },
+  { data:'2026-12-20', icon:'🎄', titolo:'Festa di Natale del Convitto',  desc:'Il tradizionale concerto natalizio del Laboratorio Musicale. Cena di fine anno, saluti, partenza per le vacanze.' },
+  { data:'2027-01-07', icon:'📚', titolo:'Rientro e 2° quadrimestre',     desc:'Rientro dopo le vacanze natalizie. Inizio del secondo quadrimestre con intensificazione dei ritmi di studio.' },
+  { data:'2027-02-15', icon:'📊', titolo:'Pagelle 1° quadrimestre',       desc:'Consegna ufficiale delle valutazioni del primo quadrimestre. Colloqui con le famiglie.' },
+  { data:'2027-04-01', icon:'🌍', titolo:'Erasmus e PCTO',                desc:'Partenza dei gruppi per i percorsi Erasmus+ e inizio degli stage in azienda (PCTO) per le classi del triennio.' },
+  { data:'2027-05-15', icon:'📝', titolo:'Pagellino del 2° quadrimestre', desc:'Seconda valutazione intermedia prima degli scrutini finali. Ultimi interventi di supporto agli studenti in difficoltà.' },
+  { data:'2027-06-01', icon:'🎓', titolo:'Esami di maturità',             desc:'Inizio degli esami di Stato per le classi quinte. Il Convitto garantisce l\'assistenza agli studenti durante tutto il periodo.' },
+  { data:'2027-06-20', icon:'☀️', titolo:'Fine anno scolastico',          desc:'Saluti, cerimonia degli esami, chiusura del Convitto per l\'estate. Arrivederci a settembre.' },
 ];
+
+// Anno scolastico di riferimento: dopo la fine dell'anno (~20 giugno) si passa al nuovo a.s.
+function asStartYear(){ const n=new Date(), m=n.getMonth(), d=n.getDate(); const ancoraInCorso=(m<5)||(m===5&&d<=20); return ancoraInCorso ? n.getFullYear()-1 : n.getFullYear(); }
+function schoolYear(){ const s=asStartYear(); return s+'/'+(s+1); }
+const asEl = document.getElementById('an-as');
+if (asEl) asEl.textContent = '— A.S. ' + schoolYear();
 
 // Messaggi giornalieri automatici
 function getOggi() {
@@ -165,9 +171,7 @@ function getOggi() {
 // Calcola progresso anno: 15 settembre → 20 giugno
 function getProgress() {
   const now   = new Date();
-  const m     = now.getMonth(); // 0=gen ... 11=dic
-  // Se siamo tra gennaio e agosto: l'anno scolastico è iniziato a settembre SCORSO
-  const startYear = m < 8 ? now.getFullYear()-1 : now.getFullYear();
+  const startYear = asStartYear();
   const start = new Date(startYear,     8, 15); // 15 settembre
   const end   = new Date(startYear + 1, 5, 20); // 20 giugno anno dopo
   if (now < start) return 0;
@@ -206,13 +210,16 @@ TAPPE.forEach(t => {
       <div class="an-step-date">${d}</div>
       <div class="an-step-title">${t.titolo}</div>
       <div class="an-step-desc">${t.desc}</div>
-      <span class="an-step-badge">${st==='past'?'✓ ':st==='now'?'▶ ':'◦ '}${t.badge}</span>
+      <span class="an-step-badge">${st==='past'?'✓ Svolto':st==='now'?'▶ In corso':'◦ In programma'}</span>
     </div>
   `;
   stepsEl.appendChild(div);
 });
 
 // ── ADEMPIMENTI DEL PERIODO ──────────────────────────────
+// NB (Michele): le date qui sotto sono quelle della maturità 2026.
+// Quando esce l'O.M. maturità 2026/27, aggiorna i campi `data` e la `Fonte` in fondo.
+// Le scadenze ricorrenti (pagellini, scrutini) si possono lasciare come riferimento.
 const ADEMPIMENTI = [
   { mese:4, voci:[
     { data:'12 maggio',    icona:'📋', titolo:'Presidenti di commissione',      desc:'Pubblicati dagli USR gli elenchi dei Presidenti di commissione dell\'Esame di Stato.',                                                                                                         chi:'Maturandi' },
@@ -250,7 +257,7 @@ function renderAdempimenti() {
 
   let html = `<div style="border-top:1px solid rgba(44,62,45,.15);padding-top:2rem">
     <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);margin-bottom:.5rem">Adempimenti del periodo</p>
-    <h3 style="font-family:var(--fd);font-size:1.4rem;font-weight:300;color:var(--bosco);margin-bottom:1.5rem">Scadenze di <em style="font-style:italic;color:var(--oro)">${meseNomi[month]}${month < 6 ? '–' + meseNomi[Math.min(month+1,11)] : ''} 2026</em></h3>`;
+    <h3 style="font-family:var(--fd);font-size:1.4rem;font-weight:300;color:var(--bosco);margin-bottom:1.5rem">Scadenze di <em style="font-style:italic;color:var(--oro)">${meseNomi[month]}${month < 6 ? '–' + meseNomi[Math.min(month+1,11)] : ''} ${now.getFullYear()}</em></h3>`;
 
   relevant.forEach(gruppo => {
     const isCurrent = gruppo.mese === month;

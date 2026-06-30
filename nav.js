@@ -71,7 +71,6 @@
           <li><a href="notizie.html" data-page="notizie">Ultime notizie</a></li>
           <li><a href="in-2-minuti.html" data-page="in-2-minuti">⚡ In 2 Minuti</a></li>
           <li><a href="calendario.html" data-page="calendario">Calendario eventi</a></li>
-          <li><a href="natale2024.html" data-page="natale2024">🎄 Natale 2024</a></li>
         </ul>
       </div>
 
@@ -143,7 +142,6 @@
         <li><a href="notizie.html">Ultime notizie</a></li>
         <li><a href="in-2-minuti.html">⚡ In 2 Minuti</a></li>
         <li><a href="calendario.html">Calendario eventi</a></li>
-        <li><a href="natale2024.html">🎄 Natale 2024</a></li>
       </ul>
     </li>
 
