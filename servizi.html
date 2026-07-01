@@ -47,16 +47,25 @@
     }
     #ristorazione, #alloggi, #studio, #sport, #tecnologia, #musica, #salute, #orari { scroll-margin-top: 90px; }
     
-    /* Overlay immagine dinamico */
+    /* Overlay immagine dinamico e correzioni per ritratti */
     .img-container { position: relative; width: 100%; border-radius: 8px; overflow: hidden; }
     .img-overlay { position: absolute; top: 1.2rem; right: 1.2rem; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(4px); padding: 0.6rem 1.2rem; border-radius: 6px; border: 1px solid rgba(184,146,42,.4); box-shadow: 0 4px 10px rgba(0,0,0,0.15); font-family: var(--fu, 'Source Sans 3', sans-serif); text-align: right; line-height: 1.2; z-index: 2; }
     .img-overlay strong { display: block; font-size: 0.9rem; color: var(--bosco, #2C3E2D); font-weight: 700; margin-bottom: 0.15rem; }
     .img-overlay span { display: block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--txt2, #555); font-weight: 600; }
     .img-overlay .ico { color: var(--oro, #B8922A); font-style: normal; margin-right: 0.3rem; font-size: 1.1em; }
+    
+    /* Gestione foto verticali su mobile */
+    .portrait-safe img { aspect-ratio: auto !important; max-height: 450px; object-position: center top; }
+    
+    @media(min-width:768px){ 
+      .portrait-safe img { aspect-ratio: 16/9 !important; object-position: center 30%; max-height: none; } 
+    }
+    
     @media(max-width:560px) {
-      .img-overlay { top: 0.6rem; right: 0.6rem; padding: 0.4rem 0.8rem; }
-      .img-overlay strong { font-size: 0.8rem; }
-      .img-overlay span { font-size: 0.55rem; }
+      .img-overlay { top: 0.5rem; right: 0.5rem; padding: 0.35rem 0.6rem; border-radius: 4px; }
+      .img-overlay strong { font-size: 0.75rem; margin-bottom: 0; }
+      .img-overlay span { font-size: 0.5rem; }
+      .img-overlay .ico { font-size: 1em; }
     }
   </style>
 </head>
@@ -104,7 +113,7 @@
       </div>
 
       <div id="alloggi" class="svc-block rev rv">
-        <img src="img/camera.jpg" alt="Camera del convitto" loading="lazy"/>
+        <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=900&q=80" alt="Camera del convitto" loading="lazy"/>
         <div>
           <p class="lbl">Servizio 02</p>
           <h2>Alloggi e <em>camere</em></h2>
@@ -121,7 +130,7 @@
       </div>
 
       <div id="studio" class="svc-block rv">
-        <img src="img/sala-studio.jpg" alt="Studio guidato al Convitto Costaggini" loading="lazy"/>
+        <img src="img/sala-studio.png" alt="Studio guidato al Convitto Costaggini" loading="lazy"/>
         <div>
           <p class="lbl">Servizio 03</p>
           <h2>Studio <em>guidato</em></h2>
@@ -175,7 +184,7 @@
       </div>
 
       <div id="musica" class="svc-block rev rv">
-        <div class="img-container">
+        <div class="img-container portrait-safe">
           <img src="img/lab-musicale.jpg" alt="Laboratorio musicale del Convitto Costaggini" loading="lazy"/>
           <div class="img-overlay">
             <strong><span class="ico" aria-hidden="true">🎼</span>Laboratorio Musicale</strong>
@@ -200,7 +209,7 @@
       </div>
 
       <div id="salute" class="svc-block rev rv">
-        <img src="img/infermiera.jpg" alt="Infermeria del convitto" loading="lazy"/>
+        <img src="img/infermiera.png" alt="Infermeria del convitto" loading="lazy"/>
         <div>
           <p class="lbl">Servizio 07</p>
           <h2>Salute e <em>assistenza</em></h2>
