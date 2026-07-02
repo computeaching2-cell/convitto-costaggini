@@ -605,3 +605,23 @@ a.nc:hover, a.article-card:hover, a.alumni-card:hover,
 
 /* Pill tag hover */
 .tag:hover { background: rgba(44,62,45,.12); transform: translateY(-1px); transition: all .2s; cursor: default; }
+
+/* ═══════════════════════════════════════════════════════════════
+   ACCESSIBILITÀ — Riduci movimento
+   Rete di sicurezza valida su tutto il sito: se il sistema operativo
+   dell'utente richiede "riduci movimento" (impostazione di
+   accessibilità per chi soffre di disturbi vestibolari, emicranie
+   da trigger visivi, ecc.), tutte le animazioni CSS — presenti e
+   future, su qualunque pagina — vengono azzerate o rese istantanee.
+   Non serve intervenire pagina per pagina: questa regola ha priorità
+   perché è l'ultima dichiarata e usa selettori universali.
+   ═══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
