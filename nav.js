@@ -867,6 +867,16 @@
 
   window.ConvittoSearch = { cerca: cerca, renderHTML: renderHTML };
 
+  function announceCount(query, statusEl) {
+    if (!statusEl) return;
+    var q = query.trim().toLowerCase();
+    if (q.length < 2) { statusEl.textContent = ''; return; }
+    var n = cerca(q).length;
+    statusEl.textContent = n === 0
+      ? 'Nessun risultato trovato per "' + q + '"'
+      : n + ' risultat' + (n === 1 ? 'o' : 'i') + ' trovat' + (n === 1 ? 'o' : 'i') + ' per "' + q + '"';
+  }
+
   /* ── Pannello a comparsa, raggiungibile da ogni pagina ── */
   var modal = document.createElement('div');
   modal.id = 'gsearch-modal';
@@ -879,6 +889,7 @@
         '<button id="gsearch-close" type="button" aria-label="Chiudi ricerca">✕</button>' +
       '</div>' +
       '<div id="gsearch-results" role="listbox" aria-label="Risultati della ricerca"></div>' +
+      '<div id="gsearch-status" class="sr-only" aria-live="polite" role="status"></div>' +
       '<div id="gsearch-hint">Premi <kbd>Esc</kbd> per chiudere</div>' +
     '</div>';
   document.body.appendChild(modal);
@@ -902,7 +913,11 @@
     document.body.style.overflow = '';
     if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
   }
-  gInput.addEventListener('input', function () { gResults.innerHTML = renderHTML(gInput.value); });
+  var gStatus = document.getElementById('gsearch-status');
+  gInput.addEventListener('input', function () {
+    gResults.innerHTML = renderHTML(gInput.value);
+    announceCount(gInput.value, gStatus);
+  });
   gClose.addEventListener('click', closeSearch);
   gBackdrop.addEventListener('click', closeSearch);
   document.addEventListener('keydown', function (e) {
@@ -929,6 +944,7 @@
   var homeInput = document.getElementById('search-input');
   var homeResults = document.getElementById('search-results');
   var homeBtn = document.getElementById('search-btn');
+  var homeStatus = document.getElementById('search-status');
   if (homeInput && homeResults) {
     var lastQuery = '';
     var focusIdx = -1;
@@ -941,11 +957,13 @@
         homeResults.innerHTML = '';
         homeResults.classList.remove('open');
         homeInput.setAttribute('aria-expanded', 'false');
+        if (homeStatus) homeStatus.textContent = '';
         return;
       }
       homeResults.innerHTML = renderHTML(q);
       homeResults.classList.add('open');
       homeInput.setAttribute('aria-expanded', 'true');
+      announceCount(q, homeStatus);
     }
     homeInput.addEventListener('keydown', function (e) {
       var items = homeResults.querySelectorAll('.sr-item');

@@ -617,6 +617,12 @@ a.nc:hover, a.article-card:hover, a.alumni-card:hover,
 /* Pill tag hover */
 .tag:hover { background: rgba(44,62,45,.12); transform: translateY(-1px); transition: all .2s; cursor: default; }
 
+/* Solo per screen reader — annunci invisibili a schermo */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    RICERCA — elenco risultati (condiviso dalla barra in home e dal
    pannello di ricerca sitewide iniettato da nav.js su ogni pagina)

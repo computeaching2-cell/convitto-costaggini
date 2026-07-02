@@ -30,6 +30,9 @@
     .fg { display: flex; flex-direction: column; gap: .3rem; }
     .fg label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--bosco); }
     .fg label .req { color: var(--oro); }
+    .field-error { display:none; font-size:.72rem; color:#b23a3a; font-weight:600; }
+    .field-error.show { display:block; }
+    .fg input[aria-invalid="true"], .fg select[aria-invalid="true"], .fg textarea[aria-invalid="true"] { border-color:#dc2626; }
     .fg input, .fg select, .fg textarea {
       font-size: 1rem; font-family: var(--fu); color: var(--txt);
       background: var(--av); border: 1.5px solid var(--av3); border-radius: 3px;
@@ -124,16 +127,19 @@
           <div class="frow">
             <div class="fg">
               <label for="nome">Nome <span class="req">*</span></label>
-              <input style="font-size:16px" type="text" id="nome" name="nome" required autocomplete="given-name" placeholder="Mario"/>
+              <input style="font-size:16px" type="text" id="nome" name="nome" required autocomplete="given-name" placeholder="Mario" aria-describedby="nome-err"/>
+              <span class="field-error" id="nome-err" role="alert"></span>
             </div>
             <div class="fg">
               <label for="cognome">Cognome <span class="req">*</span></label>
-              <input style="font-size:16px" type="text" id="cognome" name="cognome" required autocomplete="family-name" placeholder="Rossi"/>
+              <input style="font-size:16px" type="text" id="cognome" name="cognome" required autocomplete="family-name" placeholder="Rossi" aria-describedby="cognome-err"/>
+              <span class="field-error" id="cognome-err" role="alert"></span>
             </div>
           </div>
           <div class="fg">
             <label for="email">Email <span class="req">*</span></label>
-            <input style="font-size:16px" type="email" id="email" name="email" required autocomplete="email" placeholder="mario@email.it"/>
+            <input style="font-size:16px" type="email" id="email" name="email" required autocomplete="email" placeholder="mario@email.it" aria-describedby="email-err"/>
+            <span class="field-error" id="email-err" role="alert"></span>
           </div>
           <div class="fg">
             <label for="telefono">Telefono</label>
@@ -141,7 +147,7 @@
           </div>
           <div class="fg">
             <label for="oggetto">Motivo della richiesta <span class="req">*</span></label>
-            <select id="oggetto" name="oggetto" required>
+            <select id="oggetto" name="oggetto" required aria-describedby="oggetto-err">
               <option value="">— Seleziona —</option>
               <option value="colloquio-educatori">Colloquio con gli Educatori</option>
               <option value="emergenza">Emergenza / Urgenza</option>
@@ -152,16 +158,19 @@
               <option value="tariffe">Tariffe e contributi</option>
               <option value="altro">Altro</option>
             </select>
+            <span class="field-error" id="oggetto-err" role="alert"></span>
           </div>
           <div class="fg">
             <label for="messaggio">Messaggio <span class="req">*</span></label>
-            <textarea id="messaggio" name="messaggio" required placeholder="Scrivi qui il tuo messaggio…"></textarea>
+            <textarea id="messaggio" name="messaggio" required placeholder="Scrivi qui il tuo messaggio…" aria-describedby="messaggio-err"></textarea>
+            <span class="field-error" id="messaggio-err" role="alert"></span>
           </div>
           <div class="fpriv">
-            <input style="font-size:16px" type="checkbox" id="priv" name="privacy_accettata" required aria-required="true" value="si"/>
+            <input style="font-size:16px" type="checkbox" id="priv" name="privacy_accettata" required aria-required="true" value="si" aria-describedby="priv-err"/>
             <label for="priv">
               Ho letto e accetto l'<a href="privacy.html" style="color:var(--bosco2)">informativa sul trattamento dei dati personali</a> ai sensi del Reg. UE 2016/679 (GDPR). <span class="req">*</span>
             </label>
+            <span class="field-error" id="priv-err" role="alert"></span>
           </div>
           <button type="submit" class="bsub">Invia messaggio →</button>
           <div class="form-msg success" id="form-success" role="alert">
@@ -356,21 +365,49 @@ const CONTACT_GAS = 'https://script.google.com/a/macros/alberghierorieti.it/s/AK
 
 const form = document.getElementById('contact-form');
 if (form) {
+  form.querySelectorAll('[aria-describedby]').forEach(el => {
+    const clear = () => {
+      const errEl = document.getElementById(el.getAttribute('aria-describedby'));
+      el.style.borderColor = '';
+      el.removeAttribute('aria-invalid');
+      if (errEl) { errEl.textContent = ''; errEl.classList.remove('show'); }
+    };
+    el.addEventListener('input', clear);
+    el.addEventListener('change', clear);
+  });
+}
+if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Validazione campi required
+    // Validazione campi required — messaggi accessibili collegati ai campi
     const required = form.querySelectorAll('[required]');
     let valid = true;
+    let firstInvalid = null;
     required.forEach(el => {
-      el.style.borderColor = '';
-      if (el.type === 'checkbox' ? !el.checked : !el.value.trim()) {
+      const errEl = document.getElementById(el.getAttribute('aria-describedby'));
+      const isEmpty = el.type === 'checkbox' ? !el.checked : !el.value.trim();
+      const isBadEmail = el.type === 'email' && el.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+      if (isEmpty || isBadEmail) {
         valid = false;
         el.style.borderColor = '#dc2626';
+        el.setAttribute('aria-invalid', 'true');
+        if (errEl) {
+          errEl.textContent = isEmpty
+            ? (el.type === 'checkbox' ? 'Devi accettare l\'informativa privacy per continuare.' : 'Questo campo è obbligatorio.')
+            : 'Inserisci un indirizzo email valido (es. mario@email.it).';
+          errEl.classList.add('show');
+        }
+        if (!firstInvalid) firstInvalid = el;
+      } else {
+        el.style.borderColor = '';
+        el.removeAttribute('aria-invalid');
+        if (errEl) { errEl.textContent = ''; errEl.classList.remove('show'); }
       }
     });
     if (!valid) {
-      form.querySelector('[style*="border-color"]')?.scrollIntoView({behavior:'smooth',block:'center'});
+      firstInvalid?.focus();
+      firstInvalid?.scrollIntoView({behavior:'smooth',block:'center'});
       return;
     }
 
