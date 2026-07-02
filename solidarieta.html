@@ -41,6 +41,21 @@
     .sl-hero-meta { font-family:var(--fu); font-size:.7rem; color:rgba(245,240,232,.35); letter-spacing:.12em; text-transform:uppercase; margin-top:1rem; }
     .sl-hero-meta span { color:var(--oro2); margin:0 .4rem; }
 
+    /* Scintille di luce fluttuanti — motivo distinto dal Vinile e dal Laboratorio Musicale */
+    .sl-motifs { position:absolute; inset:0; pointer-events:none; z-index:0; }
+    .sl-spark {
+      position:absolute; bottom:-20px; border-radius:50%;
+      background:var(--oro2); box-shadow:0 0 8px rgba(184,146,42,.65);
+      opacity:0; animation:slSparkRise linear infinite;
+    }
+    @keyframes slSparkRise {
+      0%   { transform:translateY(0) scale(.6); opacity:0; }
+      15%  { opacity:.8; }
+      50%  { transform:translateY(-40vh) scale(1); }
+      85%  { opacity:.3; }
+      100% { transform:translateY(-80vh) scale(.6); opacity:0; }
+    }
+
     /* ── VIDEO ── */
     .sl-video-section { background:#000; padding:0; }
     .sl-video-wrap {
@@ -161,6 +176,17 @@
 
   <!-- HERO -->
   <section class="sl-hero">
+    <div class="sl-motifs" aria-hidden="true">
+      <span class="sl-spark" style="left:6%;width:5px;height:5px;animation-duration:8s;animation-delay:0s"></span>
+      <span class="sl-spark" style="left:15%;width:3px;height:3px;animation-duration:6.5s;animation-delay:1.5s"></span>
+      <span class="sl-spark" style="left:27%;width:6px;height:6px;animation-duration:9.5s;animation-delay:3s"></span>
+      <span class="sl-spark" style="left:40%;width:4px;height:4px;animation-duration:7s;animation-delay:.8s"></span>
+      <span class="sl-spark" style="left:53%;width:5px;height:5px;animation-duration:8.5s;animation-delay:4s"></span>
+      <span class="sl-spark" style="left:65%;width:3px;height:3px;animation-duration:6s;animation-delay:2.2s"></span>
+      <span class="sl-spark" style="left:76%;width:6px;height:6px;animation-duration:10s;animation-delay:5s"></span>
+      <span class="sl-spark" style="left:87%;width:4px;height:4px;animation-duration:7.5s;animation-delay:1s"></span>
+      <span class="sl-spark" style="left:95%;width:5px;height:5px;animation-duration:9s;animation-delay:3.6s"></span>
+    </div>
     <div class="w" style="position:relative;z-index:1">
       <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:2rem;justify-content:center">
         <a href="index.html" style="color:rgba(245,240,232,.35)">Home</a>

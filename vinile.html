@@ -17,10 +17,29 @@
     body { background:#0a0f0a; }
 
     /* HERO */
-    .vn-hero { background:linear-gradient(180deg,#000,#0a0f0a); padding:4rem 1.25rem 3rem; text-align:center; }
+    .vn-hero { background:linear-gradient(180deg,#000,#0a0f0a); padding:4rem 1.25rem 3rem; text-align:center; position:relative; overflow:hidden; }
     .vn-hero h1 { font-family:var(--fd); font-size:clamp(2rem,7vw,4.5rem); font-weight:300; color:#fff; }
     .vn-hero h1 em { font-style:italic; color:var(--oro3); }
     .vn-hero p { color:rgba(245,240,232,.5); max-width:500px; margin:.75rem auto 0; font-size:.9rem; line-height:1.8; }
+    .vn-hero .w { position:relative; z-index:1; }
+
+    /* Solchi di vinile fluttuanti — motivo distinto dalle note del Laboratorio Musicale */
+    .vn-motifs { position:absolute; inset:0; pointer-events:none; z-index:0; }
+    .vn-ring {
+      position:absolute; bottom:-60px; border-radius:50%;
+      border:1.5px solid rgba(184,146,42,.3);
+      opacity:0; animation:vnRingRise linear infinite;
+    }
+    .vn-ring::after {
+      content:''; position:absolute; inset:32%; border-radius:50%;
+      border:1px solid rgba(184,146,42,.22);
+    }
+    @keyframes vnRingRise {
+      0%   { transform:translateY(0) rotate(0deg); opacity:0; }
+      12%  { opacity:.5; }
+      88%  { opacity:.25; }
+      100% { transform:translateY(-115vh) rotate(140deg); opacity:0; }
+    }
 
     /* GIRADISCHI */
     .vn-player-wrap { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:3rem; padding:3rem 1.25rem; max-width:900px; margin:0 auto; }
@@ -137,6 +156,16 @@
 
   <!-- HERO -->
   <section class="vn-hero">
+    <div class="vn-motifs" aria-hidden="true">
+      <span class="vn-ring" style="left:5%;width:34px;height:34px;animation-duration:15s;animation-delay:0s"></span>
+      <span class="vn-ring" style="left:16%;width:22px;height:22px;animation-duration:11s;animation-delay:3s"></span>
+      <span class="vn-ring" style="left:28%;width:46px;height:46px;animation-duration:18s;animation-delay:6s"></span>
+      <span class="vn-ring" style="left:42%;width:26px;height:26px;animation-duration:13s;animation-delay:1.5s"></span>
+      <span class="vn-ring" style="left:58%;width:38px;height:38px;animation-duration:16s;animation-delay:4.5s"></span>
+      <span class="vn-ring" style="left:71%;width:20px;height:20px;animation-duration:10s;animation-delay:8s"></span>
+      <span class="vn-ring" style="left:83%;width:30px;height:30px;animation-duration:14s;animation-delay:2.5s"></span>
+      <span class="vn-ring" style="left:93%;width:24px;height:24px;animation-duration:12.5s;animation-delay:6.5s"></span>
+    </div>
     <div class="w">
       <p style="font-family:var(--fu);font-size:.6rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.75rem">— Laboratorio Musicale · Dal 2003</p>
       <h1>Il Vinile<br>del <em>Convitto</em></h1>
