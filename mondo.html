@@ -29,8 +29,7 @@
     .popup-city { font-size:.78rem; color:rgba(255,255,255,.6); margin-bottom:.35rem; }
     .popup-role { font-size:.78rem; color:rgba(184,146,42,.8); font-style:italic; }
     .popup-year { font-size:.6rem; color:rgba(255,255,255,.3); margin-top:.35rem; display:block; }
-    @keyframes rieti-pulse { 0%{transform:scale(1);opacity:.8} 50%{transform:scale(2.2);opacity:0} 100%{transform:scale(1);opacity:.8} }
-    .rieti-ring { position:absolute; top:-7px; left:-7px; width:24px; height:24px; border-radius:50%; border:2px solid #B8922A; animation:rieti-pulse 1.8s ease-out infinite; }
+    .rieti-ring { position:absolute; top:-7px; left:-7px; width:24px; height:24px; border-radius:50%; border:2px solid #B8922A; opacity:.8; }
     .rieti-dot  { width:12px; height:12px; border-radius:50%; background:#B8922A; border:2px solid #fff; box-shadow:0 0 8px rgba(184,146,42,.7); }
     .map-legend { position:absolute; bottom:2rem; left:1rem; z-index:1000; background:rgba(13,31,45,.9); border:1px solid rgba(184,146,42,.25); border-radius:8px; padding:.75rem 1rem; backdrop-filter:blur(8px); }
     .map-legend p { font-family:'Source Sans 3',sans-serif; font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:.5rem; }
@@ -208,7 +207,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
 }).addTo(map);
 
 // Pin Rieti
-L.marker([42.405,12.865],{icon:L.divIcon({className:'',html:'<div style="position:relative"><div style="position:absolute;top:-7px;left:-7px;width:24px;height:24px;border-radius:50%;border:2px solid #B8922A;animation:rieti-pulse 1.8s ease-out infinite"></div><div style="width:12px;height:12px;border-radius:50%;background:#B8922A;border:2px solid #fff;box-shadow:0 0 8px rgba(184,146,42,.7)"></div></div>',iconSize:[12,12],iconAnchor:[6,6],popupAnchor:[0,-12]})})
+L.marker([42.405,12.865],{icon:L.divIcon({className:'',html:'<div style="position:relative"><div style="position:absolute;top:-7px;left:-7px;width:24px;height:24px;border-radius:50%;border:2px solid #B8922A;opacity:.8"></div><div style="width:12px;height:12px;border-radius:50%;background:#B8922A;border:2px solid #fff;box-shadow:0 0 8px rgba(184,146,42,.7)"></div></div>',iconSize:[12,12],iconAnchor:[6,6],popupAnchor:[0,-12]})})
   .addTo(map)
   .bindPopup('<div class="popup-inner"><span class="popup-type alumni">⭐ Sede</span><span class="popup-name">Convitto "Costaggini"</span><div class="popup-city">📍 Via Salaria s.n.c. — Rieti</div><div class="popup-role">IPSSEOA R. A. Costaggini · Dal 1971</div></div>',{maxWidth:240});
 

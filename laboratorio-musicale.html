@@ -43,13 +43,12 @@
       pointer-events: none;
       opacity: .06;
     }
-    /* Note musicali fluttuanti */
+    /* Note musicali — motivo statico, nessuna animazione */
     .mus-note {
       position: absolute;
       font-size: 1.4rem;
       color: var(--oro2);
-      opacity: 0;
-      animation: noteFloat linear infinite;
+      opacity: .4;
       pointer-events: none;
       user-select: none;
     }
@@ -96,7 +95,7 @@
     @keyframes bounceMus {
       0%,100%{transform:translateY(0);opacity:.5} 50%{transform:translateY(7px);opacity:1}
     }
-    .mus-scroll-arrow { animation: bounceMus 1.4s ease-in-out infinite; }
+    .mus-scroll-arrow { /* statico: nessuna animazione */ }
 
     /* Linea ornamentale con nota */
     .mus-divider {
@@ -412,8 +411,8 @@
       0%,100% { opacity: var(--op0,.08); }
       50%      { opacity: var(--op1,.16); }
     }
-    .mus-deco-sway  { animation: deco-sway  6s ease-in-out infinite; }
-    .mus-deco-pulse { animation: deco-pulse 4s ease-in-out infinite; }
+    .mus-deco-sway  { /* statico: nessuna animazione */ }
+    .mus-deco-pulse { /* statico: nessuna animazione */ }
 
   @media(min-width:560px){.lab-grid{grid-template-columns:1fr 1fr}}</style>
 </head>
@@ -431,15 +430,15 @@
 
     <!-- Note musicali fluttuanti -->
     <div aria-hidden="true">
-      <span class="mus-note" style="left:4%;animation-duration:9s;animation-delay:0s">♩</span>
-      <span class="mus-note" style="left:12%;animation-duration:12s;animation-delay:2s;font-size:1.8rem">♪</span>
-      <span class="mus-note" style="left:22%;animation-duration:10s;animation-delay:4s">♫</span>
-      <span class="mus-note" style="left:35%;animation-duration:8s;animation-delay:1s;font-size:1rem">♬</span>
-      <span class="mus-note" style="left:55%;animation-duration:13s;animation-delay:3s">♩</span>
-      <span class="mus-note" style="left:68%;animation-duration:9.5s;animation-delay:5s;font-size:1.8rem">♪</span>
-      <span class="mus-note" style="left:78%;animation-duration:11s;animation-delay:1.5s">♫</span>
-      <span class="mus-note" style="left:88%;animation-duration:8.5s;animation-delay:3.5s;font-size:1rem">♬</span>
-      <span class="mus-note" style="left:95%;animation-duration:10.5s;animation-delay:6s">♩</span>
+      <span class="mus-note" style="left:4%;top:70%">♩</span>
+      <span class="mus-note" style="left:12%;top:20%;font-size:1.8rem">♪</span>
+      <span class="mus-note" style="left:22%;top:55%">♫</span>
+      <span class="mus-note" style="left:35%;top:12%;font-size:1rem">♬</span>
+      <span class="mus-note" style="left:55%;top:40%">♩</span>
+      <span class="mus-note" style="left:68%;top:65%;font-size:1.8rem">♪</span>
+      <span class="mus-note" style="left:78%;top:25%">♫</span>
+      <span class="mus-note" style="left:88%;top:50%;font-size:1rem">♬</span>
+      <span class="mus-note" style="left:95%;top:15%">♩</span>
     </div>
 
     <!-- Pentagramma SVG decorativo -->

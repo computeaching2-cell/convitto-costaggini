@@ -167,7 +167,7 @@
   .ca-btn .arr { transition: transform .18s ease; }
   .ca-btn:hover { background: var(--bosco); color: var(--avorio); }
   .ca-btn:hover .arr { transform: translateX(2px); }
-  .ca-btn.primary { background: var(--oro); border-color: var(--oro); color: #fff; }
+  .ca-btn.primary { background: var(--oro2); border-color: var(--oro2); color: var(--bosco); }
   .ca-btn.primary:hover { background: #A37F1E; border-color: #A37F1E; }
   .ca a:focus-visible, .ca-btn:focus-visible {
     outline: 2px solid var(--oro); outline-offset: 3px; border-radius: 3px;
@@ -191,7 +191,7 @@
   .ca-foot dd a:hover { border-color: var(--oro-soft); }
   .ca-foot .map-btn { margin-top: 1.6rem; }
   .ca-foot .ca-btn { border-color: var(--oro-soft); color: var(--avorio); }
-  .ca-foot .ca-btn:hover { background: var(--oro); border-color: var(--oro); color: #fff; }
+  .ca-foot .ca-btn:hover { background: var(--oro2); border-color: var(--oro2); color: var(--bosco); }
 
   .ca-note {
     border-top: 1px solid rgba(246,242,232,.16);
@@ -199,18 +199,12 @@
     font-size: .7687rem; color: rgba(246,242,232,.62); max-width: 70ch;
   }
 
-  /* ---------- vivacità minima nell'hero ---------- */
+  /* ---------- vivacità minima nell'hero — motivo statico ---------- */
   .ca-sparks { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
   .ca-spark {
-    position: absolute; bottom: -10px; width: 5px; height: 5px; border-radius: 50%;
+    position: absolute; width: 5px; height: 5px; border-radius: 50%;
     background: radial-gradient(circle, rgba(237,217,138,.95), rgba(184,146,42,.55) 60%, transparent 72%);
-    opacity: 0; animation: caFloat linear infinite; will-change: transform, opacity;
-  }
-  @keyframes caFloat {
-    0%   { transform: translateY(0) scale(.9);   opacity: 0; }
-    15%  { opacity: .55; }
-    85%  { opacity: .3; }
-    100% { transform: translateY(-78vh) scale(1.05); opacity: 0; }
+    opacity: .4;
   }
 
   /* ---------- reveal on scroll ---------- */
@@ -229,14 +223,14 @@
   <!-- HERO -->
   <header class="ca-hero">
     <div class="ca-sparks" aria-hidden="true">
-      <span class="ca-spark" style="left:6%;animation-duration:11s;animation-delay:0s"></span>
-      <span class="ca-spark" style="left:18%;animation-duration:13s;animation-delay:3s"></span>
-      <span class="ca-spark" style="left:31%;animation-duration:9.5s;animation-delay:1.4s"></span>
-      <span class="ca-spark" style="left:46%;animation-duration:12s;animation-delay:4.2s"></span>
-      <span class="ca-spark" style="left:59%;animation-duration:10.5s;animation-delay:2.1s"></span>
-      <span class="ca-spark" style="left:72%;animation-duration:13.5s;animation-delay:5s"></span>
-      <span class="ca-spark" style="left:84%;animation-duration:9s;animation-delay:1s"></span>
-      <span class="ca-spark" style="left:93%;animation-duration:12.5s;animation-delay:3.6s"></span>
+      <span class="ca-spark" style="left:6%;top:65%"></span>
+      <span class="ca-spark" style="left:18%;top:25%"></span>
+      <span class="ca-spark" style="left:31%;top:55%"></span>
+      <span class="ca-spark" style="left:46%;top:15%"></span>
+      <span class="ca-spark" style="left:59%;top:70%"></span>
+      <span class="ca-spark" style="left:72%;top:35%"></span>
+      <span class="ca-spark" style="left:84%;top:60%"></span>
+      <span class="ca-spark" style="left:93%;top:20%"></span>
     </div>
     <div class="ca-wrap">
       <p class="ca-hero-brand">Convitto «Costaggini» · Rieti</p>

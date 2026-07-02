@@ -89,8 +89,7 @@ body { background: var(--bg); color: var(--txt); font-family: var(--fu); overflo
   padding: 4rem 3rem 3rem; position: relative; overflow: hidden;
   border-bottom: 1px solid rgba(184,146,42,.08);
 }
-.hero::before { content: ''; position: absolute; top: 0; left: -100%; width: 55%; height: 1px; background: linear-gradient(90deg, transparent, rgba(184,146,42,.35), transparent); animation: scan 5s ease-in-out infinite; }
-@keyframes scan { to { left: 150%; } }
+.hero::before { content: ''; position: absolute; top: 0; left: -100%; width: 55%; height: 1px; background: linear-gradient(90deg, transparent, rgba(184,146,42,.35), transparent); }
 .hero-eye { font-family: var(--fu); font-size: .56rem; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--oro2); margin-bottom: .7rem; }
 .hero h1 { font-family: var(--fd); font-size: clamp(2rem,5vw,3.6rem); font-weight: 300; color: #fff; line-height: 1.1; margin-bottom: .7rem; }
 .hero h1 em { font-style: italic; color: var(--oro3); }

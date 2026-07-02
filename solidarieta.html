@@ -27,13 +27,6 @@
       background:linear-gradient(160deg,#000 0%,#0d150d 60%,#0a0f0a 100%);
       padding:5rem 1.25rem 4rem; text-align:center; position:relative; overflow:hidden;
     }
-    /* Riga luminosa animata */
-    .sl-hero::before {
-      content:''; position:absolute; top:0; left:-100%; width:60%; height:1px;
-      background:linear-gradient(90deg,transparent,rgba(184,146,42,.4),transparent);
-      animation:scanline 4s ease-in-out infinite;
-    }
-    @keyframes scanline { to { left:150%; } }
 
     .sl-hero-eyebrow { font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--oro2); margin-bottom:.75rem; }
     .sl-hero h1 { font-family:var(--fd); font-size:clamp(2.5rem,9vw,5.5rem); font-weight:300; color:#fff; line-height:1; margin-bottom:.4rem; }
@@ -41,19 +34,12 @@
     .sl-hero-meta { font-family:var(--fu); font-size:.7rem; color:rgba(245,240,232,.35); letter-spacing:.12em; text-transform:uppercase; margin-top:1rem; }
     .sl-hero-meta span { color:var(--oro2); margin:0 .4rem; }
 
-    /* Scintille di luce fluttuanti — motivo distinto dal Vinile e dal Laboratorio Musicale */
+    /* Scintille di luce — motivo statico, distinto dal Vinile e dal Laboratorio Musicale */
     .sl-motifs { position:absolute; inset:0; pointer-events:none; z-index:0; }
     .sl-spark {
-      position:absolute; bottom:-20px; border-radius:50%;
+      position:absolute; border-radius:50%;
       background:var(--oro2); box-shadow:0 0 8px rgba(184,146,42,.65);
-      opacity:0; animation:slSparkRise linear infinite;
-    }
-    @keyframes slSparkRise {
-      0%   { transform:translateY(0) scale(.6); opacity:0; }
-      15%  { opacity:.8; }
-      50%  { transform:translateY(-40vh) scale(1); }
-      85%  { opacity:.3; }
-      100% { transform:translateY(-80vh) scale(.6); opacity:0; }
+      opacity:.55;
     }
 
     /* ── VIDEO ── */
@@ -177,15 +163,15 @@
   <!-- HERO -->
   <section class="sl-hero">
     <div class="sl-motifs" aria-hidden="true">
-      <span class="sl-spark" style="left:6%;width:5px;height:5px;animation-duration:8s;animation-delay:0s"></span>
-      <span class="sl-spark" style="left:15%;width:3px;height:3px;animation-duration:6.5s;animation-delay:1.5s"></span>
-      <span class="sl-spark" style="left:27%;width:6px;height:6px;animation-duration:9.5s;animation-delay:3s"></span>
-      <span class="sl-spark" style="left:40%;width:4px;height:4px;animation-duration:7s;animation-delay:.8s"></span>
-      <span class="sl-spark" style="left:53%;width:5px;height:5px;animation-duration:8.5s;animation-delay:4s"></span>
-      <span class="sl-spark" style="left:65%;width:3px;height:3px;animation-duration:6s;animation-delay:2.2s"></span>
-      <span class="sl-spark" style="left:76%;width:6px;height:6px;animation-duration:10s;animation-delay:5s"></span>
-      <span class="sl-spark" style="left:87%;width:4px;height:4px;animation-duration:7.5s;animation-delay:1s"></span>
-      <span class="sl-spark" style="left:95%;width:5px;height:5px;animation-duration:9s;animation-delay:3.6s"></span>
+      <span class="sl-spark" style="left:6%;top:20%;width:5px;height:5px"></span>
+      <span class="sl-spark" style="left:15%;top:60%;width:3px;height:3px"></span>
+      <span class="sl-spark" style="left:27%;top:35%;width:6px;height:6px"></span>
+      <span class="sl-spark" style="left:40%;top:70%;width:4px;height:4px"></span>
+      <span class="sl-spark" style="left:53%;top:15%;width:5px;height:5px"></span>
+      <span class="sl-spark" style="left:65%;top:50%;width:3px;height:3px"></span>
+      <span class="sl-spark" style="left:76%;top:25%;width:6px;height:6px"></span>
+      <span class="sl-spark" style="left:87%;top:65%;width:4px;height:4px"></span>
+      <span class="sl-spark" style="left:95%;top:40%;width:5px;height:5px"></span>
     </div>
     <div class="w" style="position:relative;z-index:1">
       <nav class="breadcrumb" aria-label="Percorso" style="margin-bottom:2rem;justify-content:center">
@@ -311,15 +297,38 @@
 <script>
 const vid = document.getElementById('sl-video');
 if (vid) {
-  // I browser richiedono muted per l'autoplay — dopo 1s togliamo il mute
+  // I browser richiedono muted per l'autoplay — dopo 800ms togliamo il mute
   vid.volume = 1;
+
+  // Amplificatore: il volume nativo si ferma al 100%, quindi usiamo la
+  // Web Audio API per alzare il segnale oltre il tetto naturale.
+  function boostVolume(el, gainValue) {
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      const ctx = new Ctx();
+      const source = ctx.createMediaElementSource(el);
+      const gainNode = ctx.createGain();
+      gainNode.gain.value = gainValue; // 1 = volume originale, 1.8 = +80%
+      source.connect(gainNode).connect(ctx.destination);
+      if (ctx.state === 'suspended') {
+        const resume = () => { ctx.resume(); document.removeEventListener('click', resume); };
+        document.addEventListener('click', resume, { once: true });
+      }
+    } catch (e) {
+      // Se il boost non è supportato/consentito, il video resta comunque al volume normale
+    }
+  }
+
   vid.addEventListener('canplay', function() {
     vid.play().then(() => {
-      // Autoplay avviato — dopo 800ms togliamo il mute per la vera riproduzione audio
-      setTimeout(() => { vid.muted = false; }, 800);
+      setTimeout(() => {
+        vid.muted = false;
+        boostVolume(vid, 1.8);
+      }, 800);
     }).catch(() => {
       // Browser ha bloccato l'autoplay — l'utente dovrà premere play
       vid.muted = false;
+      boostVolume(vid, 1.8);
     });
   }, { once: true });
 }
