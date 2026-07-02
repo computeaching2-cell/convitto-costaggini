@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Da dove vengono i convittori del Costaggini — mappa interattiva delle province e regioni di provenienza."/>
+  <title>Da dove vengono | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <style>
+    body { background: var(--av); }
+    #pv-map { height: 480px; border-radius: 12px; overflow: hidden; border: 1px solid var(--av3); }
+    @media(max-width:600px){ #pv-map { height: 320px; } }
+    .pv-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .75rem; margin-top: 1.5rem; }
+    @media(max-width:480px){ .pv-stats { grid-template-columns: 1fr 1fr; } }
+    .pv-stat { background: #fff; border: 1px solid var(--av3); border-radius: 10px; padding: 1rem; text-align: center; }
+    .pv-stat-num { font-family: var(--fd); font-size: 2.2rem; font-weight: 300; color: var(--bosco); line-height: 1; }
+    .pv-stat-label { font-family: var(--fu); font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--txt2); margin-top: .3rem; }
+    .pv-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .65rem; margin-top: 1.25rem; }
+    @media(max-width:480px){ .pv-list { grid-template-columns: 1fr; } }
+    .pv-item { display: flex; align-items: center; gap: .75rem; background: #fff; border: 1px solid var(--av3); border-radius: 8px; padding: .6rem .85rem; }
+    .pv-bar-wrap { flex: 1; background: var(--av3); border-radius: 4px; height: 6px; }
+    .pv-bar { background: linear-gradient(90deg, var(--bosco), var(--bosco2)); border-radius: 4px; height: 6px; transition: width .6s ease; }
+    .pv-place { font-family: var(--fu); font-size: .78rem; font-weight: 700; color: var(--bosco); min-width: 80px; }
+    .pv-count { font-family: var(--fu); font-size: .72rem; color: var(--txt2); min-width: 28px; text-align: right; }
+    /* Leaflet custom marker */
+    .pv-marker { background: var(--bosco); border: 2px solid var(--oro); border-radius: 50%; color: #fff; font-family: var(--fu); font-size: .6rem; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+  </style>
+</head>
+<body data-page="provenienza">
+<main id="main">
+
+  <div class="page-hero">
+    <div class="w">
+      <nav class="breadcrumb"><a href="index.html">Home</a><span>›</span><a href="il-convitto.html">Il Convitto</a><span>›</span><span>Da dove vengono</span></nav>
+      <div class="gold-bar"></div>
+      <h1>Da dove <em>vengono</em></h1>
+      <p class="sub">Il Convitto Costaggini non è solo reatino — è nazionale. Studenti da tutta Italia scelgono di venire a Rieti per formarsi in un ambiente professionale d'eccellenza.</p>
+    </div>
+  </div>
+
+  <section style="padding-top:1.25rem;padding-bottom:1.5rem">
+    <div class="w">
+
+      <!-- Statistiche -->
+      <div class="pv-stats rv" id="pv-stats"></div>
+
+      <!-- Mappa -->
+      <div style="margin:1rem 0">
+        <p class="lbl">Mappa interattiva</p>
+        <h2 style="margin-bottom:1rem">Le province di <em>provenienza</em></h2>
+        <div id="pv-map" role="img" aria-label="Mappa interattiva province di provenienza"></div>
+      </div>
+
+      <!-- Lista ordinata -->
+      <div>
+        <p class="lbl">Dettaglio</p>
+        <h2 style="margin-bottom:1rem">Province e <em>numeri</em></h2>
+        <div class="pv-list rv" id="pv-list"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─ VEDI ANCHE (le due mappe) ─ -->
+  <section style="background:var(--av);padding:3rem 1.25rem">
+    <div class="w" style="max-width:760px;margin:0 auto">
+      <p style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro);text-align:center;margin:0 0 1.5rem">Vedi anche</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem">
+        <a href="mondo.html" style="display:block;background:#fff;border:1px solid var(--av2);border-radius:10px;padding:1.25rem 1.4rem;text-decoration:none;transition:transform .2s,box-shadow .2s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 20px rgba(44,62,45,.1)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+          <div style="font-family:var(--fd);font-size:1.15rem;color:var(--bosco);margin-bottom:.25rem">Il Costaggini nel Mondo &rarr;</div>
+          <div style="font-size:.82rem;color:var(--txt2);line-height:1.55">L'altra mappa: dove sono oggi, nel mondo, i nostri ex convittori</div>
+        </a>
+        <a href="il-convitto.html" style="display:block;background:#fff;border:1px solid var(--av2);border-radius:10px;padding:1.25rem 1.4rem;text-decoration:none;transition:transform .2s,box-shadow .2s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 20px rgba(44,62,45,.1)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+          <div style="font-family:var(--fd);font-size:1.15rem;color:var(--bosco);margin-bottom:.25rem">Il Convitto &rarr;</div>
+          <div style="font-size:.82rem;color:var(--txt2);line-height:1.55">Chi siamo, gli spazi e la nostra storia</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="nav.js"></script>
+<script>
+// ══════════════════════════════════════════════════════════════
+// DATI PROVENIENZA — aggiornare ogni anno
+// Per ogni provincia: nome, sigla, lat, lng, numero convittori
+// ══════════════════════════════════════════════════════════════
+const ANNO = '2025/2026';
+const DATI = [
+  // Lazio
+  { nome: 'Rieti',       sigla: 'RI', lat: 42.404,  lng: 12.857,  n: 28 },
+  { nome: 'Roma',        sigla: 'RM', lat: 41.902,  lng: 12.496,  n: 18 },
+  { nome: 'Viterbo',     sigla: 'VT', lat: 42.417,  lng: 12.107,  n: 8  },
+  { nome: 'Frosinone',   sigla: 'FR', lat: 41.640,  lng: 13.341,  n: 5  },
+  { nome: 'Latina',      sigla: 'LT', lat: 41.468,  lng: 12.903,  n: 3  },
+  // Centro-Sud
+  { nome: 'L\'Aquila',   sigla: 'AQ', lat: 42.351,  lng: 13.399,  n: 12 },
+  { nome: 'Teramo',      sigla: 'TE', lat: 42.660,  lng: 13.704,  n: 6  },
+  { nome: 'Pescara',     sigla: 'PE', lat: 42.462,  lng: 14.216,  n: 4  },
+  { nome: 'Chieti',      sigla: 'CH', lat: 42.351,  lng: 14.168,  n: 3  },
+  { nome: 'Campobasso',  sigla: 'CB', lat: 41.563,  lng: 14.656,  n: 4  },
+  { nome: 'Napoli',      sigla: 'NA', lat: 40.852,  lng: 14.268,  n: 5  },
+  // Nord
+  { nome: 'Milano',      sigla: 'MI', lat: 45.465,  lng: 9.188,   n: 2  },
+  { nome: 'Torino',      sigla: 'TO', lat: 45.071,  lng: 7.686,   n: 1  },
+];
+
+// ── STATISTICHE ───────────────────────────────────────────────
+const totale = DATI.reduce((s, d) => s + d.n, 0);
+const regioni = new Set(DATI.map(d => {
+  if (['RI','RM','VT','FR','LT'].includes(d.sigla)) return 'Lazio';
+  if (['AQ','TE','PE','CH'].includes(d.sigla)) return 'Abruzzo';
+  if (['CB','IS'].includes(d.sigla)) return 'Molise';
+  if (['NA','SA','CE','BN','AV'].includes(d.sigla)) return 'Campania';
+  return 'Nord';
+})).size;
+const fuoriRieti = DATI.filter(d => d.sigla !== 'RI').reduce((s, d) => s + d.n, 0);
+const province = DATI.length;
+
+const stats = [
+  { n: totale, label: 'convittori totali' },
+  { n: province, label: 'province diverse' },
+  { n: regioni, label: 'regioni rappresentate' },
+  { n: Math.round(fuoriRieti / totale * 100) + '%', label: 'fuori provincia' },
+];
+document.getElementById('pv-stats').innerHTML = stats.map(s =>
+  `<div class="pv-stat rv"><div class="pv-stat-num">${s.n}</div><div class="pv-stat-label">${s.label}</div></div>`
+).join('');
+
+// ── LISTA ─────────────────────────────────────────────────────
+const sorted = [...DATI].sort((a, b) => b.n - a.n);
+const max = sorted[0].n;
+document.getElementById('pv-list').innerHTML = sorted.map(d =>
+  `<div class="pv-item rv">
+    <span class="pv-place">${d.nome}</span>
+    <div class="pv-bar-wrap"><div class="pv-bar" style="width:${Math.round(d.n/max*100)}%"></div></div>
+    <span class="pv-count">${d.n}</span>
+  </div>`
+).join('');
+
+// ── MAPPA ─────────────────────────────────────────────────────
+const map = L.map('pv-map', {
+  center: [42.5, 13.5], zoom: 6,
+  zoomControl: true, scrollWheelZoom: false,
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap contributors © CARTO',
+  maxZoom: 10,
+}).addTo(map);
+
+// Segna Rieti come sede
+L.circleMarker([42.404, 12.857], {
+  radius: 10, fillColor: '#B8922A', color: '#2C3E2D',
+  weight: 2, opacity: 1, fillOpacity: 1,
+}).addTo(map).bindPopup('<strong>Rieti</strong><br>Sede del Convitto Costaggini');
+
+// Segna le province di provenienza
+DATI.forEach(d => {
+  if (d.sigla === 'RI') return;
+  const size = 8 + Math.round(d.n / max * 16);
+  const icon = L.divIcon({
+    className: '',
+    html: `<div class="pv-marker" style="width:${size*2}px;height:${size*2}px;border-radius:50%;background:#2C3E2D;border:2px solid #B8922A;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Source Sans 3',sans-serif;font-size:${Math.max(9,size-2)}px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.3)">${d.n}</div>`,
+    iconSize: [size*2, size*2],
+    iconAnchor: [size, size],
+  });
+  L.marker([d.lat, d.lng], { icon })
+    .addTo(map)
+    .bindPopup(`<strong>${d.nome} (${d.sigla})</strong><br>${d.n} convittor${d.n===1?'e':'i'}`);
+});
+</script>
+</body>
+</html>
