@@ -43,14 +43,14 @@
     </div>
   </div>
 
-  <section>
+  <section style="padding-top:1.25rem;padding-bottom:1.5rem">
     <div class="w">
 
       <!-- Statistiche -->
       <div class="pv-stats rv" id="pv-stats"></div>
 
       <!-- Mappa -->
-      <div style="margin:2rem 0">
+      <div style="margin:1rem 0">
         <p class="lbl">Mappa interattiva</p>
         <h2 style="margin-bottom:1rem">Le province di <em>provenienza</em></h2>
         <div id="pv-map" role="img" aria-label="Mappa interattiva province di provenienza"></div>
@@ -61,11 +61,6 @@
         <p class="lbl">Dettaglio</p>
         <h2 style="margin-bottom:1rem">Province e <em>numeri</em></h2>
         <div class="pv-list rv" id="pv-list"></div>
-      </div>
-
-      <!-- Nota aggiornamento -->
-      <div style="background:rgba(184,146,42,.08);border:1px solid rgba(184,146,42,.2);border-radius:8px;padding:1rem 1.25rem;margin-top:2rem;text-align:center">
-        <p style="font-family:var(--fu);font-size:.72rem;color:var(--bosco2);margin:0">📅 Dati aggiornati all'A.S. <span id="pv-anno"></span> · Per aggiornare i dati modificare l'array <code>DATI</code> in <code>provenienza.html</code></p>
       </div>
 
     </div>
@@ -114,8 +109,6 @@ const DATI = [
   { nome: 'Milano',      sigla: 'MI', lat: 45.465,  lng: 9.188,   n: 2  },
   { nome: 'Torino',      sigla: 'TO', lat: 45.071,  lng: 7.686,   n: 1  },
 ];
-
-document.getElementById('pv-anno').textContent = ANNO;
 
 // ── STATISTICHE ───────────────────────────────────────────────
 const totale = DATI.reduce((s, d) => s + d.n, 0);
