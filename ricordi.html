@@ -273,6 +273,7 @@ async function submitRicordo(e) {
   }
 
   // Se ha indicato dove abita, crea automaticamente anche un pin per la mappa
+  // (salvato su Supabase, in attesa di approvazione — coerente con iscriviti-alumni.html)
   if (r.dove.trim()) {
     try {
       const res = await fetch(
@@ -281,24 +282,19 @@ async function submitRicordo(e) {
       );
       const geo = await res.json();
       if (geo && geo[0]) {
-        const pin = {
-          id:    'p' + Date.now(),
-          name:  r.nome,
-          city:  r.dove,
-          type:  'alumni',
-          year:  r.anni,
-          role:  'Ex convittore/trice',
-          lat:   parseFloat(geo[0].lat),
-          lng:   parseFloat(geo[0].lon),
-          pending:     true,
-          fromRicordo: true,   // marcato: viene dal Muro dei Ricordi
-          submittedAt: new Date().toISOString()
-        };
-        const pinQueue = JSON.parse(localStorage.getItem('costaggini-pins-pending') || '[]');
-        pinQueue.push(pin);
-        localStorage.setItem('costaggini-pins-pending', JSON.stringify(pinQueue));
+        await sb.insert('pin_mappa', {
+          nome: r.nome,
+          citta: r.dove,
+          tipo: 'alumni',
+          anni: r.anni,
+          ruolo: 'Ex convittore/trice',
+          lat: parseFloat(geo[0].lat),
+          lng: parseFloat(geo[0].lon),
+          from_alumni: false,
+          approvato: false
+        });
       }
-    } catch(err) { /* geocoding fallito — non blocca l'invio del ricordo */ }
+    } catch(err) { /* geocoding o inserimento falliti — non blocca l'invio del ricordo */ }
   }
 
   // Svuota il form
