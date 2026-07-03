@@ -519,26 +519,7 @@
     <div class="thumb-strip" id="thumbStrip" role="list" aria-label="Miniature galleria"></div>
   </div>
 
-  <!-- GALLERY MASONRY CON LIGHTBOX -->
   <section style="background:#0e1a0f;padding:2rem 1.25rem 2.5rem">
-    <div class="w">
-      <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem;text-align:center">— Galleria completa</p>
-      <p style="font-family:var(--fd);font-size:1.2rem;font-weight:300;color:rgba(245,240,232,.6);text-align:center;margin-bottom:1.5rem">Clicca su una foto per ingrandirla</p>
-      <div id="masonry-grid" style="columns:2;column-gap:.75rem;orphans:1;widows:1">
-      <style>@media(min-width:640px){#masonry-grid{columns:3}}@media(min-width:960px){#masonry-grid{columns:4}}</style>
-      </div>
-    </div>
-  </section>
-
-  <!-- LIGHTBOX -->
-  <div id="lb" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:9500;align-items:center;justify-content:center;flex-direction:column" role="dialog" aria-modal="true" aria-label="Foto ingrandita">
-    <button id="lb-close" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(255,255,255,.6);font-size:2rem;cursor:pointer;line-height:1;z-index:1" aria-label="Chiudi">✕</button>
-    <button id="lb-prev" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:none;color:#fff;font-size:1.8rem;cursor:pointer;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center" aria-label="Precedente">‹</button>
-    <button id="lb-next" style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:none;color:#fff;font-size:1.8rem;cursor:pointer;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center" aria-label="Successiva">›</button>
-    <img id="lb-img" src="" alt="" style="max-width:calc(100vw - 6rem);max-height:calc(100vh - 6rem);object-fit:contain;border-radius:4px;transition:opacity .2s"/>
-    <p id="lb-cap" style="font-family:'Source Sans 3',sans-serif;font-size:.75rem;color:rgba(255,255,255,.45);margin-top:.75rem;text-align:center;max-width:600px;padding:0 1rem"></p>
-    <p id="lb-num" style="font-family:'Source Sans 3',sans-serif;font-size:.65rem;color:rgba(255,255,255,.25);margin-top:.25rem"></p>
-  </div>
     <div class="w">
       <div class="gal-menu rv">
         <h2>Il <em>Menù</em> della serata</h2>
@@ -692,87 +673,6 @@
     if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
   }), {threshold:.08});
   document.querySelectorAll('.rv').forEach(el => obs.observe(el));
-
-  // ── MASONRY GALLERY + LIGHTBOX ──────────────────────────────
-  // Estrae le foto direttamente dal DOM dello slideshow
-  const PHOTOS = Array.from(document.querySelectorAll('.slide img')).map(img => ({
-    src: img.src, alt: img.alt
-  }));
-  let lbIdx = 0;
-
-  // Costruisce la griglia masonry
-  const grid = document.getElementById('masonry-grid');
-  PHOTOS.forEach((ph, i) => {
-    const wrap = document.createElement('div');
-    wrap.style.cssText = 'break-inside:avoid;margin-bottom:.75rem;cursor:pointer;overflow:hidden;border-radius:6px;opacity:0;transform:translateY(12px);transition:opacity .4s,transform .4s';
-    wrap.style.transitionDelay = (i * 0.06) + 's';
-    const img = document.createElement('img');
-    img.src = ph.src; img.alt = ph.alt;
-    img.style.cssText = 'width:100%;display:block;border-radius:6px;transition:transform .3s';
-    img.loading = 'lazy';
-    wrap.appendChild(img);
-    wrap.addEventListener('click', () => openLb(i));
-    wrap.addEventListener('mouseenter', () => img.style.transform = 'scale(1.03)');
-    wrap.addEventListener('mouseleave', () => img.style.transform = '');
-    grid.appendChild(wrap);
-  });
-
-  // Anima le card quando entrano nel viewport
-  const galObs = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; galObs.unobserve(e.target); }
-  }), {threshold:0.05});
-  grid.querySelectorAll('div').forEach(el => galObs.observe(el));
-
-  // Lightbox
-  const lb = document.getElementById('lb');
-  const lbImg = document.getElementById('lb-img');
-  const lbCap = document.getElementById('lb-cap');
-  const lbNum = document.getElementById('lb-num');
-
-  function openLb(i) {
-    lbIdx = i;
-    updateLb();
-    lb.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLb() {
-    lb.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-  function updateLb() {
-    lbImg.style.opacity = '0';
-    setTimeout(() => {
-      lbImg.src = PHOTOS[lbIdx].src;
-      lbImg.alt = PHOTOS[lbIdx].alt;
-      lbCap.textContent = PHOTOS[lbIdx].alt;
-      lbNum.textContent = (lbIdx + 1) + ' / ' + PHOTOS.length;
-      lbImg.style.opacity = '1';
-    }, 150);
-  }
-
-  document.getElementById('lb-close').onclick = closeLb;
-  document.getElementById('lb-prev').onclick = () => { lbIdx = (lbIdx - 1 + PHOTOS.length) % PHOTOS.length; updateLb(); };
-  document.getElementById('lb-next').onclick = () => { lbIdx = (lbIdx + 1) % PHOTOS.length; updateLb(); };
-  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
-  document.addEventListener('keydown', e => {
-    if (lb.style.display === 'flex') {
-      if (e.key === 'Escape') closeLb();
-      if (e.key === 'ArrowLeft') { lbIdx = (lbIdx - 1 + PHOTOS.length) % PHOTOS.length; updateLb(); }
-      if (e.key === 'ArrowRight') { lbIdx = (lbIdx + 1) % PHOTOS.length; updateLb(); }
-    }
-  });
-
-  // Swipe su mobile
-  let touchX = 0;
-  lb.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, {passive:true});
-  lb.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 50) {
-      if (dx < 0) { lbIdx = (lbIdx + 1) % PHOTOS.length; }
-      else { lbIdx = (lbIdx - 1 + PHOTOS.length) % PHOTOS.length; }
-      updateLb();
-    }
-  }, {passive:true});
 
 })();
 </script>
