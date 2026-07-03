@@ -372,10 +372,17 @@
     wrap.appendChild(fChat);
   })();
 
-  const obs = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
-  }), { threshold: 0.08 });
-  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+  try {
+    const obs = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+    }), { threshold: 0.08 });
+    document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+  } catch (err) {
+    // Fallback: se IntersectionObserver non è disponibile o fallisce,
+    // mostra comunque i contenuti invece di lasciarli invisibili per sempre.
+    console.error('Reveal observer non disponibile, mostro i contenuti direttamente:', err);
+    document.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+  }
 
 
 
@@ -666,7 +673,7 @@
   })();
 
   /* ── 📊 CONTATORI ANIMATI ── */
-  (function(){
+  try { (function(){
     function animateCounter(el) {
       const target = parseInt(el.dataset.count);
       const suffix = el.dataset.suffix || '';
@@ -699,7 +706,9 @@
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('[data-count]').forEach(el => cObs.observe(el));
     });
-  })();
+  })(); } catch (err) {
+    console.error('Contatori animati non disponibili:', err);
+  }
 
 })();
 
@@ -806,10 +815,8 @@
     { titolo: 'Scadenze e calendario iscrizioni', pagina: 'ammissione.html', ancora: '#procedura', cat: 'Ammissione', keywords: ['scadenza','calendario','quando','data','settembre','ottobre','novembre','gennaio','marzo','maggio','giugno','termine'] },
     { titolo: 'Regolamento del Convitto', pagina: 'trasparenza.html', ancora: '#disposizioni', cat: 'Trasparenza', keywords: ['regolamento','regole','norme','disciplina','comportamento','patto','convivenza'] },
     { titolo: 'P.T.O.F. — Piano Triennale Offerta Formativa', pagina: 'trasparenza.html', ancora: '#disposizioni', cat: 'Trasparenza', keywords: ['ptof','piano','triennale','offerta','formativa','progetto','educativo','programma'] },
-    { titolo: 'Bilancio e tariffe deliberate', pagina: 'trasparenza.html', ancora: '#bilancio', cat: 'Trasparenza', keywords: ['bilancio','preventivo','consuntivo','patrimonio','spese','entrate','conto','finanze','delibera'] },
     { titolo: 'Dichiarazione di accessibilità AGID', pagina: 'trasparenza.html', ancora: '#accessibilita', cat: 'Trasparenza', keywords: ['accessibilità','agid','wcag','disabilità','legge stanca','dichiarazione','conformità'] },
     { titolo: 'Privacy e trattamento dati GDPR', pagina: 'trasparenza.html', ancora: '#privacy', cat: 'Trasparenza', keywords: ['privacy','gdpr','dati','personali','trattamento','titolare','cookie','consenso','reg ue'] },
-    { titolo: 'ANAC e anticorruzione', pagina: 'trasparenza.html', ancora: '#anac', cat: 'Trasparenza', keywords: ['anac','anticorruzione','corruzione','segnalazione','whistleblowing','illecito','rpc'] },
     { titolo: 'Tutte le notizie e comunicati', pagina: 'notizie.html', ancora: '', cat: 'Notizie', keywords: ['notizie','news','comunicato','aggiornamento','avviso','circolare','delibera','comunicazioni'] },
     { titolo: 'Trionfo al Concorso Nazionale di Cucina', pagina: 'notizie.html', ancora: '', cat: 'Notizie', keywords: ['concorso','cucina','regionale','nazionale','junior','fipe','primo posto','gara','competizione','cuoco','chef'] },
     { titolo: 'Open Day — Porte aperte alle famiglie', pagina: 'notizie.html', ancora: '', cat: 'Notizie', keywords: ['open day','porte aperte','visita','famiglia','famiglie','presentazione','tour','scoprire'] },
