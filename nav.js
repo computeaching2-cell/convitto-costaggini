@@ -85,6 +85,7 @@
           <li><a href="ptof-guida.html" data-page="ptof-guida">PTOF</a></li>
           <li><a href="trasparenza.html" data-page="trasparenza">Trasparenza</a></li>
           <li><a href="organizzazione.html" data-page="organizzazione">Organizzazione</a></li>
+          <li><a href="mappa-sito.html" data-page="mappa-sito">🗺️ Mappa del Sito</a></li>
         </ul>
       </div>
       <a href="area-riservata.html" style="margin-left:.3rem;background:rgba(44,62,45,.35);border:1px solid rgba(184,146,42,.5);border-radius:4px;color:#D4AA4A !important;font-size:.72rem !important;padding:.4rem .75rem !important;display:inline-flex;align-items:center;gap:.3rem;" title="Area riservata famiglie">
@@ -155,6 +156,7 @@
         <li><a href="ptof-guida.html">Il PTOF spiegato</a></li>
         <li><a href="trasparenza.html">Amministrazione Trasparente</a></li>
         <li><a href="organizzazione.html">Organizzazione</a></li>
+        <li><a href="mappa-sito.html">🗺️ Mappa del Sito</a></li>
       </ul>
     </li>
 
@@ -242,6 +244,7 @@
           <li><a href="privacy.html">Privacy &amp; GDPR</a></li>
           <li><a href="cookie-policy.html">Cookie Policy</a></li>
           <li><a href="trasparenza.html#accessibilita">Accessibilità</a></li>
+          <li><a href="mappa-sito.html">🗺️ Mappa del Sito</a></li>
         </ul></div>
 
       </div>
