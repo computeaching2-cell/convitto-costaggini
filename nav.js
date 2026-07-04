@@ -73,6 +73,7 @@
         </button>
         <ul class="dd-menu" role="menu">
           <li><a href="notizie.html" data-page="notizie">Ultime notizie</a></li>
+          <li><a href="menu-settimana.html" data-page="menu-settimana">🍽️ Menu della Settimana</a></li>
           <li><a href="in-2-minuti.html" data-page="in-2-minuti">⚡ In 2 Minuti</a></li>
           <li><a href="calendario.html" data-page="calendario">Calendario eventi</a></li>
         </ul>
@@ -145,6 +146,7 @@
       <button class="drw-acc" aria-expanded="false">Novità <svg viewBox="0 0 24 24" class="drw-arrow"><path d="M7 10l5 5 5-5z"/></svg></button>
       <ul class="drw-sub">
         <li><a href="notizie.html">Ultime notizie</a></li>
+        <li><a href="menu-settimana.html">🍽️ Menu della Settimana</a></li>
         <li><a href="in-2-minuti.html">⚡ In 2 Minuti</a></li>
         <li><a href="calendario.html">Calendario eventi</a></li>
       </ul>
@@ -840,6 +842,7 @@
     { titolo: 'Per i Genitori', pagina: 'genitori.html', ancora: '', cat: 'Famiglie', keywords: ['genitori','famiglie','famiglia','vicini','informazioni'] },
     { titolo: 'Una giornata al Convitto', pagina: 'giornata-tipo.html', ancora: '', cat: 'Il Convitto', keywords: ['giornata','tipo','sveglia','studio','sport','cena','quotidiana','routine'] },
     { titolo: 'In 2 Minuti', pagina: 'in-2-minuti.html', ancora: '', cat: 'Orientamento', keywords: ['2 minuti','veloce','faq','domande frequenti','riassunto'] },
+    { titolo: 'Menu della Settimana', pagina: 'menu-settimana.html', ancora: '', cat: 'Novità', keywords: ['menu','mensa','cibo','pasti','primo','secondo','contorno','settimana','cucina'] },
     { titolo: 'Lettera a un Futuro Convittore', pagina: 'lettera.html', ancora: '', cat: 'Comunità', keywords: ['lettera','futuro','convittore','testimonianza','consigli'] },
     { titolo: 'Open Day Digitale', pagina: 'openday.html', ancora: '', cat: 'Orientamento', keywords: ['open day','digitale','tour','spazi','faq','prenotazione','visita'] },
     { titolo: 'Organizzazione del Convitto', pagina: 'organizzazione.html', ancora: '', cat: 'Trasparenza', keywords: ['organizzazione','organigramma','personale','patto educativo','corresponsabilità'] },

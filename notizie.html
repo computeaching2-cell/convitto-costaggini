@@ -188,11 +188,11 @@ function renderNotizie(filtro) {
     grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--fu);font-size:.85rem;color:var(--txt2)">Nessuna notizia in questa categoria.</p>';
     return;
   }
-  const cat_colors = { eventi:'#1a4a7a', successi:'#1d6f42', pnrr:'#ea580c', 'vita al convitto':'#6b21a8' };
+  const cat_colors = { eventi:'#1a4a7a', successi:'#1d6f42', pnrr:'#ea580c', 'vita al convitto':'#6b21a8', 'piatto della settimana':'#a06a00' };
   grid.innerHTML = filtered.map((n, i) => {
     const featured = ''; // tutte le notizie alla stessa dimensione
     const img = n.immagine ? `<img src="${n.immagine}" alt="${n.titolo}" loading="${i===0?'eager':'lazy'}"/>` : '';
-    const cs = cat_colors[n.categoria] ? `background:${cat_colors[n.categoria]};color:#fff` : '';
+    const cs = cat_colors[(n.categoria||'').toLowerCase()] ? `background:${cat_colors[(n.categoria||'').toLowerCase()]};color:#fff` : '';
     const lnk = n.link ? `<a href="${n.link}" ${n.link.startsWith('http')?'data-ext':''} class="ac-link">${n.link_testo||'Leggi →'}</a>` : '';
     return `<article class="article-card${featured}" data-cat="${n.categoria||''}">${img}<div class="ac-body"><div class="ac-meta"><span class="ac-date">${n.data_pub||''}</span><span class="ac-cat" style="${cs}">${n.categoria||''}</span></div><h3>${n.titolo}</h3><p>${n.testo||''}</p>${lnk}</div></article>`;
   }).join('');

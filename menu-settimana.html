@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Il menu della settimana del Convitto Costaggini di Rieti — primo, secondo e contorno per ogni giorno."/>
+  <meta name="theme-color" content="#2C3E2D"/>
+  <title>Menu della Settimana | Convitto "Costaggini" — Rieti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <style>
+    .menu-card { background:var(--bco); border:1px solid var(--av3); border-radius:10px; box-shadow:var(--sh-sm); overflow:hidden; }
+    .menu-row { display:grid; grid-template-columns:120px 1fr 1fr 1fr; border-bottom:1px solid var(--av3); }
+    .menu-row:last-child { border-bottom:none; }
+    .menu-row.head { background:var(--bosco); }
+    .menu-row.head div { color:var(--av); font-family:var(--fu); font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+    .menu-cell { padding:.9rem 1rem; font-size:.88rem; color:var(--txt); display:flex; align-items:center; }
+    .menu-giorno { font-family:var(--fu); font-weight:800; letter-spacing:.05em; text-transform:uppercase; font-size:.72rem; color:var(--oro); background:var(--av2); }
+    .menu-row:nth-child(even):not(.head) .menu-cell:not(.menu-giorno) { background:var(--av2); }
+    @media(max-width:640px) {
+      .menu-row { grid-template-columns:1fr; }
+      .menu-row.head { display:none; }
+      .menu-cell { border-bottom:1px dashed var(--av3); }
+      .menu-cell:before { content:attr(data-lbl); font-family:var(--fu); font-size:.6rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--oro); width:80px; flex-shrink:0; }
+      .menu-giorno { font-size:.85rem; border-bottom:none; }
+    }
+  </style>
+</head>
+<body>
+
+<main id="main">
+
+  <div class="page-hero rv">
+    <div class="w">
+      <nav class="breadcrumb" aria-label="Percorso">
+        <a href="index.html">Home</a><span>›</span>
+        <a href="notizie.html">Notizie</a><span>›</span>
+        <span aria-current="page">Menu della Settimana</span>
+      </nav>
+      <p class="lbl">Dalla cucina del Convitto</p>
+      <h1>Il menu <em>della settimana</em></h1>
+      <p class="sub">Primo, secondo e contorno di ogni giorno — preparati dagli studenti di Enogastronomia dell'Istituto.</p>
+    </div>
+  </div>
+
+  <section style="background:var(--av);padding:3rem 1.25rem">
+    <div class="w" style="max-width:840px">
+
+      <div class="menu-card" id="menu-box">
+        <div style="padding:2rem;text-align:center;color:var(--txt2);font-size:.85rem">Caricamento del menu…</div>
+      </div>
+
+      <p style="font-size:.78rem;color:var(--txt2);margin-top:1.25rem;text-align:center">Il menu può variare in base alla disponibilità delle materie prime. Per intolleranze o allergie, contattare la segreteria del Convitto.</p>
+
+      <br/><a href="notizie.html" class="btn-outline-dark">Torna alle notizie →</a>
+    </div>
+  </section>
+
+</main>
+<script src="nav.js"></script>
+<script>
+const SB_URL_M = 'https://sawclsysqnjsvbobioqo.supabase.co';
+const SB_ANON_M = 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ';
+const GIORNI_ORDINE = ['lunedì','martedì','mercoledì','giovedì','venerdì'];
+
+function mEsc(t){ return (t||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+async function caricaMenu(){
+  const box = document.getElementById('menu-box');
+  try{
+    const r = await fetch(SB_URL_M + '/rest/v1/menu_settimanale', {
+      headers:{ 'apikey':SB_ANON_M, 'Authorization':'Bearer ' + SB_ANON_M }
+    });
+    const data = await r.json();
+    const byGiorno = {};
+    (Array.isArray(data) ? data : []).forEach(row => { byGiorno[row.giorno] = row; });
+
+    const righeConContenuto = GIORNI_ORDINE.filter(g => {
+      const row = byGiorno[g];
+      return row && (row.primo || row.secondo || row.contorno);
+    });
+
+    if(!righeConContenuto.length){
+      box.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--txt2);font-size:.85rem">Il menu di questa settimana non è ancora stato pubblicato.</div>';
+      return;
+    }
+
+    let html = '<div class="menu-row head"><div class="menu-cell">Giorno</div><div class="menu-cell">Primo</div><div class="menu-cell">Secondo</div><div class="menu-cell">Contorno</div></div>';
+    righeConContenuto.forEach(g => {
+      const row = byGiorno[g];
+      const cap = g.charAt(0).toUpperCase() + g.slice(1);
+      html += '<div class="menu-row">'
+        + '<div class="menu-cell menu-giorno" data-lbl="">' + mEsc(cap) + '</div>'
+        + '<div class="menu-cell" data-lbl="Primo">' + mEsc(row.primo || '—') + '</div>'
+        + '<div class="menu-cell" data-lbl="Secondo">' + mEsc(row.secondo || '—') + '</div>'
+        + '<div class="menu-cell" data-lbl="Contorno">' + mEsc(row.contorno || '—') + '</div>'
+        + '</div>';
+    });
+    box.innerHTML = html;
+  }catch(e){
+    box.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--txt2);font-size:.85rem">Impossibile caricare il menu al momento.</div>';
+  }
+}
+caricaMenu();
+</script>
+</body>
+</html>

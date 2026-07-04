@@ -336,6 +336,7 @@ function admConfirm(opts) {
     <button class="main-tab on" onclick="switchTab('notizie',this)">📰 Notizie</button>
     <button class="main-tab" onclick="switchTab('avvisi',this)">📋 Comunicati</button>
     <button class="main-tab" onclick="switchTab('eventi',this)">🗓️ Eventi</button>
+    <button class="main-tab" onclick="switchTab('menu',this)">🍽️ Menu Settimanale</button>
     <button class="main-tab" onclick="switchTab('ricordi',this)">💬 Ricordi</button>
       <button class="main-tab" onclick="switchTab('mappa',this)">🗺️ Mappa — Pin in attesa</button>
     <button class="main-tab" onclick="switchTab('alumni',this)">👥 <em>Alumni</em> — Schede in attesa</button>
@@ -363,6 +364,7 @@ function admConfirm(opts) {
               <option>Istituzionale</option><option>Vita al Convitto</option>
               <option>PNRR</option><option>Successi</option>
               <option>Eventi</option><option>Erasmus+</option>
+              <option>Piatto della Settimana</option>
             </select>
           </div>
         </div>
@@ -482,6 +484,25 @@ function admConfirm(opts) {
         <h2>Eventi in calendario <em>— gestisci</em></h2>
         <p class="list-count" id="e-count"></p>
         <div id="e-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB — MENU SETTIMANALE
+  ══════════════════════════════════ -->
+  <div class="tab-section" id="tab-menu">
+    <div class="adm-body">
+      <div class="adm-card">
+        <h2>Menu della <em>settimana corrente</em></h2>
+        <p style="font-size:.8rem;color:#8b7a5a;margin:-.5rem 0 1rem">Aggiornalo ogni settimana — sovrascrive sempre quello precedente, non serve creare nulla di nuovo.</p>
+        <div id="menu-griglia">
+          <p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Caricamento...</p>
+        </div>
+        <div class="form-btns">
+          <button class="btn-pubblica" id="menu-btn-salva" onclick="salvaMenu()">💾 Salva menu della settimana</button>
+          <span class="ok-msg" id="menu-ok">✅ Salvato!</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1060,6 +1081,65 @@ function resetEvento() {
   document.getElementById('e-form-title').innerHTML = '+ Nuovo <em>evento</em>';
 }
 
+// ═══ MENU SETTIMANALE ═══
+const MENU_GIORNI = ['lunedì','martedì','mercoledì','giovedì','venerdì'];
+function menuEsc(t){ return (t||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+async function loadMenu() {
+  const wrap = document.getElementById('menu-griglia');
+  wrap.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Caricamento...</p>';
+  try {
+    const resp = await fetch(SB_N + '/rest/v1/menu_settimanale', {
+      headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+    });
+    const data = await resp.json();
+    const byGiorno = {};
+    (Array.isArray(data) ? data : []).forEach(r => { byGiorno[r.giorno] = r; });
+    wrap.innerHTML = MENU_GIORNI.map(g => {
+      const r = byGiorno[g] || {};
+      const cap = g.charAt(0).toUpperCase() + g.slice(1);
+      return '<div class="fg-row2" style="align-items:end;border-bottom:1px solid #eee0c4;padding-bottom:.75rem;margin-bottom:.75rem">'
+        + '<div class="fg" style="grid-column:1/-1;margin-bottom:0"><label style="color:var(--bosco);font-weight:800">' + cap + '</label></div>'
+        + '<div class="fg"><label>Primo</label><input type="text" data-giorno="' + g + '" data-campo="primo" value="' + menuEsc(r.primo) + '"/></div>'
+        + '<div class="fg"><label>Secondo</label><input type="text" data-giorno="' + g + '" data-campo="secondo" value="' + menuEsc(r.secondo) + '"/></div>'
+        + '<div class="fg" style="grid-column:1/-1"><label>Contorno</label><input type="text" data-giorno="' + g + '" data-campo="contorno" value="' + menuEsc(r.contorno) + '"/></div>'
+        + '</div>';
+    }).join('');
+  } catch(e) {
+    wrap.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
+  }
+}
+
+async function salvaMenu() {
+  const righe = MENU_GIORNI.map(g => {
+    const get = campo => {
+      const el = document.querySelector('[data-giorno="' + g + '"][data-campo="' + campo + '"]');
+      return el ? el.value.trim() : '';
+    };
+    return { giorno: g, primo: get('primo'), secondo: get('secondo'), contorno: get('contorno') };
+  });
+  try {
+    const resp = await fetch(SB_N + '/rest/v1/menu_settimanale?on_conflict=giorno', {
+      method: 'POST',
+      headers: {
+        'apikey': SB_PUB,
+        'Authorization': 'Bearer ' + SB_TOKEN(),
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify(righe)
+    });
+    if (resp.ok) {
+      document.getElementById('menu-ok').style.display = 'inline';
+      setTimeout(() => { document.getElementById('menu-ok').style.display = 'none'; }, 3000);
+    } else {
+      alert('Errore salvataggio: ' + resp.status);
+    }
+  } catch(e) {
+    alert('Errore: ' + e.message);
+  }
+}
+
 // ═══ FAMIGLIE ═══
 async function famLoad(stato) {
   const lista = document.getElementById('fam-lista');
@@ -1546,6 +1626,7 @@ function switchTab(nome, btn) {
   if (nome === 'lab')     labLoad();
   if (nome === 'famiglie') famLoad('in_attesa');
   if (nome === 'eventi') loadEventi();
+  if (nome === 'menu') loadMenu();
 }
 
 
