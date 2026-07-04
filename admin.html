@@ -321,7 +321,7 @@ function admConfirm(opts) {
     </div>
     <div class="adm-hdr-links">
       <a href="index.html"
-         style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1.1rem;background:linear-gradient(135deg,#B8922A,#d4aa4a);color:var(--bosco);border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:opacity .2s"
+         style="font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1.1rem;background:linear-gradient(135deg, var(--oro2), var(--oro3));color:var(--bosco);border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:opacity .2s"
          onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
         🏠 Home
       </a>
@@ -1103,6 +1103,7 @@ async function loadMenu() {
         + '<div class="fg"><label>Primo</label><input type="text" data-giorno="' + g + '" data-campo="primo" value="' + menuEsc(r.primo) + '"/></div>'
         + '<div class="fg"><label>Secondo</label><input type="text" data-giorno="' + g + '" data-campo="secondo" value="' + menuEsc(r.secondo) + '"/></div>'
         + '<div class="fg" style="grid-column:1/-1"><label>Contorno</label><input type="text" data-giorno="' + g + '" data-campo="contorno" value="' + menuEsc(r.contorno) + '"/></div>'
+        + '<div class="fg" style="grid-column:1/-1"><label>URL foto (facoltativa)</label><input type="text" data-giorno="' + g + '" data-campo="foto" placeholder="https://…" value="' + menuEsc(r.foto) + '"/></div>'
         + '</div>';
     }).join('');
   } catch(e) {
@@ -1116,7 +1117,7 @@ async function salvaMenu() {
       const el = document.querySelector('[data-giorno="' + g + '"][data-campo="' + campo + '"]');
       return el ? el.value.trim() : '';
     };
-    return { giorno: g, primo: get('primo'), secondo: get('secondo'), contorno: get('contorno') };
+    return { giorno: g, primo: get('primo'), secondo: get('secondo'), contorno: get('contorno'), foto: get('foto') };
   });
   try {
     const resp = await fetch(SB_N + '/rest/v1/menu_settimanale?on_conflict=giorno', {

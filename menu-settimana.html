@@ -95,11 +95,13 @@ async function caricaMenu(){
     righeConContenuto.forEach(g => {
       const row = byGiorno[g];
       const cap = g.charAt(0).toUpperCase() + g.slice(1);
+      const foto = row.foto ? '<div style="grid-column:1/-1;padding:.75rem 1rem 1rem"><img src="' + mEsc(row.foto) + '" alt="Vassoio del pranzo di ' + mEsc(cap) + '" style="width:100%;max-width:420px;border-radius:8px;display:block;margin:0 auto"/></div>' : '';
       html += '<div class="menu-row">'
         + '<div class="menu-cell menu-giorno" data-lbl="">' + mEsc(cap) + '</div>'
         + '<div class="menu-cell" data-lbl="Primo">' + mEsc(row.primo || '—') + '</div>'
         + '<div class="menu-cell" data-lbl="Secondo">' + mEsc(row.secondo || '—') + '</div>'
         + '<div class="menu-cell" data-lbl="Contorno">' + mEsc(row.contorno || '—') + '</div>'
+        + foto
         + '</div>';
     });
     box.innerHTML = html;
