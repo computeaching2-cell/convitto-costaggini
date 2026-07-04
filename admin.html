@@ -1126,19 +1126,20 @@ async function famAzione(id, nuovoStato) {
         + '<p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.7;margin:0 0 1.25rem">'
         + 'Account creato per <strong style="color:var(--oro2)">' + email + '</strong>.<br>'
         + 'La famiglia ha ricevuto un\'email con le credenziali di accesso.</p>'
-        + '<button id="fam-ok-btn" style="background:linear-gradient(135deg,#B8922A,#D4AA4A);color:#1a2e1b;border:none;cursor:pointer;font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.75rem;border-radius:40px">OK</button>';
+        + '<button id="fam-ok-btn-succ" style="background:linear-gradient(135deg,#B8922A,#D4AA4A);color:#1a2e1b;border:none;cursor:pointer;font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.75rem;border-radius:40px">OK</button>';
     } else {
       box.innerHTML = '<div style="font-size:2.5rem;margin-bottom:.75rem">⚠️</div>'
         + '<h3 style="font-family:var(--fd);font-size:1.3rem;font-weight:300;color:#F5F0E8;margin:0 0 .6rem">Stato approvato — errore invio</h3>'
         + '<p style="font-size:.85rem;color:rgba(245,240,232,.65);line-height:1.7;margin:0 0 1.25rem">'
         + 'La richiesta è stata approvata ma si è verificato un errore nella creazione dell\'account.<br>'
         + '<span style="color:#e74c3c;font-size:.8rem">' + gasMsg + '</span></p>'
-        + '<button id="fam-ok-btn" style="background:linear-gradient(135deg,#B8922A,#D4AA4A);color:#1a2e1b;border:none;cursor:pointer;font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.75rem;border-radius:40px">OK</button>';
+        + '<button id="fam-ok-btn-err" style="background:linear-gradient(135deg,#B8922A,#D4AA4A);color:#1a2e1b;border:none;cursor:pointer;font-family:var(--fu);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.75rem;border-radius:40px">OK</button>';
     }
 
     ov.appendChild(box);
     document.body.appendChild(ov);
-    document.getElementById('fam-ok-btn').addEventListener('click', () => { ov.remove(); document.body.style.overflow=''; });
+    const famOkBtn = document.getElementById('fam-ok-btn-succ') || document.getElementById('fam-ok-btn-err');
+    famOkBtn.addEventListener('click', () => { ov.remove(); document.body.style.overflow=''; });
 
   } else {
     await famLoad('in_attesa');
