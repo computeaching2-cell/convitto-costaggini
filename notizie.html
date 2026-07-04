@@ -166,9 +166,14 @@ let tutteLeNotizie = [];
 
 async function caricaNotizie() {
   try {
-    const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/notizie?order=created_at.desc', {
+    let resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/notizie?order=ordine.asc.nullslast,created_at.desc', {
       headers: { 'apikey': SB_ANON_N, 'Authorization': 'Bearer ' + SB_ANON_N }
     });
+    if (!resp.ok) {
+      resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/notizie?order=created_at.desc', {
+        headers: { 'apikey': SB_ANON_N, 'Authorization': 'Bearer ' + SB_ANON_N }
+      });
+    }
     tutteLeNotizie = await resp.json();
     renderNotizie('all');
   } catch(e) {

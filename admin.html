@@ -723,17 +723,26 @@ async function initNotizie() {
   await loadNotizie();
 }
 
+let notizieCache = [];
+
 async function loadNotizie() {
   const list = document.getElementById('n-list');
   list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Caricamento...</p>';
   try {
-    const resp = await fetch(SB_N + '/rest/v1/notizie?order=created_at.desc', {
+    let resp = await fetch(SB_N + '/rest/v1/notizie?order=ordine.asc.nullslast,created_at.desc', {
       headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
     });
+    if (!resp.ok) {
+      // La colonna "ordine" potrebbe non esistere ancora: ripiego sul vecchio ordinamento
+      resp = await fetch(SB_N + '/rest/v1/notizie?order=created_at.desc', {
+        headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_PUB }
+      });
+    }
     const data = await resp.json();
+    notizieCache = data;
     document.getElementById('n-count').textContent = data.length + ' notizie · le prime 3 appaiono in homepage';
     if (!data.length) { list.innerHTML = '<p style="color:#8b7a5a;font-size:.85rem;padding:.75rem 0">Nessuna notizia.</p>'; return; }
-    list.innerHTML = data.map(n => `
+    list.innerHTML = data.map((n, i) => `
       <div class="adm-item" data-id="${n.id}">
         <div class="adm-item-head">
           <strong>${n.titolo}</strong>
@@ -741,6 +750,8 @@ async function loadNotizie() {
           <span style="font-size:.75rem;color:#8b7a5a;margin-left:.5rem">${n.data_pub || ''}</span>
         </div>
         <div class="adm-item-foot">
+          <button class="btn-ed" onclick="spostaNotizia('${n.id}','su')" title="Sposta più in alto" ${i===0?'disabled style="opacity:.35;cursor:default"':''}>⬆️</button>
+          <button class="btn-ed" onclick="spostaNotizia('${n.id}','giu')" title="Sposta più in basso" ${i===data.length-1?'disabled style="opacity:.35;cursor:default"':''}>⬇️</button>
           <button class="btn-ed" onclick="editNotizia('${n.id}')">✏️ Modifica</button>
           <button class="btn-ed del" onclick="deleteNotizia('${n.id}')">🗑️ Elimina</button>
         </div>
@@ -748,6 +759,27 @@ async function loadNotizie() {
   } catch(e) {
     list.innerHTML = '<p style="color:#dc2626;font-size:.85rem">Errore: ' + e.message + '</p>';
   }
+}
+
+async function spostaNotizia(id, direzione) {
+  const idx = notizieCache.findIndex(n => n.id === id);
+  if (idx === -1) return;
+  const target = direzione === 'su' ? idx - 1 : idx + 1;
+  if (target < 0 || target >= notizieCache.length) return;
+
+  const arr = notizieCache.slice();
+  const tmp = arr[idx]; arr[idx] = arr[target]; arr[target] = tmp;
+
+  // Riassegna un ordine esplicito e sequenziale (10, 20, 30…) secondo la nuova disposizione
+  await Promise.all(arr.map((n, i) =>
+    fetch(SB_N + '/rest/v1/notizie?id=eq.' + n.id, {
+      method: 'PATCH',
+      headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_TOKEN(), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ ordine: (i + 1) * 10 })
+    })
+  ));
+
+  await loadNotizie();
 }
 
 async function salvaNotizia() {

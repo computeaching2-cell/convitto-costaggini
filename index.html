@@ -681,9 +681,14 @@ function idxTronca(t, n){ t = t || ''; return t.length > n ? t.slice(0, n).trim(
 async function caricaNotizieHome(){
   const row = document.getElementById('news-home-row');
   try{
-    const r = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/notizie?order=ordine.asc.nullslast,created_at.desc&limit=3', {
+    let r = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/notizie?order=ordine.asc.nullslast,created_at.desc&limit=3', {
       headers:{'apikey':'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ','Authorization':'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ'}
     });
+    if (!r.ok) {
+      r = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/notizie?order=created_at.desc&limit=3', {
+        headers:{'apikey':'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ','Authorization':'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ'}
+      });
+    }
     const data = await r.json();
     if(!Array.isArray(data) || !data.length){
       row.innerHTML = '<p style="font-family:var(--fu);font-size:.8rem;color:var(--txt2);padding:1rem 0">Nessuna notizia pubblicata al momento.</p>';
