@@ -356,33 +356,7 @@
       </div>
 
       <div class="news-row" id="news-home-row">
-        <article class="nc rv">
-          <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" alt="Aula magna per presentazione libro LILT al Costaggini di Rieti" loading="eager"/>
-          <div class="nc-body">
-            <p class="nc-date">Maggio 2026 · Istituzionale</p>
-            <h3>La LILT di Rieti all'Aula Magna del Costaggini — presentazione del libro del Prof. Schittulli</h3>
-            <p>L'Associazione Provinciale LILT di Rieti ha scelto l'Aula Magna dell'IPSSEOA "R. A. Costaggini" per accogliere il Presid…</p>
-            <a href="https://www.formatrieti.it/2026/05/12/la-lilt-rieti-accoglie-francesco-schittulli-presentazione-del-libro-allipsseoa-costaggini/" target="_blank" rel="noopener" class="nc-lnk">Leggi su Format Rieti →</a>
-          </div>
-        </article>
-        <article class="nc rv d1">
-          <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80" alt="Cantiere nuova palestra Costaggini PNRR" loading="lazy"/>
-          <div class="nc-body">
-            <p class="nc-date">Luglio 2025 — in corso · PNRR</p>
-            <h3>🏗️ In costruzione la nuova palestra polifunzionale — 1 milione di euro PNRR</h3>
-            <p>Dal 10 luglio 2025 è in corso la costruzione della nuova palestra dell'Istituto Costaggini, finanziata con circa 1 milio…</p>
-            <a href="https://www.rietilife.com/2026/03/09/il-presidente-cuneo-al-cantiere-della-palestra-dellistituto-costaggini-di-rieti/" target="_blank" rel="noopener" class="nc-lnk">Aggiornamento cantiere (marzo 2026) →</a>
-          </div>
-        </article>
-        <article class="nc rv d2">
-          <img src="https://img.youtube.com/vi/gQBUvoLzuDM/maxresdefault.jpg" alt="Podcast: Raffaele Castaldo intervista Stefania Marinetti — Mensa Santa Chiara Rieti" loading="lazy"/>
-          <div class="nc-body">
-            <p class="nc-date">2025 · Vita al Convitto</p>
-            <h3>🎙️ Raffaele Castaldo intervista la responsabile della Mensa di Santa Chiara</h3>
-            <p>Un nostro convittore, brillante conduttore, incontra Stefania Marinetti — fondatrice e anima della Mensa dei poveri di Rieti, attiva dal 2002. Un podcast che unisce formazione professionale e impegno civile.</p>
-            <a href="https://www.youtube.com/watch?v=gQBUvoLzuDM&t=15s" target="_blank" rel="noopener" class="nc-lnk">▶ Ascolta il podcast →</a>
-          </div>
-        </article>
+        <p style="font-family:var(--fu);font-size:.8rem;color:var(--txt2);padding:1rem 0">Caricamento notizie…</p>
       </div>
       <div style="flex:1;min-width:200px">
           <p style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro2);margin-bottom:.3rem">Resta aggiornato</p>
@@ -700,5 +674,32 @@
     }
   }
 })();
+
+function idxEsc(t){ return (t||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function idxTronca(t, n){ t = t || ''; return t.length > n ? t.slice(0, n).trim() + '…' : t; }
+
+async function caricaNotizieHome(){
+  const row = document.getElementById('news-home-row');
+  try{
+    const r = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/notizie?order=ordine.asc.nullslast,created_at.desc&limit=3', {
+      headers:{'apikey':'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ','Authorization':'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ'}
+    });
+    const data = await r.json();
+    if(!Array.isArray(data) || !data.length){
+      row.innerHTML = '<p style="font-family:var(--fu);font-size:.8rem;color:var(--txt2);padding:1rem 0">Nessuna notizia pubblicata al momento.</p>';
+      return;
+    }
+    row.innerHTML = data.map((n,i)=>{
+      const img = n.immagine ? `<img src="${n.immagine}" alt="${idxEsc(n.titolo||'')}" loading="${i===0?'eager':'lazy'}"/>` : '';
+      const meta = [n.data_pub||'', n.categoria||''].filter(Boolean).join(' · ');
+      const lnk = n.link ? `<a href="${n.link}" ${n.link.startsWith('http')?'target="_blank" rel="noopener"':''} class="nc-lnk">${idxEsc(n.link_testo||'Leggi →')}</a>` : '';
+      const delay = i===1?' d1':(i===2?' d2':'');
+      return `<article class="nc rv${delay}">${img}<div class="nc-body"><p class="nc-date">${idxEsc(meta)}</p><h3>${idxEsc(n.titolo||'')}</h3><p>${idxEsc(idxTronca(n.testo,160))}</p>${lnk}</div></article>`;
+    }).join('');
+  }catch(e){
+    row.innerHTML = '<p style="font-family:var(--fu);font-size:.8rem;color:var(--txt2);padding:1rem 0">Impossibile caricare le notizie al momento.</p>';
+  }
+}
+caricaNotizieHome();
 </script>
 </html>
