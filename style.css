@@ -685,7 +685,9 @@ a.nc:hover, a.article-card:hover, a.alumni-card:hover,
 .gsearch-input-wrap {
   display: flex; align-items: center; gap: .6rem;
   padding: .9rem 1rem; border-bottom: 1px solid var(--av3); flex-shrink: 0;
+  transition: box-shadow .15s;
 }
+.gsearch-input-wrap:focus-within { box-shadow: inset 0 -2px 0 var(--oro2); }
 .gsearch-input-wrap svg { width: 19px; height: 19px; fill: var(--oro); flex-shrink: 0; }
 #gsearch-input {
   flex: 1; border: none; outline: none; background: transparent;

@@ -289,7 +289,7 @@ function anim(id,target){
 
 function renderList(){
   document.getElementById('pin-list').innerHTML=allPins.map((p,i)=>`
-    <div class="pin-card" id="pc${i}" onclick="flyTo(${p.lat},${p.lng},${i})">
+    <div class="pin-card" id="pc${i}" onclick="flyTo(${p.lat},${p.lng},${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
       <div class="pin-dot-l ${p.type}"></div>
       <div style="flex:1;min-width:0">
         <div style="font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:#fff">${p.name}</div>

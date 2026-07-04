@@ -153,7 +153,7 @@
 </main>
 
 <!-- MODALE -->
-<div class="mr-overlay" id="mr-overlay" onclick="if(event.target===this)closeModal()">
+<div class="mr-overlay" id="mr-overlay" onclick="if(event.target===this)closeModal()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
   <div class="mr-modal">
     <div class="mr-modal-hdr">
       <h2>Il tuo <em>ricordo</em></h2>

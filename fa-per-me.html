@@ -77,16 +77,16 @@
 
   <!-- Quiz -->
   <section class="quiz-body">
-    <div class="quiz-inner">
+    <div class="quiz-inner" aria-live="polite" aria-atomic="true">
 
       <!-- Step 1 -->
       <div class="quiz-step active" id="qs-1">
         <span class="quiz-num">Domanda 1 di 12</span>
         <p class="quiz-q">Quanto dista casa tua da Rieti?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Meno di 30 minuti — arrivo a scuola senza problemi</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> 30–60 minuti — un po' scomodo ma fattibile</div>
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Più di un'ora — ogni giorno sarebbe un'impresa</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Meno di 30 minuti — arrivo a scuola senza problemi</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> 30–60 minuti — un po' scomodo ma fattibile</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Più di un'ora — ogni giorno sarebbe un'impresa</div>
         </div>
       </div>
 
@@ -95,9 +95,9 @@
         <span class="quiz-num">Domanda 2 di 12</span>
         <p class="quiz-q">Come ti rapporti alla convivenza con persone nuove?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Mi piace stare per conto mio — ho bisogno di spazio e silenzio</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Dipende — con le persone giuste va benissimo</div>
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Adoro stare in compagnia — mi annoio da solo</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Mi piace stare per conto mio — ho bisogno di spazio e silenzio</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Dipende — con le persone giuste va benissimo</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Adoro stare in compagnia — mi annoio da solo</div>
         </div>
       </div>
 
@@ -106,9 +106,9 @@
         <span class="quiz-num">Domanda 3 di 12</span>
         <p class="quiz-q">Come ti organizzi nello studio?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Faccio fatica — mi distraggo spesso e rimando</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> A volte studio, a volte no — dipende dall'umore</div>
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Sono abbastanza autonomo — ma un po' di struttura non guasterebbe</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Faccio fatica — mi distraggo spesso e rimando</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> A volte studio, a volte no — dipende dall'umore</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Sono abbastanza autonomo — ma un po' di struttura non guasterebbe</div>
         </div>
       </div>
 
@@ -117,9 +117,9 @@
         <span class="quiz-num">Domanda 4 di 12</span>
         <p class="quiz-q">Cosa pensi degli adulti che ti danno regole?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Non le sopporto — voglio fare quello che voglio</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Le accetto se hanno senso — non voglio burocrazia inutile</div>
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Capisco che ci vogliono — aiutano a vivere bene insieme</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Non le sopporto — voglio fare quello che voglio</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Le accetto se hanno senso — non voglio burocrazia inutile</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Capisco che ci vogliono — aiutano a vivere bene insieme</div>
         </div>
       </div>
 
@@ -128,9 +128,9 @@
         <span class="quiz-num">Domanda 5 di 12</span>
         <p class="quiz-q">Hai interessi o passioni al di là della scuola?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Non molto — preferisco rilassarmi sul divano</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Qualcosa sì — musica, sport, cinema…</div>
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Moltissimi — non mi bastano mai le ore</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Non molto — preferisco rilassarmi sul divano</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Qualcosa sì — musica, sport, cinema…</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Moltissimi — non mi bastano mai le ore</div>
         </div>
       </div>
 
@@ -139,9 +139,9 @@
         <span class="quiz-num">Domanda 6 di 12</span>
         <p class="quiz-q">Cosa speri di trovare in un convitto?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">A</span> Un posto sicuro dove crescere, fare amicizie durature e costruire la mia autonomia</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Principalmente una soluzione pratica per stare vicino alla scuola</div>
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">C</span> Onestamente, non lo so ancora</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Un posto sicuro dove crescere, fare amicizie durature e costruire la mia autonomia</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Principalmente una soluzione pratica per stare vicino alla scuola</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Onestamente, non lo so ancora</div>
         </div>
       </div>
 
@@ -151,9 +151,9 @@
         <span class="quiz-num">Domanda 7 di 12</span>
         <p class="quiz-q">È la prima volta che dormi lontano da casa per un lungo periodo?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Sì — e solo pensarci mi mette un po' d'ansia</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Ho già fatto qualche esperienza — gita, campo estivo…</div>
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Sono abituato — anzi mi piace l'idea di avere più autonomia</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Sì — e solo pensarci mi mette un po' d'ansia</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Ho già fatto qualche esperienza — gita, campo estivo…</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Sono abituato — anzi mi piace l'idea di avere più autonomia</div>
         </div>
       </div>
 
@@ -162,9 +162,9 @@
         <span class="quiz-num">Domanda 8 di 12</span>
         <p class="quiz-q">Quando litighi con qualcuno, come ti comporti di solito?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Tendo a esplodere — e poi rimpiango quello che ho detto</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Mi chiudo — preferisco evitare il confronto</div>
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Cerco di capire il punto di vista dell'altro — anche quando è difficile</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Tendo a esplodere — e poi rimpiango quello che ho detto</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Mi chiudo — preferisco evitare il confronto</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Cerco di capire il punto di vista dell'altro — anche quando è difficile</div>
         </div>
       </div>
 
@@ -173,9 +173,9 @@
         <span class="quiz-num">Domanda 9 di 12</span>
         <p class="quiz-q">Alle 22:30 il cancello chiude. Come ti senti?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">A</span> Inaccettabile — la libertà è fondamentale</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Un po' rigido, ma capisco il perché</div>
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">C</span> Ragionevole — alle 22:30 dovrei già essere dentro comunque</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Inaccettabile — la libertà è fondamentale</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Un po' rigido, ma capisco il perché</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Ragionevole — alle 22:30 dovrei già essere dentro comunque</div>
         </div>
       </div>
 
@@ -184,9 +184,9 @@
         <span class="quiz-num">Domanda 10 di 12</span>
         <p class="quiz-q">Condividi la stanza con altri due ragazzi. Il tuo coinquilino ascolta musica a volume alto mentre studi. Cosa fai?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">A</span> Gli chiedo cortesemente di abbassare — o uso le cuffie</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Soffro in silenzio — non voglio creare problemi</div>
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">C</span> Rispondo alzando ancora di più il volume</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Gli chiedo cortesemente di abbassare — o uso le cuffie</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Soffro in silenzio — non voglio creare problemi</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Rispondo alzando ancora di più il volume</div>
         </div>
       </div>
 
@@ -195,9 +195,9 @@
         <span class="quiz-num">Domanda 11 di 12</span>
         <p class="quiz-q">Cosa ti attira di più dell'idea di vivere in convitto?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">A</span> Fare amicizie profonde — quelle che durano per sempre</div>
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">B</span> Crescere davvero in autonomia — senza i genitori che decidono tutto</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">C</span> Onestamente, non mi attira molto — è una scelta obbligata per la distanza</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Fare amicizie profonde — quelle che durano per sempre</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Crescere davvero in autonomia — senza i genitori che decidono tutto</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Onestamente, non mi attira molto — è una scelta obbligata per la distanza</div>
         </div>
       </div>
 
@@ -206,9 +206,9 @@
         <span class="quiz-num">Domanda 12 di 12</span>
         <p class="quiz-q">Ultima domanda. Tra dieci anni, come vorresti ricordare gli anni al Costaggini?</p>
         <div class="quiz-options">
-          <div class="quiz-opt" onclick="answer(this,2)"><span class="quiz-opt-letter">A</span> Come gli anni più formativi della mia vita — amici, esperienze, musica, crescita</div>
-          <div class="quiz-opt" onclick="answer(this,1)"><span class="quiz-opt-letter">B</span> Come un periodo utile — ho imparato una professione e trovato la mia strada</div>
-          <div class="quiz-opt" onclick="answer(this,0)"><span class="quiz-opt-letter">C</span> Come qualcosa che ho attraversato e basta — la vera vita era altrove</div>
+          <div class="quiz-opt" onclick="answer(this,2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">A</span> Come gli anni più formativi della mia vita — amici, esperienze, musica, crescita</div>
+          <div class="quiz-opt" onclick="answer(this,1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">B</span> Come un periodo utile — ho imparato una professione e trovato la mia strada</div>
+          <div class="quiz-opt" onclick="answer(this,0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><span class="quiz-opt-letter">C</span> Come qualcosa che ho attraversato e basta — la vera vita era altrove</div>
         </div>
       </div>
 

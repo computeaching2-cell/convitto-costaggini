@@ -125,7 +125,7 @@ function init() {
   // Catalogo
   const cat = document.getElementById('sw-catalog');
   cat.innerHTML = ATTIVITA.map(a => `
-    <div class="sw-item" id="item-${a.id}" onclick="selectAtt('${a.id}')">
+    <div class="sw-item" id="item-${a.id}" onclick="selectAtt('${a.id}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
       <span class="sw-item-icon">${a.icona}</span>
       <div class="sw-item-name">${a.nome}</div>
       <div class="sw-item-time">${a.tempo}</div>
@@ -153,9 +153,9 @@ function renderTable() {
       } else {
         const att = settimana[key] ? ATTIVITA.find(a=>a.id===settimana[key]) : null;
         if (att) {
-          html += `<td><div class="sw-cell filled" style="background:${att.colore}20;border:1px solid ${att.colore}50" onclick="removeAtt('${key}')" title="Clicca per rimuovere">${att.icona} <span style="font-size:.55rem">${att.nome}</span></div></td>`;
+          html += `<td><div class="sw-cell filled" style="background:${att.colore}20;border:1px solid ${att.colore}50" onclick="removeAtt('${key}')" title="Clicca per rimuovere" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">${att.icona} <span style="font-size:.55rem">${att.nome}</span></div></td>`;
         } else {
-          html += `<td><div class="sw-cell empty" onclick="addAtt('${key}')">+</div></td>`;
+          html += `<td><div class="sw-cell empty" onclick="addAtt('${key}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">+</div></td>`;
         }
       }
     });

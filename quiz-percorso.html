@@ -154,7 +154,7 @@ function render() {
       <p class="sim-q">${s.q}</p>
       <div class="sim-opts">
         ${s.opts.map((o,i) => `
-          <div class="sim-opt" onclick="choose(${i})">
+          <div class="sim-opt" onclick="choose(${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
             <div class="sim-opt-title">${o.t}</div>
             <div class="sim-opt-sub">${o.s}</div>
           </div>`).join('')}

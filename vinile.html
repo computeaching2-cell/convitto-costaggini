@@ -200,7 +200,7 @@
           <div class="vn-np-meta" id="vn-meta">Seleziona un brano</div>
         </div>
 
-        <div class="vn-progress" onclick="seekTo(event)">
+        <div class="vn-progress" onclick="seekTo(event)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
           <div class="vn-progress-fill" id="vn-fill"></div>
         </div>
         <div class="vn-time">
@@ -295,7 +295,7 @@ function fmt(s) {
 function buildPlaylist() {
   const el = document.getElementById('vn-playlist-items');
   el.innerHTML = PLAYLIST.map((t,i) => `
-    <div class="vn-pl-item" id="pl-${i}" onclick="selectTrack(${i})">
+    <div class="vn-pl-item" id="pl-${i}" onclick="selectTrack(${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
       <span class="vn-pl-num">${i+1}</span>
       <div class="vn-pl-info">
         <div class="vn-pl-title">${t.title}</div>

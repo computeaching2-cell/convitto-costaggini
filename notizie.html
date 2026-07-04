@@ -307,7 +307,7 @@ caricaEventi();
 caricaNotizie();
 </script>
 <div id="ext-modal" class="ext-modal" role="dialog" aria-modal="true" aria-label="Anteprima contenuto">
-  <div class="ext-backdrop" onclick="closeExt()"></div>
+  <div class="ext-backdrop" onclick="closeExt()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"></div>
   <div class="ext-box">
     <div class="ext-bar">
       <span id="ext-title" class="ext-title">Anteprima</span>

@@ -828,7 +828,7 @@ async function caricaNote() {
     if (!data?.length) { el.innerHTML = vuoto('📄','Nessuna comunicazione formale.'); return; }
     el.innerHTML = data.map((r,i) =>
       `<div class="rel-card">
-        <div class="rel-head" onclick="this.nextElementSibling.classList.toggle('aperto');this.querySelector('span').textContent=this.nextElementSibling.classList.contains('aperto')?'▾':'▸'">
+        <div class="rel-head" onclick="this.nextElementSibling.classList.toggle('aperto');this.querySelector('span').textContent=this.nextElementSibling.classList.contains('aperto')?'▾':'▸'" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
           <div><h4>${san(r.oggetto||'Comunicazione formale')}</h4>
           <div class="rel-meta">${r.data_evento?'Data: '+fmt(r.data_evento)+' · ':''}</div></div>
           <span>▸</span>
