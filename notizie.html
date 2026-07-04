@@ -230,9 +230,10 @@ async function caricaComunicati(){
       const meta = [a.autore||'', a.categoria||''].filter(Boolean).join(' · ');
       const aperto = (a.pinned || i===0) ? ' open' : '';
       const corpo = a.testo ? comLinkify(a.testo) : '<em style="color:var(--txt2)">(nessun testo)</em>';
+      const lnk = a.link ? `<a href="${a.link}" ${a.link.startsWith('http')?'data-ext':''} class="ac-link" style="margin-top:.6rem">${comEscape(a.link_testo||'Leggi →')}</a>` : '';
       return `<details class="com-acc"${aperto}>
         <summary><span class="com-date">${badge}</span><span class="com-title">${pin}${comEscape(a.titolo||'')}</span><span class="com-chev">›</span></summary>
-        <div class="com-acc-body">${corpo}${meta?`<div class="com-acc-meta">${comEscape(meta)}</div>`:''}</div>
+        <div class="com-acc-body">${corpo}${lnk}${meta?`<div class="com-acc-meta">${comEscape(meta)}</div>`:''}</div>
       </details>`;
     }).join('');
   }catch(e){ box.innerHTML=''; }

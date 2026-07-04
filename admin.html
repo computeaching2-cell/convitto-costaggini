@@ -420,6 +420,8 @@ function admConfirm(opts) {
         <div class="fg"><label>Autore / Ufficio</label><input type="text" id="a-autore" placeholder="Es: La Direzione"/></div>
         <div class="fg"><label>Titolo *</label><input type="text" id="a-titolo" placeholder="Es: Variazione orario mensa — venerdì 16 maggio"/></div>
         <div class="fg"><label>Testo *</label><textarea id="a-testo" rows="5" placeholder="Testo del comunicato…"></textarea></div>
+        <div class="fg"><label>Link</label><input type="text" id="a-link" placeholder="https://… oppure natale2024.html"/></div>
+        <div class="fg"><label>Testo del link</label><input type="text" id="a-link-testo" placeholder="Leggi →"/></div>
         <div class="fg">
           <label class="fg-check"><input type="checkbox" id="a-pinned"/> 📌 Metti in evidenza (pinnato in cima)</label>
         </div>
@@ -859,9 +861,11 @@ async function salvaAvviso() {
   const data    = document.getElementById('a-data').value.trim();
   const autore  = document.getElementById('a-autore').value.trim();
   const pinned  = document.getElementById('a-pinned').checked;
+  const link    = document.getElementById('a-link').value.trim();
+  const linkT   = document.getElementById('a-link-testo').value.trim();
   if (!titolo) { alert('Inserire il titolo.'); return; }
 
-  const payload = { titolo, testo, categoria: cat, data, autore, pinned };
+  const payload = { titolo, testo, categoria: cat, data, autore, pinned, link, link_testo: linkT };
 
   let url = SB_N + '/rest/v1/avvisi';
   let method = 'POST';
@@ -896,6 +900,8 @@ async function editAvviso(id) {
   document.getElementById('a-data').value    = a.data    || '';
   document.getElementById('a-autore').value  = a.autore  || '';
   document.getElementById('a-pinned').checked = !!a.pinned;
+  document.getElementById('a-link').value       = a.link || '';
+  document.getElementById('a-link-testo').value = a.link_testo || '';
   editAvvisoId = id;
   document.getElementById('a-btn-salva').textContent = '💾 Aggiorna avviso';
   document.getElementById('a-form-title').innerHTML = 'Modifica <em>avviso</em>';
@@ -912,7 +918,7 @@ async function deleteAvviso(id) {
 }
 
 function resetAvviso() {
-  ['a-titolo', 'a-testo', 'a-data', 'a-autore'].forEach(id => {
+  ['a-titolo', 'a-testo', 'a-data', 'a-autore', 'a-link', 'a-link-testo'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
