@@ -48,21 +48,21 @@ const KB=[
 
   // ── SALUTI ──
   {k:['ciao','salve','buongiorno','buonasera','hey','hello','aiuto','help','cosa puoi','cosa sai'],
-   r:'Ciao! 👋 Sono l'assistente virtuale del Convitto "Costaggini" di Rieti. Posso rispondere a domande su iscrizioni, rette, orari, educatori, servizi e vita convittuale. Come posso aiutarti?'},
+   r:'Ciao! 👋 Sono l\'assistente virtuale del Convitto "Costaggini" di Rieti. Posso rispondere a domande su iscrizioni, rette, orari, educatori, servizi e vita convittuale. Come posso aiutarti?'},
   {k:['grazie','graziee','perfetto','ottimo','benissimo','capito','ok grazie'],
    r:'Prego! 😊 Se hai altre domande sono qui. Puoi anche scrivere direttamente alla segreteria: <a href="contatti.html">modulo di contatto →</a>'},
   {k:['sei un robot','sei un ai','intelligenza artificiale','chi sei','come funzioni','chatbot','bot','automatico'],
-   r:'Sono l'assistente virtuale del Convitto "Costaggini" — funziono completamente in locale, nessuna domanda viene trasmessa a server esterni. So rispondere su iscrizioni, orari, rette, educatori e vita convittuale. Per domande specifiche usa il <a href="contatti.html">modulo di contatto →</a>'},
+   r:'Sono l\'assistente virtuale del Convitto "Costaggini" — funziono completamente in locale, nessuna domanda viene trasmessa a server esterni. So rispondere su iscrizioni, orari, rette, educatori e vita convittuale. Per domande specifiche usa il <a href="contatti.html">modulo di contatto →</a>'},
 
   // ── ISCRIZIONI ──
   {k:['iscri','ammission','come si fa','come faccio','domanda di ammissione','entrare al convitto',
       'portale miur','unica','scadenza','7 luglio','modulo domanda','procedura'],
-   r:'La procedura di ammissione si svolge in <strong>4 passi</strong>:<br>1. Iscrizione online sul portale MIUR + modulo al Convitto entro il <strong>7 luglio</strong><br>2. Consegna documentazione in segreteria e versamento quota<br>3. Colloquio con il Dirigente e gli educatori<br>4. A settembre: arrivo, assegnazione camera, accoglienza<br><br>📋 <a href="ammissione.html">Guida completa all'ammissione →</a>'},
+   r:'La procedura di ammissione si svolge in <strong>4 passi</strong>:<br>1. Iscrizione online sul portale MIUR + modulo al Convitto entro il <strong>7 luglio</strong><br>2. Consegna documentazione in segreteria e versamento quota<br>3. Colloquio con il Dirigente e gli educatori<br>4. A settembre: arrivo, assegnazione camera, accoglienza<br><br>📋 <a href="ammissione.html">Guida completa all\'ammissione →</a>'},
 
   // ── RETTE E COSTI ──
   {k:['retta','costo','quanto costa','quanto si paga','tariffa','prezzo','euro','pagamento',
       'isee','agevolazion','riduzion','sconto','esonero','borsa di studio','rata'],
-   r:'Le rette sono deliberate ogni anno dal Consiglio d'Istituto e calibrate sull'<strong>ISEE familiare</strong>. Sono previste riduzioni per situazioni economiche certificate e borse di studio regionali.<br><br>💶 <a href="ammissione.html#tariffe">Tariffe e agevolazioni →</a><br>✉️ Per un preventivo: <a href="contatti.html">Contattaci →</a>'},
+   r:'Le rette sono deliberate ogni anno dal Consiglio d\'Istituto e calibrate sull\'<strong>ISEE familiare</strong>. Sono previste riduzioni per situazioni economiche certificate e borse di studio regionali.<br><br>💶 <a href="ammissione.html#tariffe">Tariffe e agevolazioni →</a><br>✉️ Per un preventivo: <a href="contatti.html">Contattaci →</a>'},
 
   // ── ORARI E GIORNATA ──
   {k:['orario','sveglia','quando','orari','giornata','cosa si fa','routine','programma',
@@ -77,7 +77,7 @@ const KB=[
   // ── ALLERGIE E DIETE ──
   {k:['allergi','intolleran','celiaco','celiachia','vegano','vegetarian','dieta speciale',
       'senza glutine','senza lattosio','arachidi','diabete','religiosa','etica','halal'],
-   r:'Il Convitto gestisce allergie, intolleranze e diete particolari — anche per esigenze culturali o religiose — con <strong>menù dedicati</strong>, senza che il ragazzo debba chiedere due volte. Va segnalato al momento dell'iscrizione.<br><br>📋 <a href="ammissione.html#moduli">Modulo allergie →</a>'},
+   r:'Il Convitto gestisce allergie, intolleranze e diete particolari — anche per esigenze culturali o religiose — con <strong>menù dedicati</strong>, senza che il ragazzo debba chiedere due volte. Va segnalato al momento dell\'iscrizione.<br><br>📋 <a href="ammissione.html#moduli">Modulo allergie →</a>'},
 
   // ── CAMERE E STRUTTURA ──
   {k:['camera','stanza','letto','bagno','dormitor','alloggio','posto letto','struttura',
@@ -96,24 +96,24 @@ const KB=[
    r:'Gli educatori del Convitto sono <strong>personale educativo di ruolo</strong>, selezionati per concorso pubblico MIUR e tutelati dal CCNL Istruzione e Ricerca (artt. 127–129). Non sono sorveglianti — hanno competenze psicopedagogiche e lavorano in coordinamento con i docenti. Presenti <strong>H24</strong>, inclusa la notte.<br><br>👥 <a href="educatori.html">Conosci il team →</a>'},
 
   // ── SICUREZZA E NOTTE ──
-  {k:['sicur','notte','sorveglianza','chi c'è di notte','emergenza','pronto soccorso',
+  {k:['sicur','notte','sorveglianza','chi c\'è di notte','emergenza','pronto soccorso',
       'infermeria','malato','malata','si ammala','mi fa male'],
    r:'Gli educatori sono presenti <strong>H24</strong>, inclusa la notte. Per qualsiasi malessere è disponibile assistenza immediata. Protocolli di emergenza conformi al D.Lgs. 81/2008.<br><br>📞 Per urgenze: <a href="contatti.html">Contattaci →</a>'},
 
   // ── AMBIENTAMENTO ──
   {k:['ambientamento','si ambienterà','lontano da casa','nostalgia','non conosce nessuno',
       'primo giorno','prima settimana','paura','ansioso','ansia','timido','solo'],
-   r:'È la preoccupazione più comune. I primi giorni gli educatori dedicano un'attenzione particolare ai nuovi arrivati: li affiancano, li presentano, li aiutano a costruire le prime amicizie. <strong>La maggior parte dei ragazzi, dopo due o tre settimane, dice di sentirsi "a casa".</strong> Il gruppo dei pari e la routine quotidiana sono i due alleati più potenti.<br><br>💬 <a href="ammissione.html">Leggi le risposte dei genitori →</a>'},
+   r:'È la preoccupazione più comune. I primi giorni gli educatori dedicano un\'attenzione particolare ai nuovi arrivati: li affiancano, li presentano, li aiutano a costruire le prime amicizie. <strong>La maggior parte dei ragazzi, dopo due o tre settimane, dice di sentirsi "a casa".</strong> Il gruppo dei pari e la routine quotidiana sono i due alleati più potenti.<br><br>💬 <a href="ammissione.html">Leggi le risposte dei genitori →</a>'},
 
   // ── STUDIO GUIDATO ──
   {k:['studio guidato','compiti','aiuto studio','ore studio','15:30','studiare','pomeriggio studio',
       'doposcuola','metodo di studio','riuscirà a studiare','insufficiente','recupero'],
-   r:'Ogni pomeriggio dalle <strong>15:30 alle 17:15</strong> c'è lo studio guidato con gli educatori. Non solo "fare i compiti" — gli educatori lavorano sul metodo, sull'autonomia e sull'abitudine allo studio. Per difficoltà persistenti si attivano supporti aggiuntivi in accordo con la famiglia.'},
+   r:'Ogni pomeriggio dalle <strong>15:30 alle 17:15</strong> c\'è lo studio guidato con gli educatori. Non solo "fare i compiti" — gli educatori lavorano sul metodo, sull\'autonomia e sull\'abitudine allo studio. Per difficoltà persistenti si attivano supporti aggiuntivi in accordo con la famiglia.'},
 
   // ── COMPAGNO DI CAMERA / CONFLITTI ──
-  {k:['compagno di camera','litiga','conflitti','non va d'accordo','spostamento camera',
+  {k:['compagno di camera','litiga','conflitti','non va d\'accordo','spostamento camera',
       'mediazione','se litigano','convivenza'],
-   r:'L'educatore interviene subito per mediare. Se il problema persiste, il Collaboratore del Dirigente valuta uno <strong>spostamento di camera</strong>. La convivenza è parte del percorso educativo: imparare a gestire i conflitti è uno degli obiettivi espliciti del Convitto.'},
+   r:'L\'educatore interviene subito per mediare. Se il problema persiste, il Collaboratore del Dirigente valuta uno <strong>spostamento di camera</strong>. La convivenza è parte del percorso educativo: imparare a gestire i conflitti è uno degli obiettivi espliciti del Convitto.'},
 
   // ── BULLISMO ──
   {k:['bullismo','cyberbullismo','cyber bullismo','prevaricazione','viene preso in giro',
@@ -140,22 +140,22 @@ const KB=[
   // ── SEMICONVITTO ──
   {k:['semiconvitto','semi convitto','solo pranzo','non alloggia','giornaliero','senza dormire',
       'non dormo','mezza pensione'],
-   r:'Il <strong>Semiconvitto</strong> (pranzo + studio guidato + attività pomeridiane, senza pernottamento) è attivo dall'a.s. 2026/27.<br><br>📋 <a href="semiconvitto.html">Info Semiconvitto →</a>'},
+   r:'Il <strong>Semiconvitto</strong> (pranzo + studio guidato + attività pomeridiane, senza pernottamento) è attivo dall\'a.s. 2026/27.<br><br>📋 <a href="semiconvitto.html">Info Semiconvitto →</a>'},
 
   // ── VISITE E OPEN DAY ──
   {k:['open day','visita guidata','venire a vedere','prenotare','vedere il convitto',
       'posso venire','sopralluogo','porte aperte','tour dal vivo'],
-   r:'Puoi prenotare una <strong>visita guidata</strong> o partecipare all'Open Day.<br><br>📅 <a href="orientamento.html">Orientamento e visite →</a><br>🔭 Oppure esplora virtualmente: <a href="tour-virtuale.html">Tour Virtuale 360° →</a>'},
+   r:'Puoi prenotare una <strong>visita guidata</strong> o partecipare all\'Open Day.<br><br>📅 <a href="orientamento.html">Orientamento e visite →</a><br>🔭 Oppure esplora virtualmente: <a href="tour-virtuale.html">Tour Virtuale 360° →</a>'},
 
   // ── TOUR VIRTUALE ──
   {k:['tour virtuale','tour','360','foto','vedere gli spazi','visitare online','stanze',
-      'video convitto','immagini','galleria','com'è','panorama'],
+      'video convitto','immagini','galleria','com\'è','panorama'],
    r:'Il Convitto è visitabile virtualmente a <strong>360°</strong> direttamente dallo smartphone, senza installare nulla. Puoi esplorare ingresso, corridoi, sala ricreativa, ufficio educatori e molto altro.<br><br>🔭 <a href="tour-virtuale.html">Apri il Tour Virtuale →</a>'},
 
   // ── DOVE SI TROVA ──
   {k:['dove','indirizzo','come arrivare','via','rieti','sede','posizione','mappa','gps',
       'navigatore','autobus','treno','pullman','distanza','km da','percorso'],
-   r:'Il Convitto si trova in <strong>Via Salaria s.n.c., 02100 Rieti</strong>, nella sede dell'IPSSEOA "R. A. Costaggini".<br><br>📍 <a href="contatti.html">Mappa e indicazioni →</a>'},
+   r:'Il Convitto si trova in <strong>Via Salaria s.n.c., 02100 Rieti</strong>, nella sede dell\'IPSSEOA "R. A. Costaggini".<br><br>📍 <a href="contatti.html">Mappa e indicazioni →</a>'},
 
   // ── CONTATTI ──
   {k:['telefono','email','contatto','scrivere','segreteria','informazioni','risponde',
@@ -175,7 +175,7 @@ const KB=[
   // ── USCITE E PERMESSI ──
   {k:['uscire','permesso uscita','uscita autonoma','possono uscire','chi ritira',
       'delega','delegato','autorizzazione uscita','libera uscita','rientrare tardi'],
-   r:'Le uscite autonome richiedono l'<strong>autorizzazione firmata dei genitori</strong>. È possibile delegare persone di fiducia per il ritiro. La libera uscita si regola secondo il Regolamento (Art. 28–29).<br><br>📋 <a href="ammissione.html#moduli">Modulo autorizzazione →</a>'},
+   r:'Le uscite autonome richiedono l\'<strong>autorizzazione firmata dei genitori</strong>. È possibile delegare persone di fiducia per il ritiro. La libera uscita si regola secondo il Regolamento (Art. 28–29).<br><br>📋 <a href="ammissione.html#moduli">Modulo autorizzazione →</a>'},
 
   // ── DSA E BES ──
   {k:['dsa','bes','dislessia','disgrafia','discalculia','adhd','bisogni educativi',
@@ -195,7 +195,7 @@ const KB=[
   // ── QUIZ E ORIENTAMENTO ──
   {k:['quiz','gioco','talento','fa per me','percorso scolastico','orientamento',
       'enogastronomia','ospitalità','pasticceria','sala','cucina','accoglienza','indirizzo'],
-   r:'Prova i <strong>6 quiz interattivi</strong> per scoprire quale percorso fa per te: sai già cucinare? Cucina, Sala, Pasticceria o Accoglienza? C'è anche un cruciverba del Costaggini!<br><br>🎮 <a href="scopri-talento.html">Scopri il tuo Talento →</a>'},
+   r:'Prova i <strong>6 quiz interattivi</strong> per scoprire quale percorso fa per te: sai già cucinare? Cucina, Sala, Pasticceria o Accoglienza? C\'è anche un cruciverba del Costaggini!<br><br>🎮 <a href="scopri-talento.html">Scopri il tuo Talento →</a>'},
 
   // ── ALUMNI E COMMUNITY ──
   {k:['alumni','ex convittore','ex studente','diplomati','ex allievi','sono stato convittore',
@@ -205,17 +205,17 @@ const KB=[
   // ── AREA RISERVATA FAMIGLIE ──
   {k:['area riservata','famiglie','genitore','genitori','accesso famiglie','dashboard',
       'seguire mio figlio','presenze online','registro famiglie','notifiche genitori'],
-   r:'L'<strong>Area Riservata Famiglie</strong> permette ai genitori di seguire in tempo reale: presenze ai pasti, valutazioni giornaliere, note degli educatori, colloqui e comunicazioni formali.<br><br>🔐 <a href="area-riservata.html">Richiedi accesso →</a>'},
+   r:'L\'<strong>Area Riservata Famiglie</strong> permette ai genitori di seguire in tempo reale: presenze ai pasti, valutazioni giornaliere, note degli educatori, colloqui e comunicazioni formali.<br><br>🔐 <a href="area-riservata.html">Richiedi accesso →</a>'},
 
   // ── AGGIORNAMENTI / NEWS ──
   {k:['novità','news','aggiornamenti','notizie','comunicazioni','avvisi','bacheca',
-      'cosa c'è di nuovo','ultime notizie'],
+      'cosa c\'è di nuovo','ultime notizie'],
    r:'Tutte le comunicazioni, gli avvisi e le novità del Convitto sono sulla bacheca aggiornamenti.<br><br>📢 <a href="aggiornamenti.html">Leggi gli aggiornamenti →</a>'},
 
   // ── PTOF E PROGETTO EDUCATIVO ──
   {k:['ptof','progetto educativo','piano offerta formativa','filosofia','metodo',
       'mission','obiettivi','valori','come educate','stile educativo'],
-   r:'Il progetto educativo del Convitto mira alla crescita umana, civile e culturale dei ragazzi — in coordinamento con i docenti dell'Istituto.<br><br>📖 <a href="ptof.html">PTOF →</a> · <a href="progetto-educativo.html">Progetto Educativo →</a>'},
+   r:'Il progetto educativo del Convitto mira alla crescita umana, civile e culturale dei ragazzi — in coordinamento con i docenti dell\'Istituto.<br><br>📖 <a href="ptof.html">PTOF →</a> · <a href="progetto-educativo.html">Progetto Educativo →</a>'},
 
   // ── CERTIFICATI ──
   {k:['certificato','frequenza','documento','attestato','dichiarazione','modulo',
@@ -223,23 +223,23 @@ const KB=[
    r:'Puoi richiedere e stampare online certificati di frequenza e altri moduli.<br><br>📄 <a href="ammissione.html#moduli">Modulistica →</a>'},
 
   // ── CONVITTO VS COLLEGIO PRIVATO ──
-  {k:['differenza','cos'è un convitto','collegio privato','privatista','pubblico',
+  {k:['differenza','cos\'è un convitto','collegio privato','privatista','pubblico',
       'statale','costo rispetto a','convitto o collegio'],
-   r:'Il Convitto "Costaggini" è una struttura <strong>pubblica statale</strong> (MIUR), non un collegio privato. Le rette sono calibrate sull'ISEE. Offre lo stesso livello di cura educativa dei collegi privati — ma con una vocazione pubblica e inclusiva.'},
+   r:'Il Convitto "Costaggini" è una struttura <strong>pubblica statale</strong> (MIUR), non un collegio privato. Le rette sono calibrate sull\'ISEE. Offre lo stesso livello di cura educativa dei collegi privati — ma con una vocazione pubblica e inclusiva.'},
 
   // ── TRASPORTO ──
   {k:['trasporto','pullman','bus','navetta','come vanno a scuola','accompagnati',
       'mezzi','ci accompagnano','7:40','come raggiungono la scuola'],
-   r:'Il Convitto dispone di <strong>mezzi propri</strong> che accompagnano i ragazzi all'IPSSEOA ogni mattina (ore 7:40). Un educatore è sempre presente sul mezzo.'},
+   r:'Il Convitto dispone di <strong>mezzi propri</strong> che accompagnano i ragazzi all\'IPSSEOA ogni mattina (ore 7:40). Un educatore è sempre presente sul mezzo.'},
 
   // ── AUTONOMIA DEL RAGAZZO ──
   {k:['autonomia','diventerà autonomo','impara ad arrangiarsi','crescerà','responsabilità',
       'indipendenza','imparerà a vivere da solo'],
-   r:'La conquista progressiva dell'autonomia è uno degli <strong>obiettivi espliciti</strong> del progetto educativo. I ragazzi imparano a gestire il tempo, i rapporti, lo studio e gli spazi — con la guida degli educatori, non nonostante di essa.'},
+   r:'La conquista progressiva dell\'autonomia è uno degli <strong>obiettivi espliciti</strong> del progetto educativo. I ragazzi imparano a gestire il tempo, i rapporti, lo studio e gli spazi — con la guida degli educatori, non nonostante di essa.'},
 
   // ── PATTO EDUCATIVO ──
   {k:['patto educativo','patto di corresponsabilità','firmare','accordo','impegno'],
-   r:'Prima dell'inizio dell'anno scolastico, le famiglie partecipano a un <strong>colloquio con il Dirigente e gli educatori</strong> durante il quale viene presentato il Regolamento e firmato il Patto Educativo di Corresponsabilità.'},
+   r:'Prima dell\'inizio dell\'anno scolastico, le famiglie partecipano a un <strong>colloquio con il Dirigente e gli educatori</strong> durante il quale viene presentato il Regolamento e firmato il Patto Educativo di Corresponsabilità.'},
 
 
   // ── IN 2 MINUTI ──
@@ -263,7 +263,7 @@ const KB=[
   // ── PER I GENITORI ──
   {k:['guida genitori','informazioni per genitori','cosa devono sapere i genitori',
       'per i genitori','area genitori','sezione genitori','genitori.html'],
-   r:'C'è una sezione dedicata interamente ai genitori: risponde alle domande più frequenti, spiega cosa garantisce il Convitto e raccoglie le testimonianze di chi ha già vissuto questa esperienza.<br><br>👨‍👩‍👧 <a href="genitori.html">Guida per i genitori →</a>'},
+   r:'C\'è una sezione dedicata interamente ai genitori: risponde alle domande più frequenti, spiega cosa garantisce il Convitto e raccoglie le testimonianze di chi ha già vissuto questa esperienza.<br><br>👨‍👩‍👧 <a href="genitori.html">Guida per i genitori →</a>'},
 
   // ── LABORATORIO TEATRALE ──
   {k:['teatro','laboratorio teatrale','recitazione','spettacolo','palco',
@@ -273,7 +273,7 @@ const KB=[
   // ── MAPPA / ALUMNI NEL MONDO ──
   {k:['mappa alumni','dove sono finiti','nel mondo','ex convittori nel mondo',
       'carriere','lavoro dopo','successi','londra','hanno fatto'],
-   r:'Gli alumni del Convitto Costaggini lavorano in tutto il mondo — hotel a Londra, ristoranti a Roma, strutture in Europa e oltre. C'è una mappa interattiva che mostra dove sono finiti.<br><br>🌍 <a href="mondo.html">Mappa degli alumni →</a><br>🎓 <a href="comunita.html">La community →</a>'},
+   r:'Gli alumni del Convitto Costaggini lavorano in tutto il mondo — hotel a Londra, ristoranti a Roma, strutture in Europa e oltre. C\'è una mappa interattiva che mostra dove sono finiti.<br><br>🌍 <a href="mondo.html">Mappa degli alumni →</a><br>🎓 <a href="comunita.html">La community →</a>'},
 
   // ── MURO DEI RICORDI ──
   {k:['ricordi','muro dei ricordi','lasciare un messaggio','memoria',

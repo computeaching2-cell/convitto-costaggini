@@ -29,6 +29,10 @@
 
     <nav id="dnav" aria-label="Principale">
 
+      <a href="ammissione.html" style="margin-right:.5rem;background:linear-gradient(135deg,var(--oro2),var(--oro3));border-radius:4px;color:var(--bosco) !important;font-size:.75rem !important;font-weight:700 !important;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1rem !important;display:inline-flex;align-items:center;gap:.35rem;" title="Come iscriversi al Convitto">
+        📋 Come iscriversi
+      </a>
+
       <div class="dd-wrap">
         <button class="dd-btn" aria-haspopup="true" aria-expanded="false">
           Il Convitto <svg viewBox="0 0 24 24" class="dd-arrow"><path d="M7 10l5 5 5-5z"/></svg>
@@ -55,7 +59,6 @@
         <ul class="dd-menu" role="menu">
           <li><a href="servizi.html" data-page="servizi">Servizi &amp; spazi</a></li>
           <li><a href="semiconvitto.html" data-page="semiconvitto">🌅 Semiconvitto</a></li>
-          <li><a href="ammissione.html" data-page="ammissione">Come iscriversi</a></li>
           <li><a href="orientamento.html" data-page="orientamento">🗓 Orientamento &amp; Open Day</a></li>
           <li><a href="genitori.html" data-page="genitori">👨‍👩‍👧 Per i Genitori</a></li>
           <li><a href="bullismo.html" data-page="bullismo">🛡️ Bullismo e Cyberbullismo</a></li>
@@ -92,10 +95,6 @@
         <svg viewBox="0 0 24 24" width="13" height="13" style="fill:#D4AA4A" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
         Famiglie
       </a>
-      <a href="#" id="nav-admin-btn" style="margin-left:.3rem;background:rgba(0,0,0,.35);border:1px solid rgba(184,146,42,.4);border-radius:4px;color:#D4AA4A !important;font-size:.72rem !important;padding:.4rem .75rem !important;display:inline-flex;align-items:center;gap:.3rem;" title="Pannello amministratori">
-        <svg viewBox="0 0 24 24" width="13" height="13" style="fill:#D4AA4A" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1z"/></svg>
-        Admin
-      </a>
     </nav>
 
     <button id="brg" aria-label="Apri menu" aria-expanded="false" aria-controls="drw">
@@ -106,6 +105,10 @@
 
 <nav id="drw" aria-label="Menu" role="navigation">
   <ul>
+
+    <li><a href="ammissione.html" style="background:linear-gradient(135deg,var(--oro2),var(--oro3));color:var(--bosco) !important;font-weight:700;border-radius:4px;padding:.7rem .9rem;display:flex;align-items:center;gap:.4rem;text-transform:uppercase;font-size:.78rem;letter-spacing:.05em;margin-bottom:.3rem;">
+      📋 Come iscriversi
+    </a></li>
 
     <li class="drw-group">
       <button class="drw-acc" aria-expanded="false">Il Convitto <svg viewBox="0 0 24 24" class="drw-arrow"><path d="M7 10l5 5 5-5z"/></svg></button>
@@ -129,7 +132,6 @@
       <ul class="drw-sub">
         <li><a href="servizi.html">Servizi &amp; spazi</a></li>
         <li><a href="semiconvitto.html">🌅 Semiconvitto</a></li>
-        <li><a href="ammissione.html">Come iscriversi</a></li>
         <li><a href="orientamento.html">🗓 Orientamento &amp; Open Day</a></li>
         <li><a href="genitori.html">👨‍👩‍👧 Per i Genitori</a></li>
         <li><a href="bullismo.html">🛡️ Bullismo e Cyberbullismo</a></li>
@@ -163,11 +165,6 @@
     <li><a href="area-riservata.html" style="color:var(--oro2);font-weight:700;display:flex;align-items:center;gap:.5rem;padding:.6rem 0;">
       <svg viewBox="0 0 24 24" width="15" height="15" style="fill:var(--oro2);flex-shrink:0"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
       Area Riservata Famiglie
-    </a></li>
-
-    <li><a href="#" id="drw-admin-btn" style="color:#D4AA4A;display:flex;align-items:center;gap:.5rem;">
-      <svg viewBox="0 0 24 24" width="15" height="15" style="fill:#D4AA4A;flex-shrink:0"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1z"/></svg>
-      Pannello Admin
     </a></li>
 
   </ul>
@@ -267,7 +264,7 @@
   /* ── Caricamento chatbot ── */
   function loadChatbot() {
     const cbScript = document.createElement('script');
-    cbScript.src = 'assistente.js';
+    cbScript.src = 'chatbot.js';
     document.body.appendChild(cbScript);
   }
   if (document.readyState === 'loading') {
@@ -324,14 +321,6 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeD(); });
 
-  /* ── Bottone Admin nel menu ── */
-  document.addEventListener('click', function(e) {
-    const btn = e.target.closest('#nav-admin-btn, #drw-admin-btn');
-    if (!btn) return;
-    e.preventDefault();
-    window.location.href = 'admin.html';
-  });
-
   /* ── FAB — 3 cerchi fissi, sempre visibili ── */
   (function(){
     const isHome = !document.body.dataset.page || document.body.dataset.page === 'home';
@@ -369,7 +358,7 @@
       wrap.appendChild(fHome);
     }
 
-    // 3. Chatbot — creato qui, usato da assistente.js
+    // 3. Chatbot — creato qui, usato da chatbot.js
     const fChat = document.createElement('button');
     fChat.id = 'cc-fab'; fChat.className = 'fab-c';
     fChat.setAttribute('aria-label','Apri assistente virtuale'); fChat.setAttribute('data-tip','Assistente');

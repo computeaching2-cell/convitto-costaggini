@@ -91,6 +91,9 @@ body { background: var(--bg); color: var(--txt); font-family: var(--fu); overflo
 }
 .hero::before { content: ''; position: absolute; top: 0; left: -100%; width: 55%; height: 1px; background: linear-gradient(90deg, transparent, rgba(184,146,42,.35), transparent); }
 .hero-eye { font-family: var(--fu); font-size: .56rem; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--oro2); margin-bottom: .7rem; }
+.breadcrumb { display:flex; align-items:center; gap:.4rem; font-family: var(--fu); font-size:.68rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:rgba(245,240,232,.7); margin-bottom:.9rem; }
+.breadcrumb a { color: var(--oro2); text-decoration:none; }
+.breadcrumb span { color: rgba(245,240,232,.55); }
 .hero h1 { font-family: var(--fd); font-size: clamp(2rem,5vw,3.6rem); font-weight: 300; color: #fff; line-height: 1.1; margin-bottom: .7rem; }
 .hero h1 em { font-style: italic; color: var(--oro3); }
 .hero-meta { font-family: var(--fu); font-size: .65rem; color: var(--txt3); letter-spacing: .08em; }
@@ -234,6 +237,7 @@ code { background: rgba(255,255,255,.06); padding: .1rem .38rem; border-radius: 
     <!-- INTRO -->
     <section id="s-intro" class="sec on">
       <div class="hero">
+        <nav class="breadcrumb"><a href="index.html">Home</a><span>›</span><span aria-current="page">Collegio Educatori</span></nav>
         <p class="hero-eye">Collegio Educatori &middot; A.S. 2026/2027</p>
         <h1>Il sito web del Convitto<br><em>Costaggini</em></h1>
         <p style="font-family:var(--fd);font-size:1.05rem;font-style:italic;color:var(--txt2);max-width:540px;margin:.7rem 0 0;line-height:1.75">Un ecosistema digitale completo al servizio del Convitto e di chi ci lavora ogni giorno. Questa guida &egrave; il vostro manuale operativo.</p>

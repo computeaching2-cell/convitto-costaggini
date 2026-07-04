@@ -194,14 +194,14 @@ a { color: inherit; }
   background-size: 18px 18px;
 }
 .page-hero .w { position: relative; z-index: 1; }
-.page-hero .breadcrumb {
+.page-hero .breadcrumb, .breadcrumb {
   display: flex; align-items: center; gap: .4rem;
   font-family: var(--fu); font-size: .72rem; font-weight: 600;
   letter-spacing: .1em; text-transform: uppercase;
   color: rgba(245,240,232,.70); margin-bottom: .75rem;
 }
-.page-hero .breadcrumb a { color: #D4AA4A; text-decoration: none; }
-.page-hero .breadcrumb span { color: rgba(245,240,232,.60); }
+.page-hero .breadcrumb a, .breadcrumb a { color: #D4AA4A; text-decoration: none; }
+.page-hero .breadcrumb span, .breadcrumb span { color: rgba(245,240,232,.60); }
 .page-hero h1 {
   font-family: var(--fd); font-size: clamp(2rem, 6vw, 3.5rem);
   font-weight: 300; color: #fff; line-height: 1.1; margin-bottom: .7rem;
