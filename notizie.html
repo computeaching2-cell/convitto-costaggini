@@ -130,6 +130,7 @@
         <button class="fbtn" data-filter="successi">Successi</button>
         <button class="fbtn" data-filter="istituzionale">Istituzionale</button>
         <button class="fbtn" data-filter="comunicati">Comunicati</button>
+        <button class="fbtn" data-filter="piatto della settimana">🍽️ Piatto della Settimana</button>
       </div>
       <div class="news-grid" id="news-grid-main">
         <div id="notizie-loading" style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--fu);font-size:.85rem;color:var(--txt2)">Caricamento notizie...</div>
@@ -183,7 +184,7 @@ async function caricaNotizie() {
 
 function renderNotizie(filtro) {
   const grid = document.getElementById('news-grid-main');
-  const filtered = filtro === 'all' ? tutteLeNotizie : tutteLeNotizie.filter(n => n.categoria === filtro);
+  const filtered = filtro === 'all' ? tutteLeNotizie : tutteLeNotizie.filter(n => (n.categoria||'').toLowerCase() === filtro);
   if (!filtered.length) {
     grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--fu);font-size:.85rem;color:var(--txt2)">Nessuna notizia in questa categoria.</p>';
     return;
