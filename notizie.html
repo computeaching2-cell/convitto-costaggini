@@ -70,6 +70,9 @@
     .com-acc .com-chev{ color:var(--oro,#B8922A); font-size:1.25rem; transition:transform .2s ease; }
     .com-acc[open] .com-chev{ transform:rotate(90deg); }
     .com-acc-body{ padding:0 .9rem .85rem; font-size:.86rem; line-height:1.65; color:var(--txt2,#6b6353); }
+    .com-link-wrap{ margin-top:.65rem; }
+    .com-link{ display:inline-flex; align-items:center; gap:.3rem; font-style:italic; font-weight:700; color:var(--bosco); text-decoration:none; border-bottom:1px solid var(--bosco); padding-bottom:1px; transition:color var(--ease), border-color var(--ease); }
+    .com-link:hover{ color:var(--oro); border-color:var(--oro); }
     .com-acc-meta{ margin-top:.55rem; font-family:var(--fu); font-size:.68rem; font-style:italic; color:var(--txt2,#6b6353); }
   </style>
   <style>
@@ -230,7 +233,7 @@ async function caricaComunicati(){
       const meta = [a.autore||'', a.categoria||''].filter(Boolean).join(' · ');
       const aperto = (a.pinned || i===0) ? ' open' : '';
       const corpo = a.testo ? comLinkify(a.testo) : '<em style="color:var(--txt2)">(nessun testo)</em>';
-      const lnk = a.link ? `<a href="${a.link}" ${a.link.startsWith('http')?'data-ext':''} class="ac-link" style="margin-top:.6rem">${comEscape(a.link_testo||'Leggi →')}</a>` : '';
+      const lnk = a.link ? `<div class="com-link-wrap"><a href="${a.link}" ${a.link.startsWith('http')?'data-ext':''} class="com-link">${comEscape(a.link_testo||'Leggi →')}</a></div>` : '';
       return `<details class="com-acc"${aperto}>
         <summary><span class="com-date">${badge}</span><span class="com-title">${pin}${comEscape(a.titolo||'')}</span><span class="com-chev">›</span></summary>
         <div class="com-acc-body">${corpo}${lnk}${meta?`<div class="com-acc-meta">${comEscape(meta)}</div>`:''}</div>
