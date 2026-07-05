@@ -194,6 +194,9 @@
 <script src="supabase.js"></script>
 <script src="nav.js"></script>
 <script>
+// Escape HTML per i campi testo inseriti dagli utenti prima di iniettarli in innerHTML
+// (stessa funzione già usata in calendario.html — evita XSS da form pubblici)
+function escapeHtml(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 const RICORDI_DEFAULT = [];
 
 function buildCard(r, delay = 0) {
@@ -201,10 +204,10 @@ function buildCard(r, delay = 0) {
   div.className = `mr-card c${r.colore ?? Math.floor(Math.random()*5)}`;
   div.style.animationDelay = delay + 'ms';
   div.innerHTML = `
-    <p class="mr-card-quote">${r.testo}</p>
+    <p class="mr-card-quote">${escapeHtml(r.testo)}</p>
     <div>
-      <span class="mr-card-year">${r.anni || ''}</span>
-      <span class="mr-card-author">${r.nome}${r.dove ? ' · ' + r.dove : ''}</span>
+      <span class="mr-card-year">${escapeHtml(r.anni || '')}</span>
+      <span class="mr-card-author">${escapeHtml(r.nome)}${r.dove ? ' · ' + escapeHtml(r.dove) : ''}</span>
     </div>
   `;
   return div;
@@ -251,6 +254,19 @@ async function submitRicordo(e) {
     colore: Math.floor(Math.random()*5),
     approvato: false
   };
+
+  // La validazione HTML5 "required" accetta anche testo fatto di soli spazi:
+  // qui controlliamo il valore già "trimmato" per evitare ricordi vuoti in coda di approvazione
+  if (!r.testo) {
+    alert('Scrivi il tuo ricordo prima di inviare.');
+    document.getElementById('mr-testo').focus();
+    return;
+  }
+  if (!r.nome) {
+    alert('Indica il tuo nome prima di inviare.');
+    document.getElementById('mr-nome').focus();
+    return;
+  }
 
   const btn = e.target.querySelector('button[type=submit]');
   if (btn) { btn.disabled = true; btn.textContent = 'Invio…'; }
@@ -371,11 +387,3 @@ renderWall();
 </script>
 </body>
 </html>
-      <div style="margin-top:1.25rem">
-        <a href="comunita.html"
-           style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.65);text-decoration:none;padding:.45rem 1rem;border:1px solid rgba(245,240,232,.2);border-radius:6px;transition:all .2s"
-           onmouseover="this.style.color='#F5F0E8';this.style.borderColor='rgba(245,240,232,.45)'"
-           onmouseout="this.style.color='rgba(245,240,232,.65)';this.style.borderColor='rgba(245,240,232,.2)'">
-          ← Torna alla Comunità
-        </a>
-      </div>

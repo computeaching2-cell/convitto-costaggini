@@ -645,6 +645,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
 // ═══ NOTIZIE — SUPABASE ═══
 const SB_N = 'https://sawclsysqnjsvbobioqo.supabase.co';
+// Escape HTML per tutti i campi testo inseriti dagli utenti prima di iniettarli in innerHTML
+// (stessa funzione già usata in calendario.html — evita XSS da form pubblici)
+function escapeHtml(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 const SB_PUB = 'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ';
 // Token di sessione dell'amministratore loggato (sostituisce il service_role, che NON deve stare nel client).
 // Le operazioni admin passano per le policy RLS is_admin() come utente authenticated.
@@ -1157,9 +1160,9 @@ async function famLoad(stato) {
     lista.innerHTML = data.map(f => `
       <div class="fam-card ${f.stato}">
         <div class="fam-info">
-          <div class="fam-campo"><strong>Studente</strong>${f.nome_studente || '—'}</div>
-          <div class="fam-campo"><strong>Email</strong>${f.email_genitore || '—'}</div>
-          <div class="fam-campo"><strong>Relazione</strong>${f.relazione || '—'}</div>
+          <div class="fam-campo"><strong>Studente</strong>${escapeHtml(f.nome_studente) || '—'}</div>
+          <div class="fam-campo"><strong>Email</strong>${escapeHtml(f.email_genitore) || '—'}</div>
+          <div class="fam-campo"><strong>Relazione</strong>${escapeHtml(f.relazione) || '—'}</div>
           <div class="fam-campo"><strong>Richiesta</strong>${f.created_at ? f.created_at.slice(0,10) : '—'}</div>
           <div class="fam-campo"><strong>Stato</strong>${f.stato}</div>
         </div>
@@ -1297,11 +1300,11 @@ function pinCard(p, approvato) {
   return `
     <div class="fam-card ${approvato ? 'approvata' : 'in_attesa'}" style="margin-bottom:.75rem">
       <div class="fam-info">
-        <div class="fam-campo"><strong>Nome</strong>${p.nome || '—'}</div>
-        <div class="fam-campo"><strong>Città</strong>${p.citta || '—'}</div>
-        <div class="fam-campo"><strong>Tipo</strong>${LABELS[p.tipo] || p.tipo || '—'}</div>
-        <div class="fam-campo"><strong>Anno</strong>${p.anni || '—'}</div>
-        <div class="fam-campo"><strong>Ruolo</strong>${p.ruolo || '—'}</div>
+        <div class="fam-campo"><strong>Nome</strong>${escapeHtml(p.nome) || '—'}</div>
+        <div class="fam-campo"><strong>Città</strong>${escapeHtml(p.citta) || '—'}</div>
+        <div class="fam-campo"><strong>Tipo</strong>${escapeHtml(LABELS[p.tipo] || p.tipo) || '—'}</div>
+        <div class="fam-campo"><strong>Anno</strong>${escapeHtml(p.anni) || '—'}</div>
+        <div class="fam-campo"><strong>Ruolo</strong>${escapeHtml(p.ruolo) || '—'}</div>
         <div class="fam-campo"><strong>Coordinate</strong>${p.lat ? p.lat.toFixed(2) + ', ' + p.lng.toFixed(2) : '—'}</div>
       </div>
       <div class="fam-azioni">
@@ -1353,15 +1356,15 @@ async function odLoad(stato) {
     list.innerHTML = data.map(p => `
       <div class="fam-card ${p.stato}" style="margin-bottom:.75rem">
         <div class="fam-info">
-          <div class="fam-campo"><strong>Nome</strong>${p.nome || '—'}</div>
-          <div class="fam-campo"><strong>Email</strong>${p.email || '—'}</div>
-          <div class="fam-campo"><strong>Telefono</strong>${p.telefono || '—'}</div>
-          <div class="fam-campo"><strong>Data preferita</strong>${p.data_pref || '—'}</div>
-          <div class="fam-campo"><strong>Persone</strong>${p.persone || '—'}</div>
+          <div class="fam-campo"><strong>Nome</strong>${escapeHtml(p.nome) || '—'}</div>
+          <div class="fam-campo"><strong>Email</strong>${escapeHtml(p.email) || '—'}</div>
+          <div class="fam-campo"><strong>Telefono</strong>${escapeHtml(p.telefono) || '—'}</div>
+          <div class="fam-campo"><strong>Data preferita</strong>${escapeHtml(p.data_pref) || '—'}</div>
+          <div class="fam-campo"><strong>Persone</strong>${escapeHtml(p.persone) || '—'}</div>
           <div class="fam-campo"><strong>Richiesta</strong>${p.created_at ? p.created_at.slice(0,10) : '—'}</div>
           <div class="fam-campo"><strong>Stato</strong>${p.stato}</div>
         </div>
-        ${p.note ? `<div style="font-size:.8rem;color:#6b5a2a;font-style:italic;margin:.5rem 0 .75rem;padding:.5rem .75rem;background:#f9f6ef;border-radius:6px">"${p.note}"</div>` : ''}
+        ${p.note ? `<div style="font-size:.8rem;color:#6b5a2a;font-style:italic;margin:.5rem 0 .75rem;padding:.5rem .75rem;background:#f9f6ef;border-radius:6px">"${escapeHtml(p.note)}"</div>` : ''}
         <div class="fam-azioni">
           ${p.stato === 'nuova' ? `
             <button class="btn-approva" onclick="odAzione('${p.id}','confermata')">✅ Conferma</button>
@@ -1411,12 +1414,12 @@ async function ricordiLoad(approvato) {
     list.innerHTML = data.map(r => `
       <div class="fam-card ${r.approvato ? 'approvata' : 'in_attesa'}" style="margin-bottom:.75rem">
         <div class="fam-info">
-          <div class="fam-campo"><strong>Nome</strong>${r.nome || '—'}</div>
-          <div class="fam-campo"><strong>Anni</strong>${r.anni || '—'}</div>
-          <div class="fam-campo"><strong>Dove ora</strong>${r.dove || '—'}</div>
+          <div class="fam-campo"><strong>Nome</strong>${escapeHtml(r.nome) || '—'}</div>
+          <div class="fam-campo"><strong>Anni</strong>${escapeHtml(r.anni) || '—'}</div>
+          <div class="fam-campo"><strong>Dove ora</strong>${escapeHtml(r.dove) || '—'}</div>
           <div class="fam-campo"><strong>Data</strong>${r.created_at ? r.created_at.slice(0,10) : '—'}</div>
         </div>
-        ${r.testo ? `<div style="font-size:.82rem;color:rgba(245,240,232,.7);font-style:italic;margin:.5rem 0 .75rem;padding:.6rem .85rem;background:rgba(245,240,232,.05);border-radius:6px;line-height:1.6">"${r.testo}"</div>` : ''}
+        ${r.testo ? `<div style="font-size:.82rem;color:rgba(245,240,232,.7);font-style:italic;margin:.5rem 0 .75rem;padding:.6rem .85rem;background:rgba(245,240,232,.05);border-radius:6px;line-height:1.6">"${escapeHtml(r.testo)}"</div>` : ''}
         <div class="fam-azioni">
           ${!r.approvato ? `
             <button class="btn-approva" onclick="ricordiAzione('${r.id}', true)">✅ Approva</button>
@@ -1492,14 +1495,14 @@ function alumniCard(a, approvato) {
   return `
     <div class="fam-card ${approvato ? 'approvata' : 'in_attesa'}" style="margin-bottom:.75rem">
       <div class="fam-info">
-        <div class="fam-campo"><strong>Nome</strong>${a.nome || '—'}</div>
-        <div class="fam-campo"><strong>Lavoro</strong>${a.lavoro || '—'}</div>
-        <div class="fam-campo"><strong>Settore</strong>${a.settore || '—'}</div>
-        <div class="fam-campo"><strong>Città</strong>${a.citta || '—'}</div>
-        <div class="fam-campo"><strong>Anni convitto</strong>${a.anni || '—'}</div>
-        <div class="fam-campo"><strong>Email</strong>${a.email || '—'}</div>
+        <div class="fam-campo"><strong>Nome</strong>${escapeHtml(a.nome) || '—'}</div>
+        <div class="fam-campo"><strong>Lavoro</strong>${escapeHtml(a.lavoro) || '—'}</div>
+        <div class="fam-campo"><strong>Settore</strong>${escapeHtml(a.settore) || '—'}</div>
+        <div class="fam-campo"><strong>Città</strong>${escapeHtml(a.citta) || '—'}</div>
+        <div class="fam-campo"><strong>Anni convitto</strong>${escapeHtml(a.anni) || '—'}</div>
+        <div class="fam-campo"><strong>Email</strong>${escapeHtml(a.email) || '—'}</div>
       </div>
-      ${a.ricordo ? `<div style="font-size:.8rem;color:#6b5a2a;font-style:italic;margin:0 0 .75rem;padding:.5rem .75rem;background:#f9f6ef;border-radius:6px">"${a.ricordo}"</div>` : ''}
+      ${a.ricordo ? `<div style="font-size:.8rem;color:#6b5a2a;font-style:italic;margin:0 0 .75rem;padding:.5rem .75rem;background:#f9f6ef;border-radius:6px">"${escapeHtml(a.ricordo)}"</div>` : ''}
       <div class="fam-azioni">
         ${!approvato ? `
           <button class="btn-approva" onclick="alumniAzione('${a.id}', true)">✅ Approva</button>

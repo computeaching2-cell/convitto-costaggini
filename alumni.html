@@ -225,6 +225,9 @@ function alumniNoContact(e) {
 </main>
 <script src="nav.js"></script>
 <script>
+// Escape HTML per i campi testo inseriti dagli utenti prima di iniettarli in innerHTML
+// (stessa funzione già usata in calendario.html — evita XSS da form pubblici)
+function escapeHtml(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 // Carica le schede alumni approvate da Supabase
 (async function() {
   const grid = document.getElementById('alumni-community-grid');
@@ -245,20 +248,18 @@ function alumniNoContact(e) {
     }
     approved.forEach((a, idx) => {
       const s = a || {};
+      // Solo URL http/https vengono resi cliccabili — evita schemi javascript: nei link social
+      const isHttp = (u) => typeof u === 'string' && /^https?:\/\//i.test(u.trim());
+      const fbUrl  = a.social_fb  ? (a.social_fb.startsWith('http')  ? a.social_fb  : 'https://facebook.com/'+a.social_fb)               : '';
+      const igUrl  = a.social_ig  ? (a.social_ig.startsWith('http')  ? a.social_ig  : 'https://instagram.com/'+a.social_ig.replace('@','')) : '';
       const socialIcons = [
-        a.social_fb  ? `<a href="${a.social_fb.startsWith('http')?a.social_fb:'https://facebook.com/'+a.social_fb}" target="_blank" rel="noopener" title="Facebook" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">📘</a>` : '',
-        a.social_ig  ? `<a href="${a.social_ig.startsWith('http')?a.social_ig:'https://instagram.com/'+a.social_ig.replace('@','')}" target="_blank" rel="noopener" title="Instagram" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">📸</a>` : '',
-        a.social_li  ? `<a href="${a.social_li}" target="_blank" rel="noopener" title="LinkedIn" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">💼</a>` : '',
-        a.social_web ? `<a href="${a.social_web}" target="_blank" rel="noopener" title="Sito web" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">🌐</a>` : '',
+        fbUrl && isHttp(fbUrl) ? `<a href="${escapeHtml(fbUrl)}" target="_blank" rel="noopener" title="Facebook" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">📘</a>` : '',
+        igUrl && isHttp(igUrl) ? `<a href="${escapeHtml(igUrl)}" target="_blank" rel="noopener" title="Instagram" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">📸</a>` : '',
+        a.social_li  && isHttp(a.social_li)  ? `<a href="${escapeHtml(a.social_li)}" target="_blank" rel="noopener" title="LinkedIn" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">💼</a>` : '',
+        a.social_web && isHttp(a.social_web) ? `<a href="${escapeHtml(a.social_web)}" target="_blank" rel="noopener" title="Sito web" style="color:rgba(245,240,232,.4);text-decoration:none;font-size:1.1rem" onmouseover="this.style.color='#D4AA4A'" onmouseout="this.style.color='rgba(245,240,232,.4)'">🌐</a>` : '',
       ].filter(Boolean).join('');
 
-      const socialRow = socialIcons ? `<div style="display:flex;gap:.5rem;margin-top:.6rem">${socialIcons}</div>` : '';
-      const contattaBtn = a.contattabile && a.email
-        ? `<a href="mailto:${a.email}?subject=Ciao%20dal%20Costaggini&body=Ciao%20${encodeURIComponent(a.nome||'')}%2C%20ti%20scrivo%20dal%20sito%20del%20Convitto..."
-             style="display:inline-flex;align-items:center;gap:.3rem;margin-top:.65rem;font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;background:rgba(184,146,42,.12);border:1px solid rgba(184,146,42,.25);border-radius:20px;color:var(--oro2);text-decoration:none"
-             onmouseover="this.style.background='rgba(184,146,42,.22)'" onmouseout="this.style.background='rgba(184,146,42,.12)'">
-             📩 Scrivimi
-           </a>` : '';
+      const socialRow = socialIcons ? `<div style="display:flex;gap:.5rem;margin-top:.6rem;justify-content:center">${socialIcons}</div>` : '';
 
       const card = document.createElement('div');
       card.className = 'alumni-card';
@@ -277,14 +278,15 @@ function alumniNoContact(e) {
       card.innerHTML = `
         <div style="padding:1rem .85rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.35rem;height:100%;box-sizing:border-box">
           <div style="width:44px;height:44px;border-radius:50%;background:rgba(245,240,232,.1);border:1.5px solid rgba(245,240,232,.18);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;font-style:italic;color:rgba(245,240,232,.85);flex-shrink:0">
-            ${(a.nome||'?')[0].toUpperCase()}
+            ${escapeHtml((a.nome||'?')[0].toUpperCase())}
           </div>
-          <h3 style="font-family:var(--fd);font-size:.95rem;font-weight:400;color:#F5F0E8;margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.nome||''}</h3>
-          <p style="font-size:.75rem;color:rgba(245,240,232,.65);margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${[a.lavoro,a.citta].filter(Boolean).join(' · ')}</p>
-          ${a.anni ? '<p style="font-family:var(--fu);font-size:.58rem;color:rgba(184,146,42,.75);letter-spacing:.08em;text-transform:uppercase;margin:0">' + a.anni + '</p>' : ''}
-          ${a.ricordo ? '<p style="font-size:.75rem;color:rgba(245,240,232,.45);font-style:italic;line-height:1.5;margin:.15rem 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">"' + a.ricordo + '"</p>' : ''}
+          <h3 style="font-family:var(--fd);font-size:.95rem;font-weight:400;color:#F5F0E8;margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(a.nome||'')}</h3>
+          <p style="font-size:.75rem;color:rgba(245,240,232,.65);margin:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml([a.lavoro,a.citta].filter(Boolean).join(' · '))}</p>
+          ${a.anni ? '<p style="font-family:var(--fu);font-size:.58rem;color:rgba(184,146,42,.75);letter-spacing:.08em;text-transform:uppercase;margin:0">' + escapeHtml(a.anni) + '</p>' : ''}
+          ${a.ricordo ? '<p style="font-size:.75rem;color:rgba(245,240,232,.45);font-style:italic;line-height:1.5;margin:.15rem 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">"' + escapeHtml(a.ricordo) + '"</p>' : ''}
+          ${socialRow}
           ${hasContact
-            ? '<a href="mailto:' + a.email + '?subject=Ciao%20dal%20Costaggini" style="display:inline-flex;align-items:center;gap:.25rem;margin-top:.4rem;font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;background:rgba(184,146,42,.2);border:1px solid rgba(184,146,42,.4);border-radius:20px;color:var(--oro2);text-decoration:none">✉ Scrivimi</a>'
+            ? '<a href="mailto:' + escapeHtml(a.email) + '?subject=Ciao%20dal%20Costaggini" style="display:inline-flex;align-items:center;gap:.25rem;margin-top:.4rem;font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;background:rgba(184,146,42,.2);border:1px solid rgba(184,146,42,.4);border-radius:20px;color:var(--oro2);text-decoration:none">✉ Scrivimi</a>'
             : '<button onclick="alumniNoContact(event)" style="display:inline-flex;align-items:center;gap:.25rem;margin-top:.4rem;font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;background:rgba(245,240,232,.05);border:1px solid rgba(245,240,232,.12);border-radius:20px;color:rgba(245,240,232,.3);cursor:pointer">✉ Scrivimi</button>'
           }
         </div>
@@ -295,12 +297,4 @@ function alumniNoContact(e) {
 })();
 </script>
 </body>
-</html
-      <div style="margin-top:1.25rem">
-        <a href="comunita.html"
-           style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.65);text-decoration:none;padding:.45rem 1rem;border:1px solid rgba(245,240,232,.2);border-radius:6px;transition:all .2s"
-           onmouseover="this.style.color='#F5F0E8';this.style.borderColor='rgba(245,240,232,.45)'"
-           onmouseout="this.style.color='rgba(245,240,232,.65)';this.style.borderColor='rgba(245,240,232,.2)'">
-          ← Torna alla Comunità
-        </a>
-      </div>>
+</html>
