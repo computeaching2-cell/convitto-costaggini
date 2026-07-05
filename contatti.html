@@ -435,16 +435,24 @@ if (form) {
     };
 
     try {
-      // GAS richiede no-cors — non possiamo leggere la risposta
-      // ma i dati arrivano correttamente
-      await fetch(CONTACT_GAS, {
+      const resp = await fetch(CONTACT_GAS, {
         method:  'POST',
-        mode:    'no-cors',
         headers: { 'Content-Type': 'text/plain' },
         body:    JSON.stringify(payload)
       });
-      // Con no-cors consideriamo sempre successo se non lancia eccezione
-      if (true) {
+
+      let esito;
+      try {
+        esito = await resp.json();
+      } catch (parseErr) {
+        throw new Error('Risposta del server non valida (HTTP ' + resp.status + ')');
+      }
+
+      if (!resp.ok || !esito || esito.success !== true) {
+        throw new Error((esito && esito.message) || ('Errore del server (HTTP ' + resp.status + ')'));
+      }
+
+      {
         // Overlay di conferma
         const ov = document.createElement('div');
         ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(44,62,45,.92);display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(4px)';
