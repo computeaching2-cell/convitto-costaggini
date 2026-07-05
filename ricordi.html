@@ -272,17 +272,7 @@ async function submitRicordo(e) {
   if (btn) { btn.disabled = true; btn.textContent = 'Invio…'; }
 
   try {
-    const resp = await fetch('https://sawclsysqnjsvbobioqo.supabase.co/rest/v1/ricordi', {
-      method: 'POST',
-      headers: {
-        'apikey':        'sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ',
-        'Authorization': 'Bearer sb_publishable_sUgIVDar21Sf5Dtr3D7nhQ_kpOB57FQ',
-        'Content-Type':  'application/json',
-        'Prefer':        'return=minimal'
-      },
-      body: JSON.stringify(r)
-    });
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    await sb.insert('ricordi', r);
   } catch(err) {
     if (btn) { btn.disabled = false; btn.textContent = 'Invia'; }
     alert('Errore durante l\'invio. Riprova tra poco.');

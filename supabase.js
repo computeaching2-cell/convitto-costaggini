@@ -24,9 +24,6 @@ const sb = {
 
   // ── INSERT ────────────────────────────────────────
   async insert(table, data) {
-    console.log('[SB INSERT] table:', table);
-    console.log('[SB INSERT] apikey starts with:', SUPABASE_PUB.substring(0, 20));
-    console.log('[SB INSERT] data:', JSON.stringify(data).substring(0, 100));
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/${table}`,
       { method: 'POST',
@@ -39,42 +36,7 @@ const sb = {
         body: JSON.stringify(data)
       }
     );
-    console.log('[SB INSERT] response status:', res.status);
     if (!res.ok) throw new Error(await res.text());
     return res.status === 201 ? {} : await res.json();
-  },
-
-  // ── UPDATE (solo per admin con service key) ───────
-  async update(table, id, data, serviceKey) {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`,
-      { method: 'PATCH',
-        headers: {
-          'apikey': serviceKey || SUPABASE_PUB,
-          'Authorization': `Bearer ${serviceKey || SUPABASE_PUB}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(data)
-      }
-    );
-    if (!res.ok) throw new Error(await res.text());
-    return res.json();
-  },
-
-  // ── DELETE (solo per admin) ───────────────────────
-  async delete(table, id, serviceKey) {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`,
-      { method: 'DELETE',
-        headers: {
-          'apikey': serviceKey || SUPABASE_PUB,
-          'Authorization': `Bearer ${serviceKey || SUPABASE_PUB}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    );
-    if (!res.ok) throw new Error(await res.text());
-    return true;
   }
 };
