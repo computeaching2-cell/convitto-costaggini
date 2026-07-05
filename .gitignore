@@ -1,0 +1,14 @@
+﻿# Cartelle/file di lavorazione locale — MAI committare nella repo pubblica
+tappa*-coda*/
+tappa*-consegna*/
+*-consegna/
+*.patch
+*.bak
+*.orig
+/staging/
+/wip/
+/_tmp/
+/_scratch/
+
+.DS_Store
+Thumbs.db
