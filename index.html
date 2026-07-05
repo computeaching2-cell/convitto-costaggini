@@ -65,8 +65,9 @@
       .about-grid { grid-template-columns: 1fr 1fr; align-items: center; gap: 2.5rem; }
       .about-grid > div:last-child { text-align: left; }
     }
-    .about-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-    @media(min-width:900px){ .about-img { aspect-ratio: 16/9; max-height: 320px; } }
+    .ar-box { position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; }
+    .ar-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media(min-width:900px){ .ar-box { max-height: 320px; } }
 
     /* ── ESPERIENZE UNICHE — 2 colonne su desktop ── */
     @media(min-width:640px){
@@ -305,9 +306,11 @@
     <div class="w about-grid">
       <div>
         <figure style="margin:0;overflow:hidden;border-radius:6px">
-          <picture><source type="image/webp" srcset="img/terminillo.webp"/><img src="img/terminillo.jpg"
-               alt="Monte Terminillo con neve visto dalla piana reatina — 2.217 m s.l.m."
-               class="about-img" loading="lazy" width="1600" height="1200"/></picture>
+          <div class="ar-box">
+            <picture><source type="image/webp" srcset="img/terminillo.webp"/><img src="img/terminillo.jpg"
+                 alt="Monte Terminillo con neve visto dalla piana reatina — 2.217 m s.l.m."
+                 loading="lazy" width="1600" height="1200"/></picture>
+          </div>
           <figcaption style="background:var(--bosco);padding:.45rem .85rem">
             <span style="font-family:var(--fu);font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,240,232,.7);display:block;margin-bottom:.2rem">🏔️ Monte Terminillo · Rieti, Lazio</span>
             <a href="https://commons.wikimedia.org/wiki/File:Terminillo.JPG" target="_blank" rel="noopener"
