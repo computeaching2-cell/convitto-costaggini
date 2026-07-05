@@ -496,7 +496,9 @@ NB: la domanda richiede firma autografa per la validità legale; contattare il g
 
   fetch(CONTACT_GAS, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) })
     .finally(() => {
-      document.getElementById('da-form').style.display = 'none';
+      document.querySelectorAll('#da-form input, #da-form select, #da-form textarea')
+        .forEach(el => el.disabled = true);
+      document.getElementById('da-submit').style.display = 'none';
       document.getElementById('da-success').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
