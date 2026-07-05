@@ -358,12 +358,16 @@ document.getElementById('btn-zoom-in').addEventListener('click',  () => { autoRo
 
 // ── Seleziona stanza ──
 function selectRoom(room) {
-  document.querySelectorAll('.tv-room-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tv-room-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+    b.setAttribute('tabindex', '-1');
+  });
   const btn = document.getElementById('btn-' + room.id);
-  if (btn) btn.classList.add('active');
-  document.querySelectorAll('.tv-thumb').forEach(t => t.classList.remove('active'));
+  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); btn.setAttribute('tabindex', '0'); }
+  document.querySelectorAll('.tv-thumb').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-pressed', 'false'); });
   const th = document.getElementById('thumb-' + room.id);
-  if (th) th.classList.add('active');
+  if (th) { th.classList.add('active'); th.setAttribute('aria-pressed', 'true'); }
   document.getElementById('tv-icon').textContent  = room.icon;
   document.getElementById('tv-title').innerHTML   = room.title;
   document.getElementById('tv-desc').textContent  = room.desc;
@@ -377,13 +381,28 @@ function selectRoom(room) {
 // ── Build pulsanti stanza ──
 function buildButtons() {
   const wrap = document.getElementById('tv-rooms');
-  ROOMS.forEach(r => {
+  ROOMS.forEach((r, i) => {
     const btn = document.createElement('button');
     btn.className = 'tv-room-btn'; btn.id = 'btn-' + r.id;
     btn.setAttribute('role','tab');
+    btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
     btn.textContent = r.icon + ' ' + r.label;
     btn.onclick = () => selectRoom(r);
     wrap.appendChild(btn);
+  });
+  // Navigazione da tastiera tra i tab (freccia sinistra/destra, Home/End)
+  const tabs = () => Array.from(wrap.querySelectorAll('.tv-room-btn'));
+  wrap.addEventListener('keydown', e => {
+    const list = tabs();
+    const i = list.indexOf(document.activeElement);
+    if (i === -1) return;
+    let next = null;
+    if (e.key === 'ArrowRight') next = list[(i + 1) % list.length];
+    else if (e.key === 'ArrowLeft') next = list[(i - 1 + list.length) % list.length];
+    else if (e.key === 'Home') next = list[0];
+    else if (e.key === 'End') next = list[list.length - 1];
+    if (next) { e.preventDefault(); next.focus(); next.click(); }
   });
 }
 
@@ -394,7 +413,11 @@ function buildThumbs() {
     const div = document.createElement('div');
     div.className = 'tv-thumb'; div.id = 'thumb-' + r.id;
     div.setAttribute('role','button'); div.setAttribute('aria-label', r.label);
+    div.setAttribute('aria-pressed', 'false'); div.setAttribute('tabindex', '0');
     div.onclick = () => selectRoom(r);
+    div.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectRoom(r); }
+    });
     const img = new Image();
     img.onload  = () => { div.innerHTML = `<img src="${r.thumb}" alt="${r.label}" loading="lazy"/><div class="tv-thumb-label">${r.label}</div>`; };
     img.onerror = () => { div.innerHTML = `<div class="tv-thumb-placeholder"><span>${r.icon}</span><span>${r.label}</span></div>`; };
