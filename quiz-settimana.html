@@ -128,7 +128,7 @@ function init() {
   // Catalogo
   const cat = document.getElementById('sw-catalog');
   cat.innerHTML = ATTIVITA.map(a => `
-    <div class="sw-item" id="item-${a.id}" onclick="selectAtt('${a.id}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+    <div class="sw-item" id="item-${a.id}" onclick="selectAtt('${a.id}')" role="button" tabindex="0" aria-pressed="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
       <span class="sw-item-icon">${a.icona}</span>
       <div class="sw-item-name">${a.nome}</div>
       <div class="sw-item-time">${a.tempo}</div>
@@ -171,8 +171,9 @@ function renderTable() {
 
 function selectAtt(id) {
   sel = id;
-  document.querySelectorAll('.sw-item').forEach(el => el.classList.remove('sel'));
-  document.getElementById('item-'+id).classList.add('sel');
+  document.querySelectorAll('.sw-item').forEach(el => { el.classList.remove('sel'); el.setAttribute('aria-pressed','false'); });
+  const it = document.getElementById('item-'+id);
+  it.classList.add('sel'); it.setAttribute('aria-pressed','true');
 }
 
 function addAtt(key) {

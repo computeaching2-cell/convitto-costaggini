@@ -296,7 +296,7 @@ function fmt(s) {
 function buildPlaylist() {
   const el = document.getElementById('vn-playlist-items');
   el.innerHTML = PLAYLIST.map((t,i) => `
-    <div class="vn-pl-item" id="pl-${i}" onclick="selectTrack(${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+    <div class="vn-pl-item" id="pl-${i}" onclick="selectTrack(${i})" role="button" tabindex="0" aria-current="${i===current?'true':'false'}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
       <span class="vn-pl-num">${i+1}</span>
       <div class="vn-pl-info">
         <div class="vn-pl-title">${t.title}</div>
@@ -308,8 +308,9 @@ function buildPlaylist() {
 }
 
 function selectTrack(i) {
-  document.querySelectorAll('.vn-pl-item').forEach(el=>el.classList.remove('active'));
-  document.getElementById(`pl-${i}`).classList.add('active');
+  document.querySelectorAll('.vn-pl-item').forEach(el=>{ el.classList.remove('active'); el.setAttribute('aria-current','false'); });
+  const plEl = document.getElementById(`pl-${i}`);
+  plEl.classList.add('active'); plEl.setAttribute('aria-current','true');
   current = i;
   const t = PLAYLIST[i];
   // Se il brano ha una pagina dedicata, mostra il link
