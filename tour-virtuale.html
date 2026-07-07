@@ -130,6 +130,35 @@
     .tv-hero .breadcrumb a { color: #D4AA4A; text-decoration: none; }
     .tv-hero .breadcrumb a:hover { color: var(--oro3); }
     .tv-hero .breadcrumb span { color: rgba(245,240,232,.60); }
+
+    /* Guida vocale */
+    .tv-narration {
+      max-width: 860px; margin: 1rem auto 0; padding: 0 1.25rem;
+      display: flex; align-items: flex-start; gap: .75rem;
+    }
+    .tv-narr-btn {
+      flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(184,146,42,.14); border: 1.5px solid rgba(184,146,42,.5);
+      color: var(--oro3); font-size: 1.05rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s;
+    }
+    .tv-narr-btn:hover { background: rgba(184,146,42,.28); border-color: var(--oro); }
+    .tv-narr-btn[aria-pressed="true"] { background: var(--oro); border-color: var(--oro); color: #1a1a1a; }
+    .tv-narr-body { flex: 1; min-width: 0; }
+    .tv-narr-caption {
+      font-family: var(--fu); font-size: .78rem; line-height: 1.65;
+      color: rgba(245,240,232,.75); font-style: italic; min-height: 1.4em;
+    }
+    .tv-narr-caption.speaking { color: #fff; }
+    .tv-narr-toggle {
+      margin-top: .35rem; background: none; border: none; cursor: pointer;
+      font-family: var(--fu); font-size: .58rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(245,240,232,.4); padding: 0; text-decoration: underline; text-underline-offset: 2px;
+    }
+    .tv-narr-toggle:hover { color: var(--oro2); }
+    .tv-narr-unavailable { font-size: .7rem; color: rgba(245,240,232,.35); font-style: italic; }
   </style>
   <link rel="icon" href="favicon.ico" sizes="any"/>
   <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32"/>
@@ -199,6 +228,13 @@
         <p id="tv-desc"></p>
       </div>
     </div>
+    <div class="tv-narration" id="tv-narration" style="display:none">
+      <button class="tv-narr-btn" id="tv-narr-btn" aria-pressed="false" aria-label="Ascolta la guida vocale">🔊</button>
+      <div class="tv-narr-body">
+        <p class="tv-narr-caption" id="tv-narr-caption" aria-live="polite"></p>
+        <button class="tv-narr-toggle" id="tv-narr-cc-toggle" aria-pressed="true">Nascondi sottotitoli</button>
+      </div>
+    </div>
   </div>
 
   <section style="background:#0a0f0a;padding:1rem 0">
@@ -221,6 +257,16 @@ const ROOMS = [
   { id:'musica',           label:'Lab Musicale',      icon:'🎵', title:'Il <em>Laboratorio Musicale</em>',     desc:'Fondato da Michele Gaggiano e Dino Barba. Chitarre, tastiere, percussioni — e la libertà di scoprire un talento.', img:'img/tour/musica.jpg', thumb:'img/tour/musica.jpg' },
   { id:'giardino',         label:'Giardino',          icon:'🌿', title:'Il <em>giardino</em>',                 desc:'Lo spazio aperto del Convitto — con il Terminillo sullo sfondo. Luogo di pausa, di chiacchiere, di aria fresca.', img:'img/tour/giardino.jpg', thumb:'img/tour/giardino.jpg' },
 ];
+
+// ══ GUIDA VOCALE (testi narrati, in prima persona) ═════
+// Chiave = id della stanza in ROOMS. Le stanze non ancora presenti qui
+// semplicemente non mostrano la barra della guida vocale.
+const NARRATIONS = {
+  'ingresso': 'Benvenuti al Convitto! Qui alla reception trovate sempre qualcuno pronto ad accogliervi: è il primo punto di riferimento, sia per chi arriva per la prima volta sia per noi ogni giorno. Da qui si accede a tutti gli ambienti: aule, sale comuni, e naturalmente le nostre camere. Vi accompagno a scoprirli.',
+  'corridoi': 'Questi sono i corridoi che percorriamo ogni giorno per raggiungere le nostre stanze. Non è solo un passaggio: è dove ci si incrocia, ci si saluta, si organizza la giornata al volo tra una lezione e l\'altra. Le scale e l\'ascensore collegano tutti i piani della struttura.',
+  'sala-ricreativa': 'Questa è la sala ricreativa, uno dei posti che preferisco. Calcio balilla, ping pong, un po\' di relax dopo lo studio: qui si respira un\'atmosfera diversa, più leggera. E quando il tempo lo permette, la porta si apre direttamente sul verde esterno.',
+  'ufficio-educatori': 'Questo è l\'ufficio degli educatori, il punto di riferimento per qualsiasi cosa: un dubbio, un problema, o semplicemente due chiacchiere. Sono sempre presenti, giorno e notte, ed è rassicurante sapere che c\'è sempre qualcuno a cui rivolgersi.',
+};
 
 // ══ THREE.JS VIEWER ═══════════════════════════════════
 const canvas   = document.getElementById('tv-canvas');
@@ -356,8 +402,106 @@ Object.entries(panMap).forEach(([id, fn]) => {
 document.getElementById('btn-zoom-out').addEventListener('click', () => { autoRot = false; clearTimeout(autoTimer); zoom(+6); autoTimer = setTimeout(() => { autoRot = true; }, 2000); });
 document.getElementById('btn-zoom-in').addEventListener('click',  () => { autoRot = false; clearTimeout(autoTimer); zoom(-6); autoTimer = setTimeout(() => { autoRot = true; }, 2000); });
 
+// ══ GUIDA VOCALE — Web Speech API ═══════════════════════
+// Nessun file audio, nessun servizio esterno: il browser stesso legge il
+// testo con una voce italiana. Gratuito e senza manutenzione.
+const ttsSupported = 'speechSynthesis' in window;
+let ttsEnabled  = localStorage.getItem('tv-tts-enabled') !== 'off'; // attiva di default
+let ccEnabled   = localStorage.getItem('tv-cc-enabled')  !== 'off'; // sottotitoli attivi di default
+let itVoice     = null;
+let currentUtter = null;
+
+const narrBar    = document.getElementById('tv-narration');
+const narrBtn    = document.getElementById('tv-narr-btn');
+const narrCap    = document.getElementById('tv-narr-caption');
+const ccToggle   = document.getElementById('tv-narr-cc-toggle');
+
+function pickItalianVoice() {
+  if (!ttsSupported) return;
+  const voices = speechSynthesis.getVoices();
+  // Preferisce una voce italiana femminile nota; altrimenti la prima voce it-IT disponibile
+  itVoice = voices.find(v => /it-IT|it_IT|Italian/i.test(v.lang) && /elsa|alice|federica|donna|female/i.test(v.name))
+         || voices.find(v => /^it/i.test(v.lang))
+         || null;
+}
+if (ttsSupported) {
+  pickItalianVoice();
+  speechSynthesis.onvoiceschanged = pickItalianVoice;
+}
+
+function updateNarrBtn(speaking) {
+  narrBtn.textContent = speaking ? '⏸' : '🔊';
+  narrBtn.setAttribute('aria-pressed', String(speaking));
+  narrBtn.setAttribute('aria-label', speaking ? 'Metti in pausa la guida vocale' : 'Ascolta la guida vocale');
+  narrCap.classList.toggle('speaking', speaking);
+}
+
+function stopNarration() {
+  if (ttsSupported) speechSynthesis.cancel();
+  currentUtter = null;
+  updateNarrBtn(false);
+}
+
+// auto = true quando il cambio stanza è partito da un'interazione dell'utente
+// (click su una tab o su una miniatura): solo in quel caso i browser
+// permettono l'avvio automatico della sintesi vocale.
+function speakRoom(room, auto) {
+  const text = NARRATIONS[room.id];
+  if (!text) { narrBar.style.display = 'none'; return; }
+  narrBar.style.display = 'flex';
+  narrCap.textContent = ccEnabled ? text : '';
+
+  if (!ttsSupported) {
+    narrBtn.style.display = 'none';
+    if (!ccEnabled) narrCap.textContent = text; // senza TTS mostriamo comunque il testo
+    return;
+  }
+  narrBtn.style.display = 'flex';
+  stopNarration();
+  if (!ttsEnabled || !auto) return; // rispetta la preferenza utente / le regole autoplay del browser
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'it-IT';
+  if (itVoice) utter.voice = itVoice;
+  utter.rate = 0.98;
+  utter.pitch = 1.05;
+  utter.onstart = () => updateNarrBtn(true);
+  utter.onend   = () => updateNarrBtn(false);
+  utter.onerror = () => updateNarrBtn(false);
+  currentUtter = utter;
+  speechSynthesis.speak(utter);
+}
+
+// Pulsante play/pausa manuale (usabile anche al primo caricamento,
+// dove l'autoplay del browser sarebbe comunque bloccato)
+narrBtn.addEventListener('click', () => {
+  if (!ttsSupported) return;
+  if (speechSynthesis.speaking && !speechSynthesis.paused) {
+    speechSynthesis.pause();
+    updateNarrBtn(false);
+  } else if (speechSynthesis.paused) {
+    speechSynthesis.resume();
+    updateNarrBtn(true);
+  } else {
+    const room = ROOMS.find(r => document.getElementById('btn-' + r.id)?.classList.contains('active'));
+    if (room) speakRoom(room, true);
+  }
+});
+
+// Toggle sottotitoli
+ccToggle.addEventListener('click', () => {
+  ccEnabled = !ccEnabled;
+  localStorage.setItem('tv-cc-enabled', ccEnabled ? 'on' : 'off');
+  ccToggle.textContent = ccEnabled ? 'Nascondi sottotitoli' : 'Mostra sottotitoli';
+  ccToggle.setAttribute('aria-pressed', String(ccEnabled));
+  const room = ROOMS.find(r => document.getElementById('btn-' + r.id)?.classList.contains('active'));
+  if (room) narrCap.textContent = ccEnabled ? (NARRATIONS[room.id] || '') : '';
+});
+ccToggle.textContent = ccEnabled ? 'Nascondi sottotitoli' : 'Mostra sottotitoli';
+ccToggle.setAttribute('aria-pressed', String(ccEnabled));
+
 // ── Seleziona stanza ──
-function selectRoom(room) {
+function selectRoom(room, auto = true) {
   document.querySelectorAll('.tv-room-btn').forEach(b => {
     b.classList.remove('active');
     b.setAttribute('aria-selected', 'false');
@@ -376,6 +520,8 @@ function selectRoom(room) {
   document.getElementById('tv-placeholder').style.display = 'flex';
   document.getElementById('tv-info').style.display = 'none';
   loadPanorama(room.img);
+  stopNarration();
+  speakRoom(room, auto);
 }
 
 // ── Build pulsanti stanza ──
@@ -388,7 +534,7 @@ function buildButtons() {
     btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
     btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
     btn.textContent = r.icon + ' ' + r.label;
-    btn.onclick = () => selectRoom(r);
+    btn.onclick = () => selectRoom(r, true);
     wrap.appendChild(btn);
   });
   // Navigazione da tastiera tra i tab (freccia sinistra/destra, Home/End)
@@ -414,9 +560,9 @@ function buildThumbs() {
     div.className = 'tv-thumb'; div.id = 'thumb-' + r.id;
     div.setAttribute('role','button'); div.setAttribute('aria-label', r.label);
     div.setAttribute('aria-pressed', 'false'); div.setAttribute('tabindex', '0');
-    div.onclick = () => selectRoom(r);
+    div.onclick = () => selectRoom(r, true);
     div.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectRoom(r); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectRoom(r, true); }
     });
     const img = new Image();
     img.onload  = () => { div.innerHTML = `<img src="${r.thumb}" alt="${r.label}" loading="lazy"/><div class="tv-thumb-label">${r.label}</div>`; };
@@ -432,7 +578,7 @@ resize();
 render();
 buildButtons();
 buildThumbs();
-selectRoom(ROOMS[0]);
+selectRoom(ROOMS[0], false); // niente autoplay al primo caricamento: l'utente avvia con il pulsante 🔊
 </script>
 </body>
 </html>
