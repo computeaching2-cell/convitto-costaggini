@@ -108,6 +108,14 @@
       </div>
 
 
+      <!-- Export calendario -->
+      <div id="cal-export-box" style="display:none;margin-bottom:1.5rem">
+        <button onclick="esportaICal()" class="btn-outline-dark" style="font-family:var(--fu);font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.6rem 1.25rem;border-radius:6px;cursor:pointer">
+          📅 Esporta tutti gli eventi (.ics)
+        </button>
+        <span style="font-size:.72rem;color:var(--txt2);margin-left:.75rem">Compatibile con Apple Calendar, Outlook e Google Calendar</span>
+      </div>
+
       <div id="cal-eventi">
         <p style="text-align:center;color:var(--txt2);font-family:var(--fu);font-size:.85rem;padding:2rem">Caricamento eventi…</p>
       </div>
@@ -135,6 +143,76 @@ const CAT_STYLE = {
   istituzionale:''
 };
 function escapeHtml(t){return (t||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+// ── Export calendario: dati reali, popolati dopo il fetch ──
+let EVENTI_REALI = [];
+
+function iso8601(d){
+  const p = n => String(n).padStart(2,'0');
+  return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate());
+}
+function giornoSuccessivo(d){
+  const n = new Date(d.getTime());
+  n.setDate(n.getDate()+1);
+  return n;
+}
+function linkGoogleCalendar(e){
+  const d = new Date(e.data+'T00:00:00');
+  if(isNaN(d)) return null;
+  const dates = iso8601(d) + '/' + iso8601(giornoSuccessivo(d));
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: e.titolo || 'Evento Convitto Costaggini',
+    dates: dates,
+    location: e.luogo || 'Convitto "Costaggini", Via Salaria s.n.c., Rieti',
+    details: (e.descrizione || 'Evento del Convitto "Costaggini" di Rieti. Info: 0746 296862')
+  });
+  return 'https://calendar.google.com/calendar/render?' + params.toString();
+}
+
+function icsEscape(t){
+  return (t||'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/[\r\n]+/g,'\\n');
+}
+
+function esportaICal(){
+  const validi = EVENTI_REALI.filter(e => e.data && !isNaN(new Date(e.data+'T00:00:00')));
+  if(!validi.length){ alert('Nessun evento con data confermata da esportare al momento.'); return; }
+  const uid = () => Math.random().toString(36).substr(2,9).toUpperCase();
+  const now = new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+  let cal = [
+    'BEGIN:VCALENDAR','VERSION:2.0',
+    'PRODID:-//Convitto Costaggini Rieti//IT',
+    'CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'X-WR-CALNAME:Convitto Costaggini — Eventi',
+    'X-WR-TIMEZONE:Europe/Rome',
+  ];
+  validi.forEach(e => {
+    const d = new Date(e.data+'T00:00:00');
+    cal.push(
+      'BEGIN:VEVENT',
+      `UID:${uid()}@convittocostaggini.rieti`,
+      `DTSTAMP:${now}`,
+      `DTSTART;VALUE=DATE:${iso8601(d)}`,
+      `DTEND;VALUE=DATE:${iso8601(giornoSuccessivo(d))}`,
+      `SUMMARY:${icsEscape(e.titolo)}`,
+      `LOCATION:${icsEscape(e.luogo||'Convitto "Costaggini", Rieti')}`,
+      `DESCRIPTION:${icsEscape(e.descrizione||'Evento del Convitto "Costaggini" di Rieti. Info: 0746 296862')}`,
+      'END:VEVENT'
+    );
+  });
+  cal.push('END:VCALENDAR');
+  const blob = new Blob([cal.join('\r\n')], { type:'text/calendar;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'convitto-costaggini-eventi.ics'; a.click();
+}
+
+function aggiornaVisibilitaExport(){
+  const box = document.getElementById('cal-export-box');
+  if(!box) return;
+  const haEventiConData = EVENTI_REALI.some(e => e.data && !isNaN(new Date(e.data+'T00:00:00')));
+  box.style.display = haEventiConData ? '' : 'none';
+}
+
 async function caricaCalendario(){
   const box = document.getElementById('cal-eventi');
   if(!box) return;
@@ -145,6 +223,8 @@ async function caricaCalendario(){
       box.innerHTML = '<p style="text-align:center;color:var(--txt2);font-family:var(--fu);font-size:.85rem;padding:2rem">Nessun evento in calendario al momento.</p>';
       return;
     }
+    EVENTI_REALI = data;
+    aggiornaVisibilitaExport();
     // raggruppa per mese (gli eventi senza data finiscono in coda)
     const gruppi = []; const idx = {};
     const senzaData = [];
@@ -166,9 +246,11 @@ async function caricaCalendario(){
         const stl = CAT_STYLE[cat]!==undefined ? CAT_STYLE[cat] : '';
         const badge = '<span class="ev-cat-badge"'+(stl?(' style="'+stl+'"'):'')+'>'+escapeHtml(cat.charAt(0).toUpperCase()+cat.slice(1))+'</span>';
         const meta = [e.luogo?('📍 '+escapeHtml(e.luogo)):'', e.nota?escapeHtml(e.nota):''].filter(Boolean).map(x=>'<span>'+x+'</span>').join('');
+        const gcalUrl = linkGoogleCalendar(e);
+        const gcalLink = gcalUrl ? '<span><a href="'+gcalUrl+'" target="_blank" rel="noopener" style="color:var(--bosco2);text-decoration:underline">+ Google Calendar</a></span>' : '';
         const tit = e.link ? '<a href="'+escapeHtml(e.link)+'"'+(e.link.startsWith('http')?' target="_blank" rel="noopener"':'')+'>'+escapeHtml(e.titolo||'')+'</a>' : escapeHtml(e.titolo||'');
         const desc = e.descrizione ? '<p style="margin:.35rem 0 0;font-size:.85rem;color:var(--txt2);line-height:1.55">'+escapeHtml(e.descrizione)+'</p>' : '';
-        return '<div class="ev-item" data-cat="'+cat+'"><div class="ev-date-box"><span class="ev-day">'+day+'</span><span class="ev-mon">'+mon+'</span></div><div class="ev-body">'+badge+'<h2 class="ev-title">'+tit+'</h2>'+desc+(meta?('<div class="ev-meta">'+meta+'</div>'):'')+'</div></div>';
+        return '<div class="ev-item" data-cat="'+cat+'"><div class="ev-date-box"><span class="ev-day">'+day+'</span><span class="ev-mon">'+mon+'</span></div><div class="ev-body">'+badge+'<h2 class="ev-title">'+tit+'</h2>'+desc+'<div class="ev-meta">'+meta+gcalLink+'</div></div></div>';
       }).join('');
       return '<div class="month-header">'+escapeHtml(g.label)+'</div><div class="ev-list">'+items+'</div>';
     }).join('');
@@ -202,42 +284,7 @@ document.querySelectorAll('.cal-filter').forEach(btn => {
 });
 
 // ── EXPORT iCAL ──────────────────────────────────────────────
-const EVENTI_ICAL = [
-  { titolo:'Accoglienza nuovi convittori', data:'20250915', ora:'0900', luogo:'Convitto Costaggini, Via Salaria s.n.c., Rieti' },
-  { titolo:'Open Day Costaggini — Novembre', data:'20251130', ora:'1000', luogo:'IPSSEOA Costaggini, Via Salaria s.n.c., Rieti' },
-  { titolo:'Festa di Natale del Convitto', data:'20251219', ora:'1830', luogo:'Convitto Costaggini, Rieti' },
-  { titolo:'Open Day Costaggini — Gennaio', data:'20260125', ora:'1000', luogo:'IPSSEOA Costaggini, Via Salaria s.n.c., Rieti' },
-  { titolo:'Concerto-Saggio Fine Anno — Laboratorio Musicale', data:'20260527', ora:'1830', luogo:'Convitto Costaggini, Rieti' },
-  { titolo:'Fine anno scolastico 2025/26', data:'20260615', ora:'0900', luogo:'IPSSEOA Costaggini, Rieti' },
-];
-
-function esportaICal() {
-  const uid = () => Math.random().toString(36).substr(2,9).toUpperCase();
-  const now = new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
-  let cal = [
-    'BEGIN:VCALENDAR','VERSION:2.0',
-    'PRODID:-//Convitto Costaggini Rieti//IT',
-    'CALSCALE:GREGORIAN','METHOD:PUBLISH',
-    'X-WR-CALNAME:Convitto Costaggini — Eventi A.S. 2026/27',
-    'X-WR-TIMEZONE:Europe/Rome',
-  ];
-  EVENTI_ICAL.forEach(ev => {
-    cal.push(
-      'BEGIN:VEVENT',
-      `UID:${uid()}@convittocostaggini.rieti`,
-      `DTSTAMP:${now}`,
-      `DTSTART;TZID=Europe/Rome:${ev.data}T${ev.ora}00`,
-      `SUMMARY:${ev.titolo}`,
-      `LOCATION:${ev.luogo}`,
-      `DESCRIPTION:Evento del Convitto "Costaggini" di Rieti. Info: 0746 296862`,
-      'END:VEVENT'
-    );
-  });
-  cal.push('END:VCALENDAR');
-  const blob = new Blob([cal.join('\r\n')], { type:'text/calendar;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob); a.download = 'convitto-costaggini.ics'; a.click();
-}
+// (vedi iniettaExportUI/esportaICal più sotto: usano i dati reali caricati)
 </script>
 </body>
 </html>
