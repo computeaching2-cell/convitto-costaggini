@@ -259,13 +259,27 @@ const ROOMS = [
 ];
 
 // ══ GUIDA VOCALE (testi narrati, in prima persona) ═════
-// Chiave = id della stanza in ROOMS. Le stanze non ancora presenti qui
-// semplicemente non mostrano la barra della guida vocale.
+// Chiave = id della stanza in ROOMS. Questo stesso testo funge sia da
+// sottotitolo sia da copione per la registrazione (vedi AUDIO_SRC sotto).
+// Le stanze non presenti qui semplicemente non mostrano la barra della guida vocale.
 const NARRATIONS = {
   'ingresso': 'Benvenuti al Convitto! Qui alla reception trovate sempre qualcuno pronto ad accogliervi: è il primo punto di riferimento, sia per chi arriva per la prima volta sia per noi ogni giorno. Da qui si accede a tutti gli ambienti: aule, sale comuni, e naturalmente le nostre camere. Vi accompagno a scoprirli.',
   'corridoi': 'Questi sono i corridoi che percorriamo ogni giorno per raggiungere le nostre stanze. Non è solo un passaggio: è dove ci si incrocia, ci si saluta, si organizza la giornata al volo tra una lezione e l\'altra. Le scale e l\'ascensore collegano tutti i piani della struttura.',
   'sala-ricreativa': 'Questa è la sala ricreativa, uno dei posti che preferisco. Calcio balilla, ping pong, un po\' di relax dopo lo studio: qui si respira un\'atmosfera diversa, più leggera. E quando il tempo lo permette, la porta si apre direttamente sul verde esterno.',
   'ufficio-educatori': 'Questo è l\'ufficio degli educatori, il punto di riferimento per qualsiasi cosa: un dubbio, un problema, o semplicemente due chiacchiere. Sono sempre presenti, giorno e notte, ed è rassicurante sapere che c\'è sempre qualcuno a cui rivolgersi.',
+};
+
+// ══ GUIDA VOCALE (registrazioni audio) ══════════════════
+// Percorso del file audio per ogni ambiente. Caricare i file registrati
+// in img/tour/../audio/tour/ (vedi cartella indicata qui sotto) con
+// questi nomi esatti. Formato consigliato: mp3, mono, 128 kbps.
+// Se un ambiente non ha (ancora) un file audio, la guida vocale mostra
+// comunque il sottotitolo ma senza pulsante di riproduzione.
+const AUDIO_SRC = {
+  'ingresso':          'audio/tour/ingresso.mp3',
+  'corridoi':          'audio/tour/corridoi.mp3',
+  'sala-ricreativa':   'audio/tour/sala-ricreativa.mp3',
+  'ufficio-educatori': 'audio/tour/ufficio-educatori.mp3',
 };
 
 // ══ THREE.JS VIEWER ═══════════════════════════════════
@@ -402,32 +416,18 @@ Object.entries(panMap).forEach(([id, fn]) => {
 document.getElementById('btn-zoom-out').addEventListener('click', () => { autoRot = false; clearTimeout(autoTimer); zoom(+6); autoTimer = setTimeout(() => { autoRot = true; }, 2000); });
 document.getElementById('btn-zoom-in').addEventListener('click',  () => { autoRot = false; clearTimeout(autoTimer); zoom(-6); autoTimer = setTimeout(() => { autoRot = true; }, 2000); });
 
-// ══ GUIDA VOCALE — Web Speech API ═══════════════════════
-// Nessun file audio, nessun servizio esterno: il browser stesso legge il
-// testo con una voce italiana. Gratuito e senza manutenzione.
-const ttsSupported = 'speechSynthesis' in window;
-let ttsEnabled  = localStorage.getItem('tv-tts-enabled') !== 'off'; // attiva di default
-let ccEnabled   = localStorage.getItem('tv-cc-enabled')  !== 'off'; // sottotitoli attivi di default
-let itVoice     = null;
-let currentUtter = null;
+// ══ GUIDA VOCALE — riproduzione di registrazioni audio ══════════════════
+// Sostituisce la sintesi vocale del browser (Web Speech API) con file
+// audio registrati (es. da un allievo). Nessun servizio esterno: un solo
+// elemento <audio> riutilizzato, il cui src cambia in base all'ambiente.
+let ccEnabled = localStorage.getItem('tv-cc-enabled') !== 'off'; // sottotitoli attivi di default
+const narrAudio = new Audio();
+narrAudio.preload = 'none';
 
 const narrBar    = document.getElementById('tv-narration');
 const narrBtn    = document.getElementById('tv-narr-btn');
 const narrCap    = document.getElementById('tv-narr-caption');
 const ccToggle   = document.getElementById('tv-narr-cc-toggle');
-
-function pickItalianVoice() {
-  if (!ttsSupported) return;
-  const voices = speechSynthesis.getVoices();
-  // Preferisce una voce italiana femminile nota; altrimenti la prima voce it-IT disponibile
-  itVoice = voices.find(v => /it-IT|it_IT|Italian/i.test(v.lang) && /elsa|alice|federica|donna|female/i.test(v.name))
-         || voices.find(v => /^it/i.test(v.lang))
-         || null;
-}
-if (ttsSupported) {
-  pickItalianVoice();
-  speechSynthesis.onvoiceschanged = pickItalianVoice;
-}
 
 function updateNarrBtn(speaking) {
   narrBtn.textContent = speaking ? '⏸' : '🔊';
@@ -437,54 +437,51 @@ function updateNarrBtn(speaking) {
 }
 
 function stopNarration() {
-  if (ttsSupported) speechSynthesis.cancel();
-  currentUtter = null;
+  narrAudio.pause();
+  narrAudio.currentTime = 0;
   updateNarrBtn(false);
 }
 
+narrAudio.addEventListener('play',  () => updateNarrBtn(true));
+narrAudio.addEventListener('pause', () => updateNarrBtn(false));
+narrAudio.addEventListener('ended', () => updateNarrBtn(false));
+
 // auto = true quando il cambio stanza è partito da un'interazione dell'utente
 // (click su una tab o su una miniatura): solo in quel caso i browser
-// permettono l'avvio automatico della sintesi vocale.
+// permettono l'avvio automatico della riproduzione audio.
 function speakRoom(room, auto) {
   const text = NARRATIONS[room.id];
-  if (!text) { narrBar.style.display = 'none'; return; }
+  const src  = AUDIO_SRC[room.id];
+  if (!text && !src) { narrBar.style.display = 'none'; return; }
   narrBar.style.display = 'flex';
-  narrCap.textContent = ccEnabled ? text : '';
+  narrCap.textContent = ccEnabled ? (text || '') : '';
 
-  if (!ttsSupported) {
+  if (!src) {
+    // Nessun file audio disponibile per questo ambiente: mostra solo il testo
     narrBtn.style.display = 'none';
-    if (!ccEnabled) narrCap.textContent = text; // senza TTS mostriamo comunque il testo
+    if (!ccEnabled) narrCap.textContent = text || '';
     return;
   }
+
   narrBtn.style.display = 'flex';
   stopNarration();
-  if (!ttsEnabled || !auto) return; // rispetta la preferenza utente / le regole autoplay del browser
-
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = 'it-IT';
-  if (itVoice) utter.voice = itVoice;
-  utter.rate = 0.98;
-  utter.pitch = 1.05;
-  utter.onstart = () => updateNarrBtn(true);
-  utter.onend   = () => updateNarrBtn(false);
-  utter.onerror = () => updateNarrBtn(false);
-  currentUtter = utter;
-  speechSynthesis.speak(utter);
+  narrAudio.src = src;
+  if (!auto) return; // rispetta le regole autoplay del browser
+  narrAudio.play().catch(() => {
+    // riproduzione bloccata dal browser, o file non ancora presente:
+    // l'utente può comunque avviarla con il pulsante 🔊
+    updateNarrBtn(false);
+  });
 }
 
 // Pulsante play/pausa manuale (usabile anche al primo caricamento,
 // dove l'autoplay del browser sarebbe comunque bloccato)
 narrBtn.addEventListener('click', () => {
-  if (!ttsSupported) return;
-  if (speechSynthesis.speaking && !speechSynthesis.paused) {
-    speechSynthesis.pause();
-    updateNarrBtn(false);
-  } else if (speechSynthesis.paused) {
-    speechSynthesis.resume();
-    updateNarrBtn(true);
+  if (!narrAudio.src) return;
+  if (!narrAudio.paused) {
+    narrAudio.pause();
   } else {
-    const room = ROOMS.find(r => document.getElementById('btn-' + r.id)?.classList.contains('active'));
-    if (room) speakRoom(room, true);
+    narrAudio.play().catch(() => {});
   }
 });
 
