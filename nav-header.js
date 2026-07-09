@@ -49,6 +49,7 @@
           <li style="padding-left: .6rem;"><a href="laboratorio-musicale.html" data-page="laboratorio-musicale">└ Accedi al Laboratorio</a></li>
           <li style="padding-left: .6rem;"><a href="vinile.html" data-page="vinile">└ 📻 Vinile</a></li>
           <li style="padding-left: .6rem;"><a href="solidarieta.html" data-page="solidarieta">└ 🤝 La Solidarietà</a></li>
+          <li style="padding-left: .6rem;"><a href="abbraccio-amatrice.html" data-page="abbraccio-amatrice">└ 🕯️ Quando Rieti abbracciò Amatrice</a></li>
           
           <li><a href="comunita.html" data-page="comunita">🌟 La nostra Comunità</a></li>
         </ul>
@@ -125,6 +126,7 @@
         <li style="padding-left: .75rem;"><a href="laboratorio-musicale.html">Accedi al Laboratorio</a></li>
         <li style="padding-left: .75rem;"><a href="vinile.html">📻 Vinile</a></li>
         <li style="padding-left: .75rem;"><a href="solidarieta.html">🤝 La Solidarietà</a></li>
+        <li style="padding-left: .75rem;"><a href="abbraccio-amatrice.html">🕯️ Quando Rieti abbracciò Amatrice</a></li>
         
         <li><a href="comunita.html">🌟 La nostra Comunità</a></li>
       </ul>

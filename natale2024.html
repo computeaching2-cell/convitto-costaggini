@@ -565,7 +565,7 @@
     };
     if (img.complete) setSrc();
     else img.addEventListener('load', setSrc);
-    slide.insertBefore(bg, img);
+    slide.insertBefore(bg, slide.firstChild);
   });
 
   const TOTAL = document.querySelectorAll('#slidesTrack .slide').length;
