@@ -50,6 +50,7 @@
           <li style="padding-left: .6rem;"><a href="vinile.html" data-page="vinile">└ 📻 Vinile</a></li>
           <li style="padding-left: .6rem;"><a href="solidarieta.html" data-page="solidarieta">└ 🤝 La Solidarietà</a></li>
           <li style="padding-left: .6rem;"><a href="abbraccio-amatrice.html" data-page="abbraccio-amatrice">└ 🕯️ Quando Rieti abbracciò Amatrice</a></li>
+          <li style="padding-left: .6rem;"><a href="riconoscimento-frassinetti.html" data-page="frassinetti2026">└ 🎗️ Un riconoscimento che ci onora</a></li>
           
           <li><a href="comunita.html" data-page="comunita">🌟 La nostra Comunità</a></li>
         </ul>
@@ -127,6 +128,7 @@
         <li style="padding-left: .75rem;"><a href="vinile.html">📻 Vinile</a></li>
         <li style="padding-left: .75rem;"><a href="solidarieta.html">🤝 La Solidarietà</a></li>
         <li style="padding-left: .75rem;"><a href="abbraccio-amatrice.html">🕯️ Quando Rieti abbracciò Amatrice</a></li>
+        <li style="padding-left: .75rem;"><a href="riconoscimento-frassinetti.html">🎗️ Un riconoscimento che ci onora</a></li>
         
         <li><a href="comunita.html">🌟 La nostra Comunità</a></li>
       </ul>

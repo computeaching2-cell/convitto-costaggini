@@ -80,6 +80,11 @@
     .slide-bg { position: absolute; inset: -20px; background-size: cover; background-position: center; filter: blur(18px) brightness(.45) saturate(.7); transform: scale(1.08); z-index: 0; }
     .slide img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; transform: translateZ(0); }
     .slide-caption { z-index: 2; position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(12,20,13,.88) 0%, transparent 100%); padding: 2.5rem 1.5rem 1.25rem; pointer-events: none; }
+    @media(max-width:600px){
+      .slide-caption { padding: 1.6rem .9rem .7rem; background: linear-gradient(0deg, rgba(12,20,13,.94) 0%, rgba(12,20,13,.6) 55%, transparent 100%); }
+      .slide-caption span { font-size: .56rem; margin-bottom: .15rem; }
+      .slide-caption p { font-size: .82rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
+    }
     .slide-caption p { font-family: var(--fd); font-size: clamp(.95rem,2.5vw,1.25rem); font-weight: 300; font-style: italic; color: rgba(245,240,232,.88); margin: 0; }
     .slide-caption span { display: block; font-family: var(--fu); font-size: .65rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--oro2); margin-bottom: .3rem; }
 
@@ -106,6 +111,10 @@
     .am-story { background: var(--av); padding: 3rem 1.25rem; }
     .am-story .w { max-width: 760px; }
     .am-step { display: grid; grid-template-columns: 56px 1fr; gap: 1.25rem; margin-bottom: 2.75rem; }
+    @media(max-width:640px){
+      .am-step { grid-template-columns: 1fr; gap: .35rem; }
+      .am-step-num { font-size: 1.3rem; opacity: .5; }
+    }
     .am-step:last-child { margin-bottom: 0; }
     .am-step-num { font-family: var(--fd); font-size: 2.1rem; font-weight: 300; color: var(--oro3); line-height: 1; opacity: .6; }
     .am-step h2 { font-family: var(--fd); font-size: 1.5rem; font-weight: 400; color: var(--bosco); margin-bottom: .6rem; }

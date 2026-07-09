@@ -675,6 +675,7 @@
     { titolo: 'Il Vinile del Convitto', pagina: 'vinile.html', ancora: '', cat: 'Comunità', keywords: ['vinile','disco','musica','ascolta','esibizioni','registrazioni'] },
     { titolo: 'La Solidarietà — il brano', pagina: 'solidarieta.html', ancora: '', cat: 'Comunità', keywords: ['solidarietà','brano','canzone','musica','2019'] },
     { titolo: 'Quando Rieti abbracciò Amatrice', pagina: 'abbraccio-amatrice.html', ancora: '', cat: 'Comunità', keywords: ['amatrice','terremoto','stelle tornano a scuola','chef','solidarietà','2016','bottura','cracco'] },
+    { titolo: 'Un riconoscimento che ci onora', pagina: 'riconoscimento-frassinetti.html', ancora: '', cat: 'Comunità', keywords: ['frassinetti','sottosegretario','ministero','istruzione','visita','podcast','raffaele castaldo','2026'] },
     { titolo: 'Il Costaggini nel Mondo', pagina: 'mondo.html', ancora: '', cat: 'Comunità', keywords: ['mondo','alumni','ex convittori','mappa','estero'] },
     { titolo: 'Da dove vengono i convittori', pagina: 'provenienza.html', ancora: '', cat: 'Comunità', keywords: ['provenienza','province','regioni','da dove vengono','mappa','statistiche'] },
     { titolo: 'Bullismo e Cyberbullismo', pagina: 'bullismo.html', ancora: '', cat: 'Sicurezza', keywords: ['bullismo','cyberbullismo','molestie','prepotenze','sicurezza','segnalare','aiuto','protezione','genitori','studenti'] },
