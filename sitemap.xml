@@ -115,6 +115,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://convitto.alberghierorieti.edu.it/abbraccio-amatrice.html</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://convitto.alberghierorieti.edu.it/riconoscimento-frassinetti.html</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://convitto.alberghierorieti.edu.it/natale2024.html</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://convitto.alberghierorieti.edu.it/educatori.html</loc>
     <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
