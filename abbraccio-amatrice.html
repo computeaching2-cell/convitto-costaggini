@@ -159,6 +159,11 @@
     .am-close .fonte { margin-top: 2rem; font-family: var(--fu); font-size: .65rem; letter-spacing: .06em; color: var(--txt2); }
 
     .back-bar { background: var(--bosco); padding: 1.5rem 1.25rem; text-align: center; }
+    .share-bar { padding: 2.75rem 1.25rem; text-align: center; background: var(--av); }
+    .share-label { font-family: var(--fd); font-size: 1.05rem; font-style: italic; color: var(--bosco); margin-bottom: 1.1rem; }
+    .share-btns { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+    .share-btn { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--fu); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .6rem 1.15rem; border-radius: 40px; border: 1px solid var(--av3); background: var(--av2); color: var(--bosco); text-decoration: none; cursor: pointer; transition: .2s; }
+    .share-btn:hover, .share-btn:focus-visible { background: var(--oro); border-color: var(--oro); color: #fff; }
   </style>
   <link rel="icon" href="favicon.ico" sizes="any"/>
   <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32"/>
@@ -351,12 +356,39 @@
     </div>
   </section>
 
+  <div class="share-bar">
+    <p class="share-label">Ti ha colpito questa storia? Condividila.</p>
+    <div class="share-btns">
+      <a class="share-btn" id="shareWa" target="_blank" rel="noopener" aria-label="Condividi su WhatsApp">💬 WhatsApp</a>
+      <a class="share-btn" id="shareFb" target="_blank" rel="noopener" aria-label="Condividi su Facebook">📘 Facebook</a>
+      <button class="share-btn" id="shareCopy" type="button">🔗 Copia link</button>
+    </div>
+  </div>
+
   <div class="back-bar">
     <a href="comunita.html" class="btn-gold">← Torna alla Comunità</a>
   </div>
 
 </main>
 <script src="nav.js"></script>
+<script>
+(function(){
+  const url = location.href;
+  const text = encodeURIComponent('Quando Rieti abbracciò Amatrice — 70 chef, tre serate, una scuola che ne ha aiutata un\'altra a rialzarsi.');
+  const wa = document.getElementById('shareWa');
+  const fb = document.getElementById('shareFb');
+  const copyBtn = document.getElementById('shareCopy');
+  if(wa) wa.href = 'https://wa.me/?text=' + text + '%20' + encodeURIComponent(url);
+  if(fb) fb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+  if(copyBtn) copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(url).then(() => {
+      const orig = copyBtn.textContent;
+      copyBtn.textContent = '✓ Copiato!';
+      setTimeout(() => { copyBtn.textContent = orig; }, 2000);
+    });
+  });
+})();
+</script>
 <script>
 (function(){
   document.querySelectorAll('.slide').forEach(slide => {
