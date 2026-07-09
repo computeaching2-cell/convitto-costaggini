@@ -280,6 +280,38 @@ const KB=[
       'ricordo del convitto','cosa lasciare'],
    r:'Il <strong>Muro dei Ricordi</strong> è lo spazio dove chi è passato dal Convitto lascia un segno — un momento, un odore, una frase sentita nel corridoio.<br><br>🕯️ <a href="ricordi.html">Lascia un ricordo →</a>'},
 
+  // ── QUANDO RIETI ABBRACCIÒ AMATRICE (2016) ──
+  {k:['amatrice','terremoto','stelle tornano a scuola','le stelle tornano a scuola',
+      'chef per amatrice','cene di beneficenza','cena benefica','raccolta fondi terremoto',
+      'bottura','cracco','uliassi','gennaro esposito','moreno cedroni','fratelli serva',
+      'la trota rivodutri','solidarietà chef','grandi chef italiani','settanta chef',
+      '70 chef','ottobre 2016','alberghiero di amatrice','sisma 2016'],
+   r:'Nell\'ottobre 2016, dopo il terremoto che colpì Amatrice, il Costaggini ospitò <strong>"Le Stelle Tornano a Scuola"</strong>: tre sere di cene benefiche con settanta grandi chef italiani — tra cui Bottura, Cracco, Uliassi — per raccogliere fondi a favore dell\'Alberghiero di Amatrice. I nostri convittori curarono il servizio in sala.<br><br>🕯️ <a href="abbraccio-amatrice.html">Scopri la storia completa →</a>'},
+
+  // ── VISITA DEL SOTTOSEGRETARIO FRASSINETTI (2026) ──
+  {k:['frassinetti','sottosegretario','ministero dell istruzione','ministero istruzione e merito',
+      'politici in visita','politico in visita','visita ministeriale','visita istituzionale',
+      'visita del sottosegretario','visita frassinetti','podcast del convitto','in visita al convitto',
+      'venuto in visita','ospite illustre','personalita in visita','chi e venuto a trovarci',
+      'raffaele castaldo','onorevole frassinetti','paola frassinetti','riconoscimento che ci onora'],
+   r:'Il 29 maggio 2026 l\'On. Paola Frassinetti, Sottosegretario di Stato all\'Istruzione e al Merito, ha visitato il Costaggini: laboratori, cucina, un pranzo di lavoro e un podcast condotto da un nostro convittore, Raffaele Castaldo.<br><br>🎗️ <a href="riconoscimento-frassinetti.html">Scopri la visita →</a>'},
+
+  // ── FESTA DI NATALE 2024 ──
+  {k:['natale 2024','festa di natale','cena di natale','tombola di natale','tombola',
+      'dicembre 2024','cenone','festa natalizia','concerto di natale'],
+   r:'A dicembre 2024 la sala mensa si è trasformata per una sera in sala da concerto: cena di gala, musica dal vivo suonata dai ragazzi e la grande tombola comunitaria.<br><br>🎄 <a href="natale2024.html">Rivivi la serata →</a>'},
+
+  // ── MOMENTI DA NON DIMENTICARE (sezione) ──
+  {k:['momenti da non dimenticare','eventi importanti del convitto','eventi importanti',
+      'eventi da ricordare','storia del convitto','momenti storici','eventi memorabili',
+      'cosa e successo di importante','fatti importanti','eventi speciali','pagine di memoria'],
+   r:'C\'è una sezione dedicata ai momenti che hanno lasciato davvero un segno nella storia del Convitto — non semplice cronaca, ma testimonianze da conservare.<br><br>✨ <a href="comunita.html">Scopri "Momenti da non dimenticare" →</a>'},
+
+  // ── PREMIO AL MERITO ──
+  {k:['premio al merito','premio merito','merito','come si misura il merito','premiazione',
+      'premio progresso','graduatoria merito','punteggio comportamento','chi viene premiato'],
+   r:'Il <strong>Premio al Merito</strong> misura un anno di comportamento e impegno in un punteggio, con due graduatorie di pari dignità e un Premio Progresso per chi migliora di più. Una premiazione pensata per essere di tutti, non solo dei primi della classe.<br><br>🏅 <a href="premio-merito.html">Scopri come funziona →</a>'},
+
 ];
 
 // ── SUGGERIMENTI CONTESTUALI ──────────────────────────────────────────────
@@ -312,7 +344,8 @@ const NORM_MAP={
   "devo":"","dovrei":"","vorrei":"","voglio":"","puoi dirmi":"","puoi spiegarmi":"",
   "ho bisogno di sapere":"","mi puoi dire":"","vorrei sapere":"","dimmi":"",
   "qual è":"","quale":"","quando":"quando","dove":"dove","come":"come","chi":"chi",
-  "l'":"","dell'":"","all'":"","nell'":"","un'":"","un ":"","una ":"","il ":"","la ":"","lo ":"","i ":"","le ":"","gli ":"",
+  "l'":"","dell'":"","all'":"","nell'":"","un'":"",
+  "\\bun\\b\\s+":"","\\buna\\b\\s+":"","\\bil\\b\\s+":"","\\bla\\b\\s+":"","\\blo\\b\\s+":"","\\bi\\b\\s+":"","\\ble\\b\\s+":"","\\bgli\\b\\s+":"",
 };
 
 function normalize(q){
