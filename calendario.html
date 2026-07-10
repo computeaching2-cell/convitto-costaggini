@@ -53,6 +53,15 @@
     .ev-meta { font-size:.75rem; color:var(--txt2); }
     .ev-meta span + span::before { content:' · '; }
 
+    /* Su smartphone la casella data diventa una fascia orizzontale in alto, non più una colonna stretta allungata per tutta l'altezza della card */
+    @media(max-width:600px){
+      .ev-item { grid-template-columns:1fr; }
+      .ev-date-box { flex-direction:row; justify-content:flex-start; gap:.45rem; padding:.5rem .9rem; }
+      .ev-day { font-size:1.15rem; }
+      .ev-mon { margin-top:0; }
+      .ev-body { padding:.75rem .9rem .9rem; }
+    }
+
     /* Mese header */
     .month-header { font-family:var(--fu); font-size:.65rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--oro); padding:.5rem 0 .75rem; margin-top:2rem; border-bottom:1px solid var(--av3); margin-bottom:.75rem; }
     .month-header:first-child { margin-top:0; }
