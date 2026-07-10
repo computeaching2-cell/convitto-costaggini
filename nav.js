@@ -519,10 +519,22 @@
 
   /* ── 📊 CONTATORI ANIMATI ── */
   try { (function(){
-    function animateCounter(el) {
+    const noMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function finalText(el) {
       const target = parseInt(el.dataset.count);
       const suffix = el.dataset.suffix || '';
       const prefix = el.dataset.prefix || '';
+      const num = el.dataset.plain ? String(target) : target.toLocaleString('it-IT');
+      return prefix + num + suffix;
+    }
+
+    function animateCounter(el) {
+      if (noMotion) { el.textContent = finalText(el); return; }
+      const target = parseInt(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
+      const plain = !!el.dataset.plain;
       const duration = 1800;
       const start = performance.now();
       function step(now) {
@@ -530,7 +542,7 @@
         // Easing ease-out
         const ease = 1 - Math.pow(1 - progress, 3);
         const current = Math.round(ease * target);
-        el.textContent = prefix + current.toLocaleString('it-IT') + suffix;
+        el.textContent = prefix + (plain ? String(current) : current.toLocaleString('it-IT')) + suffix;
         if (progress < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
@@ -553,6 +565,37 @@
     });
   })(); } catch (err) {
     console.error('Contatori animati non disponibili:', err);
+  }
+
+  /* ── 🌄 PARALLAX DISCRETO ── */
+  // Applica un leggero spostamento verticale agli elementi [data-parallax]
+  // in base allo scroll. Disattivato del tutto se l'utente ha impostato
+  // "riduci movimento" (vedi anche la regola globale in style.css).
+  try { (function(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const els = document.querySelectorAll('[data-parallax]');
+    if (!els.length) return;
+    let ticking = false;
+    function update(){
+      const vh = window.innerHeight;
+      els.forEach(el => {
+        const speed = parseFloat(el.dataset.parallax) || 0.15;
+        const host = el.parentElement;
+        const rect = host.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > vh) return; // fuori dallo schermo: non calcolare
+        const offset = rect.top * speed;
+        el.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0)';
+      });
+      ticking = false;
+    }
+    function onScroll(){
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  })(); } catch (err) {
+    console.error('Parallax non disponibile:', err);
   }
 
 })();

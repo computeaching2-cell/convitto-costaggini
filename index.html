@@ -22,7 +22,7 @@
   <style>
     /* ── HERO ── */
     #hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; background: var(--bosco); overflow: hidden; }
-    .hbg { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,20,13,.60) 0%, rgba(12,20,13,.88) 100%), url('https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4374-scaled.jpg') center/cover no-repeat; }
+    .hbg { position: absolute; top: -8%; left: 0; right: 0; bottom: -8%; background: linear-gradient(180deg, rgba(12,20,13,.60) 0%, rgba(12,20,13,.88) 100%), url('https://www.alberghierorieti.edu.it/wp-content/uploads/IMG_4374-scaled.jpg') center/cover no-repeat; will-change: transform; }
     .hbd { position: relative; z-index: 2; padding: 5rem 1.25rem 2.5rem; width: 100%; max-width: 800px; margin-top: -2rem; }
     .hchip { display: inline-flex; align-items: center; gap: .5rem; font-size: .66rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--oro2); margin-bottom: .9rem; }
     .hchip::before { content: ''; width: 16px; height: 1px; background: var(--oro2); }
@@ -211,7 +211,7 @@
 
   <!-- HERO -->
   <section id="hero" aria-labelledby="h1">
-    <div class="hbg" aria-hidden="true"></div>
+    <div class="hbg" aria-hidden="true" data-parallax="0.18"></div>
     <div class="hbd w">
       <p class="hchip" aria-hidden="true">Eccellenza &amp; Tradizione · Rieti</p>
       <h1 id="h1">Dove la vita di collegio diventa <em>arte dell'ospitalità</em></h1>
@@ -222,7 +222,7 @@
       </div>
       <div class="hstats" aria-label="Il convitto in numeri">
         <div class="hs"><span class="hs-n" data-count="129">129</span><span class="hs-l">Convittori/trici</span></div>
-        <div class="hs"><span class="hs-n" data-count="1971" data-prefix="">1971</span><span class="hs-l">Anno apertura</span></div>
+        <div class="hs"><span class="hs-n" data-count="1971" data-plain="1">1971</span><span class="hs-l">Anno apertura</span></div>
         <div class="hs"><span class="hs-n" data-count="5">5</span><span class="hs-l">Piani residenziali</span></div>
         <div class="hs"><span class="hs-n" data-count="590" data-suffix="K€">590K€</span><span class="hs-l">PNRR mensa</span></div>
       </div>
