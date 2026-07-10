@@ -47,9 +47,8 @@
 </script>
   <style>
     .storia-grid { display: grid; gap: 2rem; }
-    .ar-box { position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 6px 6px 0 0; }
-    .ar-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-    @media(min-width:900px){ .storia-grid { grid-template-columns:1fr; align-items: start; } .ar-box { max-height: 320px; } }
+    .storia-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 6px 6px 0 0; display: block; }
+    @media(min-width:900px){ .storia-grid { grid-template-columns:1fr; align-items: start; } .storia-img { max-height: 320px; } }
 
     .mission-strip { background: var(--bosco); padding: 3rem 1rem; }
     .mission-strip .lbl { color: var(--oro2); }
@@ -131,11 +130,9 @@
     <div class="w storia-grid">
       <div>
         <figure style="margin:0">
-          <div class="ar-box rv">
-            <picture><source type="image/webp" srcset="img/rieti-centro.webp"/><img src="img/rieti-centro.jpg"
-                 alt="Rieti — panorama del centro storico con il fiume Velino, le colline e le montagne sullo sfondo"
-                 loading="lazy" width="1600" height="1151"/></picture>
-          </div>
+          <picture><source type="image/webp" srcset="img/rieti-centro.webp"/><img src="img/rieti-centro.jpg" class="storia-img rv"
+               alt="Rieti — panorama del centro storico con il fiume Velino, le colline e le montagne sullo sfondo"
+               loading="lazy" width="1600" height="1151"/></picture>
           <figcaption style="background:var(--bosco);border-radius:0 0 6px 6px;padding:.45rem .85rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.3rem">
             <span style="font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,240,232,.7)">📍 Rieti — Centro storico da Colle San Mauro</span>
             <span style="font-family:var(--fu);font-size:.55rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(184,146,42,.65);overflow-wrap:anywhere">
