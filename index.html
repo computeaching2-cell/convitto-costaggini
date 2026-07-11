@@ -195,6 +195,10 @@
     .triptych-wrap { position:relative; height:160px; overflow:hidden; background:var(--bosco); }
     .triptych-img { position:absolute; top:0; height:100%; width:42%; display:block; }
     .triptych-img img { width:100%; height:100%; object-fit:cover; display:block; }
+    /* Foto laboratorio musicale: il riquadro è basso e largo, la fascia centrale
+       tagliava le teste dei ragazzi — sposto l'inquadratura leggermente più in
+       basso nella foto sorgente per farle rientrare intere */
+    .img-lab { object-position:center 28%; }
     .t-left  { left:0; z-index:1;
       -webkit-mask-image:linear-gradient(to right,#000 0%,#000 69%,transparent 100%);
               mask-image:linear-gradient(to right,#000 0%,#000 69%,transparent 100%); }
@@ -466,16 +470,16 @@
           <!-- Trittico statico: 3 foto sfumate ai bordi, sempre visibili insieme -->
           <div class="triptych-wrap" aria-hidden="true">
             <picture class="triptych-img t-left">
+              <source type="image/webp" srcset="img/Educatori.webp"/>
+              <img src="img/Educatori.jpg" alt="" loading="lazy"/>
+            </picture>
+            <picture class="triptych-img t-mid">
               <source type="image/webp" srcset="img/mensa-convitto.webp"/>
               <img src="img/mensa-convitto.jpg" alt="" loading="lazy"/>
             </picture>
-            <picture class="triptych-img t-mid">
-              <source type="image/webp" srcset="img/lab-musicale.webp"/>
-              <img src="img/lab-musicale.jpg" alt="" loading="lazy"/>
-            </picture>
             <picture class="triptych-img t-right">
-              <source type="image/webp" srcset="img/Educatori.webp"/>
-              <img src="img/Educatori.jpg" alt="" loading="lazy"/>
+              <source type="image/webp" srcset="img/lab-musicale.webp"/>
+              <img src="img/lab-musicale.jpg" alt="" loading="lazy" class="img-lab"/>
             </picture>
           </div>
           <!-- Testo + pulsanti nella stessa riga -->
@@ -597,9 +601,9 @@
           <img src="https://www.alberghierorieti.edu.it/wp-content/uploads/1702938319160.jpg" alt="Sala studio del Convitto Costaggini" loading="lazy"/>
           <div class="ss-cap"><span class="ico" aria-hidden="true">📚</span><span class="lab">Lo studio guidato</span></div>
         </div>
-        <div class="ss-slide" role="group" aria-roledescription="foto" aria-label="Alcune Educatrici">
-          <img src="https://www.alberghierorieti.edu.it/wp-content/uploads/1704014837735.jpg" alt="Educatrici e convittori del Convitto Costaggini" loading="lazy"/>
-          <div class="ss-cap"><span class="ico" aria-hidden="true">🤝</span><span class="lab">Alcune Educatrici</span></div>
+        <div class="ss-slide" role="group" aria-roledescription="foto" aria-label="Le Educatrici al gran completo">
+          <picture><source type="image/webp" srcset="img/educatrici-gruppo.webp"/><img src="img/educatrici-gruppo.jpg" alt="Le educatrici del Convitto Costaggini riunite al completo" loading="lazy" width="1800" height="1350"/></picture>
+          <div class="ss-cap"><span class="ico" aria-hidden="true">🤝</span><span class="lab">Le Educatrici al gran completo</span></div>
         </div>
         <div class="ss-slide" role="group" aria-roledescription="foto" aria-label="Il Laboratorio Musicale">
           <picture><source type="image/webp" srcset="img/gruppo-laboratorio.webp"/><img src="img/gruppo-laboratorio.jpg" alt="Il gruppo di ragazzi del Laboratorio Musicale del Convitto durante un'esibizione" loading="lazy" width="1800" height="1350"/></picture>
