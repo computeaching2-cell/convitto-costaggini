@@ -119,7 +119,7 @@
     .svc-block li:last-child { border-bottom: none; }
     .svc-block li::before { content: '✓'; color: var(--oro); font-weight: 700; flex-shrink: 0; }
     .svc-num { font-family: var(--fd); font-size: 4rem; font-weight: 300; color: var(--av3); line-height: 1; display: block; margin-bottom: .25rem; }
-    @media(min-width:768px){ .svc-block { grid-template-columns: 1fr 1fr; } .svc-block.rev img, .svc-block.rev .img-container { order: 2; } .svc-block.rev div:not(.img-overlay) { order: 1; } }
+    @media(min-width:768px){ .svc-block { grid-template-columns: 1fr 1fr; } .svc-block.rev > *:first-child { order: 2; } .svc-block.rev > *:last-child { order: 1; } }
 
     .orari-table { width: 100%; border-collapse: collapse; margin-top: 1.25rem; font-size: .85rem; }
     .orari-table th { background: var(--bosco); color: var(--av); padding: .6rem .85rem; text-align: left; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; font-family: var(--fu); }
