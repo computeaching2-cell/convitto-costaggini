@@ -170,6 +170,39 @@
       .search-wrap { padding: 0 2rem; }
     }
 
+    /* ── MINI-NAV AD ANCORE ── */
+    #jumpnav {
+      background: var(--bosco);
+      padding: .5rem 1.25rem 1.75rem;
+    }
+    .jumpnav-wrap {
+      max-width: 1320px; margin: 0 auto;
+      display: flex; gap: .55rem; flex-wrap: nowrap;
+      overflow-x: auto; scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .jumpnav-wrap::-webkit-scrollbar { display: none; }
+    .jump-btn {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: var(--fu); font-size: .68rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--oro2);
+      background: rgba(245,240,232,.06);
+      border: 1px solid rgba(184,146,42,.28);
+      border-radius: 40px;
+      padding: .5rem 1rem;
+      text-decoration: none;
+      transition: background var(--ease), border-color var(--ease), color var(--ease);
+      white-space: nowrap;
+    }
+    .jump-btn:hover {
+      background: var(--oro2); border-color: var(--oro2); color: var(--bosco);
+    }
+    section[id] { scroll-margin-top: 90px; }
+    @media(min-width:768px) { .jumpnav-wrap { padding: 0 1.5rem; justify-content: center; flex-wrap: wrap; overflow: visible; } }
+    @media(min-width:1024px) { .jumpnav-wrap { padding: 0 2rem; } }
+
     /* ── IL TUO PERCORSO ── */
     .who-section { padding:3.5rem 1.25rem; background:var(--bco); }
     .who-section .w { max-width:1080px; margin:0 auto; }
@@ -295,8 +328,20 @@
     </div>
   </div>
 
+  <!-- MINI-NAV AD ANCORE -->
+  <nav id="jumpnav" aria-label="Salta a una sezione della pagina">
+    <div class="jumpnav-wrap">
+      <a href="#percorso" class="jump-btn">🧭 Il tuo percorso</a>
+      <a href="#intro" class="jump-btn">🏛️ Servizi &amp; Trasparenza</a>
+      <a href="#news-prev" class="jump-btn">📰 Notizie</a>
+      <a href="#esperienze" class="jump-btn">🎓 Open Day &amp; Alumni</a>
+      <a href="#gal" class="jump-btn">🖼️ Galleria</a>
+      <a href="#faq-home" class="jump-btn">❓ FAQ</a>
+    </div>
+  </nav>
+
   <!-- IL TUO PERCORSO -->
-  <section class="who-section">
+  <section class="who-section" id="percorso">
     <div class="w">
       <div class="who-head">
         <p class="lbl">Il tuo percorso</p>
@@ -357,21 +402,6 @@
           <span class="ic-txt">Documenti istituzionali, regolamenti e informativa privacy.</span>
           <span class="ic-lnk">Scopri →</span>
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- TOUR VIRTUALE PROMO -->
-  <section style="background:linear-gradient(135deg,var(--bosco),#1a3a1b);padding:2.5rem 1.25rem">
-    <div class="w">
-      <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;justify-content:center;text-align:center">
-        <div style="font-size:3.5rem">🏛️</div>
-        <div style="flex:1;min-width:220px">
-          <p style="font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--oro2);margin-bottom:.35rem">Novità</p>
-          <h2 style="font-family:var(--fd);font-size:1.6rem;font-weight:300;color:#fff;margin-bottom:.4rem">Visita il Convitto <em style="font-style:italic;color:var(--oro3)">a 360°</em></h2>
-          <p style="font-family:var(--fu);font-size:.82rem;color:rgba(245,240,232,.6);line-height:1.7;max-width:480px;margin:0 auto .85rem">Esplora gli ambienti — camere, mensa, sala studio, laboratorio musicale — prima ancora di arrivare. Usa il mouse o il dito per guardarti intorno.</p>
-          <a href="tour-virtuale.html" style="display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fu);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1.75rem;background:linear-gradient(135deg,var(--oro2),var(--oro3));color:var(--bosco);border-radius:8px;text-decoration:none">🏛️ Inizia il tour virtuale →</a>
-        </div>
       </div>
     </div>
   </section>
@@ -447,6 +477,24 @@
         </a>
       </div>
 
+      <div style="margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--av3)">
+        <p style="font-family:var(--fu);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro);margin-bottom:.65rem">Dicono di noi</p>
+        <div style="display:flex;flex-direction:column;gap:.55rem">
+          <a href="https://www.rietinvetrina.it/la-festa-di-natale-in-convitto-momento-di-condivisione-e-gioia-al-costaggini-di-rieti-le-foto/" target="_blank" rel="noopener" style="display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;text-decoration:none;font-size:.82rem;color:var(--txt2);line-height:1.5">
+            <span style="font-family:var(--fu);font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--oro);flex-shrink:0">Rietinvetrina</span>
+            <span style="font-family:var(--fd);font-style:italic;color:var(--bosco)">"La festa di Natale in convitto: momento di condivisione e gioia"</span>
+          </a>
+          <a href="https://www.rietilife.com/2026/03/09/il-presidente-cuneo-al-cantiere-della-palestra-dellistituto-costaggini-di-rieti/" target="_blank" rel="noopener" style="display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;text-decoration:none;font-size:.82rem;color:var(--txt2);line-height:1.5">
+            <span style="font-family:var(--fu);font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--oro);flex-shrink:0">Rietilife</span>
+            <span style="font-family:var(--fd);font-style:italic;color:var(--bosco)">"Il presidente Cuneo al cantiere della palestra: stiamo costruendo un campus"</span>
+          </a>
+          <a href="https://www.rietilife.com/2025/05/26/590mila-euro-per-la-riqualificazione-della-mensa-del-convitto-dellalberghiero-di-rieti-finanziamento-ottenuto-dalla-provincia-nellambito-del-pnrr/" target="_blank" rel="noopener" style="display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;text-decoration:none;font-size:.82rem;color:var(--txt2);line-height:1.5">
+            <span style="font-family:var(--fu);font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--oro);flex-shrink:0">Rietilife</span>
+            <span style="font-family:var(--fd);font-style:italic;color:var(--bosco)">"590mila euro PNRR per la riqualificazione della mensa"</span>
+          </a>
+        </div>
+      </div>
+
       <br/><a href="notizie.html" class="btn-outline-dark">Tutte le notizie →</a>
     </div>
   </section>
@@ -454,7 +502,7 @@
 
 
   <!-- TEASER OPEN DAY + MONDO -->
-  <section style="background:var(--av);padding:3rem 1.25rem">
+  <section id="esperienze" style="background:var(--av);padding:3rem 1.25rem">
     <div class="w">
       <p class="lbl">Scopri di più</p>
       <h2>Due esperienze <em>uniche</em></h2>
@@ -508,31 +556,6 @@
       </div>
     </div>
   </section>
-  <!-- DICONO DI NOI -->
-  <section id="press" style="background:var(--av);padding:4rem 1.25rem">
-    <div class="w">
-      <p class="lbl">Rassegna stampa</p>
-      <h2>Dicono di <em>noi</em></h2>
-      <div style="display:grid;gap:1rem;grid-template-columns:1fr;margin-top:1.5rem">
-        <a href="https://www.rietinvetrina.it/la-festa-di-natale-in-convitto-momento-di-condivisione-e-gioia-al-costaggini-di-rieti-le-foto/" target="_blank" rel="noopener" class="rv" style="display:flex;align-items:center;gap:1.25rem;background:var(--av2);border:1px solid var(--av3);border-radius:8px;padding:1.1rem 1.4rem;text-decoration:none;transition:transform .2s,box-shadow .2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <span style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro);flex-shrink:0">Rietinvetrina</span>
-          <span style="font-family:var(--fd);font-size:1rem;color:var(--bosco);font-style:italic">"La festa di Natale in convitto: momento di condivisione e gioia al Costaggini"</span>
-          <span style="margin-left:auto;color:var(--oro);flex-shrink:0">→</span>
-        </a>
-        <a href="https://www.rietilife.com/2026/03/09/il-presidente-cuneo-al-cantiere-della-palestra-dellistituto-costaggini-di-rieti/" target="_blank" rel="noopener" class="rv d1" style="display:flex;align-items:center;gap:1.25rem;background:var(--av2);border:1px solid var(--av3);border-radius:8px;padding:1.1rem 1.4rem;text-decoration:none;transition:transform .2s,box-shadow .2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <span style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro);flex-shrink:0">Rietilife</span>
-          <span style="font-family:var(--fd);font-size:1rem;color:var(--bosco);font-style:italic">"Il presidente Cuneo al cantiere della palestra del Costaggini: stiamo costruendo un campus"</span>
-          <span style="margin-left:auto;color:var(--oro);flex-shrink:0">→</span>
-        </a>
-        <a href="https://www.rietilife.com/2025/05/26/590mila-euro-per-la-riqualificazione-della-mensa-del-convitto-dellalberghiero-di-rieti-finanziamento-ottenuto-dalla-provincia-nellambito-del-pnrr/" target="_blank" rel="noopener" class="rv d2" style="display:flex;align-items:center;gap:1.25rem;background:var(--av2);border:1px solid var(--av3);border-radius:8px;padding:1.1rem 1.4rem;text-decoration:none;transition:transform .2s,box-shadow .2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <span style="font-family:var(--fu);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--oro);flex-shrink:0">Rietilife</span>
-          <span style="font-family:var(--fd);font-size:1rem;color:var(--bosco);font-style:italic">"590mila euro PNRR per la riqualificazione della mensa del Convitto Costaggini"</span>
-          <span style="margin-left:auto;color:var(--oro);flex-shrink:0">→</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
   <!-- GALLERIA SPAZI -->
   <section id="gal" aria-labelledby="gh" style="background:var(--bosco);padding:4rem 0 0">
     <div class="w"><p class="lbl" style="color:var(--oro2)">I nostri spazi</p><h2 id="gh" style="color:var(--av)">La vita al <em style="color:var(--oro3)">Costaggini</em></h2>
