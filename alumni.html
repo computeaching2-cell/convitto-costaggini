@@ -34,6 +34,19 @@
     .stat-n{font-family:var(--fd);font-size:2.2rem;font-weight:300;color:var(--oro3);display:block;line-height:1}
     .stat-l{font-family:var(--fu);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.45);margin-top:.3rem;display:block}
     .test-big{background:var(--av2);border:1px solid var(--av3);border-radius:10px;padding:1.75rem 1.5rem;position:relative}
+
+    /* Alumni — cifre reali (dati auto-aggregati da Supabase, non una stima) */
+    .ar-panel{background:var(--bco);border:1px solid var(--av3);border-radius:12px;padding:1.75rem 1.5rem 1.5rem;margin:0 auto 2.25rem;max-width:720px;text-align:center}
+    .ar-eyebrow{font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--oro);margin-bottom:.9rem;display:flex;align-items:center;justify-content:center;gap:.4rem}
+    .ar-eyebrow::before,.ar-eyebrow::after{content:'';flex:1;max-width:40px;height:1px;background:var(--av3)}
+    .ar-numbers{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-bottom:.6rem}
+    .ar-num-cell{min-width:100px}
+    .ar-num{font-family:var(--fd);font-size:2.4rem;font-weight:400;color:var(--bosco);display:block;line-height:1}
+    .ar-num-l{font-family:var(--fu);font-size:.68rem;color:var(--txt2);margin-top:.3rem;display:block;line-height:1.4}
+    .ar-sectors{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem;margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--av2)}
+    .ar-pill{font-family:var(--fu);font-weight:600;letter-spacing:.02em;background:var(--av2);color:var(--bosco2);border-radius:99px;padding:.32rem .85rem;white-space:nowrap}
+    .ar-note{font-size:.72rem;color:var(--txt2);margin-top:1rem;line-height:1.6}
+    .ar-note a{color:var(--oro);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(184,146,42,.35)}
     .test-big::before{content:'"';position:absolute;top:-.5rem;left:1rem;font-family:var(--fd);font-size:5rem;color:var(--oro2);opacity:.15;line-height:1;pointer-events:none}
     .test-big blockquote{font-family:var(--fd);font-size:clamp(1rem,2.5vw,1.2rem);font-style:italic;color:var(--bosco);line-height:1.7;margin:0 0 1.25rem}
     .test-author-row{display:flex;align-items:center;gap:.9rem}
@@ -166,6 +179,9 @@ function alumniNoContact(e) {
       <h2 style="text-align:center">Le storie degli <em>Alumni</em></h2>
       <p style="color:var(--txt2);max-width:560px;margin:.5rem auto 1.25rem;font-size:.88rem;line-height:1.75;text-align:center">Dal Costaggini al mondo. Cuochi, maître, hotel manager, imprenditori, musicisti.</p>
 
+      <!-- Cifre reali — popolato via JS da alumni_pubblici, nessuna query aggiuntiva -->
+      <div id="alumni-cifre-reali"></div>
+
       <!-- Nota pulsante Scrivimi -->
       <div style="display:flex;align-items:flex-start;gap:.6rem;background:rgba(184,146,42,.07);border:1px solid rgba(184,146,42,.2);border-radius:8px;padding:.65rem 1rem;margin:0 auto 1.75rem;max-width:560px">
         <span style="font-size:1rem;flex-shrink:0;margin-top:.05rem">💬</span>
@@ -235,6 +251,62 @@ function alumniNoContact(e) {
 // Escape HTML per i campi testo inseriti dagli utenti prima di iniettarli in innerHTML
 // (stessa funzione già usata in calendario.html — evita XSS da form pubblici)
 function escapeHtml(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+// Pannello "cifre reali" — costruito sugli stessi dati alumni_pubblici già
+// caricati per le schede, nessuna query aggiuntiva. Si mostra solo quando
+// c'è abbastanza materiale da dire qualcosa di vero: zero iscritti = pannello
+// nascosto, pochi iscritti = solo il numero totale, dati sufficienti (5+) =
+// anche i settori più citati come pillole ordinate per frequenza.
+function renderCifreReali(rows) {
+  const box = document.getElementById('alumni-cifre-reali');
+  if (!box) return;
+  const totale = rows.length;
+  if (totale === 0) { box.innerHTML = ''; return; }
+
+  const conLavoro = rows.filter(a => a && typeof a.lavoro === 'string' && a.lavoro.trim()).length;
+
+  // Conteggio settori (solo se il campo è valorizzato)
+  const settoriCount = {};
+  rows.forEach(a => {
+    const s = a && a.settore ? String(a.settore).trim() : '';
+    if (!s) return;
+    settoriCount[s] = (settoriCount[s] || 0) + 1;
+  });
+  const settoriOrdinati = Object.entries(settoriCount).sort((a, b) => b[1] - a[1]);
+
+  let numbersHtml = `
+    <div class="ar-num-cell">
+      <span class="ar-num">${totale}</span>
+      <span class="ar-num-l">Ex convittori<br>nella community</span>
+    </div>`;
+  if (conLavoro > 0) {
+    numbersHtml += `
+    <div class="ar-num-cell">
+      <span class="ar-num">${conLavoro}</span>
+      <span class="ar-num-l">Ci hanno detto<br>dove lavorano oggi</span>
+    </div>`;
+  }
+
+  // Le pillole dei settori compaiono solo con un campione minimo — sotto
+  // quella soglia mostrarle darebbe un'impressione di precisione che i
+  // numeri non hanno ancora.
+  let sectorsHtml = '';
+  if (conLavoro >= 5 && settoriOrdinati.length > 0) {
+    const top = settoriOrdinati.slice(0, 6);
+    sectorsHtml = `<div class="ar-sectors">` +
+      top.map(([nome, n]) => `<span class="ar-pill">${escapeHtml(nome)} · ${n}</span>`).join('') +
+      `</div>`;
+  }
+
+  box.innerHTML = `
+    <div class="ar-panel">
+      <div class="ar-eyebrow">Dati reali, in tempo reale</div>
+      <div class="ar-numbers">${numbersHtml}</div>
+      ${sectorsHtml}
+      <p class="ar-note">Numeri condivisi volontariamente dagli alumni stessi, aggiornati automaticamente ad ogni nuova iscrizione — non una stima. <a href="iscriviti-alumni.html">Aggiungi anche la tua storia →</a></p>
+    </div>`;
+}
+
 // Carica le schede alumni approvate da Supabase
 (async function() {
   const grid = document.getElementById('alumni-community-grid');
@@ -248,6 +320,7 @@ function escapeHtml(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&
   }
   try {
     const approved = await sb.select('alumni_pubblici', '');
+    renderCifreReali(approved || []);
     if (!approved || !approved.length) {
       const emptyMsg = document.getElementById('alumni-empty-msg');
       if (emptyMsg) emptyMsg.style.display = 'block';
