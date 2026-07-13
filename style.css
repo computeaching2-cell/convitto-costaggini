@@ -733,3 +733,44 @@ a.nc:hover, a.article-card:hover, a.alumni-card:hover,
     scroll-behavior: auto !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   STAMPA — attivo su tutto il sito quando l'utente stampa
+   o salva come PDF (Ctrl+P o il pulsante "🖨️ Stampa" sulle
+   pagine pratiche). Nasconde navigazione/decorazioni, forza
+   testo nero su sfondo bianco, evita sprechi di carta.
+   ═══════════════════════════════════════════════════ */
+/* Pulsante "Stampa / Salva PDF" — sulle pagine pratiche (menu, giornata tipo,
+   come arrivare, ammissione). Nascosto in stampa (vedi @media print sotto),
+   visibile solo su schermo. */
+.print-btn {
+  display: inline-flex; align-items: center; gap: .4rem; margin-top: 1rem;
+  font-family: var(--fu); font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; padding: .55rem 1.1rem;
+  background: transparent; border: 1.5px solid var(--oro); border-radius: 6px;
+  color: var(--oro2); cursor: pointer; transition: background .15s, transform .15s;
+}
+.print-btn:hover { background: rgba(184,146,42,.12); transform: translateY(-1px); }
+
+@media print {
+  header#hdr, footer, #cc-fab, #cc-panel,
+  .share-bar, .print-btn, #gt-div, .goog-te-gadget,
+  .hero-jump, .breadcrumb, #site-search-modal {
+    display: none !important;
+  }
+  * {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  body { margin: 0; padding: 0; }
+  main { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+  a { color: #000 !important; text-decoration: underline; }
+  img, svg { max-width: 100% !important; page-break-inside: avoid; }
+  h1, h2, h3 { page-break-after: avoid; }
+  table, .stat-row, .fam-card, .alumni-card { page-break-inside: avoid; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .75em; font-weight: normal; }
+  a[href^="mailto"]::after, a[href^="tel"]::after, a[href^="#"]::after,
+  a[href$=".html"]::after { content: ""; }
+}
