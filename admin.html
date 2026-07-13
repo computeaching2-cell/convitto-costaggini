@@ -1504,6 +1504,15 @@ function alumniCard(a, approvato) {
         <div class="fam-campo"><strong>Email</strong>${escapeHtml(a.email) || '—'}</div>
       </div>
       ${a.ricordo ? `<div style="font-size:.8rem;color:#6b5a2a;font-style:italic;margin:0 0 .75rem;padding:.5rem .75rem;background:#f9f6ef;border-radius:6px">"${escapeHtml(a.ricordo)}"</div>` : ''}
+      <div class="fam-campo" style="margin-bottom:.75rem">
+        <strong>🎥 Video intervista</strong>
+        <div style="display:flex;gap:.4rem;margin-top:.3rem;flex-wrap:wrap">
+          <input type="url" id="video-input-${a.id}" value="${escapeHtml(a.video_url || '')}" placeholder="Link condivisione Google Drive…"
+                 style="flex:1;min-width:200px;padding:.4rem .6rem;border:1px solid #d9cba5;border-radius:6px;font-size:.8rem;font-family:inherit">
+          <button class="btn-approva" style="padding:.4rem .8rem" onclick="alumniSalvaVideo('${a.id}')">💾 Salva</button>
+          ${a.video_url ? `<button class="btn-rifiuta" style="padding:.4rem .8rem" onclick="alumniRimuoviVideo('${a.id}')">✖ Rimuovi</button>` : ''}
+        </div>
+      </div>
       <div class="fam-azioni">
         ${!approvato ? `
           <button class="btn-approva" onclick="alumniAzione('${a.id}', true)">✅ Approva</button>
@@ -1514,6 +1523,32 @@ function alumniCard(a, approvato) {
         `}
       </div>
     </div>`;
+}
+
+async function alumniSalvaVideo(id) {
+  const input = document.getElementById('video-input-' + id);
+  const url = input.value.trim();
+  if (url && !/^https:\/\/(drive|docs)\.google\.com\//.test(url)) {
+    if (!await admConfirm({icon:'⚠️', title:'Link non riconosciuto', message:'Questo non sembra un link di Google Drive. Salvarlo comunque? Il video potrebbe non incorporarsi correttamente sul sito.', confirmText:'Salva comunque', type:'neutral'})) return;
+  }
+  const resp = await fetch(SB_N + '/rest/v1/alumni?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_TOKEN(), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ video_url: url || null })
+  });
+  if (resp.ok) { await loadAlumni(); }
+  else { alert('Errore: ' + resp.status); }
+}
+
+async function alumniRimuoviVideo(id) {
+  if (!await admConfirm({icon:'✖', title:'Rimuovi video', message:'Il badge video sparirà dalla scheda pubblica.', confirmText:'Rimuovi', type:'neutral'})) return;
+  const resp = await fetch(SB_N + '/rest/v1/alumni?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_PUB, 'Authorization': 'Bearer ' + SB_TOKEN(), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ video_url: null })
+  });
+  if (resp.ok) { await loadAlumni(); }
+  else { alert('Errore: ' + resp.status); }
 }
 
 async function alumniAzione(id, approva) {
