@@ -48,6 +48,7 @@
           <li><a href="scopri-talento.html">✨ Scopri il tuo Talento</a></li>
           <li><a href="come-arrivare.html">🚌 Come arrivare</a></li>
         <li><a href="contatti.html">Contattaci</a></li>
+        <li><a href="contatti.html?oggetto=segnalazione-tecnica">🛠️ Segnala un problema</a></li>
         </ul></div>
 
         <div class="fc"><h4>Contatti Uffici</h4><ul>
