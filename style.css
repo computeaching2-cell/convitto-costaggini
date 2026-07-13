@@ -753,7 +753,7 @@ a.nc:hover, a.article-card:hover, a.alumni-card:hover,
 .print-btn:hover { background: rgba(184,146,42,.12); transform: translateY(-1px); }
 
 @media print {
-  header#hdr, footer, #cc-fab, #cc-panel,
+  header#hdr, footer, #cc-fab, #cc-panel, nav#drw, #fab-wrap, #tr-btn,
   .share-bar, .print-btn, #gt-div, .goog-te-gadget,
   .hero-jump, .breadcrumb, #site-search-modal {
     display: none !important;
@@ -763,13 +763,24 @@ a.nc:hover, a.article-card:hover, a.alumni-card:hover,
     color: #000 !important;
     box-shadow: none !important;
     text-shadow: none !important;
+    position: static !important;
+    float: none !important;
   }
   body { margin: 0; padding: 0; }
   main { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+  /* Ogni sezione torna a un flusso semplice, una colonna: le griglie e le
+     colonne "appiccicate" pensate per lo schermo non sopravvivono bene
+     all'impaginazione a pagine fisse della stampa. */
+  main section, main div, main article {
+    display: block !important;
+    padding-top: .6rem !important; padding-bottom: .6rem !important;
+    width: auto !important; max-width: 100% !important;
+  }
+  main .w { padding-left: 0 !important; padding-right: 0 !important; }
   a { color: #000 !important; text-decoration: underline; }
   img, svg { max-width: 100% !important; page-break-inside: avoid; }
   h1, h2, h3 { page-break-after: avoid; }
-  table, .stat-row, .fam-card, .alumni-card { page-break-inside: avoid; }
+  table, .stat-row, .fam-card, .alumni-card, li { page-break-inside: avoid; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .75em; font-weight: normal; }
   a[href^="mailto"]::after, a[href^="tel"]::after, a[href^="#"]::after,
   a[href$=".html"]::after { content: ""; }
