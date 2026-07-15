@@ -66,6 +66,7 @@ var inPausa = false;
 window.addEventListener('load', function () {
   if (APP_URL.indexOf("https://script.google.com/a/macros/alberghierorieti.it/s/AKfycbxRt-dmvNX8xTVLTsh2Vnu8usHij2ZYvuREaLmqx6AdnP9Yz3SHFZ8JAbRAs2df5PS9_g/exec") > -1 || TOTEM_TOKEN.indexOf("convitto-totem-8k2m9x4p7q") > -1) {
     document.getElementById('setup-warning').style.display = 'flex';
+    document.getElementById('setup-warning').style.display = 'flex';
   }
 });
 
@@ -111,12 +112,43 @@ function onScan(testoQR) {
   msgEl.innerHTML = "⏳ Verifica in corso...";
   diagEl.innerText = "";
 
+  // ⚠️ DIAGNOSTICA: timeout esplicito di 8 secondi. Senza questo, se la richiesta
+  // non riceve MAI risposta (né successo né errore — es. richiesta bloccata in rete
+  // senza un rifiuto esplicito), fetch() può restare appesa indefinitamente e la
+  // pagina resterebbe bloccata su "Verifica in corso" per sempre, senza dire nulla.
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function () { controller.abort(); }, 8000);
+
+  function ripristina() {
+    setTimeout(function () {
+      msgEl.innerText = "Avvicina il tuo QR Code...";
+      diagEl.innerText = "";
+      inPausa = false;
+    }, 2200);
+  }
+
   fetch(APP_URL, {
     method: "POST",
     headers: { "Content-Type": "text/plain;charset=utf-8" }, // evita il preflight CORS
-    body: JSON.stringify({ action: "totemScan", qr: testoQR, modalita: modalitaCorrente, token: TOTEM_TOKEN })
+    body: JSON.stringify({ action: "totemScan", qr: testoQR, modalita: modalitaCorrente, token: TOTEM_TOKEN }),
+    signal: controller.signal
   })
-    .then(function (res) { return res.json(); })
+    .then(function (res) {
+      clearTimeout(timeoutId);
+      if (!res.ok) {
+        throw new Error("Il server ha risposto con codice HTTP " + res.status);
+      }
+      return res.text().then(function (testo) {
+        try {
+          return JSON.parse(testo);
+        } catch (eParse) {
+          // La risposta non è JSON: tipicamente vuol dire che Google ha restituito
+          // una pagina di errore/login invece del risultato atteso (es. URL sbagliato,
+          // o deployment non davvero pubblico). Mostriamo l'inizio del testo ricevuto.
+          throw new Error("Risposta non valida dal server (non è JSON). Inizio risposta: " + testo.substring(0, 150));
+        }
+      });
+    })
     .then(function (json) {
       if (json.success) {
         var etichette = { USCITA: "Uscita registrata!", RIENTRO: "Rientro registrato!", COLAZIONE: "COLAZIONE OK!", PRANZO: "PRANZO OK!", CENA: "CENA OK!", RIENTRO_PASTO: "OK!" };
@@ -132,17 +164,14 @@ function onScan(testoQR) {
         msgEl.innerHTML = "<span style='color:#b91c1c;'>⚠️ Errore</span>";
         diagEl.innerText = json.message || "";
       }
+      ripristina();
     })
     .catch(function (err) {
-      msgEl.innerHTML = "<span style='color:#b91c1c;'>⚠️ Errore di connessione</span>";
-      diagEl.innerText = String(err && err.message ? err.message : err);
-    })
-    .finally(function () {
-      setTimeout(function () {
-        msgEl.innerText = "Avvicina il tuo QR Code...";
-        diagEl.innerText = "";
-        inPausa = false;
-      }, 2200);
+      clearTimeout(timeoutId);
+      var isTimeout = err && err.name === 'AbortError';
+      msgEl.innerHTML = "<span style='color:#b91c1c;'>⚠️ " + (isTimeout ? "Nessuna risposta dal server" : "Errore di connessione") + "</span>";
+      diagEl.innerText = isTimeout ? "Timeout dopo 8 secondi: verifica URL, connessione, o che il deployment sia pubblico." : String(err && err.message ? err.message : err);
+      ripristina();
     });
 }
 </script>
