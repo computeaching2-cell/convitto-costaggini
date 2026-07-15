@@ -58,13 +58,19 @@
 </div>
 
 <script>
+// =========================================================================
+// CONFIGURAZIONE — già compilata con i tuoi valori reali
+// =========================================================================
+var APP_URL = "https://script.google.com/a/macros/alberghierorieti.it/s/AKfycbxRt-dmvNX8xTVLTsh2Vnu8usHij2ZYvuREaLmqx6AdnP9Yz3SHFZ8JAbRAs2df5PS9_g/exec";
+var TOTEM_TOKEN = "convitto-totem-8k2m9x4p7q";
+// =========================================================================
 
 var scanner = null;
 var modalitaCorrente = "";
 var inPausa = false;
 
 window.addEventListener('load', function () {
-  if (APP_URL.indexOf("https://script.google.com/a/macros/alberghierorieti.it/s/AKfycbxRt-dmvNX8xTVLTsh2Vnu8usHij2ZYvuREaLmqx6AdnP9Yz3SHFZ8JAbRAs2df5PS9_g/exec") > -1 || TOTEM_TOKEN.indexOf("convitto-totem-8k2m9x4p7q") > -1) {
+  if (!APP_URL || APP_URL.indexOf("script.google.com") === -1 || !TOTEM_TOKEN) {
     document.getElementById('setup-warning').style.display = 'flex';
   }
 });
