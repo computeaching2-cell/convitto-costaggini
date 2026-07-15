@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
 <title>Totem Convitto Costaggini</title>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <style>
@@ -58,16 +59,12 @@
 
 <script>
 
-var APP_URL = "https://script.google.com/a/macros/alberghierorieti.it/s/AKfycbxRt-dmvNX8xTVLTsh2Vnu8usHij2ZYvuREaLmqx6AdnP9Yz3SHFZ8JAbRAs2df5PS9_g/exec";
-
-var TOTEM_TOKEN = "convitto-totem-8k2m9x4p7q";
-
 var scanner = null;
 var modalitaCorrente = "";
 var inPausa = false;
 
 window.addEventListener('load', function () {
-  if (APP_URL.indexOf("INSERISCI_QUI") > -1 || TOTEM_TOKEN.indexOf("INSERISCI_QUI") > -1) {
+  if (APP_URL.indexOf("https://script.google.com/a/macros/alberghierorieti.it/s/AKfycbxRt-dmvNX8xTVLTsh2Vnu8usHij2ZYvuREaLmqx6AdnP9Yz3SHFZ8JAbRAs2df5PS9_g/exec") > -1 || TOTEM_TOKEN.indexOf("convitto-totem-8k2m9x4p7q") > -1) {
     document.getElementById('setup-warning').style.display = 'flex';
   }
 });
@@ -127,7 +124,10 @@ function onScan(testoQR) {
         var nomeBreve = (json.nome || "").split(" ")[0];
         msgEl.innerHTML = "<span style='color:#15803d;font-size:1.4rem;'>✅ Ciao " + nomeBreve + "!</span><br>" + testoOp;
       } else if (json.notFound) {
+        // Mostriamo il testo esatto ricevuto dal server: indispensabile per capire
+        // se il QR non combacia per spazi, ordine nome/cognome, accenti, ecc.
         msgEl.innerHTML = "<span style='color:#b91c1c;'>❌ QR non riconosciuto</span>";
+        diagEl.innerText = json.message || "";
       } else {
         msgEl.innerHTML = "<span style='color:#b91c1c;'>⚠️ Errore</span>";
         diagEl.innerText = json.message || "";
