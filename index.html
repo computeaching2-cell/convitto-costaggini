@@ -175,7 +175,15 @@
     #jumpnav {
       background: var(--bosco);
       padding: .5rem 1.25rem 1.75rem;
+      position: relative;
     }
+    #jumpnav::after {
+      content: '';
+      position: absolute; top: .5rem; bottom: 1.75rem; right: 0;
+      width: 32px; pointer-events: none;
+      background: linear-gradient(to right, rgba(44,62,45,0), var(--bosco));
+    }
+    @media(min-width:768px) { #jumpnav::after { display: none; } }
     .jumpnav-wrap {
       max-width: 1320px; margin: 0 auto;
       display: flex; gap: .55rem; flex-wrap: nowrap;
