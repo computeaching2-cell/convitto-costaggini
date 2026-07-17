@@ -14,8 +14,7 @@
   #menu-view p { color:#94a3b8; font-size:0.9rem; margin-top:0; margin-bottom:30px; }
   .menu-btn { width:100%; max-width:340px; padding:22px; margin-bottom:14px; border:none; border-radius:14px; font-size:1.15rem; font-weight:900; color:white; cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,0.4); text-transform:uppercase; letter-spacing:0.5px; }
   #btn-mensa { background:#f59e0b; }
-  #btn-entrata { background:#10b981; }
-  #btn-uscita { background:#ef4444; }
+  #btn-porta { background:linear-gradient(135deg, #10b981 50%, #ef4444 50%); }
 
   #totem-view { position:fixed; inset:0; display:none; flex-direction:column; }
   #totem-header { background:#1e293b; color:white; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; flex-shrink:0; }
@@ -39,8 +38,7 @@
   <h1>🏫 Convitto "Costaggini"</h1>
   <p>Seleziona la modalità del totem</p>
   <button class="menu-btn" id="btn-mensa" onclick="avvia('MENSA')">🍽️ Mensa</button>
-  <button class="menu-btn" id="btn-entrata" onclick="avvia('ENTRATA')">🟢 Solo Entrate</button>
-  <button class="menu-btn" id="btn-uscita" onclick="avvia('USCITA')">🔴 Solo Uscite</button>
+  <button class="menu-btn" id="btn-porta" onclick="avvia('PORTA')">🔄 Entrata / Uscita</button>
 </div>
 
 <div id="totem-view">
@@ -78,7 +76,7 @@ function avvia(modalita) {
   document.getElementById('menu-view').style.display = 'none';
   document.getElementById('totem-view').style.display = 'flex';
 
-  var titoli = { PORTA: "🔄 Porta Girevole", MENSA: "🍽️ Mensa", ENTRATA: "🟢 Entrate", USCITA: "🔴 Uscite" };
+  var titoli = { PORTA: "🔄 Entrata / Uscita", MENSA: "🍽️ Mensa" };
   document.getElementById('totem-title').innerText = titoli[modalita] || "TOTEM";
   document.getElementById('msg').innerText = "Avvicina il tuo QR Code...";
   document.getElementById('diag').innerText = "";
