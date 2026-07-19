@@ -265,7 +265,44 @@ function alumniNoContact(e) {
 // (stessa funzione già usata in calendario.html — evita XSS da form pubblici)
 function escapeHtml(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
-// Converte un link di condivisione Google Drive nel suo URL incorporabile.
+function escapeHtml(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+// Copia l'email negli appunti come riscontro visibile, in aggiunta al mailto:
+// (che parte in parallelo ma non dà alcun segnale se non c'è un client email predefinito)
+function alumniCopyEmail(e, email) {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = email;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch(err) {}
+      document.body.removeChild(ta);
+    }
+  } catch(err) { /* clipboard non disponibile, procede solo col mailto */ }
+  alumniShowToast('✓ Email copiata: ' + email);
+}
+
+function alumniShowToast(msg) {
+  const old = document.getElementById('alumni-toast');
+  if (old) old.remove();
+  const t = document.createElement('div');
+  t.id = 'alumni-toast';
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;left:50%;bottom:1.5rem;transform:translateX(-50%);background:#1a2e1b;color:#F5F0E8;border:1px solid rgba(184,146,42,.4);border-radius:30px;padding:.55rem 1.1rem;font-family:var(--fu),sans-serif;font-size:.75rem;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.35);z-index:10000;opacity:0;transition:opacity .25s;max-width:90vw;text-align:center';
+  document.body.appendChild(t);
+  requestAnimationFrame(() => { t.style.opacity = '1'; });
+  setTimeout(() => {
+    t.style.opacity = '0';
+    setTimeout(() => t.remove(), 300);
+  }, 2500);
+}
+  
+  // Converte un link di condivisione Google Drive nel suo URL incorporabile.
 // Se il link non è nel formato atteso, viene restituito così com'è: l'iframe
 // semplicemente non caricherà nulla e l'utente vede comunque il link diretto.
 function driveEmbedUrl(url) {
