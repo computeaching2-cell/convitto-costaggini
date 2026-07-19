@@ -269,6 +269,7 @@ function escapeHtml(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&
 
 // Copia l'email negli appunti come riscontro visibile, in aggiunta al mailto:
 // (che parte in parallelo ma non dà alcun segnale se non c'è un client email predefinito)
+
 function alumniCopyEmail(e, email) {
   try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -283,23 +284,29 @@ function alumniCopyEmail(e, email) {
       try { document.execCommand('copy'); } catch(err) {}
       document.body.removeChild(ta);
     }
-  } catch(err) { /* clipboard non disponibile, procede solo col mailto */ }
-  alumniShowToast('✓ Email copiata: ' + email, 'Se non si apre il tuo programma di posta, incollala nella tua casella abituale (Gmail, Outlook…) per scrivere.');
+  } catch(err) { /* clipboard non disponibile, l'overlay mostra comunque l'indirizzo da copiare a mano */ }
+  alumniShowEmailOverlay(email);
 }
 
-function alumniShowToast(msg, submsg) {
-  const old = document.getElementById('alumni-toast');
+function alumniShowEmailOverlay(email) {
+  const old = document.getElementById('alumni-email-ov');
   if (old) old.remove();
-  const t = document.createElement('div');
-  t.id = 'alumni-toast';
-  t.innerHTML = '<div>' + msg + '</div>' + (submsg ? '<div style="font-weight:400;font-size:.68rem;opacity:.75;margin-top:.25rem">' + submsg + '</div>' : '');
-  t.style.cssText = 'position:fixed;left:50%;bottom:1.5rem;transform:translateX(-50%);background:#1a2e1b;color:#F5F0E8;border:1px solid rgba(184,146,42,.4);border-radius:14px;padding:.65rem 1.1rem;font-family:var(--fu),sans-serif;font-size:.75rem;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.35);z-index:10000;opacity:0;transition:opacity .25s;max-width:90vw;text-align:center;line-height:1.4';
-  document.body.appendChild(t);
-  requestAnimationFrame(() => { t.style.opacity = '1'; });
-  setTimeout(() => {
-    t.style.opacity = '0';
-    setTimeout(() => t.remove(), 300);
-  }, 4000);
+  var ov = document.createElement('div');
+  ov.id = 'alumni-email-ov';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(6,13,6,.88);display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px)';
+  var box = document.createElement('div');
+  box.style.cssText = 'background:#1a2e1b;border:1px solid rgba(184,146,42,.3);border-radius:14px;padding:2rem 1.75rem;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)';
+  box.innerHTML = '<div style="font-size:2.2rem;margin-bottom:.75rem">✓</div>'
+    + '<h3 style="font-family:var(--fd);font-size:1.3rem;font-weight:300;color:#F5F0E8;margin:0 0 .6rem">Email copiata</h3>'
+    + '<p style="font-family:var(--fu);font-size:.85rem;font-weight:700;color:var(--oro2);background:rgba(184,146,42,.12);border-radius:8px;padding:.6rem 1rem;margin:0 0 1.1rem;word-break:break-all">' + escapeHtml(email) + '</p>'
+    + '<p style="font-size:.83rem;color:rgba(245,240,232,.6);line-height:1.7;margin:0 0 1.5rem">Se il tuo programma di posta non si è aperto da solo, incolla l\'indirizzo nella tua casella abituale (Gmail, Outlook…) per scrivere.</p>'
+    + '<button id="alumni-email-ov-close" style="background:linear-gradient(135deg,#B8922A,#D4AA4A);color:#1a2e1b;border:none;padding:.6rem 1.5rem;border-radius:40px;cursor:pointer;font-family:var(--fu),sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase">Ho capito</button>';
+  ov.appendChild(box);
+  document.body.appendChild(ov);
+  document.body.style.overflow = 'hidden';
+  function chiudi() { ov.remove(); document.body.style.overflow = ''; }
+  document.getElementById('alumni-email-ov-close').addEventListener('click', chiudi);
+  ov.addEventListener('click', function(ev) { if (ev.target === ov) chiudi(); });
 }
   
   // Converte un link di condivisione Google Drive nel suo URL incorporabile.
