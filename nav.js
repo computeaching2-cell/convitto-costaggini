@@ -186,6 +186,7 @@
       #fab-top{opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;transform:translateY(4px);}
       #fab-top.vis{opacity:1;pointer-events:auto;transform:translateY(0);}
       @media(max-width:700px){.fab-c[data-tip]:hover::after{display:none;}}
+      @media(max-height:480px){#fab-wrap{flex-direction:row;flex-wrap:wrap-reverse;bottom:.4rem;right:.4rem;gap:.3rem;max-width:calc(100vw - .8rem);justify-content:flex-end;}.fab-c{width:32px;height:32px;}.fab-c svg{width:14px;height:14px;}}
     `;
     const st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
 
