@@ -24,7 +24,7 @@ Lo script:
 import re
 from pathlib import Path
 
-SITE_URL = "https://computeaching2-cell.github.io/convitto-costaggini"
+SITE_URL = "https://convitto-costaggini.github.io/convitto-costaggini"
 
 BLOCKS = {
     "index.html": """<script type="application/ld+json">
@@ -178,8 +178,8 @@ confermare) — vedi note nel file schema-org-convitto.md.
 QUANDO IL DOMINIO UFFICIALE SARÀ ATTIVO, per aggiornare tutti gli URL
 in un colpo solo, lancia (dalla cartella del repository):
 
-  grep -rl 'computeaching2-cell.github.io/convitto-costaggini' --include='*.html' . \\
-    | xargs sed -i 's|https://computeaching2-cell.github.io/convitto-costaggini|https://NUOVO-DOMINIO|g'
+  grep -rl 'convitto-costaggini.github.io/convitto-costaggini' --include='*.html' . \\
+    | xargs sed -i 's|https://convitto-costaggini.github.io/convitto-costaggini|https://NUOVO-DOMINIO|g'
 
 (sostituendo NUOVO-DOMINIO con il dominio vero, senza slash finale)
 --------------------------------------------------------------
